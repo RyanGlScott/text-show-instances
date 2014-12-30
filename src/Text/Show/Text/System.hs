@@ -11,3 +11,4 @@ Imports 'Show' instances for @System@ modules.
 module Text.Show.Text.System () where
 
 import Text.Show.Text.System.Random ()
+import Text.Show.Text.System.Time   ()

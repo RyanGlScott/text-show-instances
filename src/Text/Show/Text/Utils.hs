@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-|
 Module:      Text.Show.Text.Utils
 Copyright:   (C) 2014 Ryan Scott
@@ -11,7 +12,8 @@ Miscellaneous utility functions.
 module Text.Show.Text.Utils where
 
 import Data.Monoid (Monoid(mappend))
-import Text.Show.Text (Builder, singleton)
+import Prelude hiding (Show)
+import Text.Show.Text (Show, Builder, showbUnary, singleton)
 
 infixr 6 <>
 
@@ -26,3 +28,8 @@ infixr 6 <>
 s :: Char -> Builder
 s = singleton
 {-# INLINE s #-}
+
+-- | This pattern is used frequently when showing container types.
+showbUnaryList :: Show a => Int -> [a] -> Builder
+showbUnaryList p = showbUnary "fromList" p
+{-# INLINE showbUnaryList #-}

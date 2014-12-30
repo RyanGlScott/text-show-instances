@@ -10,7 +10,7 @@ Portability: GHC
 
 Monomorphic 'Show' function for 'StdGen'.
 
-/Since 0.1/
+/Since: 0.1/
 -}
 module Text.Show.Text.System.Random (showbStdGenPrec) where
 
@@ -22,7 +22,7 @@ import Text.Show.Text (Show(showbPrec), Builder, FromStringShow(..))
 
 -- | Convert a 'StdGen' to a 'Builder' with the given precedence.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbStdGenPrec :: Int -> StdGen -> Builder
 showbStdGenPrec p = showbPrec p . FromStringShow
 {-# INLINE showbStdGenPrec #-}

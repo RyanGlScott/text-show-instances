@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, OverloadedStrings, TemplateHaskell #-}
+{-# LANGUAGE CPP, TemplateHaskell #-}
 {-# OPTIONS -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Data.Containers
@@ -38,11 +38,12 @@ import           Data.Tree (Tree)
 
 import           Prelude hiding (Show)
 
-import           Text.Show.Text (Builder, Show(showbPrec), Show1(showbPrec1), showbUnary)
+import           Text.Show.Text (Builder, Show(showbPrec), Show1(showbPrec1))
 import           Text.Show.Text.Data.Integral ()
 import           Text.Show.Text.Data.List ()
 import           Text.Show.Text.Data.Tuple ()
 import           Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import           Text.Show.Text.Utils (showbUnaryList)
 
 #include "inline.h"
 
@@ -101,11 +102,6 @@ showbSetPrec p = showbUnaryList p . Set.toList
 showbTreePrec :: Show a => Int -> Tree a -> Builder
 showbTreePrec = showbPrec
 {-# INLINE showbTreePrec #-}
-
--- | This pattern is used frequently when showing container types.
-showbUnaryList :: Show a => Int -> [a] -> Builder
-showbUnaryList p = showbUnary "fromList" p
-{-# INLINE showbUnaryList #-}
 
 instance Show v => Show (IntMap v) where
     showbPrec = showbIntMapPrec

@@ -10,7 +10,7 @@ Portability: GHC
 
 Monomorphic 'Show' functions for data types in the @pretty@ library.
 
-/Since 0.1/
+/Since: 0.1/
 -}
 module Text.Show.Text.Text.PrettyPrint (
       showbDoc
@@ -41,7 +41,7 @@ import Text.Show.Text.Utils ((<>), s)
 
 -- | Convert a 'Doc' to a 'Builder'.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbDoc :: Doc -> Builder
 showbDoc doc = fullRender (mode style) (lineLength style)
                           (ribbonsPerLine style)
@@ -56,21 +56,21 @@ txtPrinter (PStr s') b = fromString s' <> b
 
 -- | Convert a 'Mode' to a 'Builder'.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbMode :: Mode -> Builder
 showbMode = showb
 {-# INLINE showbMode #-}
 
 -- | Convert a 'Style' to a 'Builder' with the given precedence.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbStylePrec :: Int -> Style -> Builder
 showbStylePrec = showbPrec
 {-# INLINE showbStylePrec #-}
 
 -- | Convert 'TextDetails' to a 'Builder' with the given precedence.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbTextDetailsPrec :: Int -> TextDetails -> Builder
 showbTextDetailsPrec = showbPrec
 {-# INLINE showbTextDetailsPrec #-}
@@ -79,7 +79,7 @@ showbTextDetailsPrec = showbPrec
 -- | Convert a 'PrettyLevel' value to a 'Builder' with the given precedence.
 -- This function is only available with @pretty-1.1.2.0@ or later.
 -- 
--- /Since 0.1/
+-- /Since: 0.1/
 showbPrettyLevelPrec :: Int -> PrettyLevel -> Builder
 showbPrettyLevelPrec = showbPrec
 {-# INLINE showbPrettyLevelPrec #-}

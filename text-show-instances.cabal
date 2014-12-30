@@ -11,7 +11,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/filepath             filepath>@             NOT DONE
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@                  NOT DONE
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@           NOT DONE
-                     * @<http://hackage.haskell.org/package/old-time             old-time>@             NOT DONE
+                     * @<http://hackage.haskell.org/package/old-time             old-time>@             DONE
                      * @<http://hackage.haskell.org/package/pretty               pretty>@               DONE
                      * @<http://hackage.haskell.org/package/random               random>@               DONE
                      * @<http://hackage.haskell.org/package/semigroups           semigroups>@           NOT DONE
@@ -22,7 +22,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                        (and @<http://hackage.haskell.org/package/transformers-compat transformers-compat>@
                        if using an old version of @transformers@)                                       NOT DONE
                      * @<http://hackage.haskell.org/package/unix                 unix>@                 NOT DONE (if using a Unix-like OS)
-                     * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@ NOT DONE
+                     * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@ DONE
                      * @<http://hackage.haskell.org/package/vector               vector>@               NOT DONE
                      * @<http://hackage.haskell.org/package/Win32                Win32>@                NOT DONE (if using Windows)
                      * @<http://hackage.haskell.org/package/xhtml                xhtml>@                NOT DONE
@@ -58,7 +58,9 @@ library
                        Text.Show.Text.Data.Containers
                        Text.Show.Text.Data.Tagged
                        Text.Show.Text.Data.Time
+                       Text.Show.Text.Data.UnorderedContainers
                        Text.Show.Text.System.Random
+                       Text.Show.Text.System.Time
                        Text.Show.Text.Text.PrettyPrint
   other-modules:       Text.Show.Text.Data
                        Text.Show.Text.System
@@ -108,7 +110,9 @@ test-suite text-show-instances-properties
                        Properties.Data.Containers
                        Properties.Data.Tagged
                        Properties.Data.Time
+                       Properties.Data.UnorderedContainers
                        Properties.System.Random
+                       Properties.System.Time
                        Properties.Text.PrettyPrint
                        Properties.Utils
   build-depends:       base                 >= 4.2    && < 5
