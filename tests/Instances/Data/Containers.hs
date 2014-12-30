@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
-Module:      Instances.Containers
+Module:      Instances.Data.Containers
 Copyright:   (C) 2014 Ryan Scott
 License:     BSD-style (see the file LICENSE)
 Maintainer:  Ryan Scott
@@ -10,10 +10,10 @@ Portability: GHC
 
 Provides 'Arbitrary' instances for data types located in @containers@.
 -} 
-module Instances.Containers () where
+module Instances.Data.Containers () where
 
 #if !(MIN_VERSION_base(4,8,0))
-import           Control.Applicative ((<*>), pure)
+import Control.Applicative ((<*>), pure)
 #endif
 
 import Data.Functor ((<$>))

@@ -12,10 +12,10 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@                  NOT DONE
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@           NOT DONE
                      * @<http://hackage.haskell.org/package/old-time             old-time>@             NOT DONE
-                     * @<http://hackage.haskell.org/package/pretty               pretty>@               NOT DONE
-                     * @<http://hackage.haskell.org/package/random               random>@               NOT DONE
+                     * @<http://hackage.haskell.org/package/pretty               pretty>@               DONE
+                     * @<http://hackage.haskell.org/package/random               random>@               DONE
                      * @<http://hackage.haskell.org/package/semigroups           semigroups>@           NOT DONE
-                     * @<http://hackage.haskell.org/package/tagged               tagged>@               NOT DONE
+                     * @<http://hackage.haskell.org/package/tagged               tagged>@               DONE
                      * @<http://hackage.haskell.org/package/template-haskell     template-haskell>@     NOT DONE
                      * @<http://hackage.haskell.org/package/time                 time>@                 DONE
                      * @<http://hackage.haskell.org/package/transformers         transformers>@
@@ -56,8 +56,13 @@ library
   exposed-modules:     Text.Show.Text.Instances
   
                        Text.Show.Text.Data.Containers
+                       Text.Show.Text.Data.Tagged
                        Text.Show.Text.Data.Time
+                       Text.Show.Text.System.Random
+                       Text.Show.Text.Text.PrettyPrint
   other-modules:       Text.Show.Text.Data
+                       Text.Show.Text.System
+                       Text.Show.Text.Text
                        Text.Show.Text.Utils
   build-depends:       base                 >= 4.2    && < 5
                      , containers           >= 0.1    && < 0.6
@@ -96,9 +101,15 @@ library
 test-suite text-show-instances-properties
   type:                exitcode-stdio-1.0
   main-is:             Properties.hs
-  other-modules:       Instances.Containers
-                       Properties.Containers
-                       Properties.Time
+  other-modules:       Instances.Data.Containers
+                       Instances.Data.Tagged
+                       Instances.System.Random
+                       Instances.Text.PrettyPrint
+                       Properties.Data.Containers
+                       Properties.Data.Tagged
+                       Properties.Data.Time
+                       Properties.System.Random
+                       Properties.Text.PrettyPrint
                        Properties.Utils
   build-depends:       base                 >= 4.2    && < 5
                      , containers           >= 0.1    && < 0.6

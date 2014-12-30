@@ -10,8 +10,11 @@ Portability: GHC
 -}
 module Main (main) where
 
-import Properties.Containers (containersTests)
-import Properties.Time       (timeTests)
+import Properties.Data.Containers  (containersTests)
+import Properties.Data.Tagged      (taggedTests)
+import Properties.Data.Time        (timeTests)
+import Properties.System.Random    (randomTests)
+import Properties.Text.PrettyPrint (prettyTests)
 
 import Test.Tasty (TestTree, defaultMain, testGroup)
 
@@ -20,7 +23,10 @@ main = defaultMain testTree
 
 allTests :: [TestTree]
 allTests = concat [ containersTests
+                  , taggedTests
                   , timeTests
+                  , randomTests
+                  , prettyTests
                   ]
 
 testTree :: TestTree
