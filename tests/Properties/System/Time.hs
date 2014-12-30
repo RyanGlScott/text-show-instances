@@ -14,6 +14,7 @@ import Properties.Utils (prop_matchesShow)
 
 import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day)
 
+import Test.QuickCheck.Instances ()
 import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.QuickCheck (testProperty)
 

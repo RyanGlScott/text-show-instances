@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP, OverloadedStrings #-}
 {-|
 Module:      Text.Show.Text.Utils
 Copyright:   (C) 2014 Ryan Scott
@@ -11,7 +11,9 @@ Miscellaneous utility functions.
 -}
 module Text.Show.Text.Utils where
 
+#if !(MIN_VERSION_base(4,8,0))
 import Data.Monoid (Monoid(mappend))
+#endif
 import Prelude hiding (Show)
 import Text.Show.Text (Show, Builder, showbUnary, singleton)
 

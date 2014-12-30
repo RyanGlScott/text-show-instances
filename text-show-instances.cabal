@@ -79,7 +79,7 @@ library
                      , random               >= 1.0.1  && < 1.2
                      , semigroups           >= 0.8.4  && < 1
                      , tagged               >= 0.4.4  && < 1
-                     , template-haskell     >= 2.4    && < 2.10
+                     , template-haskell     >= 2.4    && < 2.11
                      , text-show            >= 0.5    && < 0.6
                      , time                 >= 0.1    && < 1.6
                      , unordered-containers >= 0.2    && < 0.3
@@ -133,7 +133,7 @@ test-suite text-show-instances-properties
                      , tagged               >= 0.4.4  && < 1
                      , tasty                >= 0.8    && < 0.11
                      , tasty-quickcheck     >= 0.8    && < 0.9
-                     , template-haskell     >= 2.4    && < 2.10
+                     , template-haskell     >= 2.4    && < 2.11
                      , text-show            >= 0.5    && < 0.6
                      , text-show-instances  == 0.1
                      , time                 >= 0.1    && < 1.6
