@@ -10,7 +10,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/directory            directory>@            NOT DONE
                      * @<http://hackage.haskell.org/package/filepath             filepath>@             NOT DONE
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@                  NOT DONE
-                     * @<http://hackage.haskell.org/package/old-locale           old-locale>@           NOT DONE
+                     * @<http://hackage.haskell.org/package/old-locale           old-locale>@           DONE
                      * @<http://hackage.haskell.org/package/old-time             old-time>@             DONE
                      * @<http://hackage.haskell.org/package/pretty               pretty>@               DONE
                      * @<http://hackage.haskell.org/package/random               random>@               DONE
@@ -23,7 +23,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                        if using an old version of @transformers@)                                       NOT DONE
                      * @<http://hackage.haskell.org/package/unix                 unix>@                 NOT DONE (if using a Unix-like OS)
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@ DONE
-                     * @<http://hackage.haskell.org/package/vector               vector>@               NOT DONE
+                     * @<http://hackage.haskell.org/package/vector               vector>@               DONE
                      * @<http://hackage.haskell.org/package/Win32                Win32>@                NOT DONE (if using Windows)
                      * @<http://hackage.haskell.org/package/xhtml                xhtml>@                NOT DONE
                      .
@@ -59,6 +59,8 @@ library
                        Text.Show.Text.Data.Tagged
                        Text.Show.Text.Data.Time
                        Text.Show.Text.Data.UnorderedContainers
+                       Text.Show.Text.Data.Vector
+                       Text.Show.Text.System.Locale
                        Text.Show.Text.System.Random
                        Text.Show.Text.System.Time
                        Text.Show.Text.Text.PrettyPrint
@@ -105,12 +107,14 @@ test-suite text-show-instances-properties
   main-is:             Properties.hs
   other-modules:       Instances.Data.Containers
                        Instances.Data.Tagged
+                       Instances.System.Locale
                        Instances.System.Random
                        Instances.Text.PrettyPrint
                        Properties.Data.Containers
                        Properties.Data.Tagged
                        Properties.Data.Time
                        Properties.Data.UnorderedContainers
+                       Properties.System.Locale
                        Properties.System.Random
                        Properties.System.Time
                        Properties.Text.PrettyPrint

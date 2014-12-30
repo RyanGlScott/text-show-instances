@@ -21,7 +21,7 @@ import           Data.HashSet (HashSet)
 
 import           Prelude hiding (Show)
 
-import           Text.Show.Text (Show(showbPrec), Builder)
+import           Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder)
 import           Text.Show.Text.Utils (showbUnaryList)
 
 #include "inline.h"
@@ -47,3 +47,11 @@ instance (Show k, Show v) => Show (HashMap k v) where
 instance Show a => Show (HashSet a) where
     showbPrec = showbHashSetPrec
     INLINE_INST_FUN(showbPrec)
+
+instance Show k => Show1 (HashMap k) where
+    showbPrec1 = showbHashMapPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 HashSet where
+    showbPrec1 = showbHashSetPrec
+    INLINE_INST_FUN(showbPrec1)
