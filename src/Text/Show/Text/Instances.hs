@@ -15,3 +15,4 @@ module Text.Show.Text.Instances () where
 import Text.Show.Text.Data   ()
 import Text.Show.Text.System ()
 import Text.Show.Text.Text   ()
+import Text.Show.Text.Trace  ()

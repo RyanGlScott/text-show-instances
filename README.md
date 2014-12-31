@@ -4,6 +4,7 @@
 
 * [`containers`](http://hackage.haskell.org/package/containers)
 * [`directory`](http://hackage.haskell.org/package/directory)
+* [`hpc`](http://hackage.haskell.org/package/hpc)
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)
 * [`random`](http://hackage.haskell.org/package/random)

@@ -20,6 +20,7 @@ import Properties.System.Locale            (oldLocaleTests)
 import Properties.System.Random            (randomTests)
 import Properties.System.Time              (oldTimeTests)
 import Properties.Text.PrettyPrint         (prettyTests)
+import Properties.Trace.Hpc                (hpcTests)
 
 import Test.Tasty (TestTree, defaultMain, testGroup)
 
@@ -37,6 +38,7 @@ allTests = concat [ containersTests
                   , randomTests
                   , oldTimeTests
                   , prettyTests
+                  , hpcTests
                   ]
 
 testTree :: TestTree
