@@ -24,7 +24,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@ DONE
                      * @<http://hackage.haskell.org/package/vector               vector>@               DONE
                      * @<http://hackage.haskell.org/package/Win32                Win32>@                NOT DONE (if using Windows)
-                     * @<http://hackage.haskell.org/package/xhtml                xhtml>@                NOT DONE
+                     * @<http://hackage.haskell.org/package/xhtml                xhtml>@                DONE
                      .
                      One can use these instances by importing
                      "Text.Show.Text.Instances". Alternatively, there are monomorphic
@@ -64,6 +64,7 @@ library
                        Text.Show.Text.System.Random
                        Text.Show.Text.System.Time
                        Text.Show.Text.Text.PrettyPrint
+                       Text.Show.Text.Text.XHtml
                        Text.Show.Text.Trace.Hpc
   other-modules:       Text.Show.Text.Data
                        Text.Show.Text.System
@@ -112,6 +113,7 @@ test-suite text-show-instances-properties
                        Instances.System.Locale
                        Instances.System.Random
                        Instances.Text.PrettyPrint
+                       Instances.Text.XHtml
                        Instances.Trace.Hpc
                        Properties.Data.Containers
                        Properties.Data.Tagged
@@ -122,6 +124,7 @@ test-suite text-show-instances-properties
                        Properties.System.Random
                        Properties.System.Time
                        Properties.Text.PrettyPrint
+                       Properties.Text.XHtml
                        Properties.Trace.Hpc
                        Properties.Utils
   build-depends:       base                 >= 4.2    && < 5
