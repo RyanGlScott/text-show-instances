@@ -3,6 +3,7 @@
 `text-show-instances` is a supplemental library to [`text-show`](https://github.com/RyanGlScott/text-show) that provides additional `Show` instances for data types in common Haskell libraries not encompassed by `text-show`. Currently, `text-show-instances` covers these libraries:
 
 * [`containers`](http://hackage.haskell.org/package/containers)
+* [`directory`](http://hackage.haskell.org/package/directory)
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)
 * [`random`](http://hackage.haskell.org/package/random)

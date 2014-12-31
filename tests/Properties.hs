@@ -15,6 +15,7 @@ import Properties.Data.Tagged              (taggedTests)
 import Properties.Data.Time                (timeTests)
 import Properties.Data.UnorderedContainers (unorderedContainersTests)
 import Properties.Data.Vector              (vectorTests)
+import Properties.System.Directory         (directoryTests)
 import Properties.System.Locale            (oldLocaleTests)
 import Properties.System.Random            (randomTests)
 import Properties.System.Time              (oldTimeTests)
@@ -31,6 +32,7 @@ allTests = concat [ containersTests
                   , timeTests
                   , unorderedContainersTests
                   , vectorTests
+                  , directoryTests
                   , oldLocaleTests
                   , randomTests
                   , oldTimeTests

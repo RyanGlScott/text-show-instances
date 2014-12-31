@@ -7,7 +7,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      Currently, @text-show-instances@ covers these libraries:
                      .
                      * @<http://hackage.haskell.org/package/containers           containers>@           DONE
-                     * @<http://hackage.haskell.org/package/directory            directory>@            NOT DONE
+                     * @<http://hackage.haskell.org/package/directory            directory>@            DONE
                      * @<http://hackage.haskell.org/package/filepath             filepath>@             NOT DONE
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@                  NOT DONE
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@           DONE
@@ -60,6 +60,7 @@ library
                        Text.Show.Text.Data.Time
                        Text.Show.Text.Data.UnorderedContainers
                        Text.Show.Text.Data.Vector
+                       Text.Show.Text.System.Directory
                        Text.Show.Text.System.Locale
                        Text.Show.Text.System.Random
                        Text.Show.Text.System.Time
@@ -107,6 +108,7 @@ test-suite text-show-instances-properties
   main-is:             Properties.hs
   other-modules:       Instances.Data.Containers
                        Instances.Data.Tagged
+                       Instances.System.Directory
                        Instances.System.Locale
                        Instances.System.Random
                        Instances.Text.PrettyPrint
@@ -114,6 +116,7 @@ test-suite text-show-instances-properties
                        Properties.Data.Tagged
                        Properties.Data.Time
                        Properties.Data.UnorderedContainers
+                       Properties.System.Directory
                        Properties.System.Locale
                        Properties.System.Random
                        Properties.System.Time

@@ -1,5 +1,15 @@
 {-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+{-|
+Module:      Instances.System.Locale
+Copyright:   (C) 2014 Ryan Scott
+License:     BSD-style (see the file LICENSE)
+Maintainer:  Ryan Scott
+Stability:   Experimental
+Portability: GHC
+
+Provides an 'Arbitrary' instance for 'TimeLocale' values.
+-}
 module Instances.System.Locale () where
 
 #if !(MIN_VERSION_base(4,8,0))
