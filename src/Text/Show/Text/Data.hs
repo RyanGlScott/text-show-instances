@@ -11,6 +11,7 @@ Imports 'Show' instances for @Data@ modules.
 module Text.Show.Text.Data () where
 
 import Text.Show.Text.Data.Containers          ()
+import Text.Show.Text.Data.Functor.Trans       ()
 import Text.Show.Text.Data.Tagged              ()
 import Text.Show.Text.Data.Time                ()
 import Text.Show.Text.Data.UnorderedContainers ()

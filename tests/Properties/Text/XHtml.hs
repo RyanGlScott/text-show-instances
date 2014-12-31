@@ -25,6 +25,7 @@ xhtmlTests :: [TestTree]
 xhtmlTests =
     [ testGroup "Text.Show.Text.Text.XHtml"
         [ testProperty "Html instance"      (prop_matchesShow :: Int -> Html -> Bool)
+        , testProperty "[Html] instance"    (prop_matchesShow :: Int -> [Html] -> Bool)
         , testProperty "HtmlAttr instance"  (prop_matchesShow :: Int -> HtmlAttr -> Bool)
         , testProperty "HotLink instance"   (prop_matchesShow :: Int -> HotLink -> Bool)
         , testProperty "HtmlTable instance" (prop_matchesShow :: Int -> HtmlTable -> Bool)
