@@ -18,10 +18,10 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/template-haskell     template-haskell>@     NOT DONE
                      * @<http://hackage.haskell.org/package/time                 time>@                 DONE
                      * @<http://hackage.haskell.org/package/transformers         transformers>@         DONE
-                     * @<http://hackage.haskell.org/package/unix                 unix>@                 NOT DONE (if using a Unix-like OS)
+                     * @<http://hackage.haskell.org/package/unix                 unix>@                 DONE
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@ DONE
                      * @<http://hackage.haskell.org/package/vector               vector>@               DONE
-                     * @<http://hackage.haskell.org/package/Win32                Win32>@                NOT DONE (if using Windows)
+                     * @<http://hackage.haskell.org/package/Win32                Win32>@                NOT DONE
                      * @<http://hackage.haskell.org/package/xhtml                xhtml>@                DONE
                      .
                      One can use these instances by importing
@@ -71,6 +71,7 @@ library
                        Text.Show.Text.Trace.Hpc
   other-modules:       Text.Show.Text.Control
                        Text.Show.Text.Data
+                       Text.Show.Text.Graphics
                        Text.Show.Text.System
                        Text.Show.Text.Text
                        Text.Show.Text.Trace
@@ -105,8 +106,11 @@ library
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
+    exposed-modules:   Text.Show.Text.Graphics.Win32
+                       Text.Show.Text.System.Win32
   else
     build-depends:     unix                 >= 2      && < 2.8
+    exposed-modules:   Text.Show.Text.System.Posix
 
 test-suite text-show-instances-properties
   type:                exitcode-stdio-1.0
@@ -172,5 +176,11 @@ test-suite text-show-instances-properties
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
+    other-modules:     Instances.Graphics.Win32
+                       Instances.System.Win32
+                       Properties.Graphics.Win32
+                       Properties.System.Win32
   else
     build-depends:     unix                 >= 2      && < 2.8
+    other-modules:     Instances.System.Posix
+                       Properties.System.Posix

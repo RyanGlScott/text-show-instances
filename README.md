@@ -12,6 +12,7 @@
 * [`tagged`](http://hackage.haskell.org/package/tagged)
 * [`time`](http://hackage.haskell.org/package/time)
 * [`transformers`](http://hackage.haskell.org/package/transformers)
+* [`unix`](http://hackage.haskell.org/package/unix)
 * [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
 * [`vector`](http://hackage.haskell.org/package/vector)
 * [`xhtml`](http://hackage.haskell.org/package/xhtml)

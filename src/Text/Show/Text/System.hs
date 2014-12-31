@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-|
 Module:      Text.Show.Text.System
 Copyright:   (C) 2014 Ryan Scott
@@ -13,3 +14,9 @@ module Text.Show.Text.System () where
 import Text.Show.Text.System.Locale ()
 import Text.Show.Text.System.Random ()
 import Text.Show.Text.System.Time   ()
+
+#if defined(mingw32_HOST_OS)
+import Text.Show.Text.System.Win32  ()
+#else
+import Text.Show.Text.System.Posix  ()
+#endif
