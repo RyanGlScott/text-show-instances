@@ -13,7 +13,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/old-time             old-time>@             DONE
                      * @<http://hackage.haskell.org/package/pretty               pretty>@               DONE
                      * @<http://hackage.haskell.org/package/random               random>@               DONE
-                     * @<http://hackage.haskell.org/package/semigroups           semigroups>@           NOT DONE
+                     * @<http://hackage.haskell.org/package/semigroups           semigroups>@           DONE
                      * @<http://hackage.haskell.org/package/tagged               tagged>@               DONE
                      * @<http://hackage.haskell.org/package/template-haskell     template-haskell>@     NOT DONE
                      * @<http://hackage.haskell.org/package/time                 time>@                 DONE
@@ -56,6 +56,8 @@ library
                        Text.Show.Text.Control.Monad.Trans
                        Text.Show.Text.Data.Containers
                        Text.Show.Text.Data.Functor.Trans
+                       Text.Show.Text.Data.List.NonEmpty
+                       Text.Show.Text.Data.Semigroup
                        Text.Show.Text.Data.Tagged
                        Text.Show.Text.Data.Time
                        Text.Show.Text.Data.UnorderedContainers
@@ -113,6 +115,8 @@ test-suite text-show-instances-properties
                        Instances.Control.Monad.Trans
                        Instances.Data.Containers
                        Instances.Data.Functor.Trans
+                       Instances.Data.List.NonEmpty
+                       Instances.Data.Semigroup
                        Instances.Data.Tagged
                        Instances.System.Directory
                        Instances.System.Locale
@@ -124,6 +128,8 @@ test-suite text-show-instances-properties
                        Properties.Control.Monad.Trans
                        Properties.Data.Containers
                        Properties.Data.Functor.Trans
+                       Properties.Data.List.NonEmpty
+                       Properties.Data.Semigroup
                        Properties.Data.Tagged
                        Properties.Data.Time
                        Properties.Data.UnorderedContainers

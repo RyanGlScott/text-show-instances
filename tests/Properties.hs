@@ -14,6 +14,8 @@ import Properties.Control.Applicative.Trans (applicativeFunctorTransformerTests)
 import Properties.Control.Monad.Trans       (monadTransformerTests)
 import Properties.Data.Containers           (containersTests)
 import Properties.Data.Functor.Trans        (functorTransformerTests)
+import Properties.Data.List.NonEmpty        (nonEmptyListTests)
+import Properties.Data.Semigroup            (semigroupTests)
 import Properties.Data.Tagged               (taggedTests)
 import Properties.Data.Time                 (timeTests)
 import Properties.Data.UnorderedContainers  (unorderedContainersTests)
@@ -36,6 +38,8 @@ allTests = concat [ applicativeFunctorTransformerTests
                   , monadTransformerTests
                   , containersTests
                   , functorTransformerTests
+                  , nonEmptyListTests
+                  , semigroupTests
                   , taggedTests
                   , timeTests
                   , unorderedContainersTests

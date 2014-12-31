@@ -8,6 +8,7 @@
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)
 * [`random`](http://hackage.haskell.org/package/random)
+* [`semigroups`](http://hackage.haskell.org/package/semigroups)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
 * [`time`](http://hackage.haskell.org/package/time)
 * [`transformers`](http://hackage.haskell.org/package/transformers)
