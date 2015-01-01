@@ -1,4 +1,7 @@
-{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, MagicHash, StandaloneDeriving #-}
+{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+#if !(MIN_VERSION_template_haskell(2,10,0))
+{-# LANGUAGE MagicHash #-}
+#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Language.Haskell.TH
@@ -190,8 +193,13 @@ instance Arbitrary Name where
 instance Arbitrary NameFlavour where
     arbitrary = oneof [ pure NameS
                       , NameQ <$> arbitrary
+#if MIN_VERSION_template_haskell(2,10,0)
+                      , NameU <$> arbitrary
+                      , NameL <$> arbitrary
+#else
                       , (\(I# i#) -> NameU i#) <$> arbitrary
                       , (\(I# i#) -> NameL i#) <$> arbitrary
+#endif
                       , NameG <$> arbitrary <*> arbitrary <*> arbitrary
                       ]
 

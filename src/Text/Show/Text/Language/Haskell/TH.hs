@@ -1,4 +1,7 @@
-{-# LANGUAGE CPP, MagicHash, TemplateHaskell #-}
+{-# LANGUAGE CPP, TemplateHaskell #-}
+#if !(MIN_VERSION_template_haskell(2,10,0))
+{-# LANGUAGE MagicHash #-}
+#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Language.Haskell.TH
@@ -252,8 +255,14 @@ showbName' ni nm = case ni of
                Name occ NameS         -> occB occ
                Name occ (NameQ m)     -> modB m   <> s '.' <> occB occ
                Name occ (NameG _ _ m) -> modB m   <> s '.' <> occB occ
-               Name occ (NameU u)     -> occB occ <> s '_' <> showbIntPrec 0 (I# u)
-               Name occ (NameL u)     -> occB occ <> s '_' <> showbIntPrec 0 (I# u)
+               Name occ (NameU u)     -> occB occ <> s '_' <> showbIntPrec 0 (mkInt u)
+               Name occ (NameL u)     -> occB occ <> s '_' <> showbIntPrec 0 (mkInt u)
+    
+#if MIN_VERSION_template_haskell(2,10,0)
+    mkInt = id
+#else
+    mkInt i# = I# i#
+#endif
     
     occB :: OccName -> Builder
     occB = fromString . occString
