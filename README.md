@@ -10,6 +10,7 @@
 * [`random`](http://hackage.haskell.org/package/random)
 * [`semigroups`](http://hackage.haskell.org/package/semigroups)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
+* [`template-haskell`](http://hackage.haskell.org/package/template-haskell)
 * [`time`](http://hackage.haskell.org/package/time)
 * [`transformers`](http://hackage.haskell.org/package/transformers)
 * [`unix`](http://hackage.haskell.org/package/unix)

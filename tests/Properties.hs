@@ -24,6 +24,7 @@ import Properties.Data.Vector               (vectorTests)
 #if defined(mingw32_HOST_OS)
 import Properties.Graphics.Win32            (win32GraphicsTests)
 #endif
+import Properties.Language.Haskell.TH       (templateHaskellTests)
 import Properties.System.Directory          (directoryTests)
 import Properties.System.Locale             (oldLocaleTests)
 #if !defined(mingw32_HOST_OS)
@@ -57,6 +58,7 @@ allTests = concat [ applicativeFunctorTransformerTests
 #if defined(mingw32_HOST_OS)
                   , win32GraphicsTests
 #endif
+                  , templateHaskellTests
                   , directoryTests
                   , oldLocaleTests
 #if !defined(mingw32_HOST_OS)
