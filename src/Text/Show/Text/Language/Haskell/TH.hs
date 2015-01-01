@@ -361,6 +361,7 @@ showbTyVarBndrPrec = showbPrec
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
 -- | Convert a 'ClassInstance' to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell@ 2.5.0.0 or 2.6.0.0.
 -- 
 -- /Since: 0.1/
 showbClassInstancePrec :: Int -> ClassInstance -> Builder

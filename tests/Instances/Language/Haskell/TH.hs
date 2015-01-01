@@ -33,7 +33,10 @@ import Language.Haskell.TH.Syntax.Internals (ModName(..), PkgName(..), OccName(.
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 
 instance Arbitrary Body where
-    arbitrary = oneof [GuardedB <$> arbitrary, NormalB <$> arbitrary]
+    arbitrary = oneof $ map pure [ GuardedB [(fGuard, fExp)]
+                                 , NormalB  fExp
+                                 ]
+--     arbitrary = oneof [GuardedB <$> arbitrary, NormalB <$> arbitrary]
 
 instance Arbitrary Callconv where
     arbitrary = oneof $ map pure [ CCall
@@ -46,84 +49,152 @@ instance Arbitrary Callconv where
                                  ]
 
 instance Arbitrary Clause where
-    arbitrary = Clause <$> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = (flip . flip Clause) fBody [fDec] <$> arbitrary
+--     arbitrary = Clause <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Con where
     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
                       , RecC    <$> arbitrary <*> arbitrary
                       , InfixC  <$> arbitrary <*> arbitrary <*> arbitrary
-                      , ForallC <$> arbitrary <*> arbitrary <*> arbitrary
+                      , flip (flip . ForallC) fCon <$> arbitrary <*> arbitrary
                       ]
+--     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
+--                       , RecC    <$> arbitrary <*> arbitrary
+--                       , InfixC  <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , ForallC <$> arbitrary <*> arbitrary <*> arbitrary
+--                       ]
 
 instance Arbitrary Dec where
     arbitrary = oneof [
-          FunD              <$> arbitrary <*> arbitrary
-        , ValD              <$> arbitrary <*> arbitrary <*> arbitrary
-        , DataD             <$> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
-        , NewtypeD          <$> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
-        , TySynD            <$> arbitrary <*> arbitrary <*> arbitrary
-        , ClassD            <$> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
-        , InstanceD         <$> arbitrary <*> arbitrary <*> arbitrary
-        , SigD              <$> arbitrary <*> arbitrary
-        , ForeignD          <$> arbitrary
-        , PragmaD           <$> arbitrary
-        , FamilyD           <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , DataInstD         <$> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
-        , NewtypeInstD      <$> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
+          flip FunD [fClause] <$> arbitrary
+        , pure $ ValD fPat fBody [fDec]
+        , DataD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , NewtypeD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , TySynD <$> arbitrary <*> arbitrary <*> arbitrary
+        , flip (flip . ((flip . (flip .)) .) . ClassD) [fDec]
+            <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , flip (flip . InstanceD) [fDec] <$> arbitrary <*> arbitrary
+        , SigD <$> arbitrary <*> arbitrary
+        , ForeignD <$> arbitrary
+        , PragmaD <$> arbitrary
+        , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataInstD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , NewtypeInstD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,8,0)
-        , InfixD            <$> arbitrary <*> arbitrary
+        , InfixD <$> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,9,0)
         , ClosedTypeFamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , RoleAnnotD        <$> arbitrary <*> arbitrary
-        , TySynInstD        <$> arbitrary <*> arbitrary
+        , RoleAnnotD <$> arbitrary <*> arbitrary
+        , TySynInstD <$> arbitrary <*> arbitrary
 #else
-        , TySynInstD        <$> arbitrary <*> arbitrary <*> arbitrary
+        , TySynInstD <$> arbitrary <*> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
-        , StandaloneDerivD  <$> arbitrary <*> arbitrary
-        , DefaultSigD       <$> arbitrary <*> arbitrary
+        , StandaloneDerivD <$> arbitrary <*> arbitrary
+        , DefaultSigD <$> arbitrary <*> arbitrary
 #endif
         ]
+--     arbitrary = oneof [
+--           FunD              <$> arbitrary <*> arbitrary
+--         , ValD              <$> arbitrary <*> arbitrary <*> arbitrary
+--         , DataD             <$> arbitrary <*> arbitrary <*> arbitrary
+--                             <*> arbitrary <*> arbitrary
+--         , NewtypeD          <$> arbitrary <*> arbitrary <*> arbitrary
+--                             <*> arbitrary <*> arbitrary
+--         , TySynD            <$> arbitrary <*> arbitrary <*> arbitrary
+--         , ClassD            <$> arbitrary <*> arbitrary <*> arbitrary
+--                             <*> arbitrary <*> arbitrary
+--         , InstanceD         <$> arbitrary <*> arbitrary <*> arbitrary
+--         , SigD              <$> arbitrary <*> arbitrary
+--         , ForeignD          <$> arbitrary
+--         , PragmaD           <$> arbitrary
+--         , FamilyD           <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--         , DataInstD         <$> arbitrary <*> arbitrary <*> arbitrary
+--                             <*> arbitrary <*> arbitrary
+--         , NewtypeInstD      <$> arbitrary <*> arbitrary <*> arbitrary
+--                             <*> arbitrary <*> arbitrary
+-- #if MIN_VERSION_template_haskell(2,8,0)
+--         , InfixD            <$> arbitrary <*> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,9,0)
+--         , ClosedTypeFamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--         , RoleAnnotD        <$> arbitrary <*> arbitrary
+--         , TySynInstD        <$> arbitrary <*> arbitrary
+-- #else
+--         , TySynInstD        <$> arbitrary <*> arbitrary <*> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,10,0)
+--         , StandaloneDerivD  <$> arbitrary <*> arbitrary
+--         , DefaultSigD       <$> arbitrary <*> arbitrary
+-- #endif
+--         ]
 
 instance Arbitrary Exp where
-    arbitrary = oneof [ VarE        <$> arbitrary
-                      , ConE        <$> arbitrary
-                      , LitE        <$> arbitrary
-                      , AppE        <$> arbitrary <*> arbitrary
-                      , InfixE      <$> arbitrary <*> arbitrary <*> arbitrary
-                      , LamE        <$> arbitrary <*> arbitrary
-                      , TupE        <$> arbitrary
-                      , CondE       <$> arbitrary <*> arbitrary <*> arbitrary
-                      , LetE        <$> arbitrary <*> arbitrary
-                      , CaseE       <$> arbitrary <*> arbitrary
-                      , DoE         <$> arbitrary
-                      , CompE       <$> arbitrary
-                      , ArithSeqE   <$> arbitrary
-                      , ListE       <$> arbitrary
-                      , SigE        <$> arbitrary <*> arbitrary
-                      , RecConE     <$> arbitrary <*> arbitrary
-                      , RecUpdE     <$> arbitrary <*> arbitrary
+    arbitrary = oneof [ VarE <$> arbitrary
+                      , ConE <$> arbitrary
+                      , LitE <$> arbitrary
+                      , pure $ AppE fExp fExp
+                      , pure $ InfixE (Just fExp) fExp (Just fExp)
+                      , pure $ LamE [fPat] fExp
+                      , pure $ TupE [fExp]
+                      , pure $ CondE fExp fExp fExp
+                      , pure $ LetE [fDec] fExp
+                      , pure $ CaseE fExp [fMatch]
+                      , pure $ DoE [fStmt]
+                      , pure $ CompE [fStmt]
+                      , pure $ ArithSeqE fRange
+                      , pure $ ListE [fExp]
+                      , SigE fExp <$> arbitrary
+                      , flip RecConE [fFieldExp] <$> arbitrary
+                      , pure $ RecUpdE fExp [fFieldExp]
 #if MIN_VERSION_template_haskell(2,6,0)
-                      , UnboxedTupE <$> arbitrary
+                      , pure $ UnboxedTupE [fExp]
 #endif
 #if MIN_VERSION_template_haskell(2,7,0)
-                      , UInfixE     <$> arbitrary <*> arbitrary <*> arbitrary
-                      , ParensE     <$> arbitrary
+                      , pure $ UInfixE fExp fExp fExp
+                      , pure $ ParensE fExp
 #endif
 #if MIN_VERSION_template_haskell(2,8,0)
-                      , LamCaseE    <$> arbitrary
-                      , MultiIfE    <$> arbitrary
+                      , pure $ LamCaseE [fMatch]
+                      , pure $ MultiIfE [(fGuard, fExp)]
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
-                      , StaticE     <$> arbitrary
+                      , pure $ StaticE fExp
 #endif
                       ]
+--     arbitrary = oneof [ VarE        <$> arbitrary
+--                       , ConE        <$> arbitrary
+--                       , LitE        <$> arbitrary
+--                       , AppE        <$> arbitrary <*> arbitrary
+--                       , InfixE      <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , LamE        <$> arbitrary <*> arbitrary
+--                       , TupE        <$> arbitrary
+--                       , CondE       <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , LetE        <$> arbitrary <*> arbitrary
+--                       , CaseE       <$> arbitrary <*> arbitrary
+--                       , DoE         <$> arbitrary
+--                       , CompE       <$> arbitrary
+--                       , ArithSeqE   <$> arbitrary
+--                       , ListE       <$> arbitrary
+--                       , SigE        <$> arbitrary <*> arbitrary
+--                       , RecConE     <$> arbitrary <*> arbitrary
+--                       , RecUpdE     <$> arbitrary <*> arbitrary
+-- #if MIN_VERSION_template_haskell(2,6,0)
+--                       , UnboxedTupE <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,7,0)
+--                       , UInfixE     <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , ParensE     <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,8,0)
+--                       , LamCaseE    <$> arbitrary
+--                       , MultiIfE    <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,10,0)
+--                       , StaticE     <$> arbitrary
+-- #endif
+--                       ]
 
 instance Arbitrary FamFlavour where
     arbitrary = oneof $ map pure [TypeFam, DataFam]
@@ -144,25 +215,44 @@ instance Arbitrary FunDep where
     arbitrary = FunDep <$> arbitrary <*> arbitrary
 
 instance Arbitrary Guard where
-    arbitrary = oneof [NormalG <$> arbitrary, PatG <$> arbitrary]
+        arbitrary = oneof $ map pure [ NormalG fExp
+                                     , PatG    [fStmt]
+                                     ]
+--     arbitrary = oneof [NormalG <$> arbitrary, PatG <$> arbitrary]
 
 instance Arbitrary Info where
     arbitrary = oneof [
 #if MIN_VERSION_template_haskell(2,5,0)
-          ClassI     <$> arbitrary <*> arbitrary
+          pure $ ClassI fDec [fDec]
 #else
-          ClassI     <$> arbitrary
+          pure $ ClassI fDec
 #endif
         , ClassOpI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , TyConI     <$> arbitrary
+        , pure $ TyConI fDec
         , PrimTyConI <$> arbitrary <*> arbitrary <*> arbitrary
         , DataConI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , VarI       <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , TyVarI     <$> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,7,0)
-        , FamilyI    <$> arbitrary <*> arbitrary
+        , pure $ FamilyI fDec [fDec]
 #endif
         ]
+--     arbitrary = oneof [
+-- #if MIN_VERSION_template_haskell(2,5,0)
+--           ClassI     <$> arbitrary <*> arbitrary
+-- #else
+--           ClassI     <$> arbitrary
+-- #endif
+--         , ClassOpI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--         , TyConI     <$> arbitrary
+--         , PrimTyConI <$> arbitrary <*> arbitrary <*> arbitrary
+--         , DataConI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--         , VarI       <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--         , TyVarI     <$> arbitrary <*> arbitrary
+-- #if MIN_VERSION_template_haskell(2,7,0)
+--         , FamilyI    <$> arbitrary <*> arbitrary
+-- #endif
+--         ]
 
 instance Arbitrary Lit where
     arbitrary = oneof [ CharL       <$> arbitrary
@@ -187,7 +277,8 @@ deriving instance Show Loc
 #endif
 
 instance Arbitrary Match where
-    arbitrary = Match <$> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = (flip . flip Match) fBody [fDec] <$> arbitrary
+--     arbitrary = Match <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Name where
     arbitrary = Name <$> arbitrary <*> arbitrary
@@ -214,29 +305,52 @@ instance Arbitrary NameSpace where
     arbitrary = oneof $ map pure [VarName, DataName, TcClsName]
 
 instance Arbitrary Pat where
-    arbitrary = oneof [ LitP          <$> arbitrary
-                      , VarP          <$> arbitrary
-                      , TupP          <$> arbitrary
-                      , ConP          <$> arbitrary <*> arbitrary
-                      , InfixP        <$> arbitrary <*> arbitrary <*> arbitrary
-                      , TildeP        <$> arbitrary
-                      , BangP         <$> arbitrary
-                      , AsP           <$> arbitrary <*> arbitrary
+    arbitrary = oneof [ LitP <$> arbitrary
+                      , VarP <$> arbitrary
+                      , pure $ TupP [fPat]
+                      , flip ConP [fPat] <$> arbitrary
+                      , (flip . InfixP) fPat fPat <$> arbitrary
+                      , pure $ TildeP fPat
+                      , pure $ BangP fPat
+                      , flip AsP fPat <$> arbitrary
                       , pure WildP
-                      , RecP          <$> arbitrary <*> arbitrary
-                      , ListP         <$> arbitrary
-                      , SigP          <$> arbitrary <*> arbitrary
+                      , flip RecP [fFieldPat] <$> arbitrary
+                      , pure $ ListP [fPat]
+                      , SigP fPat <$> arbitrary
 #if MIN_VERSION_template_haskell(2,5,0)
-                      , ViewP         <$> arbitrary <*> arbitrary
+                      , pure $ ViewP fExp fPat
 #endif
 #if MIN_VERSION_template_haskell(2,6,0)
-                      , UnboxedTupP <$> arbitrary
+                      , pure $ UnboxedTupP [fPat]
 #endif
 #if MIN_VERSION_template_haskell(2,7,0)
-                      , UInfixP       <$> arbitrary <*> arbitrary <*> arbitrary
-                      , ParensP       <$> arbitrary
+                      , (flip . UInfixP) fPat fPat <$> arbitrary
+                      , pure $ ParensP fPat
 #endif
                       ]
+--     arbitrary = oneof [ LitP        <$> arbitrary
+--                       , VarP        <$> arbitrary
+--                       , TupP        <$> arbitrary
+--                       , ConP        <$> arbitrary <*> arbitrary
+--                       , InfixP      <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , TildeP      <$> arbitrary
+--                       , BangP       <$> arbitrary
+--                       , AsP         <$> arbitrary <*> arbitrary
+--                       , pure WildP
+--                       , RecP        <$> arbitrary <*> arbitrary
+--                       , ListP       <$> arbitrary
+--                       , SigP        <$> arbitrary <*> arbitrary
+-- #if MIN_VERSION_template_haskell(2,5,0)
+--                       , ViewP       <$> arbitrary <*> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,6,0)
+--                       , UnboxedTupP <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,7,0)
+--                       , UInfixP     <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , ParensP     <$> arbitrary
+-- #endif
+--                       ]
 
 instance Arbitrary Pragma where
     arbitrary = oneof
@@ -258,11 +372,16 @@ instance Arbitrary Pragma where
         ]
 
 instance Arbitrary Range where
-    arbitrary = oneof [ FromR       <$> arbitrary
-                      , FromThenR   <$> arbitrary <*> arbitrary
-                      , FromToR     <$> arbitrary <*> arbitrary
-                      , FromThenToR <$> arbitrary <*> arbitrary <*> arbitrary
-                      ]
+    arbitrary = oneof $ map pure [ FromR       fExp
+                                 , FromThenR   fExp fExp
+                                 , FromToR     fExp fExp
+                                 , FromThenToR fExp fExp fExp
+                                 ]
+--     arbitrary = oneof [ FromR       <$> arbitrary
+--                       , FromThenR   <$> arbitrary <*> arbitrary
+--                       , FromToR     <$> arbitrary <*> arbitrary
+--                       , FromThenToR <$> arbitrary <*> arbitrary <*> arbitrary
+--                       ]
 
 instance Arbitrary Safety where
     arbitrary = oneof $ map pure [ Unsafe
@@ -275,11 +394,16 @@ instance Arbitrary Safety where
                                  ]
 
 instance Arbitrary Stmt where
-    arbitrary = oneof [ BindS   <$> arbitrary <*> arbitrary
-                      , LetS    <$> arbitrary
-                      , NoBindS <$> arbitrary
-                      , ParS    <$> arbitrary
-                      ]
+    arbitrary = oneof $ map pure [ BindS   fPat fExp
+                                 , LetS    [fDec]
+                                 , NoBindS fExp
+                                 , ParS    [[fStmt]]
+                                 ]
+--     arbitrary = oneof [ BindS   <$> arbitrary <*> arbitrary
+--                       , LetS    <$> arbitrary
+--                       , NoBindS <$> arbitrary
+--                       , ParS    <$> arbitrary
+--                       ]
 
 instance Arbitrary Strict where
     arbitrary = oneof $ map pure [ IsStrict
@@ -290,14 +414,14 @@ instance Arbitrary Strict where
                                  ]
 
 instance Arbitrary Type where
-    arbitrary = oneof [ ForallT        <$> arbitrary <*> arbitrary <*> arbitrary
-                      , VarT           <$> arbitrary
-                      , ConT           <$> arbitrary
-                      , TupleT         <$> arbitrary
+    arbitrary = oneof [ (flip . ForallT) [fTyVarBndr] fType <$> arbitrary
+                      , VarT <$> arbitrary
+                      , ConT <$> arbitrary
+                      , TupleT <$> arbitrary
                       , pure ArrowT
                       , pure ListT
-                      , AppT           <$> arbitrary <*> arbitrary
-                      , SigT           <$> arbitrary <*> arbitrary
+                      , pure $ AppT fType fType
+                      , pure $ SigT fType fKind
 #if MIN_VERSION_template_haskell(2,6,0)
                       , UnboxedTupleT  <$> arbitrary
 #endif
@@ -314,9 +438,36 @@ instance Arbitrary Type where
                       , pure EqualityT
 #endif
                       ]
+--     arbitrary = oneof [ ForallT        <$> arbitrary <*> arbitrary <*> arbitrary
+--                       , VarT           <$> arbitrary
+--                       , ConT           <$> arbitrary
+--                       , TupleT         <$> arbitrary
+--                       , pure ArrowT
+--                       , pure ListT
+--                       , AppT           <$> arbitrary <*> arbitrary
+--                       , SigT           <$> arbitrary <*> arbitrary
+-- #if MIN_VERSION_template_haskell(2,6,0)
+--                       , UnboxedTupleT  <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,7,0)
+--                       , PromotedT      <$> arbitrary
+--                       , PromotedTupleT <$> arbitrary
+--                       , pure PromotedNilT
+--                       , pure PromotedConsT
+--                       , pure StarT
+--                       , pure ConstraintT
+--                       , LitT           <$> arbitrary
+-- #endif
+-- #if MIN_VERSION_template_haskell(2,10,0)
+--                       , pure EqualityT
+-- #endif
+--                       ]
 
 instance Arbitrary TyVarBndr where
-    arbitrary = oneof [PlainTV <$> arbitrary, KindedTV <$> arbitrary <*> arbitrary]
+    arbitrary = oneof [ PlainTV <$> arbitrary
+                      , flip KindedTV fKind <$> arbitrary
+                      ]
+--     arbitrary = oneof [PlainTV <$> arbitrary, KindedTV <$> arbitrary <*> arbitrary]
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
 instance Arbitrary ClassInstance where
@@ -347,7 +498,8 @@ instance Arbitrary InlineSpec where
     arbitrary = InlineSpec <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Kind where
-    arbitrary = oneof [pure StarK, ArrowK <$> arbitrary <*> arbitrary]
+    arbitrary = oneof [pure StarK, pure $ ArrowK fKind fKind]
+--     arbitrary = oneof [pure StarK, ArrowK <$> arbitrary <*> arbitrary]
 #endif
 
 #if MIN_VERSION_template_haskell(2,9,0)
@@ -375,11 +527,70 @@ instance Arbitrary TySynEqn where
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 instance Arbitrary Pred where
-    arbitrary = oneof [ ClassP <$> arbitrary <*> arbitrary
-                      , EqualP <$> arbitrary <*> arbitrary
+    arbitrary = oneof [ flip ClassP [fType] <$> arbitrary
+                      , pure $ EqualP fType fType
                       ]
+--     arbitrary = oneof [ ClassP <$> arbitrary <*> arbitrary
+--                       , EqualP <$> arbitrary <*> arbitrary
+--                       ]
 #endif
 
 deriving instance Arbitrary ModName
 deriving instance Arbitrary OccName
 deriving instance Arbitrary PkgName
+
+-------------------------------------------------------------------------------
+-- Workarounds to make Arbitrary instances faster
+-------------------------------------------------------------------------------
+
+fBody :: Body
+fBody = GuardedB []
+
+fClause :: Clause
+fClause = Clause [fPat] fBody [fDec]
+
+fCon :: Con
+fCon = NormalC fName []
+
+fDec :: Dec
+fDec = FunD fName []
+
+fExp :: Exp
+fExp = TupE []
+
+fFieldExp :: FieldExp
+fFieldExp = (fName, fExp)
+
+fFieldPat :: FieldPat
+fFieldPat = (fName, fPat)
+
+fGuard :: Guard
+fGuard = PatG []
+
+fMatch :: Match
+fMatch = Match fPat fBody []
+
+fName :: Name
+fName = Name (OccName "") NameS
+
+fPat :: Pat
+fPat = WildP
+
+fRange :: Range
+fRange = FromR fExp
+
+fStmt :: Stmt
+fStmt = LetS []
+
+fType :: Type
+fType = ListT
+
+fTyVarBndr :: TyVarBndr
+fTyVarBndr = PlainTV fName
+
+fKind :: Kind
+#if MIN_VERSION_template_haskell(2,8,0)
+fKind = fType
+#else
+fKind = StarK
+#endif

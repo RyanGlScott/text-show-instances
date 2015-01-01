@@ -36,7 +36,7 @@ templateHaskellTests =
         , testProperty "AnnTarget instance"       (prop_matchesShow :: Int -> AnnTarget -> Bool),
 #endif
           testProperty "Body instance"            (prop_matchesShow :: Int -> Body -> Bool)
-        , testProperty "Callconc instance"        (prop_matchesShow :: Int -> Callconv -> Bool)
+        , testProperty "Callconv instance"        (prop_matchesShow :: Int -> Callconv -> Bool)
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
         , testProperty "ClassInstance instance"   (prop_matchesShow :: Int -> ClassInstance -> Bool)
 #endif

@@ -21,13 +21,15 @@ import Data.Functor ((<$>))
 import Test.QuickCheck.Instances ()
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 
-import Trace.Hpc.Mix (Mix(..), BoxLabel(..), CondBox(..))
+import Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
 import Trace.Hpc.Tix (Tix(..), TixModule(..))
 import Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
 
 instance Arbitrary Mix where
-    arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
-                    <*> arbitrary <*> arbitrary
+    arbitrary = flip (flip . ((flip . (flip .)) .) . Mix) [fMixEntry]
+                    <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+--     arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
+--                     <*> arbitrary <*> arbitrary
 
 instance Arbitrary BoxLabel where
     arbitrary = oneof [ ExpBox      <$> arbitrary
@@ -51,3 +53,10 @@ instance Arbitrary HpcPos where
 
 instance Arbitrary Hash where
     arbitrary = fromInteger <$> arbitrary
+
+-------------------------------------------------------------------------------
+-- Workarounds to make Arbitrary instances faster
+-------------------------------------------------------------------------------
+
+fMixEntry :: MixEntry
+fMixEntry = (toHpcPos (0, 1, 2, 3), ExpBox True)
