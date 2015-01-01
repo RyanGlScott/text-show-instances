@@ -49,14 +49,14 @@ instance Arbitrary Callconv where
                                  ]
 
 instance Arbitrary Clause where
-    arbitrary = (flip . flip Clause) fBody [fDec] <$> arbitrary
+    arbitrary = pure $ Clause [fPat] fBody [fDec]
 --     arbitrary = Clause <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Con where
     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
                       , RecC    <$> arbitrary <*> arbitrary
                       , InfixC  <$> arbitrary <*> arbitrary <*> arbitrary
-                      , flip (flip . ForallC) fCon <$> arbitrary <*> arbitrary
+                      , (flip . flip ForallC) [fPred] fCon <$> arbitrary
                       ]
 --     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
 --                       , RecC    <$> arbitrary <*> arbitrary
@@ -68,18 +68,18 @@ instance Arbitrary Dec where
     arbitrary = oneof [
           flip FunD [fClause] <$> arbitrary
         , pure $ ValD fPat fBody [fDec]
-        , DataD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , NewtypeD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , NewtypeD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , TySynD <$> arbitrary <*> arbitrary <*> arbitrary
-        , flip (flip . ((flip . (flip .)) .) . ClassD) [fDec]
-            <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , flip (flip . InstanceD) [fDec] <$> arbitrary <*> arbitrary
+        , (flip . ((flip . (flip .)) .) . ClassD) [fPred] [fDec]
+            <$> arbitrary <*> arbitrary <*> arbitrary
+        , (flip . InstanceD) [fPred] [fDec] <$> arbitrary
         , SigD <$> arbitrary <*> arbitrary
         , ForeignD <$> arbitrary
         , PragmaD <$> arbitrary
         , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , DataInstD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , NewtypeInstD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataInstD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , NewtypeInstD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,8,0)
         , InfixD <$> arbitrary <*> arbitrary
 #endif
@@ -414,7 +414,7 @@ instance Arbitrary Strict where
                                  ]
 
 instance Arbitrary Type where
-    arbitrary = oneof [ (flip . ForallT) [fTyVarBndr] fType <$> arbitrary
+    arbitrary = oneof [ pure $ ForallT [fTyVarBndr] [fPred] fType
                       , VarT <$> arbitrary
                       , ConT <$> arbitrary
                       , TupleT <$> arbitrary
@@ -547,7 +547,7 @@ fBody :: Body
 fBody = GuardedB []
 
 fClause :: Clause
-fClause = Clause [fPat] fBody [fDec]
+fClause = Clause [] fBody []
 
 fCon :: Con
 fCon = NormalC fName []
@@ -567,6 +567,13 @@ fFieldPat = (fName, fPat)
 fGuard :: Guard
 fGuard = PatG []
 
+fKind :: Kind
+#if MIN_VERSION_template_haskell(2,8,0)
+fKind = fType
+#else
+fKind = StarK
+#endif
+
 fMatch :: Match
 fMatch = Match fPat fBody []
 
@@ -575,6 +582,13 @@ fName = Name (OccName "") NameS
 
 fPat :: Pat
 fPat = WildP
+
+fPred :: Pred
+#if MIN_VERSION_template_haskell(2,10,0)
+fPred = fType
+#else
+fPred = ClassP fName []
+#endif
 
 fRange :: Range
 fRange = FromR fExp
@@ -587,10 +601,3 @@ fType = ListT
 
 fTyVarBndr :: TyVarBndr
 fTyVarBndr = PlainTV fName
-
-fKind :: Kind
-#if MIN_VERSION_template_haskell(2,8,0)
-fKind = fType
-#else
-fKind = StarK
-#endif
