@@ -21,7 +21,9 @@ import Control.Applicative ((<*>), pure)
 
 import Data.Functor ((<$>))
 
+#if !(MIN_VERSION_template_haskell(2,10,0))
 import GHC.Exts (Int(I#))
+#endif
 
 import Language.Haskell.TH.Syntax
 #if !(MIN_VERSION_template_haskell(2,8,0))
@@ -55,37 +57,37 @@ instance Arbitrary Con where
 
 instance Arbitrary Dec where
     arbitrary = oneof [
-          FunD               <$> arbitrary <*> arbitrary
-        , ValD               <$> arbitrary <*> arbitrary <*> arbitrary
-        , DataD              <$> arbitrary <*> arbitrary <*> arbitrary
-                             <*> arbitrary <*> arbitrary
-        , NewtypeD           <$> arbitrary <*> arbitrary <*> arbitrary
-                             <*> arbitrary <*> arbitrary
-        , TySynD             <$> arbitrary <*> arbitrary <*> arbitrary
-        , ClassD             <$> arbitrary <*> arbitrary <*> arbitrary
-                             <*> arbitrary <*> arbitrary
-        , InstanceD          <$> arbitrary <*> arbitrary <*> arbitrary
-        , SigD               <$> arbitrary <*> arbitrary
-        , ForeignD           <$> arbitrary
-        , PragmaD            <$> arbitrary
-        , FamilyD            <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , DataInstD          <$> arbitrary <*> arbitrary <*> arbitrary
-                             <*> arbitrary <*> arbitrary
-        , NewtypeInstD       <$> arbitrary <*> arbitrary <*> arbitrary
-                             <*> arbitrary <*> arbitrary
+          FunD              <$> arbitrary <*> arbitrary
+        , ValD              <$> arbitrary <*> arbitrary <*> arbitrary
+        , DataD             <$> arbitrary <*> arbitrary <*> arbitrary
+                            <*> arbitrary <*> arbitrary
+        , NewtypeD          <$> arbitrary <*> arbitrary <*> arbitrary
+                            <*> arbitrary <*> arbitrary
+        , TySynD            <$> arbitrary <*> arbitrary <*> arbitrary
+        , ClassD            <$> arbitrary <*> arbitrary <*> arbitrary
+                            <*> arbitrary <*> arbitrary
+        , InstanceD         <$> arbitrary <*> arbitrary <*> arbitrary
+        , SigD              <$> arbitrary <*> arbitrary
+        , ForeignD          <$> arbitrary
+        , PragmaD           <$> arbitrary
+        , FamilyD           <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataInstD         <$> arbitrary <*> arbitrary <*> arbitrary
+                            <*> arbitrary <*> arbitrary
+        , NewtypeInstD      <$> arbitrary <*> arbitrary <*> arbitrary
+                            <*> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,8,0)
-        , InfixD             <$> arbitrary <*> arbitrary
+        , InfixD            <$> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,9,0)
-        , ClosedTypeFamilyD  <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , RoleAnnotD         <$> arbitrary <*> arbitrary
-        , TySynInstD         <$> arbitrary <*> arbitrary
+        , ClosedTypeFamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , RoleAnnotD        <$> arbitrary <*> arbitrary
+        , TySynInstD        <$> arbitrary <*> arbitrary
 #else
-        , TySynInstD         <$> arbitrary <*> arbitrary <*> arbitrary
+        , TySynInstD        <$> arbitrary <*> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
-        , StandaloneDeriving <$> arbitrary <*> arbitrary
-        , DefaultSigD        <$> arbitrary <*> arbitrary
+        , StandaloneDerivD  <$> arbitrary <*> arbitrary
+        , DefaultSigD       <$> arbitrary <*> arbitrary
 #endif
         ]
 

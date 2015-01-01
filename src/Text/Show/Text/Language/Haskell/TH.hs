@@ -90,7 +90,9 @@ import           Data.Maybe (fromJust)
 import qualified Data.Text.Lazy as TL (Text, dropWhile, null, tail)
 import           Data.Text.Lazy (uncons)
 
+#if !(MIN_VERSION_template_haskell(2,10,0))
 import           GHC.Exts (Int(I#))
+#endif
 
 import           Language.Haskell.TH.Syntax
 
