@@ -72,7 +72,6 @@ library
                        Text.Show.Text.Trace.Hpc
   other-modules:       Text.Show.Text.Control
                        Text.Show.Text.Data
-                       Text.Show.Text.Graphics
                        Text.Show.Text.Language
                        Text.Show.Text.System
                        Text.Show.Text.Text
@@ -109,8 +108,7 @@ library
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
-    exposed-modules:   Text.Show.Text.Graphics.Win32
-                       Text.Show.Text.System.Win32
+    exposed-modules:   Text.Show.Text.System.Win32
   else
     build-depends:     unix                 >= 2      && < 2.8
     exposed-modules:   Text.Show.Text.System.Posix
@@ -126,6 +124,7 @@ test-suite text-show-instances-properties
                        Instances.Data.Semigroup
                        Instances.Data.Tagged
                        Instances.Language.Haskell.TH
+                       Instances.Miscellaneous
                        Instances.System.Directory
                        Instances.System.Locale
                        Instances.System.Random
@@ -181,9 +180,7 @@ test-suite text-show-instances-properties
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
-    other-modules:     Instances.Graphics.Win32
-                       Instances.System.Win32
-                       Properties.Graphics.Win32
+    other-modules:     Instances.System.Win32
                        Properties.System.Win32
   else
     build-depends:     unix                 >= 2      && < 2.8

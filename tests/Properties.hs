@@ -21,9 +21,6 @@ import Properties.Data.Tagged               (taggedTests)
 import Properties.Data.Time                 (timeTests)
 import Properties.Data.UnorderedContainers  (unorderedContainersTests)
 import Properties.Data.Vector               (vectorTests)
-#if defined(mingw32_HOST_OS)
-import Properties.Graphics.Win32            (win32GraphicsTests)
-#endif
 import Properties.Language.Haskell.TH       (templateHaskellTests)
 import Properties.System.Directory          (directoryTests)
 import Properties.System.Locale             (oldLocaleTests)
@@ -33,7 +30,7 @@ import Properties.System.Posix              (unixTests)
 import Properties.System.Random             (randomTests)
 import Properties.System.Time               (oldTimeTests)
 #if defined(mingw32_HOST_OS)
-import Properties.System.Win32              (win32SystemTests)
+import Properties.System.Win32              (win32Tests)
 #endif
 import Properties.Text.PrettyPrint          (prettyTests)
 import Properties.Text.XHtml                (xhtmlTests)
@@ -55,9 +52,6 @@ allTests = concat [ applicativeFunctorTransformerTests
                   , timeTests
                   , unorderedContainersTests
                   , vectorTests
-#if defined(mingw32_HOST_OS)
-                  , win32GraphicsTests
-#endif
                   , templateHaskellTests
                   , directoryTests
                   , oldLocaleTests
@@ -67,7 +61,7 @@ allTests = concat [ applicativeFunctorTransformerTests
                   , randomTests
                   , oldTimeTests
 #if defined(mingw32_HOST_OS)
-                  , win32SystemTests
+                  , win32Tests
 #endif
                   , prettyTests
                   , xhtmlTests

@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Posix
@@ -18,13 +18,10 @@ import Control.Applicative ((<*>), pure)
 
 import Data.Functor ((<$>))
 
-import Foreign.C.Types (CInt(..))
-import Foreign.Ptr (Ptr, nullPtr, plusPtr)
+import Instances.Miscellaneous ()
 
-import System.Exit (ExitCode(..))
 import System.Posix.DynamicLinker (RTLDFlags(..), DL(..))
 import System.Posix.Process (ProcessStatus(..))
-import System.Posix.Types (CGid(..), CUid(..))
 import System.Posix.User (GroupEntry(..), UserEntry(..))
 
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
@@ -47,17 +44,3 @@ instance Arbitrary GroupEntry where
 instance Arbitrary UserEntry where
     arbitrary = UserEntry <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
                           <*> arbitrary <*> arbitrary <*> arbitrary
-
--------------------------------------------------------------------------------
--- Miscellaneous Arbitrary instances (taken from text-show)
--------------------------------------------------------------------------------
-
-instance Arbitrary ExitCode where
-    arbitrary = oneof [pure ExitSuccess, ExitFailure <$> arbitrary]
-
-instance Arbitrary (Ptr a) where
-    arbitrary = plusPtr nullPtr <$> arbitrary
-
-deriving instance Arbitrary CGid
-deriving instance Arbitrary CInt
-deriving instance Arbitrary CUid

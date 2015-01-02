@@ -361,7 +361,9 @@ instance Arbitrary Pragma where
         , SpecialiseInstP <$> arbitrary
         , RuleP           <$> arbitrary <*> arbitrary <*> arbitrary
                           <*> arbitrary <*> arbitrary
+# if MIN_VERSION_template_haskell(2,9,0)
         , AnnP            <$> arbitrary <*> arbitrary
+# endif
 # if MIN_VERSION_template_haskell(2,10,0)
         , LineP           <$> arbitrary <*> arbitrary
 # endif

@@ -7,6 +7,7 @@
 * [`hpc`](http://hackage.haskell.org/package/hpc)
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)
+* [`pretty`](http://hackage.haskell.org/package/pretty)
 * [`random`](http://hackage.haskell.org/package/random)
 * [`semigroups`](http://hackage.haskell.org/package/semigroups)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
@@ -16,6 +17,7 @@
 * [`unix`](http://hackage.haskell.org/package/unix)
 * [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
 * [`vector`](http://hackage.haskell.org/package/vector)
+* [`Win32`](http://hackage.haskell.org/package/Win32)
 * [`xhtml`](http://hackage.haskell.org/package/xhtml)
 
 One can use these instances by importing `Text.Show.Text.Instances`. Alternatively, there are monomorphic versions of the `showb` function available in the other submodules of `Text.Show.Text`.
