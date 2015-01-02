@@ -27,7 +27,7 @@ import GHC.Exts (Int(I#))
 
 import Language.Haskell.TH.Syntax
 #if !(MIN_VERSION_template_haskell(2,8,0))
-import Language.Haskell.TH.Syntax.Internals (ModName(..), PkgName(..), OccName(..))
+import Language.Haskell.TH.Syntax.Internals
 #endif
 
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
@@ -540,6 +540,12 @@ instance Arbitrary Pred where
 deriving instance Arbitrary ModName
 deriving instance Arbitrary OccName
 deriving instance Arbitrary PkgName
+
+#if !(MIN_VERSION_template_haskell(2,9,0))
+deriving instance Show ModName
+deriving instance Show OccName
+deriving instance Show PkgName
+#endif
 
 -------------------------------------------------------------------------------
 -- Workarounds to make Arbitrary instances faster
