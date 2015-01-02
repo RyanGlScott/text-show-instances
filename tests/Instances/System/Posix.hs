@@ -34,7 +34,11 @@ instance Arbitrary DL where
 
 instance Arbitrary ProcessStatus where
     arbitrary = oneof [ Exited     <$> arbitrary
+#if MIN_VERSION_unix(2,7,0)
                       , Terminated <$> arbitrary <*> arbitrary
+#else
+                      , Terminated <$> arbitrary
+#endif
                       , Stopped    <$> arbitrary
                       ]
 

@@ -425,16 +425,16 @@ instance Arbitrary Type where
                       , pure $ AppT fType fType
                       , pure $ SigT fType fKind
 #if MIN_VERSION_template_haskell(2,6,0)
-                      , UnboxedTupleT  <$> arbitrary
+                      , UnboxedTupleT <$> arbitrary
 #endif
-#if MIN_VERSION_template_haskell(2,7,0)
-                      , PromotedT      <$> arbitrary
+#if MIN_VERSION_template_haskell(2,8,0)
+                      , PromotedT <$> arbitrary
                       , PromotedTupleT <$> arbitrary
                       , pure PromotedNilT
                       , pure PromotedConsT
                       , pure StarT
                       , pure ConstraintT
-                      , LitT           <$> arbitrary
+                      , LitT <$> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
                       , pure EqualityT
