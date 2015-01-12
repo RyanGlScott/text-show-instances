@@ -10,6 +10,7 @@ Imports 'Show' instances for @Data@ modules.
 -}
 module Text.Show.Text.Data () where
 
+import Text.Show.Text.Data.Binary              ()
 import Text.Show.Text.Data.Containers          ()
 import Text.Show.Text.Data.Functor.Trans       ()
 import Text.Show.Text.Data.List.NonEmpty       ()

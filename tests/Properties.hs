@@ -13,6 +13,7 @@ module Main (main) where
 
 import Properties.Control.Applicative.Trans (applicativeFunctorTransformerTests)
 import Properties.Control.Monad.Trans       (monadTransformerTests)
+import Properties.Data.Binary               (binaryTests)
 import Properties.Data.Containers           (containersTests)
 import Properties.Data.Functor.Trans        (functorTransformerTests)
 import Properties.Data.List.NonEmpty        (nonEmptyListTests)
@@ -44,6 +45,7 @@ main = defaultMain testTree
 allTests :: [TestTree]
 allTests = concat [ applicativeFunctorTransformerTests
                   , monadTransformerTests
+                  , binaryTests
                   , containersTests
                   , functorTransformerTests
                   , nonEmptyListTests
