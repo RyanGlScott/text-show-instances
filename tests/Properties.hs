@@ -18,6 +18,7 @@ import Properties.Data.Containers           (containersTests)
 import Properties.Data.Functor.Trans        (functorTransformerTests)
 import Properties.Data.List.NonEmpty        (nonEmptyListTests)
 import Properties.Data.Semigroup            (semigroupTests)
+import Properties.Data.String.UTF8          (utf8StringTests)
 import Properties.Data.Tagged               (taggedTests)
 import Properties.Data.Time                 (timeTests)
 import Properties.Data.UnorderedContainers  (unorderedContainersTests)
@@ -50,6 +51,7 @@ allTests = concat [ applicativeFunctorTransformerTests
                   , functorTransformerTests
                   , nonEmptyListTests
                   , semigroupTests
+                  , utf8StringTests
                   , taggedTests
                   , timeTests
                   , unorderedContainersTests
