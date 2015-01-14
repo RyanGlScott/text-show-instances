@@ -12,11 +12,12 @@ Provides 'Arbitrary' instances for data types in the @hoopl@ library.
 -}
 module Instances.Compiler.Hoopl () where
 
-import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed(..), UniqueMap, UniqueSet,
-                       C, mapFromList, setFromList)
+import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed(..),
+                       UniqueMap, UniqueSet, C, mapFromList, setFromList)
 #if MIN_VERSION_hoopl(3,9,0)
 import Compiler.Hoopl.Internals (uniqueToLbl)
 #else
+import Compiler.Hoopl (Unique, intToUnique)
 import Compiler.Hoopl.GHC (uniqueToLbl)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
@@ -40,6 +41,11 @@ instance Arbitrary LabelSet where
 
 instance Arbitrary a => Arbitrary (Pointed C C a) where
     arbitrary = oneof [pure Bot, PElem <$> arbitrary, pure Top]
+
+#if !(MIN_VERSION_hoopl(3,9,0))
+instance Arbitrary Unique where
+    arbitrary = intToUnique <$> arbitrary
+#endif
 
 instance Arbitrary v => Arbitrary (UniqueMap v) where
     arbitrary = mapFromList <$> arbitrary

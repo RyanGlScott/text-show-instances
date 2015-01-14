@@ -17,6 +17,7 @@ module Text.Show.Text.Compiler.Hoopl (
     , showbLabelMapPrec
     , showbLabelSetPrec
     , showbPointed
+    , showbUnique
     , showbUniqueMapPrec
     , showbUniqueSetPrec
     , showbDominatorNode
@@ -24,11 +25,12 @@ module Text.Show.Text.Compiler.Hoopl (
     , showbDPath
     ) where
 
-import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed(..), UniqueMap, UniqueSet)
+import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed(..),
+                       Unique, UniqueMap, UniqueSet)
 #if MIN_VERSION_hoopl(3,9,0)
 import Compiler.Hoopl.Internals (lblToUnique)
 #else
-import Compiler.Hoopl.GHC (lblToUnique)
+import Compiler.Hoopl.GHC (lblToUnique, uniqueToInt)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
 
@@ -48,7 +50,7 @@ import Text.Show.Text.Utils ((<>), s)
 
 -- | Convert a 'Label' to a 'Builder'.
 showbLabel :: Label -> Builder
-showbLabel l = s 'L' <> showbIntPrec 0 (lblToUnique l)
+showbLabel l = s 'L' <> showbUnique (lblToUnique l)
 {-# INLINE showbLabel #-}
 
 -- | Convert a 'LabelMap' to a 'Builder' with the given precedence.
@@ -67,6 +69,15 @@ showbPointed Bot       = "_|_"
 showbPointed Top       = s 'T'
 showbPointed (PElem a) = showb a
 {-# INLINE showbPointed #-}
+
+-- | Convert a 'Unique' value to a 'Builder'.
+showbUnique :: Unique -> Builder
+#if MIN_VERSION_hoopl(3,9,0)
+showbUnique = showbIntPrec 0
+#else
+showbUnique = showbIntPrec 0 . uniqueToInt
+#endif
+{-# INLINE showbUnique #-}
 
 -- | Convert a 'UniqueMap' to a 'Builder' with the given precedence.
 showbUniqueMapPrec :: Show v => Int -> UniqueMap v -> Builder
@@ -134,6 +145,12 @@ instance Show a => Show (Pointed t b a) where
 instance Show1 (Pointed t b) where
     showbPrec1 = showbPrec
     INLINE_INST_FUN(showbPrec1)
+
+#if !(MIN_VERSION_hoopl(3,9,0))
+instance Show Unique where
+    showb = showbUnique
+    INLINE_INST_FUN(showb)
+#endif
 
 $(deriveShowPragmas defaultInlineShowbPrec ''UniqueMap)
 

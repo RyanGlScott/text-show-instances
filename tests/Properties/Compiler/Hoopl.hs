@@ -10,7 +10,8 @@ Portability: GHC
 -}
 module Properties.Compiler.Hoopl (hooplTests) where
 
-import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed, UniqueMap, UniqueSet, C)
+import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed,
+                       Unique, UniqueMap, UniqueSet, C)
 import Compiler.Hoopl.Passes.Dominator (DominatorNode, DominatorTree, DPath)
 
 import Instances.Compiler.Hoopl ()
@@ -29,6 +30,7 @@ hooplTests =
         , testProperty "LabelMap Char instance"   (prop_matchesShow :: Int -> LabelMap Char -> Bool)
         , testProperty "LabelSet instance"        (prop_matchesShow :: Int -> LabelSet -> Bool)
         , testProperty "Pointed C C Int instance" (prop_matchesShow :: Int -> Pointed C C Int -> Bool)
+        , testProperty "Unique instance"          (prop_matchesShow :: Int -> Unique -> Bool)
         , testProperty "UniqueMap Char instance"  (prop_matchesShow :: Int -> UniqueMap Char -> Bool)
         , testProperty "UniqueSet instance"       (prop_matchesShow :: Int -> UniqueSet -> Bool)
         , testProperty "DominatorNode instance"   (prop_matchesShow :: Int -> DominatorNode -> Bool)
