@@ -19,6 +19,7 @@ import           Instances.Data.String.UTF8 ()
 
 import           Properties.Utils (prop_matchesShow)
 
+import           Test.QuickCheck.Instances ()
 import           Test.Tasty (TestTree, testGroup)
 import           Test.Tasty.QuickCheck (testProperty)
 

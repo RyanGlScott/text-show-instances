@@ -11,6 +11,7 @@ Portability: GHC
 -}
 module Main (main) where
 
+import Properties.Compiler.Hoopl            (hooplTests)
 import Properties.Control.Applicative.Trans (applicativeFunctorTransformerTests)
 import Properties.Control.Monad.Trans       (monadTransformerTests)
 import Properties.Data.Binary               (binaryTests)
@@ -44,7 +45,8 @@ main :: IO ()
 main = defaultMain testTree
 
 allTests :: [TestTree]
-allTests = concat [ applicativeFunctorTransformerTests
+allTests = concat [ hooplTests
+                  , applicativeFunctorTransformerTests
                   , monadTransformerTests
                   , binaryTests
                   , containersTests

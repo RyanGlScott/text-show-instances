@@ -12,6 +12,7 @@ Additional @Show@ instances not provided by @text-show@.
 -}
 module Text.Show.Text.Instances () where
 
+import Text.Show.Text.Compiler ()
 import Text.Show.Text.Data     ()
 import Text.Show.Text.Language ()
 import Text.Show.Text.System   ()

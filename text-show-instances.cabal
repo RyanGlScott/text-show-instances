@@ -12,6 +12,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
+                     * @<http://hackage.haskell.org/package/hoopl                hoopl>@
+                     .
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@
                      .
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@
@@ -36,7 +38,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@
                      .
-                     * @<http://hackage.haskell.org/package/utf8-string          utf8-string>@ NOT DONE
+                     * @<http://hackage.haskell.org/package/utf8-string          utf8-string>@
                      .
                      * @<http://hackage.haskell.org/package/vector               vector>@
                      .
@@ -72,6 +74,7 @@ flag transformers-four
 library
   exposed-modules:     Text.Show.Text.Instances
   
+                       Text.Show.Text.Compiler.Hoopl
                        Text.Show.Text.Control.Applicative.Trans
                        Text.Show.Text.Control.Monad.Trans
                        Text.Show.Text.Data.Binary
@@ -92,7 +95,8 @@ library
                        Text.Show.Text.Text.PrettyPrint
                        Text.Show.Text.Text.XHtml
                        Text.Show.Text.Trace.Hpc
-  other-modules:       Text.Show.Text.Control
+  other-modules:       Text.Show.Text.Compiler
+                       Text.Show.Text.Control
                        Text.Show.Text.Data
                        Text.Show.Text.Language
                        Text.Show.Text.System
@@ -101,9 +105,10 @@ library
                        Text.Show.Text.Utils
   build-depends:       base                 >= 4.2    && < 5
                      , binary               >= 0.6    && < 0.8
-                     , bytestring          >= 0.9     && < 0.11
+                     , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
+                     , hoopl                >= 3.8.7  && < 3.11
                      , hpc                  >= 0.5    && < 0.7
                      , old-locale           >= 1      && < 1.1
                      , old-time             >= 1      && < 1.2
@@ -141,7 +146,8 @@ library
 test-suite text-show-instances-properties
   type:                exitcode-stdio-1.0
   main-is:             Properties.hs
-  other-modules:       Instances.Control.Applicative.Trans
+  other-modules:       Instances.Compiler.Hoopl
+                       Instances.Control.Applicative.Trans
                        Instances.Control.Monad.Trans
                        Instances.Data.Binary
                        Instances.Data.Containers
@@ -158,6 +164,7 @@ test-suite text-show-instances-properties
                        Instances.Text.PrettyPrint
                        Instances.Text.XHtml
                        Instances.Trace.Hpc
+                       Properties.Compiler.Hoopl
                        Properties.Control.Applicative.Trans
                        Properties.Control.Monad.Trans
                        Properties.Data.Binary
@@ -180,9 +187,10 @@ test-suite text-show-instances-properties
                        Properties.Utils
   build-depends:       base                 >= 4.5    && < 5
                      , binary               >= 0.6    && < 0.8
-                     , bytestring          >= 0.9     && < 0.11
+                     , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
+                     , hoopl                >= 3.8.7  && < 3.11
                      , hpc                  >= 0.5    && < 0.7
                      , old-locale           >= 1      && < 1.1
                      , old-time             >= 1      && < 1.2
