@@ -10,7 +10,7 @@ Portability: GHC
 
 Monomorphic 'Show' functions for data types in the @hoopl@ library.
 
-/Since: 0.1/
+/Since: 0.2/
 -}
 module Text.Show.Text.Compiler.Hoopl (
       showbLabel
@@ -49,21 +49,29 @@ import Text.Show.Text.Utils ((<>), s)
 #include "inline.h"
 
 -- | Convert a 'Label' to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbLabel :: Label -> Builder
 showbLabel l = s 'L' <> showbUnique (lblToUnique l)
 {-# INLINE showbLabel #-}
 
 -- | Convert a 'LabelMap' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
 showbLabelMapPrec :: Show v => Int -> LabelMap v -> Builder
 showbLabelMapPrec = showbPrec
 {-# INLINE showbLabelMapPrec #-}
 
 -- | Convert a 'LabelSet' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
 showbLabelSetPrec :: Int -> LabelSet -> Builder
 showbLabelSetPrec = showbPrec
 {-# INLINE showbLabelSetPrec #-}
 
 -- | Convert a 'Pointed' value to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbPointed :: Show a => Pointed t b a -> Builder
 showbPointed Bot       = "_|_"
 showbPointed Top       = s 'T'
@@ -71,6 +79,8 @@ showbPointed (PElem a) = showb a
 {-# INLINE showbPointed #-}
 
 -- | Convert a 'Unique' value to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbUnique :: Unique -> Builder
 #if MIN_VERSION_hoopl(3,9,0)
 showbUnique = showbIntPrec 0
@@ -80,22 +90,30 @@ showbUnique = showbIntPrec 0 . uniqueToInt
 {-# INLINE showbUnique #-}
 
 -- | Convert a 'UniqueMap' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
 showbUniqueMapPrec :: Show v => Int -> UniqueMap v -> Builder
 showbUniqueMapPrec = showbPrec
 {-# INLINE showbUniqueMapPrec #-}
 
 -- | Convert a 'UniqueSet' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
 showbUniqueSetPrec :: Int -> UniqueSet -> Builder
 showbUniqueSetPrec = showbPrec
 {-# INLINE showbUniqueSetPrec #-}
 
 -- | Convert a 'DominatorNode' to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbDominatorNode :: DominatorNode -> Builder
 showbDominatorNode Entry        = "entryNode"
 showbDominatorNode (Labelled l) = showbLabel l
 {-# INLINE showbDominatorNode #-}
 
 -- | Convert a 'DominatorTree' to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbDominatorTree :: DominatorTree -> Builder
 showbDominatorTree t = mconcat $ "digraph {\n" : dot t ["}\n"]
   where
@@ -120,6 +138,9 @@ showbDominatorTree t = mconcat $ "digraph {\n" : dot t ["}\n"]
         subtree :: [Builder] -> DominatorTree -> [Builder]
         subtree = flip dot
 
+-- | Convert a 'DPath' to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbDPath :: DPath -> Builder
 showbDPath (DPath ls) = mconcat $ foldr (\l path ->showbLabel l <> " -> " : path)
                                         ["entry"]

@@ -28,6 +28,7 @@ import Properties.Language.Haskell.TH       (templateHaskellTests)
 import Properties.System.Directory          (directoryTests)
 import Properties.System.Locale             (oldLocaleTests)
 #if !defined(mingw32_HOST_OS)
+import Properties.System.Console.Terminfo   (terminfoTests)
 import Properties.System.Posix              (unixTests)
 #endif
 import Properties.System.Random             (randomTests)
@@ -62,6 +63,7 @@ allTests = concat [ hooplTests
                   , directoryTests
                   , oldLocaleTests
 #if !defined(mingw32_HOST_OS)
+                  , terminfoTests
                   , unixTests
 #endif
                   , randomTests

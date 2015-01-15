@@ -41,9 +41,7 @@ module Text.Show.Text.Language.Haskell.TH (
 #else
     , showbInlineSpecPrec
 #endif
-#if !(MIN_VERSION_template_haskell(2,8,0))
     , showbKindPrec
-#endif
     , showbLitPrec
     , showbLocPrec
     , showbMatchPrec
@@ -61,9 +59,7 @@ module Text.Show.Text.Language.Haskell.TH (
 #endif
     , showbPkgNamePrec
     , showbPragmaPrec
-#if !(MIN_VERSION_template_haskell(2,10,0))
     , showbPredPrec
-#endif
     , showbRangePrec
 #if MIN_VERSION_template_haskell(2,9,0)
     , showbRole
@@ -198,6 +194,17 @@ showbInfoPrec :: Int -> Info -> Builder
 showbInfoPrec = showbPrec
 {-# INLINE showbInfoPrec #-}
 
+-- | Convert a 'Kind' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
+showbKindPrec :: Int -> Kind -> Builder
+#if MIN_VERSION_template_haskell(2,8,0)
+showbKindPrec = showbTypePrec
+#else
+showbKindPrec = showbPrec
+#endif
+{-# INLINE showbKindPrec #-}
+
 -- | Convert a 'Lit' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
@@ -317,6 +324,17 @@ showbPragmaPrec :: Int -> Pragma -> Builder
 showbPragmaPrec = showbPrec
 {-# INLINE showbPragmaPrec #-}
 
+-- | Convert a 'Pred' to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.2/
+showbPredPrec :: Int -> Pred -> Builder
+#if MIN_VERSION_template_haskell(2,10,0)
+showbPredPrec = showbTypePrec
+#else
+showbPredPrec = showbPrec
+#endif
+{-# INLINE showbPredPrec #-}
+
 -- | Convert a 'Range' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
@@ -417,15 +435,6 @@ showbTyLitPrec = showbPrec
 showbInlineSpecPrec :: Int -> InlineSpec -> Builder
 showbInlineSpecPrec = showbPrec
 {-# INLINE showbInlineSpecPrec #-}
-
--- | Convert a 'Kind' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.7.0.0@ or earlier, as
--- 'Kind' is a type synonym for 'Type' in @template-haskell-2.8.0.0@ or later.
--- 
--- /Since: 0.1/
-showbKindPrec :: Int -> Kind -> Builder
-showbKindPrec = showbPrec
-{-# INLINE showbKindPrec #-}
 #endif
 
 #if MIN_VERSION_template_haskell(2,9,0)
@@ -476,17 +485,6 @@ showbRole = showb
 showbTySynEqnPrec :: Int -> TySynEqn -> Builder
 showbTySynEqnPrec = showbPrec
 {-# INLINE showbTySynEqnPrec #-}
-#endif
-
-#if !(MIN_VERSION_template_haskell(2,10,0))
--- | Convert a 'Pred' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or earlier, as
--- 'Pred' is a type synonym for 'Type' in @template-haskell-2.10.0.0@ or later.
--- 
--- /Since: 0.1/
-showbPredPrec :: Int -> Pred -> Builder
-showbPredPrec = showbPrec
-{-# INLINE showbPredPrec #-}
 #endif
 
 $(deriveShowPragmas defaultInlineShowbPrec ''Body)

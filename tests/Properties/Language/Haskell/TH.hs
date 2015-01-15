@@ -56,9 +56,7 @@ templateHaskellTests =
 #else
         , testProperty "InlineSpec instance"      (prop_matchesShow :: Int -> InlineSpec -> Bool)
 #endif
-#if !(MIN_VERSION_template_haskell(2,8,0))
         , testProperty "Kind instance"            (prop_matchesShow :: Int -> Kind -> Bool)
-#endif
         , testProperty "Lit instance"             (prop_matchesShow :: Int -> Lit -> Bool)
         , testProperty "Loc instance"             (prop_matchesShow :: Int -> Loc -> Bool)
         , testProperty "Match instance"           (prop_matchesShow :: Int -> Match -> Bool)
@@ -75,9 +73,7 @@ templateHaskellTests =
         , testProperty "Phases instance"          (prop_matchesShow :: Int -> Phases -> Bool)
 #endif
         , testProperty "PkgName instance"         (prop_matchesShow :: Int -> PkgName -> Bool)
-#if !(MIN_VERSION_template_haskell(2,10,0))
         , testProperty "Pred instance"            (prop_matchesShow :: Int -> Pred -> Bool)
-#endif
         , testProperty "Pragma instance"          (prop_matchesShow :: Int -> Pragma -> Bool)
         , testProperty "Range instance"           (prop_matchesShow :: Int -> Range -> Bool)
 #if MIN_VERSION_template_haskell(2,9,0)

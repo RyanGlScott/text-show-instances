@@ -3,8 +3,9 @@ version:             0.2
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
-                     common Haskell libraries not encompassed by @text-show@.
-                     Currently, @text-show-instances@ covers these libraries:
+                     common Haskell libraries and GHC dependencies that are not
+                     encompassed by @text-show@. Currently, @text-show-instances@
+                     covers these libraries:
                      .
                      * @<http://hackage.haskell.org/package/binary               binary>@
                      .
@@ -29,6 +30,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/tagged               tagged>@
                      .
                      * @<http://hackage.haskell.org/package/template-haskell     template-haskell>@
+                     .
+                     * @<http://hackage.haskell.org/package/terminfo             terminfo>@
                      .
                      * @<http://hackage.haskell.org/package/time                 time>@
                      .
@@ -140,8 +143,10 @@ library
     build-depends:     Win32                >= 2.1    && < 2.4
     exposed-modules:   Text.Show.Text.System.Win32
   else
-    build-depends:     unix                 >= 2      && < 2.8
-    exposed-modules:   Text.Show.Text.System.Posix
+    build-depends:     terminfo             >= 0.3.2  && < 0.5
+                     , unix                 >= 2      && < 2.8
+    exposed-modules:   Text.Show.Text.System.Console.Terminfo
+                       Text.Show.Text.System.Posix
 
 test-suite text-show-instances-properties
   type:                exitcode-stdio-1.0
@@ -223,6 +228,9 @@ test-suite text-show-instances-properties
     other-modules:     Instances.System.Win32
                        Properties.System.Win32
   else
-    build-depends:     unix                 >= 2      && < 2.8
-    other-modules:     Instances.System.Posix
+    build-depends:     terminfo             >= 0.3.2  && < 0.5
+                     , unix                 >= 2      && < 2.8
+    other-modules:     Instances.System.Console.Terminfo
+                       Instances.System.Posix
+                       Properties.System.Console.Terminfo
                        Properties.System.Posix

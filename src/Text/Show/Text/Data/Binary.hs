@@ -10,7 +10,7 @@ Portability: GHC
 
 Monomorphic 'Show' function for 'Decoder's.
 
-/Since: 0.1/
+/Since: 0.2/
 -}
 module Text.Show.Text.Data.Binary (showbDecoder) where
 
@@ -24,6 +24,8 @@ import Text.Show.Text.Utils ((<>))
 #include "inline.h"
 
 -- | Convert a 'Decoder' to a 'Builder'.
+-- 
+-- /Since: 0.2/
 showbDecoder :: Show a => Decoder a -> Builder
 showbDecoder (Fail _ msg)    = "Fail: " <> fromString msg
 showbDecoder (Partial _)     = "Partial _"

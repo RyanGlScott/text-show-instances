@@ -1,6 +1,6 @@
-# `text-show-instances` [![Hackage version](https://img.shields.io/hackage/v/text-show-instances.svg)](http://hackage.haskell.org/package/text-show-instances) [![Build Status](https://travis-ci.org/RyanGlScott/text-show-instances.svg)](https://travis-ci.org/RyanGlScott/text-show-instances)
+# `text-show-instances` [![Hackage version](https://img.shields.io/hackage/v/text-show-instances.svg?style=flat)](http://hackage.haskell.org/package/text-show-instances) [![Build Status](https://img.shields.io/travis/RyanGlScott/text-show-instances.svg?style=flat)](https://travis-ci.org/RyanGlScott/text-show-instances)
 
-`text-show-instances` is a supplemental library to [`text-show`](https://github.com/RyanGlScott/text-show) that provides additional `Show` instances for data types in common Haskell libraries not encompassed by `text-show`. Currently, `text-show-instances` covers these libraries:
+`text-show-instances` is a supplemental library to [`text-show`](https://github.com/RyanGlScott/text-show) that provides additional `Show` instances for data types in common Haskell libraries and GHC dependencies that are not encompassed by `text-show`. Currently, `text-show-instances` covers these libraries:
 
 * [`binary`](http://hackage.haskell.org/package/binary)
 * [`containers`](http://hackage.haskell.org/package/containers)
@@ -14,6 +14,7 @@
 * [`semigroups`](http://hackage.haskell.org/package/semigroups)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
 * [`template-haskell`](http://hackage.haskell.org/package/template-haskell)
+* [`terminfo`](http://hackage.haskell.org/package/terminfo)
 * [`time`](http://hackage.haskell.org/package/time)
 * [`transformers`](http://hackage.haskell.org/package/transformers)
 * [`unix`](http://hackage.haskell.org/package/unix)

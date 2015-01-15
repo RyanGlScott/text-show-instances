@@ -11,8 +11,6 @@ Portability: GHC
 -}
 module Properties.System.Directory (directoryTests) where
 
-import Test.Tasty (TestTree)
-
 #if MIN_VERSION_directory(1,1,0)
 import Instances.System.Directory ()
 
@@ -20,7 +18,7 @@ import Properties.Utils (prop_matchesShow)
 
 import System.Directory (Permissions)
 
-import Test.Tasty (testGroup)
+import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.QuickCheck (testProperty)
 
 import Text.Show.Text.System.Directory ()
