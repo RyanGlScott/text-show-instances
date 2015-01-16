@@ -5,6 +5,7 @@
 * [`binary`](http://hackage.haskell.org/package/binary)
 * [`containers`](http://hackage.haskell.org/package/containers)
 * [`directory`](http://hackage.haskell.org/package/directory)
+* [`haskeline`](http://hackage.haskell.org/package/haskeline)
 * [`hoopl`](http://hackage.haskell.org/package/hoopl)
 * [`hpc`](http://hackage.haskell.org/package/hpc)
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)

@@ -25,6 +25,7 @@ import Properties.Data.Time                 (timeTests)
 import Properties.Data.UnorderedContainers  (unorderedContainersTests)
 import Properties.Data.Vector               (vectorTests)
 import Properties.Language.Haskell.TH       (templateHaskellTests)
+import Properties.System.Console.Haskeline  (haskelineTests)
 import Properties.System.Directory          (directoryTests)
 import Properties.System.Locale             (oldLocaleTests)
 #if !defined(mingw32_HOST_OS)
@@ -60,6 +61,7 @@ allTests = concat [ hooplTests
                   , unorderedContainersTests
                   , vectorTests
                   , templateHaskellTests
+                  , haskelineTests
                   , directoryTests
                   , oldLocaleTests
 #if !defined(mingw32_HOST_OS)

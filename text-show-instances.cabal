@@ -13,6 +13,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
+                     * @<http://hackage.haskell.org/package/haskeline            haskeline>@
+                     .
                      * @<http://hackage.haskell.org/package/hoopl                hoopl>@
                      .
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@
@@ -91,6 +93,7 @@ library
                        Text.Show.Text.Data.UnorderedContainers
                        Text.Show.Text.Data.Vector
                        Text.Show.Text.Language.Haskell.TH
+                       Text.Show.Text.System.Console.Haskeline
                        Text.Show.Text.System.Directory
                        Text.Show.Text.System.Locale
                        Text.Show.Text.System.Random
@@ -111,6 +114,7 @@ library
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
+                     , haskeline            >= 0.7    && < 0.8
                      , hoopl                >= 3.8.7  && < 3.11
                      , hpc                  >= 0.5    && < 0.7
                      , old-locale           >= 1      && < 1.1
@@ -163,6 +167,7 @@ test-suite text-show-instances-properties
                        Instances.Data.Tagged
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
+                       Instances.System.Console.Haskeline
                        Instances.System.Directory
                        Instances.System.Locale
                        Instances.System.Random
@@ -182,6 +187,7 @@ test-suite text-show-instances-properties
                        Properties.Data.Time
                        Properties.Data.UnorderedContainers
                        Properties.Language.Haskell.TH
+                       Properties.System.Console.Haskeline
                        Properties.System.Directory
                        Properties.System.Locale
                        Properties.System.Random
@@ -195,6 +201,7 @@ test-suite text-show-instances-properties
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
+                     , haskeline            >= 0.7    && < 0.8
                      , hoopl                >= 3.8.7  && < 3.11
                      , hpc                  >= 0.5    && < 0.7
                      , old-locale           >= 1      && < 1.1
@@ -205,6 +212,7 @@ test-suite text-show-instances-properties
                      , semigroups           >= 0.8.4  && < 1
                      , tagged               >= 0.4.4  && < 1
                      , tasty                >= 0.8    && < 0.11
+                     , tasty-hunit                >= 0.8   && < 0.10
                      , tasty-quickcheck     >= 0.8    && < 0.9
                      , template-haskell     >= 2.4    && < 2.11
                      , text-show            >= 0.5    && < 0.6
