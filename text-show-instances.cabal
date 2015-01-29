@@ -9,8 +9,6 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/binary               binary>@
                      .
-                     * @<http://hackage.haskell.org/package/Cabal                Cabal>@
-                     .
                      * @<http://hackage.haskell.org/package/containers           containers>@
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
@@ -90,33 +88,6 @@ library
                        Text.Show.Text.Data.Time
                        Text.Show.Text.Data.UnorderedContainers
                        Text.Show.Text.Data.Vector
-                       Text.Show.Text.Distribution.Compiler
-                       Text.Show.Text.Distribution.InstalledPackageInfo
-                       Text.Show.Text.Distribution.License
-                       Text.Show.Text.Distribution.ModuleName
-                       Text.Show.Text.Distribution.Package
-                       Text.Show.Text.Distribution.PackageDescription
-                       Text.Show.Text.Distribution.ParseUtils
-                       Text.Show.Text.Distribution.Simple.BuildTarget
-                       Text.Show.Text.Distribution.Simple.CCompiler
-                       Text.Show.Text.Distribution.Simple.Compiler
-                       Text.Show.Text.Distribution.Simple.Configure
-                       Text.Show.Text.Distribution.Simple.Hpc
-                       Text.Show.Text.Distribution.Simple.InstallDirs
-                       Text.Show.Text.Distribution.Simple.LocalBuildInfo
-                       Text.Show.Text.Distribution.Simple.PackageIndex
-                       Text.Show.Text.Distribution.Simple.Program.Db
-                       Text.Show.Text.Distribution.Simple.Program.GHC
-                       Text.Show.Text.Distribution.Simple.Program.Types
-                       Text.Show.Text.Distribution.Simple.Setup
-                       Text.Show.Text.Distribution.Simple.Test.Log
-                       Text.Show.Text.Distribution.System
-                       Text.Show.Text.Distribution.TestSuite
-                       Text.Show.Text.Distribution.Text
-                       Text.Show.Text.Distribution.Utils
-                       Text.Show.Text.Distribution.Verbosity
-                       Text.Show.Text.Distribution.Version
-                       Text.Show.Text.Language.Haskell.Extension
                        Text.Show.Text.Language.Haskell.TH
                        Text.Show.Text.System.Console.Haskeline
                        Text.Show.Text.System.Directory
@@ -129,7 +100,6 @@ library
   other-modules:       Text.Show.Text.Compiler
                        Text.Show.Text.Control
                        Text.Show.Text.Data
-                       Text.Show.Text.Distribution
                        Text.Show.Text.Language
                        Text.Show.Text.System
                        Text.Show.Text.Text
@@ -138,7 +108,6 @@ library
   build-depends:       base                 >= 4.2    && < 5
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
-                     , Cabal                >= 1.8    && < 1.23
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
                      , haskeline            >= 0.7    && < 0.8
@@ -151,7 +120,7 @@ library
                      , semigroups           >= 0.8.4  && < 1
                      , tagged               >= 0.4.4  && < 1
                      , template-haskell     >= 2.4    && < 2.11
-                     , text                 >= 0.2    && < 1.3
+                     , text                 >= 0.8    && < 1.3
                      , text-show            >= 0.5    && < 0.7
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5
@@ -188,32 +157,6 @@ test-suite text-show-instances-properties
                        Instances.Data.Semigroup
                        Instances.Data.String.UTF8
                        Instances.Data.Tagged
-                       Instances.Distribution.Compiler
-                       Instances.Distribution.InstalledPackageInfo
-                       Instances.Distribution.License
-                       Instances.Distribution.ModuleName
-                       Instances.Distribution.Package
-                       Instances.Distribution.PackageDescription
-                       Instances.Distribution.ParseUtils
-                       Instances.Distribution.Simple.BuildTarget
-                       Instances.Distribution.Simple.CCompiler
-                       Instances.Distribution.Simple.Compiler
-                       Instances.Distribution.Simple.Configure
-                       Instances.Distribution.Simple.Hpc
-                       Instances.Distribution.Simple.InstallDirs
-                       Instances.Distribution.Simple.LocalBuildInfo
-                       Instances.Distribution.Simple.PackageIndex
-                       Instances.Distribution.Simple.Program.Db
-                       Instances.Distribution.Simple.Program.GHC
-                       Instances.Distribution.Simple.Program.Types
-                       Instances.Distribution.Simple.Setup
-                       Instances.Distribution.Simple.Test.Log
-                       Instances.Distribution.System
-                       Instances.Distribution.TestSuite
-                       Instances.Distribution.Utils
-                       Instances.Distribution.Verbosity
-                       Instances.Distribution.Version
-                       Instances.Language.Haskell.Extension
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
                        Instances.System.Console.Haskeline
@@ -236,33 +179,6 @@ test-suite text-show-instances-properties
                        Properties.Data.Tagged
                        Properties.Data.Time
                        Properties.Data.UnorderedContainers
-                       Properties.Distribution.Compiler
-                       Properties.Distribution.InstalledPackageInfo
-                       Properties.Distribution.License
-                       Properties.Distribution.ModuleName
-                       Properties.Distribution.Package
-                       Properties.Distribution.PackageDescription
-                       Properties.Distribution.ParseUtils
-                       Properties.Distribution.Simple.BuildTarget
-                       Properties.Distribution.Simple.CCompiler
-                       Properties.Distribution.Simple.Compiler
-                       Properties.Distribution.Simple.Configure
-                       Properties.Distribution.Simple.Hpc
-                       Properties.Distribution.Simple.InstallDirs
-                       Properties.Distribution.Simple.LocalBuildInfo
-                       Properties.Distribution.Simple.PackageIndex
-                       Properties.Distribution.Simple.Program.Db
-                       Properties.Distribution.Simple.Program.GHC
-                       Properties.Distribution.Simple.Program.Types
-                       Properties.Distribution.Simple.Setup
-                       Properties.Distribution.Simple.Test.Log
-                       Properties.Distribution.System
-                       Properties.Distribution.TestSuite
-                       Properties.Distribution.Text
-                       Properties.Distribution.Utils
-                       Properties.Distribution.Verbosity
-                       Properties.Distribution.Version
-                       Properties.Language.Haskell.Extension
                        Properties.Language.Haskell.TH
                        Properties.System.Console.Haskeline
                        Properties.System.Directory
@@ -276,7 +192,6 @@ test-suite text-show-instances-properties
   build-depends:       base                 >= 4.5    && < 5
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
-                     , Cabal                >= 1.8    && < 1.23
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
                      , haskeline            >= 0.7    && < 0.8

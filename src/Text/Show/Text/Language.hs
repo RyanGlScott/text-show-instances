@@ -10,5 +10,4 @@ Imports 'Show' instances for @Language@ modules.
 -}
 module Text.Show.Text.Language () where
 
-import Text.Show.Text.Language.Haskell.Extension ()
-import Text.Show.Text.Language.Haskell.TH        ()
+import Text.Show.Text.Language.Haskell.TH ()
