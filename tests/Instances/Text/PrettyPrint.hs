@@ -1,4 +1,7 @@
 {-# LANGUAGE CPP, StandaloneDeriving #-}
+#if MIN_VERSION_pretty(1,1,2)
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Text.PrettyPrint

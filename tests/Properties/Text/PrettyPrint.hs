@@ -20,7 +20,7 @@ import Test.Tasty.QuickCheck (testProperty)
 
 import Text.PrettyPrint.HughesPJ (Doc, Mode, Style, TextDetails, renderStyle)
 #if MIN_VERSION_pretty(1,1,2)
-import Text.PrettyPrint.HughesPJClass (TextDetails)
+import Text.PrettyPrint.HughesPJClass (PrettyLevel)
 #endif
 import Text.Show.Text (fromString)
 import Text.Show.Text.Text.PrettyPrint (renderStyleB)
