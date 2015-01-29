@@ -27,7 +27,7 @@ import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day,
                     calendarTimeToString, toCalendarTime)
 
 import Text.Show.Text (Show(showb, showbPrec), Builder, fromString)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow)
 
 #include "inline.h"
 
@@ -36,7 +36,6 @@ import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineSh
 -- /Since: 0.1/
 showbClockTime :: ClockTime -> Builder
 showbClockTime = fromString . calendarTimeToString . unsafePerformIO . toCalendarTime
-{-# INLINE showbClockTime #-}
 
 -- | Convert a 'TimeDiff' to a 'Builder' with the given precedence.
 -- 
@@ -70,7 +69,7 @@ instance Show ClockTime where
     showb = showbClockTime
     INLINE_INST_FUN(showb)
 
-$(deriveShowPragmas defaultInlineShowbPrec ''TimeDiff)
-$(deriveShowPragmas defaultInlineShowbPrec ''CalendarTime)
-$(deriveShowPragmas defaultInlineShowb     ''Month)
-$(deriveShowPragmas defaultInlineShowb     ''Day)
+$(deriveShow ''TimeDiff)
+$(deriveShow ''CalendarTime)
+$(deriveShow ''Month)
+$(deriveShow ''Day)

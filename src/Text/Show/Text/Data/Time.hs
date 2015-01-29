@@ -1,4 +1,7 @@
 {-# LANGUAGE CPP, OverloadedStrings #-}
+#if MIN_VERSION_time(1,5,0)
+{-# LANGUAGE TemplateHaskell #-}
+#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Data.Time
@@ -22,9 +25,13 @@ module Text.Show.Text.Data.Time (
     , showbTimeOfDay
     , showbLocalTime
     , showbZonedTime
+#if MIN_VERSION_time(1,5,0)
+    , showbTimeLocalePrec
+#endif
     ) where
 
 import Data.Fixed (Pico)
+import Data.Semigroup (timesN)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
 import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
@@ -34,12 +41,18 @@ import Data.Time.LocalTime (TimeZone(..), TimeOfDay(..), LocalTime(..), ZonedTim
 
 import Prelude hiding (Show)
 
-import Text.Show.Text (Builder, Show(showb), fromString,
-                       lengthB, replicateB, showbSpace,
-                       FromStringShow(..))
+import Text.Show.Text (Show(showb), Builder, FromStringShow(..),
+                       fromString, lengthB, showbSpace)
 import Text.Show.Text.Data.Fixed (showbFixed)
 import Text.Show.Text.Data.Integral ()
 import Text.Show.Text.Utils ((<>), s)
+
+#if MIN_VERSION_time(1,5,0)
+import Data.Time.Format (TimeLocale)
+
+import Text.Show.Text (showbPrec)
+import Text.Show.Text.TH (deriveShow)
+#endif
 
 #include "inline.h"
 
@@ -119,7 +132,7 @@ pad1 _        b = b
 
 padN :: Int -> Char -> Builder -> Builder
 padN i _ b | i <= 0 = b
-padN i c b          = replicateB (fromIntegral i) (s c) <> b
+padN i c b          = timesN (fromIntegral i) (s c) <> b
 {-# INLINE padN #-}
 
 showb2 :: (Num t, Ord t, Show t) => NumericPadOption -> t -> Builder
@@ -143,7 +156,6 @@ showbGregorian date = showb4 zeroOpt y
                    <> showb2 zeroOpt d
   where
     (y,m,d) = toGregorian date
-{-# INLINE showbGregorian #-}
 
 showbPaddedMin :: (Num t, Ord t, Show t) => Int -> NumericPadOption -> t -> Builder
 showbPaddedMin _  Nothing  i = showb i
@@ -151,7 +163,6 @@ showbPaddedMin pl opt      i | i < 0 = s '-' <> showbPaddedMin pl opt (negate i)
 showbPaddedMin pl (Just c) i =
     let b = showb i
     in padN (pl - fromIntegral (lengthB b)) c b
-{-# INLINE showbPaddedMin #-}
 
 showbT :: NumericPadOption -> Int -> Builder
 showbT opt t = showb4 opt ((div t 60) * 100 + (mod t 60))
@@ -169,6 +180,16 @@ timeZoneOffsetBuilder = timeZoneOffsetBuilder' $ Just '0'
 zeroOpt :: NumericPadOption
 zeroOpt = Just '0'
 {-# INLINE zeroOpt #-}
+
+#if MIN_VERSION_time(1,5,0)
+-- | Convert a 'TimeLocale' to a 'Builder' with the given precedence. This function is
+-- available with @time-1.5@ or later.
+-- 
+-- /Since: 0.2/
+showbTimeLocalePrec :: Int -> TimeLocale -> Builder
+showbTimeLocalePrec = showbPrec
+{-# INLINE showbTimeLocalePrec #-}
+#endif
 
 instance Show Day where
     showb = showbDay
@@ -205,3 +226,7 @@ instance Show LocalTime where
 instance Show ZonedTime where
     showb = showbZonedTime
     INLINE_INST_FUN(showb)
+
+#if MIN_VERSION_time(1,5,0)
+$(deriveShow ''TimeLocale)
+#endif

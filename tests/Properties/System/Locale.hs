@@ -6,7 +6,7 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-@QuickCheck@ properties for 'TimeLocale'.
+@QuickCheck@ properties for old 'TimeLocale's.
 -}
 module Properties.System.Locale (oldLocaleTests) where
 

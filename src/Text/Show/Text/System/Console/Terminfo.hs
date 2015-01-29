@@ -20,7 +20,7 @@ import System.Console.Terminfo.Base (SetupTermError)
 import System.Console.Terminfo.Color (Color)
 
 import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..))
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow)
 
 #include "inline.h"
 
@@ -38,7 +38,7 @@ showbSetupTermError :: SetupTermError -> Builder
 showbSetupTermError = showb . FromStringShow
 {-# INLINE showbSetupTermError #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Color)
+$(deriveShow ''Color)
 
 instance Show SetupTermError where
     showb = showbSetupTermError

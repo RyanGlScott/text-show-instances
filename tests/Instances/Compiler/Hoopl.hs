@@ -28,6 +28,8 @@ import Control.Applicative (pure)
 
 import Data.Functor ((<$>))
 
+import Instances.Utils ((<@>))
+
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 
 instance Arbitrary Label where
@@ -57,7 +59,7 @@ instance Arbitrary DominatorNode where
     arbitrary = oneof [pure Entry, Labelled <$> arbitrary]
 
 instance Arbitrary DominatorTree where
-    arbitrary = flip Dominates [fDominatorTree] <$> arbitrary
+    arbitrary = Dominates <$> arbitrary <@> [fDominatorTree]
 --     arbitrary = Dominates <$> arbitrary <*> arbitrary
 
 deriving instance Arbitrary DPath

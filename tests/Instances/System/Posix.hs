@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP, StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Posix
@@ -24,10 +24,12 @@ import System.Posix.DynamicLinker (RTLDFlags(..), DL(..))
 import System.Posix.Process (ProcessStatus(..))
 import System.Posix.User (GroupEntry(..), UserEntry(..))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
+deriving instance Bounded RTLDFlags
+deriving instance Enum RTLDFlags
 instance Arbitrary RTLDFlags where
-    arbitrary = oneof $ map pure [RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL, RTLD_LOCAL]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary DL where
     arbitrary = oneof [pure Null, pure Next, pure Default, DLHandle <$> arbitrary]

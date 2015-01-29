@@ -19,7 +19,7 @@ import Prelude hiding (Show)
 import System.Directory (Permissions)
 
 import Text.Show.Text (Show(showbPrec), Builder)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow)
 
 -- | Convert 'Permissions' to a 'Builder' with the given precedence.
 -- 
@@ -28,4 +28,4 @@ showbPermissionsPrec :: Int -> Permissions -> Builder
 showbPermissionsPrec = showbPrec
 {-# INLINE showbPermissionsPrec #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Permissions)
+$(deriveShow ''Permissions)

@@ -26,7 +26,7 @@ import System.Posix.Process (ProcessStatus)
 import System.Posix.User (GroupEntry, UserEntry)
 
 import Text.Show.Text (Builder, showb, showbPrec)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
 
 -- | Convert an 'RTLDFlags' value to a 'Builder'.
 -- 
@@ -63,8 +63,8 @@ showbUserEntryPrec :: Int -> UserEntry -> Builder
 showbUserEntryPrec = showbPrec
 {-# INLINE showbUserEntryPrec #-}
 
-$(deriveShowPragmas defaultInlineShowb     ''RTLDFlags)
-$(deriveShowPragmas defaultInlineShowbPrec ''DL)
-$(deriveShowPragmas defaultInlineShowbPrec ''ProcessStatus)
-$(deriveShowPragmas defaultInlineShowbPrec ''GroupEntry)
-$(deriveShowPragmas defaultInlineShowbPrec ''UserEntry)
+$(deriveShowPragmas defaultInlineShowb ''RTLDFlags)
+$(deriveShow                           ''DL)
+$(deriveShow                           ''ProcessStatus)
+$(deriveShow                           ''GroupEntry)
+$(deriveShow                           ''UserEntry)

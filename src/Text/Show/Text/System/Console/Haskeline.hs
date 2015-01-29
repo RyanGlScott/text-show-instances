@@ -26,7 +26,7 @@ import System.Console.Haskeline.Completion (Completion)
 import System.Console.Haskeline.History (History, historyLines)
 
 import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..), showbUnary)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
 
 #include "inline.h"
 
@@ -58,13 +58,13 @@ showbHistory :: History -> Builder
 showbHistory = showbUnary "fromList" 0 . historyLines
 {-# INLINE showbHistory #-}
 
-$(deriveShowPragmas defaultInlineShowb     ''Interrupt)
+$(deriveShowPragmas defaultInlineShowb ''Interrupt)
 
 instance Show Prefs where
     showbPrec = showbPrefsPrec
     INLINE_INST_FUN(showbPrec)
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Completion)
+$(deriveShow ''Completion)
 
 instance Show History where
     showb = showbHistory

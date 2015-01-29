@@ -14,12 +14,12 @@ Provides 'Arbitrary' instances for data types in the @pretty@ library
 module Instances.Text.PrettyPrint () where
 
 #if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
+import Control.Applicative ((<*>))
 #endif
 
 import Data.Functor ((<$>))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 import Text.PrettyPrint.HughesPJ (Doc, Mode(..), Style(..), TextDetails(..), text)
 #if MIN_VERSION_pretty(1,1,2)
@@ -29,8 +29,10 @@ import Text.PrettyPrint.HughesPJClass (PrettyLevel(..))
 instance Arbitrary Doc where
     arbitrary = text <$> arbitrary
 
+deriving instance Bounded Mode
+deriving instance Enum Mode
 instance Arbitrary Mode where
-    arbitrary = oneof $ map pure [PageMode, ZigZagMode, LeftMode, OneLineMode]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Style where
     arbitrary = Style <$> arbitrary <*> arbitrary <*> arbitrary

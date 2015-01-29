@@ -19,6 +19,7 @@ import Control.Applicative (pure)
 #endif
 
 import Data.Functor ((<$>))
+import Data.Version (Version(..))
 
 import Foreign.C.Types (CInt(..))
 import Foreign.Ptr (Ptr, nullPtr, plusPtr)
@@ -38,6 +39,10 @@ instance Arbitrary ExitCode where
 
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary
+
+instance Arbitrary Version where
+    arbitrary = pure $ Version [0] [""]
+--     arbitrary = Version <$> arbitrary <*> arbitrary
 
 deriving instance Arbitrary CInt
 #if defined(HTYPE_GID_T)

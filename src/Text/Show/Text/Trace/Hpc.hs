@@ -27,7 +27,8 @@ import Prelude hiding (Show)
 import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..))
 import Text.Show.Text.Data.Integral (showbIntPrec)
 import Text.Show.Text.Data.Time ()
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow, deriveShowPragmas,
+                          defaultInlineShowb, defaultInlineShowbPrec)
 import Text.Show.Text.Utils ((<>), s)
 
 import Trace.Hpc.Mix (Mix, BoxLabel, CondBox)
@@ -89,11 +90,11 @@ showbHash :: Hash -> Builder
 showbHash = showb . FromStringShow
 {-# INLINE showbHash #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Mix)
-$(deriveShowPragmas defaultInlineShowbPrec ''BoxLabel)
+$(deriveShow                               ''Mix)
+$(deriveShow                               ''BoxLabel)
 $(deriveShowPragmas defaultInlineShowb     ''CondBox)
 $(deriveShowPragmas defaultInlineShowbPrec ''Tix)
-$(deriveShowPragmas defaultInlineShowbPrec ''TixModule)
+$(deriveShow                               ''TixModule)
 
 instance Show HpcPos where
     showb = showbHpcPos

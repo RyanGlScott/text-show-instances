@@ -25,12 +25,14 @@ import Data.Functor ((<$>))
 import GHC.Exts (Int(I#))
 #endif
 
+import Instances.Utils ((<@>))
+
 import Language.Haskell.TH.Syntax
 #if !(MIN_VERSION_template_haskell(2,8,0))
 import Language.Haskell.TH.Syntax.Internals
 #endif
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 instance Arbitrary Body where
     arbitrary = oneof $ map pure [ GuardedB [(fGuard, fExp)]
@@ -38,15 +40,10 @@ instance Arbitrary Body where
                                  ]
 --     arbitrary = oneof [GuardedB <$> arbitrary, NormalB <$> arbitrary]
 
+deriving instance Bounded Callconv
+deriving instance Enum Callconv
 instance Arbitrary Callconv where
-    arbitrary = oneof $ map pure [ CCall
-                                 , StdCall
-#if MIN_VERSION_template_haskell(2,10,0)
-                                 , CApi
-                                 , Prim
-                                 , JavaScript
-#endif
-                                 ]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Clause where
     arbitrary = pure $ Clause [fPat] fBody [fDec]
@@ -56,7 +53,7 @@ instance Arbitrary Con where
     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
                       , RecC    <$> arbitrary <*> arbitrary
                       , InfixC  <$> arbitrary <*> arbitrary <*> arbitrary
-                      , (flip . flip ForallC) [fPred] fCon <$> arbitrary
+                      , ForallC <$> arbitrary <@> [fPred]   <@> fCon
                       ]
 --     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
 --                       , RecC    <$> arbitrary <*> arbitrary
@@ -66,14 +63,13 @@ instance Arbitrary Con where
 
 instance Arbitrary Dec where
     arbitrary = oneof [
-          flip FunD [fClause] <$> arbitrary
+          FunD <$> arbitrary <@> [fClause]
         , pure $ ValD fPat fBody [fDec]
         , DataD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , NewtypeD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , TySynD <$> arbitrary <*> arbitrary <*> arbitrary
-        , (flip . ((flip . (flip .)) .) . ClassD) [fPred] [fDec]
-            <$> arbitrary <*> arbitrary <*> arbitrary
-        , (flip . InstanceD) [fPred] [fDec] <$> arbitrary
+        , ClassD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <@> [fDec]
+        , InstanceD [fPred] <$> arbitrary <@> [fDec]
         , SigD <$> arbitrary <*> arbitrary
         , ForeignD <$> arbitrary
         , PragmaD <$> arbitrary
@@ -146,7 +142,7 @@ instance Arbitrary Exp where
                       , pure $ ArithSeqE fRange
                       , pure $ ListE [fExp]
                       , SigE fExp <$> arbitrary
-                      , flip RecConE [fFieldExp] <$> arbitrary
+                      , RecConE <$> arbitrary <@> [fFieldExp]
                       , pure $ RecUpdE fExp [fFieldExp]
 #if MIN_VERSION_template_haskell(2,6,0)
                       , pure $ UnboxedTupE [fExp]
@@ -196,14 +192,18 @@ instance Arbitrary Exp where
 -- #endif
 --                       ]
 
+deriving instance Bounded FamFlavour
+deriving instance Enum FamFlavour
 instance Arbitrary FamFlavour where
-    arbitrary = oneof $ map pure [TypeFam, DataFam]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Fixity where
     arbitrary = Fixity <$> arbitrary <*> arbitrary
 
+deriving instance Bounded FixityDirection
+deriving instance Enum FixityDirection
 instance Arbitrary FixityDirection where
-    arbitrary = oneof $ map pure [InfixL, InfixR, InfixN]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Foreign where
     arbitrary = oneof [ ImportF <$> arbitrary <*> arbitrary <*> arbitrary
@@ -277,7 +277,7 @@ deriving instance Show Loc
 #endif
 
 instance Arbitrary Match where
-    arbitrary = (flip . flip Match) fBody [fDec] <$> arbitrary
+    arbitrary = Match <$> arbitrary <@> fBody <@> [fDec]
 --     arbitrary = Match <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Name where
@@ -296,25 +296,28 @@ instance Arbitrary NameFlavour where
                       , NameG <$> arbitrary <*> arbitrary <*> arbitrary
                       ]
 
-instance Arbitrary NameIs where
-    arbitrary = oneof $ map pure [Alone, Applied, Infix]
-
+deriving instance Bounded NameIs
+deriving instance Enum NameIs
 deriving instance Show NameIs
+instance Arbitrary NameIs where
+    arbitrary = arbitraryBoundedEnum
 
+deriving instance Bounded NameSpace
+deriving instance Enum NameSpace
 instance Arbitrary NameSpace where
-    arbitrary = oneof $ map pure [VarName, DataName, TcClsName]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Pat where
     arbitrary = oneof [ LitP <$> arbitrary
                       , VarP <$> arbitrary
                       , pure $ TupP [fPat]
-                      , flip ConP [fPat] <$> arbitrary
-                      , (flip . InfixP) fPat fPat <$> arbitrary
+                      , ConP <$> arbitrary <@> [fPat]
+                      , InfixP fPat <$> arbitrary <@> fPat
                       , pure $ TildeP fPat
                       , pure $ BangP fPat
-                      , flip AsP fPat <$> arbitrary
+                      , AsP <$> arbitrary <@> fPat
                       , pure WildP
-                      , flip RecP [fFieldPat] <$> arbitrary
+                      , RecP <$> arbitrary <@> [fFieldPat]
                       , pure $ ListP [fPat]
                       , SigP fPat <$> arbitrary
 #if MIN_VERSION_template_haskell(2,5,0)
@@ -324,7 +327,7 @@ instance Arbitrary Pat where
                       , pure $ UnboxedTupP [fPat]
 #endif
 #if MIN_VERSION_template_haskell(2,7,0)
-                      , (flip . UInfixP) fPat fPat <$> arbitrary
+                      , UInfixP fPat <$> arbitrary <@> fPat
                       , pure $ ParensP fPat
 #endif
                       ]
@@ -385,15 +388,10 @@ instance Arbitrary Range where
 --                       , FromThenToR <$> arbitrary <*> arbitrary <*> arbitrary
 --                       ]
 
+deriving instance Bounded Safety
+deriving instance Enum Safety
 instance Arbitrary Safety where
-    arbitrary = oneof $ map pure [ Unsafe
-                                 , Safe
-#if MIN_VERSION_template_haskell(2,6,0)
-                                 , Interruptible
-#else
-                                 , Threadsafe
-#endif
-                                 ]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Stmt where
     arbitrary = oneof $ map pure [ BindS   fPat fExp
@@ -407,13 +405,10 @@ instance Arbitrary Stmt where
 --                       , ParS    <$> arbitrary
 --                       ]
 
+deriving instance Bounded Strict
+deriving instance Enum Strict
 instance Arbitrary Strict where
-    arbitrary = oneof $ map pure [ IsStrict
-                                 , NotStrict
-#if MIN_VERSION_template_haskell(2,7,0)
-                                 , Unpacked
-#endif
-                                 ]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Type where
     arbitrary = oneof [ pure $ ForallT [fTyVarBndr] [fPred] fType
@@ -466,9 +461,7 @@ instance Arbitrary Type where
 --                       ]
 
 instance Arbitrary TyVarBndr where
-    arbitrary = oneof [ PlainTV <$> arbitrary
-                      , flip KindedTV fKind <$> arbitrary
-                      ]
+    arbitrary = oneof [PlainTV  <$> arbitrary, KindedTV <$> arbitrary <@> fKind]
 --     arbitrary = oneof [PlainTV <$> arbitrary, KindedTV <$> arbitrary <*> arbitrary]
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
@@ -478,8 +471,10 @@ instance Arbitrary ClassInstance where
 #endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
+deriving instance Bounded Inline
+deriving instance Enum Inline
 instance Arbitrary Inline where
-    arbitrary = oneof $ map pure [NoInline, Inline, Inlinable]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Phases where
     arbitrary = oneof [ pure AllPhases
@@ -490,8 +485,10 @@ instance Arbitrary Phases where
 instance Arbitrary RuleBndr where
     arbitrary = oneof [RuleVar <$> arbitrary, TypedRuleVar <$> arbitrary <*> arbitrary]
 
+deriving instance Bounded RuleMatch
+deriving instance Enum RuleMatch
 instance Arbitrary RuleMatch where
-    arbitrary = oneof $ map pure [ConLike, FunLike]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary TyLit where
     arbitrary = oneof [NumTyLit <$> arbitrary, StrTyLit <$> arbitrary]
@@ -520,8 +517,10 @@ instance Arbitrary Module where
 instance Arbitrary ModuleInfo where
     arbitrary = ModuleInfo <$> arbitrary
 
+deriving instance Bounded Role
+deriving instance Enum Role
 instance Arbitrary Role where
-    arbitrary = oneof $ map pure [NominalR, RepresentationalR, PhantomR, InferR]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary TySynEqn where
     arbitrary = TySynEqn <$> arbitrary <*> arbitrary
@@ -529,7 +528,7 @@ instance Arbitrary TySynEqn where
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 instance Arbitrary Pred where
-    arbitrary = oneof [ flip ClassP [fType] <$> arbitrary
+    arbitrary = oneof [ ClassP <$> arbitrary <@> [fType]
                       , pure $ EqualP fType fType
                       ]
 --     arbitrary = oneof [ ClassP <$> arbitrary <*> arbitrary

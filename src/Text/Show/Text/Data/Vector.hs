@@ -36,7 +36,7 @@ import           Foreign.Storable (Storable)
 import           Prelude hiding (Show)
 
 import           Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder)
-import           Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import           Text.Show.Text.TH (deriveShow)
 import           Text.Show.Text.Utils (showbUnaryList)
 
 #include "inline.h"
@@ -103,4 +103,4 @@ instance Show1 B.Vector where
     showbPrec1 = showbVectorPrec
     INLINE_INST_FUN(showbPrec1)
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Size)
+$(deriveShow ''Size)

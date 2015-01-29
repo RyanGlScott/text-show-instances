@@ -8,7 +8,7 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-Monomorphic 'Show' function for 'TimeLocale'.
+Monomorphic 'Show' function for old 'TimeLocale's.
 
 /Since: 0.1/
 -}
@@ -19,7 +19,7 @@ import System.Locale (TimeLocale)
 import Prelude hiding (Show)
 
 import Text.Show.Text (Show(showbPrec), Builder)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow)
 
 -- | Convert a 'TimeLocale' to a 'Builder' with the given precedence.
 -- 
@@ -28,4 +28,4 @@ showbTimeLocalePrec :: Int -> TimeLocale -> Builder
 showbTimeLocalePrec = showbPrec
 {-# INLINE showbTimeLocalePrec #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''TimeLocale)
+$(deriveShow ''TimeLocale)

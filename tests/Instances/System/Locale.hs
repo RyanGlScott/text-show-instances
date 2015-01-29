@@ -8,7 +8,7 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-Provides an 'Arbitrary' instance for 'TimeLocale' values.
+Provides an 'Arbitrary' instance for old 'TimeLocale' values.
 -}
 module Instances.System.Locale () where
 

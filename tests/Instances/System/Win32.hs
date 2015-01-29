@@ -26,7 +26,7 @@ import System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
 import System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
                           TIME_ZONE_INFORMATION(..), TimeZoneId(..))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 instance Arbitrary DebugEventInfo where
     arbitrary = oneof [ pure UnknownDebugEvent
@@ -98,5 +98,7 @@ instance Arbitrary TIME_ZONE_INFORMATION where
     arbitrary = TIME_ZONE_INFORMATION <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
                                       <*> arbitrary <*> arbitrary <*> arbitrary
 
+deriving instance Bounded TimeZoneId
+deriving instance Enum TimeZoneId
 instance Arbitrary TimeZoneId where
-    arbitrary = oneof $ map pure [TzIdUnknown, TzIdStandard, TzIdDaylight]
+    arbitrary = arbitraryBoundedEnum

@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP, StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Trace.Hpc
@@ -13,21 +13,23 @@ Provides 'Arbitrary' instances for data types in the @hpc@ library.
 module Instances.Trace.Hpc () where
 
 #if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
+import Control.Applicative ((<*>))
 #endif
 
 import Data.Functor ((<$>))
 
+import Instances.Utils ((<@>))
+
 import Test.QuickCheck.Instances ()
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 import Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
 import Trace.Hpc.Tix (Tix(..), TixModule(..))
 import Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
 
 instance Arbitrary Mix where
-    arbitrary = flip (flip . ((flip . (flip .)) .) . Mix) [fMixEntry]
-                    <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
+                    <*> arbitrary <@> [fMixEntry]
 --     arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
 --                     <*> arbitrary <*> arbitrary
 
@@ -38,8 +40,10 @@ instance Arbitrary BoxLabel where
                       , BinBox      <$> arbitrary <*> arbitrary
                       ]
 
+deriving instance Bounded CondBox
+deriving instance Enum CondBox
 instance Arbitrary CondBox where
-    arbitrary = oneof $ map pure [GuardBinBox, CondBinBox, QualBinBox]
+    arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Tix where
     arbitrary = Tix <$> arbitrary

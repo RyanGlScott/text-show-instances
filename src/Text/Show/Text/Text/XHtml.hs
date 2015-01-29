@@ -28,7 +28,7 @@ import Prelude hiding (Show)
 
 import Text.Show.Text (Show(..), Builder, FromStringShow(..), fromString)
 import Text.Show.Text.Data.Char (showbString)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow)
 import Text.Show.Text.Utils ((<>), s)
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink,
                             htmlAttrPair, renderHtmlFragment)
@@ -83,7 +83,7 @@ instance Show HtmlAttr where
     showb = showbHtmlAttr
     INLINE_INST_FUN(showb)
 
-$(deriveShowPragmas defaultInlineShowbPrec ''HotLink)
+$(deriveShow ''HotLink)
 
 instance Show HtmlTable where
     showb = showbHtmlTable

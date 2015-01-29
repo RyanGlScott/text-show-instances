@@ -14,6 +14,7 @@ Monomorphic 'Show' functions for data types in the @pretty@ library.
 -}
 module Text.Show.Text.Text.PrettyPrint (
       showbDoc
+    , renderStyleB
     , showbMode
     , showbStylePrec
     , showbTextDetailsPrec
@@ -32,21 +33,33 @@ import Text.PrettyPrint.HughesPJ (Doc, Mode, Style(..), TextDetails(..),
                                   fullRender, style)
 #if MIN_VERSION_pretty(1,1,2)
 import Text.PrettyPrint.HughesPJClass (PrettyLevel)
+import Text.Show.Text.TH (defaultInlineShowbPrec)
 #endif
 import Text.Show.Text (Show(showb, showbPrec), Builder, fromString)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
 import Text.Show.Text.Utils ((<>), s)
 
 #include "inline.h"
 
--- | Convert a 'Doc' to a 'Builder'.
+-- | Convert a 'Doc' to a 'Builder'. This is analogous to @render@ from
+-- "Text.PrettyPrint.HughesPJ", which renders a 'Doc' using the default 'style'.
 -- 
 -- /Since: 0.1/
 showbDoc :: Doc -> Builder
-showbDoc doc = fullRender (mode style) (lineLength style)
-                          (ribbonsPerLine style)
-                          txtPrinter mempty doc
+showbDoc = renderStyleB style
 {-# INLINE showbDoc #-}
+
+-- | Renders a 'Doc' to a 'Builder' using the given 'Style'.
+-- 
+-- /Since: 0.2/
+renderStyleB :: Style -> Doc -> Builder
+renderStyleB sty doc = fullRender (mode sty)
+                                  (lineLength sty)
+                                  (ribbonsPerLine sty)
+                                  txtPrinter
+                                  mempty
+                                  doc
+{-# INLINE renderStyleB #-}
 
 txtPrinter :: TextDetails -> Builder -> Builder
 txtPrinter (Chr c)   b = s c <> b
@@ -90,8 +103,8 @@ instance Show Doc where
     INLINE_INST_FUN(showb)
 
 $(deriveShowPragmas defaultInlineShowb     ''Mode)
-$(deriveShowPragmas defaultInlineShowbPrec ''Style)
-$(deriveShowPragmas defaultInlineShowbPrec ''TextDetails)
+$(deriveShow                               ''Style)
+$(deriveShow                               ''TextDetails)
 
 #if MIN_VERSION_pretty(1,1,2)
 $(deriveShowPragmas defaultInlineShowbPrec ''PrettyLevel)

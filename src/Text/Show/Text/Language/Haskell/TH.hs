@@ -97,11 +97,8 @@ import           Prelude hiding (Show)
 import           Text.Show.Text (Show(showb, showbPrec), Builder,
                                  fromString, toLazyText)
 import           Text.Show.Text.Data.Integral (showbIntPrec)
-import           Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb,
-                                    defaultInlineShowbPrec)
+import           Text.Show.Text.TH (deriveShow)
 import           Text.Show.Text.Utils ((<>), s)
-
-#include "inline.h"
 
 -- | Convert a 'Body' to a 'Builder' with the given precedence.
 -- 
@@ -487,63 +484,62 @@ showbTySynEqnPrec = showbPrec
 {-# INLINE showbTySynEqnPrec #-}
 #endif
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Body)
-$(deriveShowPragmas defaultInlineShowb     ''Callconv)
-$(deriveShowPragmas defaultInlineShowbPrec ''Clause)
-$(deriveShowPragmas defaultInlineShowbPrec ''Con)
-$(deriveShowPragmas defaultInlineShowbPrec ''Dec)
-$(deriveShowPragmas defaultInlineShowbPrec ''Exp)
-$(deriveShowPragmas defaultInlineShowb     ''FamFlavour)
-$(deriveShowPragmas defaultInlineShowbPrec ''Fixity)
-$(deriveShowPragmas defaultInlineShowb     ''FixityDirection)
-$(deriveShowPragmas defaultInlineShowbPrec ''Foreign)
-$(deriveShowPragmas defaultInlineShowbPrec ''FunDep)
-$(deriveShowPragmas defaultInlineShowbPrec ''Guard)
-$(deriveShowPragmas defaultInlineShowbPrec ''Info)
-$(deriveShowPragmas defaultInlineShowbPrec ''Lit)
-$(deriveShowPragmas defaultInlineShowbPrec ''Loc)
-$(deriveShowPragmas defaultInlineShowbPrec ''Match)
-$(deriveShowPragmas defaultInlineShowbPrec ''ModName)
+$(deriveShow ''Body)
+$(deriveShow ''Callconv)
+$(deriveShow ''Clause)
+$(deriveShow ''Con)
+$(deriveShow ''Dec)
+$(deriveShow ''Exp)
+$(deriveShow ''FamFlavour)
+$(deriveShow ''Fixity)
+$(deriveShow ''FixityDirection)
+$(deriveShow ''Foreign)
+$(deriveShow ''FunDep)
+$(deriveShow ''Guard)
+$(deriveShow ''Info)
+$(deriveShow ''Lit)
+$(deriveShow ''Loc)
+$(deriveShow ''Match)
+$(deriveShow ''ModName)
 
 instance Show Name where
     showb = showbName
-    INLINE_INST_FUN(showb)
 
-$(deriveShowPragmas defaultInlineShowbPrec ''OccName)
-$(deriveShowPragmas defaultInlineShowbPrec ''Pat)
-$(deriveShowPragmas defaultInlineShowbPrec ''PkgName)
-$(deriveShowPragmas defaultInlineShowbPrec ''Pragma)
-$(deriveShowPragmas defaultInlineShowbPrec ''Range)
-$(deriveShowPragmas defaultInlineShowb     ''Safety)
-$(deriveShowPragmas defaultInlineShowbPrec ''Stmt)
-$(deriveShowPragmas defaultInlineShowb     ''Strict)
-$(deriveShowPragmas defaultInlineShowbPrec ''Type)
-$(deriveShowPragmas defaultInlineShowbPrec ''TyVarBndr)
+$(deriveShow ''OccName)
+$(deriveShow ''Pat)
+$(deriveShow ''PkgName)
+$(deriveShow ''Pragma)
+$(deriveShow ''Range)
+$(deriveShow ''Safety)
+$(deriveShow ''Stmt)
+$(deriveShow ''Strict)
+$(deriveShow ''Type)
+$(deriveShow ''TyVarBndr)
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
-$(deriveShowPragmas defaultInlineShowbPrec ''ClassInstance)
+$(deriveShow ''ClassInstance)
 #endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
-$(deriveShowPragmas defaultInlineShowb     ''Inline)
-$(deriveShowPragmas defaultInlineShowbPrec ''Phases)
-$(deriveShowPragmas defaultInlineShowbPrec ''RuleBndr)
-$(deriveShowPragmas defaultInlineShowb     ''RuleMatch)
-$(deriveShowPragmas defaultInlineShowbPrec ''TyLit)
+$(deriveShow ''Inline)
+$(deriveShow ''Phases)
+$(deriveShow ''RuleBndr)
+$(deriveShow ''RuleMatch)
+$(deriveShow ''TyLit)
 #else
-$(deriveShowPragmas defaultInlineShowb     ''InlineSpec)
-$(deriveShowPragmas defaultInlineShowbPrec ''Kind)
+$(deriveShow ''InlineSpec)
+$(deriveShow ''Kind)
 #endif
 
 #if MIN_VERSION_template_haskell(2,9,0)
-$(deriveShowPragmas defaultInlineShowbPrec ''AnnLookup)
-$(deriveShowPragmas defaultInlineShowbPrec ''AnnTarget)
-$(deriveShowPragmas defaultInlineShowbPrec ''Module)
-$(deriveShowPragmas defaultInlineShowbPrec ''ModuleInfo)
-$(deriveShowPragmas defaultInlineShowb     ''Role)
-$(deriveShowPragmas defaultInlineShowbPrec ''TySynEqn)
+$(deriveShow ''AnnLookup)
+$(deriveShow ''AnnTarget)
+$(deriveShow ''Module)
+$(deriveShow ''ModuleInfo)
+$(deriveShow ''Role)
+$(deriveShow ''TySynEqn)
 #endif
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
-$(deriveShowPragmas defaultInlineShowbPrec ''Pred)
+$(deriveShow ''Pred)
 #endif

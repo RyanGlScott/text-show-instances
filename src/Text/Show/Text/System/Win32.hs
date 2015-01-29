@@ -32,7 +32,8 @@ import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 
 import Text.Show.Text (Builder, showb, showbPrec)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowb, defaultInlineShowbPrec)
+import Text.Show.Text.TH (deriveShow, deriveShowPragmas,
+                          defaultInlineShowb, defaultInlineShowbPrec)
 
 -- | Convert a 'DebugEventInfo' value to a 'Builder' with the given precedence.
 -- 
@@ -104,13 +105,13 @@ showbTimeZoneIdPrec :: TimeZoneId -> Builder
 showbTimeZoneIdPrec = showb
 {-# INLINE showbTimeZoneIdPrec #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''DebugEventInfo)
-$(deriveShowPragmas defaultInlineShowbPrec ''Exception)
-$(deriveShowPragmas defaultInlineShowbPrec ''BY_HANDLE_FILE_INFORMATION)
-$(deriveShowPragmas defaultInlineShowbPrec ''WIN32_FILE_ATTRIBUTE_DATA)
-$(deriveShowPragmas defaultInlineShowbPrec ''ProcessorArchitecture)
-$(deriveShowPragmas defaultInlineShowbPrec ''SYSTEM_INFO)
+$(deriveShow                               ''DebugEventInfo)
+$(deriveShow                               ''Exception)
+$(deriveShow                               ''BY_HANDLE_FILE_INFORMATION)
+$(deriveShow                               ''WIN32_FILE_ATTRIBUTE_DATA)
+$(deriveShow                               ''ProcessorArchitecture)
+$(deriveShow                               ''SYSTEM_INFO)
 $(deriveShowPragmas defaultInlineShowbPrec ''FILETIME)
-$(deriveShowPragmas defaultInlineShowbPrec ''SYSTEMTIME)
-$(deriveShowPragmas defaultInlineShowbPrec ''TIME_ZONE_INFORMATION)
+$(deriveShow                               ''SYSTEMTIME)
+$(deriveShow                               ''TIME_ZONE_INFORMATION)
 $(deriveShowPragmas defaultInlineShowb     ''TimeZoneId)

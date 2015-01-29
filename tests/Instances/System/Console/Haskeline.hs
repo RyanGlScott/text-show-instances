@@ -18,6 +18,8 @@ import Control.Applicative ((<*>), pure)
 
 import Data.Functor ((<$>))
 
+import Instances.Utils ((<@>))
+
 import System.Console.Haskeline (Interrupt(..))
 import System.Console.Haskeline.Completion (Completion(..))
 import System.Console.Haskeline.History (History, addHistory, emptyHistory)
@@ -33,4 +35,4 @@ instance Arbitrary Completion where
     arbitrary = Completion <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary History where
-    arbitrary = flip addHistory emptyHistory <$> arbitrary
+    arbitrary = addHistory <$> arbitrary <@> emptyHistory
