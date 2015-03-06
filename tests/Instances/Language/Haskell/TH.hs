@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, FlexibleInstances, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP, FlexibleInstances, GeneralizedNewtypeDeriving,
+             StandaloneDeriving, TypeSynonymInstances #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
 {-# LANGUAGE MagicHash #-}
 #endif

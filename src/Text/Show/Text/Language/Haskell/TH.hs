@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, FlexibleInstances, TemplateHaskell #-}
+{-# LANGUAGE CPP, FlexibleInstances, TemplateHaskell, TypeSynonymInstances #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
 {-# LANGUAGE MagicHash #-}
 #endif
