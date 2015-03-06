@@ -10,7 +10,7 @@ Portability: GHC
 -}
 module Properties.Data.Semigroup (semigroupTests) where
 
-import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option)
+import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option, Arg)
 
 import Instances.Data.Semigroup ()
 
@@ -30,5 +30,6 @@ semigroupTests =
         , testProperty "Last Int Char"              (prop_matchesShow :: Int -> Last Int -> Bool)
         , testProperty "WrappedMonoid Int instance" (prop_matchesShow :: Int -> WrappedMonoid Int -> Bool)
         , testProperty "Option Int instance"        (prop_matchesShow :: Int -> Option Int -> Bool)
+        , testProperty "Arg Int Int instance"       (prop_matchesShow :: Int -> Arg Int Int -> Bool)
         ]
     ]

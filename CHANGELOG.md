@@ -1,5 +1,7 @@
 # 0.3
-* Added `showbDoc` and `Show Doc` instance to `Text.Show.Text.Language.Haskell.TH`
+* Added `showbArgPrec` (and corresponding `Show` and `Show1` instances) to `Text.Show.Text.Data.Semigroup`
+* Added `Show1` instances for data types in `Text.Show.Text.Data.List.NonEmpty` and `Text.Show.Text.Data.Semigroup`
+* Added `showbDoc` (and corresponding `Show` instance) to `Text.Show.Text.Language.Haskell.TH`
 * Renamed `showbDoc` in `Text.Show.Text.Text.PrettyPrint` to `renderB`
 
 # 0.2

@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE CPP, TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Data.Semigroup
@@ -19,14 +19,17 @@ module Text.Show.Text.Data.Semigroup (
     , showbLastPrec
     , showbWrappedMonoidPrec
     , showbOptionPrec
+    , showbArgPrec
     ) where
 
-import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option)
+import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option, Arg)
 
 import Prelude hiding (Show)
 
-import Text.Show.Text (Show(showbPrec), Builder)
+import Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder)
 import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+
+#include "inline.h"
 
 -- | Convert a 'Min' value to a 'Builder' with the given precedence.
 -- 
@@ -70,9 +73,45 @@ showbOptionPrec :: Show a => Int -> Option a -> Builder
 showbOptionPrec = showbPrec
 {-# INLINE showbOptionPrec #-}
 
+-- | Convert an 'Arg' value to a 'Builder' with the given precedence.
+-- 
+-- /Since: 0.3/
+showbArgPrec :: (Show a, Show b) => Int -> Arg a b -> Builder
+showbArgPrec = showbPrec
+{-# INLINE showbArgPrec #-}
+
 $(deriveShowPragmas defaultInlineShowbPrec ''Min)
 $(deriveShowPragmas defaultInlineShowbPrec ''Max)
 $(deriveShowPragmas defaultInlineShowbPrec ''First)
 $(deriveShowPragmas defaultInlineShowbPrec ''Last)
 $(deriveShowPragmas defaultInlineShowbPrec ''WrappedMonoid)
 $(deriveShowPragmas defaultInlineShowbPrec ''Option)
+$(deriveShowPragmas defaultInlineShowbPrec ''Arg)
+
+instance Show1 Min where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 Max where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 First where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 Last where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 WrappedMonoid where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show1 Option where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
+
+instance Show a => Show1 (Arg a) where
+    showbPrec1 = showbPrec
+    INLINE_INST_FUN(showbPrec1)
