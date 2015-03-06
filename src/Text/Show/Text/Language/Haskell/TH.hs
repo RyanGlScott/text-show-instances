@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, TemplateHaskell #-}
+{-# LANGUAGE CPP, FlexibleInstances, TemplateHaskell #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
 {-# LANGUAGE MagicHash #-}
 #endif
@@ -79,6 +79,7 @@ module Text.Show.Text.Language.Haskell.TH (
 #if MIN_VERSION_template_haskell(2,9,0)
     , showbTySynEqnPrec
 #endif
+    , showbDoc
     ) where
 
 import           Data.Char (isAlpha)
@@ -90,6 +91,7 @@ import           Data.Text.Lazy (uncons)
 import           GHC.Exts (Int(I#))
 #endif
 
+import           Language.Haskell.TH.PprLib (Doc, to_HPJ_Doc)
 import           Language.Haskell.TH.Syntax
 
 import           Prelude hiding (Show)
@@ -97,6 +99,7 @@ import           Prelude hiding (Show)
 import           Text.Show.Text (Show(showb, showbPrec), Builder,
                                  fromString, toLazyText)
 import           Text.Show.Text.Data.Integral (showbIntPrec)
+import           Text.Show.Text.Text.PrettyPrint (renderB)
 import           Text.Show.Text.TH (deriveShow)
 import           Text.Show.Text.Utils ((<>), s)
 
@@ -105,91 +108,78 @@ import           Text.Show.Text.Utils ((<>), s)
 -- /Since: 0.1/
 showbBodyPrec :: Int -> Body -> Builder
 showbBodyPrec = showbPrec
-{-# INLINE showbBodyPrec #-}
 
 -- | Convert a 'Callconv' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbCallconv :: Callconv -> Builder
 showbCallconv = showb
-{-# INLINE showbCallconv #-}
 
 -- | Convert a 'Clause' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbClausePrec :: Int -> Clause -> Builder
 showbClausePrec = showbPrec
-{-# INLINE showbClausePrec #-}
 
 -- | Convert a 'Con' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbConPrec :: Int -> Con -> Builder
 showbConPrec = showbPrec
-{-# INLINE showbConPrec #-}
 
 -- | Convert a 'Dec' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbDecPrec :: Int -> Dec -> Builder
 showbDecPrec = showbPrec
-{-# INLINE showbDecPrec #-}
 
 -- | Convert an 'Exp' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbExpPrec :: Int -> Exp -> Builder
 showbExpPrec = showbPrec
-{-# INLINE showbExpPrec #-}
 
 -- | Convert a 'FamFlavour' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbFamFlavour :: FamFlavour -> Builder
 showbFamFlavour = showb
-{-# INLINE showbFamFlavour #-}
 
 -- | Convert a 'Fixity' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbFixityPrec :: Int -> Fixity -> Builder
 showbFixityPrec = showbPrec
-{-# INLINE showbFixityPrec #-}
 
 -- | Convert a 'FixityDirection' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbFixityDirection :: FixityDirection -> Builder
 showbFixityDirection = showb
-{-# INLINE showbFixityDirection #-}
 
 -- | Convert a 'Foreign' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbForeignPrec :: Int -> Foreign -> Builder
 showbForeignPrec = showbPrec
-{-# INLINE showbForeignPrec #-}
 
 -- | Convert a 'FunDep' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbFunDepPrec :: Int -> FunDep -> Builder
 showbFunDepPrec = showbPrec
-{-# INLINE showbFunDepPrec #-}
 
 -- | Convert a 'Guard' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbGuardPrec :: Int -> Guard -> Builder
 showbGuardPrec = showbPrec
-{-# INLINE showbGuardPrec #-}
 
 -- | Convert an 'Info' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbInfoPrec :: Int -> Info -> Builder
 showbInfoPrec = showbPrec
-{-# INLINE showbInfoPrec #-}
 
 -- | Convert a 'Kind' to a 'Builder' with the given precedence.
 -- 
@@ -200,42 +190,36 @@ showbKindPrec = showbTypePrec
 #else
 showbKindPrec = showbPrec
 #endif
-{-# INLINE showbKindPrec #-}
 
 -- | Convert a 'Lit' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbLitPrec :: Int -> Dec -> Builder
 showbLitPrec = showbPrec
-{-# INLINE showbLitPrec #-}
 
 -- | Convert a 'Loc' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbLocPrec :: Int -> Loc -> Builder
 showbLocPrec = showbPrec
-{-# INLINE showbLocPrec #-}
 
 -- | Convert a 'Match' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbMatchPrec :: Int -> Match -> Builder
 showbMatchPrec = showbPrec
-{-# INLINE showbMatchPrec #-}
 
 -- | Convert a 'ModName' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbModNamePrec :: Int -> ModName -> Builder
 showbModNamePrec = showbPrec
-{-# INLINE showbModNamePrec #-}
 
 -- | Convert a 'Name' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbName :: Name -> Builder
 showbName = showbName' Alone
-{-# INLINE showbName #-}
 
 -- | Convert a 'Name' to a 'Builder' with the given 'NameIs' settings.
 -- 
@@ -298,28 +282,24 @@ showbName' ni nm = case ni of
 -- /Since: 0.1/
 showbOccNamePrec :: Int -> OccName -> Builder
 showbOccNamePrec = showbPrec
-{-# INLINE showbOccNamePrec #-}
 
 -- | Convert a 'Pat' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbPatPrec :: Int -> Pat -> Builder
 showbPatPrec = showbPrec
-{-# INLINE showbPatPrec #-}
 
 -- | Convert a 'PkgName' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbPkgNamePrec :: Int -> PkgName -> Builder
 showbPkgNamePrec = showbPrec
-{-# INLINE showbPkgNamePrec #-}
 
 -- | Convert a 'Pragma' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbPragmaPrec :: Int -> Pragma -> Builder
 showbPragmaPrec = showbPrec
-{-# INLINE showbPragmaPrec #-}
 
 -- | Convert a 'Pred' to a 'Builder' with the given precedence.
 -- 
@@ -330,49 +310,48 @@ showbPredPrec = showbTypePrec
 #else
 showbPredPrec = showbPrec
 #endif
-{-# INLINE showbPredPrec #-}
 
 -- | Convert a 'Range' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbRangePrec :: Int -> Range -> Builder
 showbRangePrec = showbPrec
-{-# INLINE showbRangePrec #-}
 
 -- | Convert a 'Safety' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbSafety :: Safety -> Builder
 showbSafety = showb
-{-# INLINE showbSafety #-}
 
 -- | Convert a 'Stmt' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbStmtPrec :: Int -> Stmt -> Builder
 showbStmtPrec = showbPrec
-{-# INLINE showbStmtPrec #-}
 
 -- | Convert a 'Strict' to a 'Builder'.
 -- 
 -- /Since: 0.1/
 showbStrict :: Strict -> Builder
 showbStrict = showb
-{-# INLINE showbStrict #-}
 
 -- | Convert a 'Type' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbTypePrec :: Int -> Type -> Builder
 showbTypePrec = showbPrec
-{-# INLINE showbTypePrec #-}
 
 -- | Convert a 'TyVarBndr' to a 'Builder' with the given precedence.
 -- 
 -- /Since: 0.1/
 showbTyVarBndrPrec :: Int -> TyVarBndr -> Builder
 showbTyVarBndrPrec = showbPrec
-{-# INLINE showbTyVarBndrPrec #-}
+
+-- | Convert a 'Doc' to a 'Builder'.
+-- 
+-- /Since: 0.3/
+showbDoc :: Doc -> Builder
+showbDoc = renderB . to_HPJ_Doc
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
 -- | Convert a 'ClassInstance' to a 'Builder' with the given precedence.
@@ -381,7 +360,6 @@ showbTyVarBndrPrec = showbPrec
 -- /Since: 0.1/
 showbClassInstancePrec :: Int -> ClassInstance -> Builder
 showbClassInstancePrec = showbPrec
-{-# INLINE showbClassInstancePrec #-}
 #endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
@@ -391,7 +369,6 @@ showbClassInstancePrec = showbPrec
 -- /Since: 0.1/
 showbInline :: Inline -> Builder
 showbInline = showb
-{-# INLINE showbInline #-}
 
 -- | Convert a 'Phases' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.8.0.0@ or later.
@@ -399,7 +376,6 @@ showbInline = showb
 -- /Since: 0.1/
 showbPhasesPrec :: Int -> Phases -> Builder
 showbPhasesPrec = showbPrec
-{-# INLINE showbPhasesPrec #-}
 
 -- | Convert a 'RuleMatch' to a 'Builder'.
 -- This function is only available with @template-haskell-2.8.0.0@ or later.
@@ -407,7 +383,6 @@ showbPhasesPrec = showbPrec
 -- /Since: 0.1/
 showbRuleMatch :: RuleMatch -> Builder
 showbRuleMatch = showb
-{-# INLINE showbRuleMatch #-}
 
 -- | Convert a 'RuleBndr' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.8.0.0@ or later.
@@ -415,7 +390,6 @@ showbRuleMatch = showb
 -- /Since: 0.1/
 showbRuleBndrPrec :: Int -> RuleBndr -> Builder
 showbRuleBndrPrec = showbPrec
-{-# INLINE showbRuleBndrPrec #-}
 
 -- | Convert a 'TyLit' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.8.0.0@ or later.
@@ -423,7 +397,6 @@ showbRuleBndrPrec = showbPrec
 -- /Since: 0.1/
 showbTyLitPrec :: Int -> TyLit -> Builder
 showbTyLitPrec = showbPrec
-{-# INLINE showbTyLitPrec #-}
 #else
 -- | Convert an 'InlineSpec' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.7.0.0@ or earlier.
@@ -431,7 +404,6 @@ showbTyLitPrec = showbPrec
 -- /Since: 0.1/
 showbInlineSpecPrec :: Int -> InlineSpec -> Builder
 showbInlineSpecPrec = showbPrec
-{-# INLINE showbInlineSpecPrec #-}
 #endif
 
 #if MIN_VERSION_template_haskell(2,9,0)
@@ -441,7 +413,6 @@ showbInlineSpecPrec = showbPrec
 -- /Since: 0.1/
 showbAnnLookupPrec :: Int -> AnnLookup -> Builder
 showbAnnLookupPrec = showbPrec
-{-# INLINE showbAnnLookupPrec #-}
 
 -- | Convert an 'AnnTarget' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.9.0.0@ or later.
@@ -449,7 +420,6 @@ showbAnnLookupPrec = showbPrec
 -- /Since: 0.1/
 showbAnnTargetPrec :: Int -> AnnTarget -> Builder
 showbAnnTargetPrec = showbPrec
-{-# INLINE showbAnnTargetPrec #-}
 
 -- | Convert a 'Module' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.9.0.0@ or later.
@@ -457,7 +427,6 @@ showbAnnTargetPrec = showbPrec
 -- /Since: 0.1/
 showbModulePrec :: Int -> Module -> Builder
 showbModulePrec = showbPrec
-{-# INLINE showbModulePrec #-}
 
 -- | Convert a 'ModuleInfo' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.9.0.0@ or later.
@@ -465,7 +434,6 @@ showbModulePrec = showbPrec
 -- /Since: 0.1/
 showbModuleInfoPrec :: Int -> ModuleInfo -> Builder
 showbModuleInfoPrec = showbPrec
-{-# INLINE showbModuleInfoPrec #-}
 
 -- | Convert a 'Role' to a 'Builder'.
 -- This function is only available with @template-haskell-2.9.0.0@ or later.
@@ -473,7 +441,6 @@ showbModuleInfoPrec = showbPrec
 -- /Since: 0.1/
 showbRole :: Role -> Builder
 showbRole = showb
-{-# INLINE showbRole #-}
 
 -- | Convert a 'TySynEqn' to a 'Builder' with the given precedence.
 -- This function is only available with @template-haskell-2.9.0.0@ or later.
@@ -481,7 +448,6 @@ showbRole = showb
 -- /Since: 0.1/
 showbTySynEqnPrec :: Int -> TySynEqn -> Builder
 showbTySynEqnPrec = showbPrec
-{-# INLINE showbTySynEqnPrec #-}
 #endif
 
 $(deriveShow ''Body)
@@ -515,6 +481,9 @@ $(deriveShow ''Stmt)
 $(deriveShow ''Strict)
 $(deriveShow ''Type)
 $(deriveShow ''TyVarBndr)
+
+instance Show Doc where
+    showb = showbDoc
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
 $(deriveShow ''ClassInstance)

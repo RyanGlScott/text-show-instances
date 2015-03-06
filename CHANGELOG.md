@@ -1,3 +1,7 @@
+# 0.3
+* Added `showbDoc` and `Show Doc` instance to `Text.Show.Text.Language.Haskell.TH`
+* Renamed `showbDoc` in `Text.Show.Text.Text.PrettyPrint` to `renderB`
+
 # 0.2
 * Exposed `showbKindPrec` and `showbPredPrec` with later versions of Template Haskell
 * Added `renderStyleB` to `Text.Show.Text.Text.PrettyPrint` (for `time-1.5` and later)

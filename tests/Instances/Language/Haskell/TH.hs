@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP, FlexibleInstances, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
 {-# LANGUAGE MagicHash #-}
 #endif
@@ -27,6 +27,7 @@ import GHC.Exts (Int(I#))
 
 import Instances.Utils ((<@>))
 
+import Language.Haskell.TH.PprLib (Doc, text)
 import Language.Haskell.TH.Syntax
 #if !(MIN_VERSION_template_haskell(2,8,0))
 import Language.Haskell.TH.Syntax.Internals
@@ -525,6 +526,9 @@ instance Arbitrary Role where
 instance Arbitrary TySynEqn where
     arbitrary = TySynEqn <$> arbitrary <*> arbitrary
 #endif
+
+instance Arbitrary Doc where
+    arbitrary = text <$> arbitrary
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 instance Arbitrary Pred where

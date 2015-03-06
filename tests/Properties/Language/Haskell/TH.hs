@@ -13,6 +13,7 @@ module Properties.Language.Haskell.TH (templateHaskellTests) where
 
 import Instances.Language.Haskell.TH ()
 
+import Language.Haskell.TH.PprLib
 import Language.Haskell.TH.Syntax
 
 import Properties.Utils (prop_matchesShow)
@@ -94,5 +95,6 @@ templateHaskellTests =
         , testProperty "TySynEqn instance"        (prop_matchesShow :: Int -> TySynEqn -> Bool)
 #endif
         , testProperty "TyVarBndr instance"       (prop_matchesShow :: Int -> TyVarBndr -> Bool)
+        , testProperty "Doc instance"             (prop_matchesShow :: Int -> Doc -> Bool)
         ]
     ]

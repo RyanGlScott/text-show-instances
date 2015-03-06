@@ -13,7 +13,7 @@ Monomorphic 'Show' functions for data types in the @pretty@ library.
 /Since: 0.1/
 -}
 module Text.Show.Text.Text.PrettyPrint (
-      showbDoc
+      renderB
     , renderStyleB
     , showbMode
     , showbStylePrec
@@ -41,13 +41,12 @@ import Text.Show.Text.Utils ((<>), s)
 
 #include "inline.h"
 
--- | Convert a 'Doc' to a 'Builder'. This is analogous to @render@ from
--- "Text.PrettyPrint.HughesPJ", which renders a 'Doc' using the default 'style'.
+-- | Renders a 'Doc' to a 'Builder' using the default 'style'.
 -- 
--- /Since: 0.1/
-showbDoc :: Doc -> Builder
-showbDoc = renderStyleB style
-{-# INLINE showbDoc #-}
+-- /Since: 0.3/
+renderB :: Doc -> Builder
+renderB = renderStyleB style
+{-# INLINE renderB #-}
 
 -- | Renders a 'Doc' to a 'Builder' using the given 'Style'.
 -- 
@@ -99,7 +98,7 @@ showbPrettyLevelPrec = showbPrec
 #endif
 
 instance Show Doc where
-    showb = showbDoc
+    showb = renderB
     INLINE_INST_FUN(showb)
 
 $(deriveShowPragmas defaultInlineShowb     ''Mode)
