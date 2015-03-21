@@ -6,6 +6,9 @@ ghc:
   - 7.6.3
   - 7.8.4
 
+before_install:
+  - export GHCVER=`ghc --numeric-version`
+
 install:
   - cabal update
   - |
