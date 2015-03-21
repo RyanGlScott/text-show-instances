@@ -1,4 +1,6 @@
-﻿{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+﻿{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Miscellaneous
@@ -16,9 +18,10 @@ module Instances.Miscellaneous () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative (pure)
-#endif
 
 import Data.Functor ((<$>))
+#endif
+
 import Data.Version (Version(..))
 
 import Foreign.C.Types (CInt(..))

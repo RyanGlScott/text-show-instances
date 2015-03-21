@@ -1,7 +1,10 @@
-{-# LANGUAGE CPP, FlexibleInstances, GeneralizedNewtypeDeriving,
-             StandaloneDeriving, TypeSynonymInstances #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE FlexibleInstances          #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
+{-# LANGUAGE TypeSynonymInstances       #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
-{-# LANGUAGE MagicHash #-}
+{-# LANGUAGE MagicHash                  #-}
 #endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -18,9 +21,9 @@ module Instances.Language.Haskell.TH () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>), pure)
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 import GHC.Exts (Int(I#))

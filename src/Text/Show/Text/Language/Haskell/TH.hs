@@ -1,6 +1,9 @@
-{-# LANGUAGE CPP, FlexibleInstances, TemplateHaskell, TypeSynonymInstances #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE TemplateHaskell      #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 #if !(MIN_VERSION_template_haskell(2,10,0))
-{-# LANGUAGE MagicHash #-}
+{-# LANGUAGE MagicHash            #-}
 #endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|

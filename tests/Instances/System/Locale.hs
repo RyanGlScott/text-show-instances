@@ -14,8 +14,9 @@ module Instances.System.Locale () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
-#endif
 import Data.Functor ((<$>))
+#endif
+
 import System.Locale (TimeLocale(..))
 import Test.Tasty.QuickCheck (Arbitrary(..))
 

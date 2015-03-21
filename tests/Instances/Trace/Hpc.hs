@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, StandaloneDeriving #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Trace.Hpc
@@ -14,9 +15,9 @@ module Instances.Trace.Hpc () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 import Instances.Utils ((<@>))
 

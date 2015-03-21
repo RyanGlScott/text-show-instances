@@ -14,11 +14,10 @@ module Instances.Data.List.NonEmpty () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
+import Data.Functor ((<$>))
 #endif
 
-import Data.Functor ((<$>))
 import Data.List.NonEmpty (NonEmpty(..))
-
 import Test.Tasty.QuickCheck (Arbitrary(..))
 
 instance Arbitrary a => Arbitrary (NonEmpty a) where

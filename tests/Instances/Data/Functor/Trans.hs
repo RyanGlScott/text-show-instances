@@ -1,4 +1,7 @@
-{-# LANGUAGE CPP, FlexibleContexts, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Functor.Trans
@@ -14,9 +17,10 @@ module Instances.Data.Functor.Trans () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
-#endif
 
 import Data.Functor ((<$>))
+#endif
+
 import Data.Functor.Compose  (Compose(..))
 import Data.Functor.Constant (Constant(..))
 import Data.Functor.Product  (Product(..))

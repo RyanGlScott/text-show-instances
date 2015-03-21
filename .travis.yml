@@ -6,13 +6,6 @@ ghc:
   - 7.6.3
   - 7.8.4
 
-before_install:
-  - export GHCVER=`ghc --numeric-version`
-  # With old GHCs, we get an old cabal-install
-  - cabal install cabal-install
-  - export PATH=$HOME/.cabal/bin:$PATH
-  - cabal --version
-
 install:
   - cabal update
   - |
@@ -29,6 +22,6 @@ script:
       cabal build
     else
       cabal configure --enable-tests
-      cabal build
+      cabal build --ghc-option=-Werror
       cabal test
     fi

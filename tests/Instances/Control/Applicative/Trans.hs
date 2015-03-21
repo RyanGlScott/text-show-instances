@@ -1,4 +1,7 @@
-{-# LANGUAGE FlexibleContexts, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Control.Applicative.Trans
@@ -15,7 +18,9 @@ module Instances.Control.Applicative.Trans () where
 import Control.Applicative.Backwards (Backwards(..))
 import Control.Applicative.Lift      (Lift(..))
 
+#if !(MIN_VERSION_base(4,8,0))
 import Data.Functor ((<$>))
+#endif
 
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 

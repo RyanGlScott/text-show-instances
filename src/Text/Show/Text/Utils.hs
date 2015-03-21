@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, OverloadedStrings #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-|
 Module:      Text.Show.Text.Utils
 Copyright:   (C) 2014-2015 Ryan Scott

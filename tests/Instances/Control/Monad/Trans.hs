@@ -1,6 +1,9 @@
-{-# LANGUAGE FlexibleContexts, GeneralizedNewtypeDeriving,
-             StandaloneDeriving, UndecidableInstances #-}
-{-# OPTIONS_GHC -fno-warn-orphans -fno-warn-warnings-deprecations #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
+{-# LANGUAGE UndecidableInstances       #-}
+{-# OPTIONS_GHC -fno-warn-orphans               #-}
+{-# OPTIONS_GHC -fno-warn-warnings-deprecations #-}
 {-|
 Module:      Instances.Control.Monad.Trans
 Copyright:   (C) 2014-2015 Ryan Scott

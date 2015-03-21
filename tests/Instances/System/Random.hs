@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Random
@@ -11,7 +12,9 @@ Provides an 'Arbitrary' instance for 'StdGen' values.
 -}
 module Instances.System.Random () where
 
+#if !(MIN_VERSION_base(4,8,0))
 import Data.Functor ((<$>))
+#endif
 import System.Random (StdGen, mkStdGen)
 import Test.Tasty.QuickCheck (Arbitrary(..))
 

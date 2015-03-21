@@ -14,8 +14,9 @@ module Instances.System.Console.Terminfo () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative (pure)
-#endif
 import Data.Functor ((<$>))
+#endif
+
 import System.Console.Terminfo.Color (Color(..))
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 

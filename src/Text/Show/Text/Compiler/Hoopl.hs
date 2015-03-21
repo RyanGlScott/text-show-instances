@@ -1,4 +1,7 @@
-{-# LANGUAGE CPP, GADTs, OverloadedStrings, TemplateHaskell #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE GADTs             #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Compiler.Hoopl

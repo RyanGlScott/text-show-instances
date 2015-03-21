@@ -14,10 +14,11 @@ module Instances.Data.Binary () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
+
+import Data.Functor ((<$>))
 #endif
 
 import Data.Binary.Get.Internal (Decoder(..))
-import Data.Functor ((<$>))
 
 import Test.QuickCheck.Instances ()
 import Test.Tasty.QuickCheck (Arbitrary(..), oneof)

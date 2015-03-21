@@ -14,9 +14,9 @@ module Instances.Data.Containers () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>), pure)
+import Data.Functor ((<$>))
 #endif
 
-import Data.Functor ((<$>))
 import Data.Sequence (ViewL(..), ViewR(..))
 
 import Test.QuickCheck.Instances ()

@@ -14,9 +14,8 @@ module Instances.Data.Vector () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import           Control.Applicative (pure)
-#endif
-
 import           Data.Functor ((<$>))
+#endif
 
 import qualified Data.Vector as B (Vector)
 import           Data.Vector.Fusion.Stream.Size (Size(..))

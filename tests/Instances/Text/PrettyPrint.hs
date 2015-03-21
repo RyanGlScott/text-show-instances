@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 #if MIN_VERSION_pretty(1,1,2)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 #endif
@@ -18,9 +19,9 @@ module Instances.Text.PrettyPrint () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 

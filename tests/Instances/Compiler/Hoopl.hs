@@ -1,4 +1,7 @@
-{-# LANGUAGE CPP, FlexibleInstances, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE FlexibleInstances          #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Compiler.Hoopl
@@ -24,9 +27,9 @@ import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DP
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative (pure)
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 import Instances.Utils ((<@>))
 

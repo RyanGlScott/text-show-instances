@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, UndecidableInstances #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.Data.String.UTF8

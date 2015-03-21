@@ -1,6 +1,7 @@
-{-# LANGUAGE CPP, OverloadedStrings #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
 #if MIN_VERSION_time(1,5,0)
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell   #-}
 #endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|

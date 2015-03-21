@@ -1,4 +1,6 @@
-{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Semigroup
@@ -14,12 +16,11 @@ module Instances.Data.Semigroup () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>))
+import Data.Functor ((<$>))
 #endif
 
-import Data.Functor ((<$>))
 import Data.Semigroup (Min(..), Max(..), First(..), Last(..),
                        WrappedMonoid(..), Option(..), Arg(..))
-
 import Test.Tasty.QuickCheck (Arbitrary(..))
 
 deriving instance Arbitrary a => Arbitrary (Min a)

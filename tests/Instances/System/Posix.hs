@@ -1,4 +1,5 @@
-{-# LANGUAGE CPP, StandaloneDeriving #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Posix
@@ -14,9 +15,9 @@ module Instances.System.Posix () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>), pure)
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 import Instances.Miscellaneous ()
 

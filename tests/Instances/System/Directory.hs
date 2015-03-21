@@ -14,7 +14,9 @@ module Instances.System.Directory () where
 
 #if MIN_VERSION_directory(1,1,0)
 import Control.Applicative ((<**>))
+# if !(MIN_VERSION_base(4,8,0))
 import Data.Functor ((<$>))
+# endif
 import System.Directory (Permissions, emptyPermissions, setOwnerReadable,
                          setOwnerWritable, setOwnerExecutable, setOwnerSearchable)                      
 import Test.Tasty.QuickCheck (Arbitrary(..))

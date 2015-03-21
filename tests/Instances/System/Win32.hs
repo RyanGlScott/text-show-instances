@@ -1,4 +1,6 @@
-{-# LANGUAGE CPP, GeneralizedNewtypeDeriving, StandaloneDeriving #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Win32
@@ -14,9 +16,9 @@ module Instances.System.Win32 () where
 
 #if !(MIN_VERSION_base(4,8,0))
 import Control.Applicative ((<*>), pure)
-#endif
 
 import Data.Functor ((<$>))
+#endif
 
 import Instances.Miscellaneous ()
 
