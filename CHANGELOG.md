@@ -1,3 +1,6 @@
+### 0.3.0.1
+* Fixed tests on Windows
+
 # 0.3
 * Added `showbArgPrec` (and corresponding `Show` and `Show1` instances) to `Text.Show.Text.Data.Semigroup`
 * Added `Show1` instances for data types in `Text.Show.Text.Data.List.NonEmpty` and `Text.Show.Text.Data.Semigroup`
