@@ -18,7 +18,7 @@ module Text.Show.Text.Data.Binary (showbDecoder) where
 import Data.Binary.Get.Internal (Decoder(..))
 import Data.Monoid.Compat
 
-import Prelude hiding (Show)
+import Prelude ()
 
 import Text.Show.Text (Show(showb, showbPrec), Show1(showbPrec1), Builder, fromString)
 

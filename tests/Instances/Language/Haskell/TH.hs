@@ -222,8 +222,10 @@ instance Arbitrary Guard where
 
 instance Arbitrary Info where
     arbitrary = oneof [
-#if MIN_VERSION_template_haskell(2,5,0)
+#if   MIN_VERSION_template_haskell(2,7,0)
           pure $ ClassI fDec [fDec]
+#elif MIN_VERSION_template_haskell(2,5,0)
+          pure $ ClassI fDec [fClassInstance]
 #else
           pure $ ClassI fDec
 #endif
@@ -555,6 +557,11 @@ deriving instance Show PkgName
 
 fBody :: Body
 fBody = GuardedB []
+
+#if MIN_VERSION_template_haskell(2,5,0) && !MIN_VERSION_template_haskell(2,7,0)
+fClassInstance :: ClassInstance
+fClassInstance = ClassInstance fName [fTyVarBndr] [fPred] fName [fType]
+#endif
 
 fClause :: Clause
 fClause = Clause [] fBody []

@@ -18,23 +18,36 @@ module Instances.Miscellaneous () where
 
 import Data.Version (Version(..))
 
-import Foreign.C.Types (CInt(..))
 import Foreign.Ptr (Ptr, nullPtr, plusPtr)
 
 import Prelude ()
 import Prelude.Compat
 
 import System.Exit (ExitCode(..))
-#if defined(HTYPE_GID_T)
-import System.Posix.Types (CGid(..))
-#endif
-#if defined(HTYPE_UID_T)
-import System.Posix.Types (CUid(..))
-#endif
 
 import Test.QuickCheck (Arbitrary(..), oneof)
-#if !(MIN_VERSION_base(4,5,0))
+
+#if MIN_VERSION_base(4,5,0)
+
+import Foreign.C.Types (CInt(..))
+# if defined(HTYPE_GID_T)
+import System.Posix.Types (CGid(..))
+# endif
+# if defined(HTYPE_UID_T)
+import System.Posix.Types (CUid(..))
+# endif
+
+#else
+
+import Foreign.C.Types (CInt)
+# if defined(HTYPE_GID_T)
+import System.Posix.Types (CGid)
+# endif
+# if defined(HTYPE_UID_T)
+import System.Posix.Types (CUid)
+# endif
 import Test.QuickCheck (arbitrarySizedBoundedIntegral)
+
 #endif
 
 instance Arbitrary ExitCode where
