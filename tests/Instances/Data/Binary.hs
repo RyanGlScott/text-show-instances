@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Binary
@@ -12,16 +11,13 @@ Provides an 'Arbitrary' instance for 'Decoder's.
 -}
 module Instances.Data.Binary () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
-
-import Data.Functor ((<$>))
-#endif
-
 import Data.Binary.Get.Internal (Decoder(..))
 
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..), oneof)
 import Test.QuickCheck.Instances ()
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
 
 instance Arbitrary a => Arbitrary (Decoder a) where
     arbitrary = oneof [ Fail      <$> arbitrary <*> arbitrary

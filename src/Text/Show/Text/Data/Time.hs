@@ -32,6 +32,7 @@ module Text.Show.Text.Data.Time (
     ) where
 
 import Data.Fixed (Pico)
+import Data.Monoid.Compat
 import Data.Semigroup (timesN)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
@@ -46,7 +47,7 @@ import Text.Show.Text (Show(showb), Builder, FromStringShow(..),
                        fromString, lengthB, showbSpace)
 import Text.Show.Text.Data.Fixed (showbFixed)
 import Text.Show.Text.Data.Integral ()
-import Text.Show.Text.Utils ((<>), s)
+import Text.Show.Text.Utils (s)
 
 #if MIN_VERSION_time(1,5,0)
 import Data.Time.Format (TimeLocale)

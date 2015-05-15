@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
@@ -14,14 +13,13 @@ Provides 'Arbitrary' instances for @Semigroup@ data types.
 -}
 module Instances.Data.Semigroup () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
-import Data.Functor ((<$>))
-#endif
-
 import Data.Semigroup (Min(..), Max(..), First(..), Last(..),
                        WrappedMonoid(..), Option(..), Arg(..))
-import Test.Tasty.QuickCheck (Arbitrary(..))
+
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..))
 
 deriving instance Arbitrary a => Arbitrary (Min a)
 deriving instance Arbitrary a => Arbitrary (Max a)

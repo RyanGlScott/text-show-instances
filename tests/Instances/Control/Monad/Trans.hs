@@ -24,7 +24,7 @@ import           Control.Monad.Trans.Maybe               (MaybeT(..))
 import qualified Control.Monad.Trans.Writer.Lazy   as WL (WriterT(..))
 import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT(..))
 
-import           Test.Tasty.QuickCheck (Arbitrary)
+import           Test.QuickCheck (Arbitrary)
 
 deriving instance Arbitrary (m (Either e a)) => Arbitrary (ErrorT e m a)
 deriving instance Arbitrary (m (Either e a)) => Arbitrary (ExceptT e m a)

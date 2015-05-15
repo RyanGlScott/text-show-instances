@@ -20,9 +20,7 @@ import           Codec.Binary.UTF8.Generic (UTF8Bytes)
 
 import qualified Data.ByteString      as BS
 import qualified Data.ByteString.Lazy as BL
-#if !(MIN_VERSION_base(4,8,0))
-import           Data.Monoid (mempty)
-#endif
+import           Data.Monoid.Compat
 import           Data.String.UTF8 (UTF8, toRep)
 import           Data.Word (Word8)
 
@@ -30,7 +28,7 @@ import           Prelude hiding (Show)
 
 import           Text.Show.Text (Show(showb), Builder)
 import           Text.Show.Text.Data.Text (showbBuilder)
-import           Text.Show.Text.Utils ((<>), s)
+import           Text.Show.Text.Utils (s)
 
 #include "inline.h"
 

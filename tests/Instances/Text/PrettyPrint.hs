@@ -1,8 +1,6 @@
 {-# LANGUAGE CPP                        #-}
-{-# LANGUAGE StandaloneDeriving         #-}
-#if MIN_VERSION_pretty(1,1,2)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-#endif
+{-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Text.PrettyPrint
@@ -17,13 +15,10 @@ Provides 'Arbitrary' instances for data types in the @pretty@ library
 -}
 module Instances.Text.PrettyPrint () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
+import Prelude ()
+import Prelude.Compat
 
-import Data.Functor ((<$>))
-#endif
-
-import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 import Text.PrettyPrint.HughesPJ (Doc, Mode(..), Style(..), TextDetails(..), text)
 #if MIN_VERSION_pretty(1,1,2)

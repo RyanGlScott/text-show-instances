@@ -37,9 +37,7 @@ import Compiler.Hoopl.GHC (lblToUnique, uniqueToInt)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Monoid (mconcat)
-#endif
+import Data.Monoid.Compat
 
 import Prelude hiding (Show)
 
@@ -47,7 +45,7 @@ import Text.Show.Text (Show(showb, showbPrec), Show1(showbPrec1), Builder)
 import Text.Show.Text.Data.Containers ()
 import Text.Show.Text.Data.Integral (showbIntPrec)
 import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
-import Text.Show.Text.Utils ((<>), s)
+import Text.Show.Text.Utils (s)
 
 #include "inline.h"
 

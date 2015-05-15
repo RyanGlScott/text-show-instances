@@ -23,6 +23,8 @@ module Text.Show.Text.Trace.Hpc (
     , showbHash
     ) where
 
+import Data.Monoid.Compat
+
 import Prelude hiding (Show)
 
 import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..))
@@ -30,7 +32,7 @@ import Text.Show.Text.Data.Integral (showbIntPrec)
 import Text.Show.Text.Data.Time ()
 import Text.Show.Text.TH (deriveShow, deriveShowPragmas,
                           defaultInlineShowb, defaultInlineShowbPrec)
-import Text.Show.Text.Utils ((<>), s)
+import Text.Show.Text.Utils (s)
 
 import Trace.Hpc.Mix (Mix, BoxLabel, CondBox)
 import Trace.Hpc.Tix (Tix, TixModule)

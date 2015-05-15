@@ -1,11 +1,9 @@
 {-# LANGUAGE CPP                        #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MagicHash                  #-}
 {-# LANGUAGE StandaloneDeriving         #-}
 {-# LANGUAGE TypeSynonymInstances       #-}
-#if !(MIN_VERSION_template_haskell(2,10,0))
-{-# LANGUAGE MagicHash                  #-}
-#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Language.Haskell.TH
@@ -19,12 +17,6 @@ Provides 'Arbitrary' instances for data types in the @template-haskell@ library.
 -}
 module Instances.Language.Haskell.TH () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
-
-import Data.Functor ((<$>))
-#endif
-
 #if !(MIN_VERSION_template_haskell(2,10,0))
 import GHC.Exts (Int(I#))
 #endif
@@ -37,7 +29,10 @@ import Language.Haskell.TH.Syntax
 import Language.Haskell.TH.Syntax.Internals
 #endif
 
-import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 instance Arbitrary Body where
     arbitrary = oneof $ map pure [ GuardedB [(fGuard, fExp)]

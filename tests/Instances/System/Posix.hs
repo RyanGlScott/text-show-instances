@@ -1,6 +1,10 @@
 {-# LANGUAGE CPP                #-}
+
+#if !defined(mingw32_HOST_OS)
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Instances.System.Posix
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -13,19 +17,17 @@ Provides 'Arbitrary' instances for data types in the @unix@ library.
 -}
 module Instances.System.Posix () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
-
-import Data.Functor ((<$>))
-#endif
-
+#if !defined(mingw32_HOST_OS)
 import Instances.Miscellaneous ()
+
+import Prelude ()
+import Prelude.Compat
 
 import System.Posix.DynamicLinker (RTLDFlags(..), DL(..))
 import System.Posix.Process (ProcessStatus(..))
 import System.Posix.User (GroupEntry(..), UserEntry(..))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 deriving instance Bounded RTLDFlags
 deriving instance Enum RTLDFlags
@@ -37,11 +39,11 @@ instance Arbitrary DL where
 
 instance Arbitrary ProcessStatus where
     arbitrary = oneof [ Exited     <$> arbitrary
-#if MIN_VERSION_unix(2,7,0)
+# if MIN_VERSION_unix(2,7,0)
                       , Terminated <$> arbitrary <*> arbitrary
-#else
+# else
                       , Terminated <$> arbitrary
-#endif
+# endif
                       , Stopped    <$> arbitrary
                       ]
 
@@ -51,3 +53,4 @@ instance Arbitrary GroupEntry where
 instance Arbitrary UserEntry where
     arbitrary = UserEntry <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
                           <*> arbitrary <*> arbitrary <*> arbitrary
+#endif

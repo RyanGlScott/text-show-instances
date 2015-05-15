@@ -1,6 +1,10 @@
 {-# LANGUAGE CPP             #-}
+
+#if !defined(mingw32_HOST_OS)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Text.Show.Text.System.Console.Terminfo
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -9,11 +13,18 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-Monomorphic 'Show' functions for data types in the @terminfo@ library.
+Monomorphic 'Show' functions for data types in the @terminfo@ library. This module
+only exports functions if using a Unix-like operating system (i.e., not Windows).
 
 /Since: 0.2/
 -}
-module Text.Show.Text.System.Console.Terminfo (showbColorPrec, showbSetupTermError) where
+module Text.Show.Text.System.Console.Terminfo (
+#if defined(mingw32_HOST_OS)
+    ) where
+#else
+      showbColorPrec
+    , showbSetupTermError
+    ) where
 
 import Prelude hiding (Show)
 
@@ -44,3 +55,4 @@ $(deriveShow ''Color)
 instance Show SetupTermError where
     showb = showbSetupTermError
     INLINE_INST_FUN(showb)
+#endif

@@ -1,5 +1,10 @@
+{-# LANGUAGE CPP             #-}
+
+#if !defined(mingw32_HOST_OS)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Text.Show.Text.System.Posix
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -8,12 +13,15 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-Monomorphic 'Show' functions for data types in the @unix@ library. This module is
-only available on Unix-like operating systems (i.e., not Windows).
+Monomorphic 'Show' functions for data types in the @unix@ library. This module
+only exports functions if using a Unix-like operating system (i.e., not Windows).
 
 /Since: 0.1/
 -}
 module Text.Show.Text.System.Posix (
+#if defined(mingw32_HOST_OS)
+    ) where
+#else
       showbRTLDFlags
     , showbDLPrec
     , showbProcessStatusPrec
@@ -68,3 +76,4 @@ $(deriveShow                           ''DL)
 $(deriveShow                           ''ProcessStatus)
 $(deriveShow                           ''GroupEntry)
 $(deriveShow                           ''UserEntry)
+#endif

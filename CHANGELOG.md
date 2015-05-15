@@ -1,3 +1,8 @@
+# 0.4
+* Allow building with `text-show-0.8`
+* Modules which were previously exported only if using a recent-enough version of GHC/`base` (e.g., `Text.Show.Text.System.Win32`) are now always exposed. If the functionality that the module provides is not available on a given version of GHC/`base`, the module will not expose anything.
+* Change test-suite to use `hspec`, allowing for it to be built on GHC 7.0 and 7.2
+
 ### 0.3.0.1
 * Fixed tests on Windows
 

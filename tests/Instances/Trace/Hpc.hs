@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -13,16 +12,13 @@ Provides 'Arbitrary' instances for data types in the @hpc@ library.
 -}
 module Instances.Trace.Hpc () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
-
-import Data.Functor ((<$>))
-#endif
-
 import Instances.Utils ((<@>))
 
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 import Test.QuickCheck.Instances ()
-import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 import Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
 import Trace.Hpc.Tix (Tix(..), TixModule(..))

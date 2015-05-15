@@ -24,9 +24,7 @@ module Text.Show.Text.Text.PrettyPrint (
 #endif
     ) where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Monoid (mempty)
-#endif
+import Data.Monoid.Compat
 
 import Prelude hiding (Show)
 
@@ -38,7 +36,7 @@ import Text.Show.Text.TH (defaultInlineShowbPrec)
 #endif
 import Text.Show.Text (Show(showb, showbPrec), Builder, fromString)
 import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
-import Text.Show.Text.Utils ((<>), s)
+import Text.Show.Text.Utils (s)
 
 #include "inline.h"
 

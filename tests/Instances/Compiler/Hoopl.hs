@@ -25,15 +25,12 @@ import Compiler.Hoopl.GHC (uniqueToLbl)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative (pure)
-
-import Data.Functor ((<$>))
-#endif
-
 import Instances.Utils ((<@>))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..), oneof)
 
 instance Arbitrary Label where
     arbitrary = uniqueToLbl <$> arbitrary

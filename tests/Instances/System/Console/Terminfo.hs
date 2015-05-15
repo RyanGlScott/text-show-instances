@@ -1,5 +1,9 @@
 {-# LANGUAGE CPP #-}
+
+#if !defined(mingw32_HOST_OS)
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Instances.System.Console.Terminfo
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -12,13 +16,13 @@ Provides 'Arbitrary' instances for data types in the @terminfo@ library.
 -}
 module Instances.System.Console.Terminfo () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative (pure)
-import Data.Functor ((<$>))
-#endif
+#if !defined(mingw32_HOST_OS)
+import Prelude ()
+import Prelude.Compat
 
 import System.Console.Terminfo.Color (Color(..))
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+
+import Test.QuickCheck (Arbitrary(..), oneof)
 
 instance Arbitrary Color where
     arbitrary = oneof [ pure Black
@@ -33,3 +37,4 @@ instance Arbitrary Color where
                       ]
 
 -- instance Arbitrary SetupTermError
+#endif

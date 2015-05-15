@@ -87,6 +87,7 @@ module Text.Show.Text.Language.Haskell.TH (
 
 import           Data.Char (isAlpha)
 import           Data.Maybe (fromJust)
+import           Data.Monoid.Compat
 import qualified Data.Text.Lazy as TL (Text, dropWhile, null, tail)
 import           Data.Text.Lazy (uncons)
 
@@ -104,7 +105,7 @@ import           Text.Show.Text (Show(showb, showbPrec), Builder,
 import           Text.Show.Text.Data.Integral (showbIntPrec)
 import           Text.Show.Text.Text.PrettyPrint (renderB)
 import           Text.Show.Text.TH (deriveShow)
-import           Text.Show.Text.Utils ((<>), s)
+import           Text.Show.Text.Utils (s)
 
 -- | Convert a 'Body' to a 'Builder' with the given precedence.
 -- 

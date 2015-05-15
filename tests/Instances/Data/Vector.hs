@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Vector
@@ -12,11 +11,6 @@ Provides 'Arbitrary' instances for 'Vector' types.
 -}
 module Instances.Data.Vector () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import           Control.Applicative (pure)
-import           Data.Functor ((<$>))
-#endif
-
 import qualified Data.Vector as B (Vector)
 import           Data.Vector.Fusion.Stream.Size (Size(..))
 import qualified Data.Vector.Generic as G (Vector)
@@ -29,7 +23,10 @@ import           Data.Vector.Unboxed (Unbox)
 
 import           Foreign.Storable (Storable)
 
-import           Test.Tasty.QuickCheck (Arbitrary(..), Gen, oneof)
+import           Prelude ()
+import           Prelude.Compat
+
+import           Test.QuickCheck (Arbitrary(..), Gen, oneof)
 
 arbitraryVector :: (Arbitrary a, G.Vector v a) => Gen (v a)
 arbitraryVector = fromList <$> arbitrary

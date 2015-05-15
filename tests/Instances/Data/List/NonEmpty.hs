@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.List.NonEmpty
@@ -12,13 +11,12 @@ Provides an 'Arbitrary' instance for 'NonEmpty' lists.
 -}
 module Instances.Data.List.NonEmpty () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
-import Data.Functor ((<$>))
-#endif
-
 import Data.List.NonEmpty (NonEmpty(..))
-import Test.Tasty.QuickCheck (Arbitrary(..))
+
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..))
 
 instance Arbitrary a => Arbitrary (NonEmpty a) where
     arbitrary = (:|) <$> arbitrary <*> arbitrary

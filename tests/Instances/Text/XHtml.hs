@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Text.XHtml
@@ -12,13 +11,10 @@ Provides 'Arbitrary' instances for data types in the @xhtml@ library.
 -}
 module Instances.Text.XHtml () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>))
+import Prelude ()
+import Prelude.Compat
 
-import Data.Functor ((<$>))
-#endif
-
-import Test.Tasty.QuickCheck (Arbitrary(..), Gen)
+import Test.QuickCheck (Arbitrary(..), Gen)
 
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink(..), strAttr, toHtml)
 import Text.XHtml.Table (HtmlTable, cell)

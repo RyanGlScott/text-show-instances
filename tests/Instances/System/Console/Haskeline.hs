@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Console.Haskeline
@@ -12,19 +11,16 @@ Provides 'Arbitrary' instances for data types in the @haskeline@ library.
 -}
 module Instances.System.Console.Haskeline () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
-
-import Data.Functor ((<$>))
-#endif
-
 import Instances.Utils ((<@>))
+
+import Prelude ()
+import Prelude.Compat
 
 import System.Console.Haskeline (Interrupt(..))
 import System.Console.Haskeline.Completion (Completion(..))
 import System.Console.Haskeline.History (History, addHistory, emptyHistory)
 
-import Test.Tasty.QuickCheck (Arbitrary(..))
+import Test.QuickCheck (Arbitrary(..))
 
 instance Arbitrary Interrupt where
     arbitrary = pure Interrupt

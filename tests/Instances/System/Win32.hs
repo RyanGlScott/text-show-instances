@@ -1,7 +1,11 @@
 {-# LANGUAGE CPP                        #-}
+
+#if defined(mingw32_HOST_OS)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Instances.System.Win32
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -14,13 +18,11 @@ Provides 'Arbitrary' instances for data types in the @Win32@ library.
 -}
 module Instances.System.Win32 () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Control.Applicative ((<*>), pure)
-
-import Data.Functor ((<$>))
-#endif
-
+#if defined(mingw32_HOST_OS)
 import Instances.Miscellaneous ()
+
+import Prelude ()
+import Prelude.Compat
 
 import System.Win32.DebugApi (DebugEventInfo(..), Exception(..))
 import System.Win32.File (BY_HANDLE_FILE_INFORMATION(..), WIN32_FILE_ATTRIBUTE_DATA(..))
@@ -28,7 +30,7 @@ import System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
 import System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
                           TIME_ZONE_INFORMATION(..), TimeZoneId(..))
 
-import Test.Tasty.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 instance Arbitrary DebugEventInfo where
     arbitrary = oneof [ pure UnknownDebugEvent
@@ -104,3 +106,4 @@ deriving instance Bounded TimeZoneId
 deriving instance Enum TimeZoneId
 instance Arbitrary TimeZoneId where
     arbitrary = arbitraryBoundedEnum
+#endif

@@ -1,5 +1,10 @@
+{-# LANGUAGE CPP             #-}
+
+#if defined(mingw32_HOST_OS)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#endif
+
 {-|
 Module:      Text.Show.Text.System.Win32
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -9,11 +14,14 @@ Stability:   Experimental
 Portability: GHC
 
 Monomorphic 'Show' functions for data types in the @Win32@ library.
-This module is only available on Windows.
+This module only exports functions if using Windows.
 
 /Since: 0.1/
 -}
 module Text.Show.Text.System.Win32 (
+#if !defined(mingw32_HOST_OS)
+    ) where
+#else
       showbDebugEventInfoPrec
     , showbExceptionPrec
     , showb_BY_HANDLE_FILE_INFORMATION_Prec
@@ -115,3 +123,4 @@ $(deriveShowPragmas defaultInlineShowbPrec ''FILETIME)
 $(deriveShow                               ''SYSTEMTIME)
 $(deriveShow                               ''TIME_ZONE_INFORMATION)
 $(deriveShowPragmas defaultInlineShowb     ''TimeZoneId)
+#endif

@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             0.3.0.1
+version:             0.4
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
@@ -65,12 +65,13 @@ stability:           Experimental
 copyright:           (C) 2014-2015 Ryan Scott
 category:            Text
 build-type:          Simple
+tested-with:         GHC == 7.0.4, GHC == 7.2.2, GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.1
 extra-source-files:  CHANGELOG.md, README.md, include/inline.h
 cabal-version:       >=1.10
 
 source-repository head
   type:                git
-  location:            git://github.com/RyanGlScott/text-show-instances.git
+  location:            https://github.com/RyanGlScott/text-show-instances
 
 library
   exposed-modules:     Text.Show.Text.Instances
@@ -97,15 +98,16 @@ library
                        Text.Show.Text.Text.PrettyPrint
                        Text.Show.Text.Text.XHtml
                        Text.Show.Text.Trace.Hpc
-  other-modules:       Text.Show.Text.Compiler
-                       Text.Show.Text.Control
-                       Text.Show.Text.Data
-                       Text.Show.Text.Language
-                       Text.Show.Text.System
-                       Text.Show.Text.Text
-                       Text.Show.Text.Trace
-                       Text.Show.Text.Utils
-  build-depends:       base                 >= 4.2    && < 5
+                       
+                       -- Only exports functions if using Windows
+                       Text.Show.Text.System.Win32
+                       
+                       -- Only exports functions if not using Windows
+                       Text.Show.Text.System.Console.Terminfo
+                       Text.Show.Text.System.Posix
+  other-modules:       Text.Show.Text.Utils
+  build-depends:       base                 >= 4.3    && < 5
+                     , base-compat          >= 0.8.1  && < 1
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
@@ -119,9 +121,9 @@ library
                      , random               >= 1.0.1  && < 1.2
                      , semigroups           >= 0.16.2 && < 1
                      , tagged               >= 0.4.4  && < 1
-                     , template-haskell     >= 2.4    && < 2.11
-                     , text                 >= 0.8    && < 1.3
-                     , text-show            >= 0.5    && < 0.8
+                     , template-haskell     >= 2.5    && < 2.11
+                     , text                 >= 0.11.1 && < 1.3
+                     , text-show            >= 0.5    && < 0.9
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5
                      , transformers-compat  >= 0.3    && < 1
@@ -138,16 +140,13 @@ library
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
-    exposed-modules:   Text.Show.Text.System.Win32
   else
     build-depends:     terminfo             >= 0.3.2  && < 0.5
                      , unix                 >= 2      && < 2.8
-    exposed-modules:   Text.Show.Text.System.Console.Terminfo
-                       Text.Show.Text.System.Posix
 
-test-suite text-show-instances-properties
+test-suite text-show-instances-spec
   type:                exitcode-stdio-1.0
-  main-is:             Properties.hs
+  main-is:             Spec.hs
   other-modules:       Instances.Compiler.Hoopl
                        Instances.Control.Applicative.Trans
                        Instances.Control.Monad.Trans
@@ -168,29 +167,45 @@ test-suite text-show-instances-properties
                        Instances.Text.XHtml
                        Instances.Trace.Hpc
                        Instances.Utils
-                       Properties.Compiler.Hoopl
-                       Properties.Control.Applicative.Trans
-                       Properties.Control.Monad.Trans
-                       Properties.Data.Binary
-                       Properties.Data.Containers
-                       Properties.Data.Functor.Trans
-                       Properties.Data.List.NonEmpty
-                       Properties.Data.Semigroup
-                       Properties.Data.String.UTF8
-                       Properties.Data.Tagged
-                       Properties.Data.Time
-                       Properties.Data.UnorderedContainers
-                       Properties.Language.Haskell.TH
-                       Properties.System.Console.Haskeline
-                       Properties.System.Directory
-                       Properties.System.Locale
-                       Properties.System.Random
-                       Properties.System.Time
-                       Properties.Text.PrettyPrint
-                       Properties.Text.XHtml
-                       Properties.Trace.Hpc
-                       Properties.Utils
-  build-depends:       base                 >= 4.5    && < 5
+                       
+                       -- Only exports functions if using Windows
+                       Instances.System.Win32
+                       
+                       -- Only exports functions if not using Windows
+                       Instances.System.Console.Terminfo
+                       Instances.System.Posix
+                       
+                       Spec.Compiler.HooplSpec
+                       Spec.Control.Applicative.TransSpec
+                       Spec.Control.Monad.TransSpec
+                       Spec.Data.BinarySpec
+                       Spec.Data.ContainersSpec
+                       Spec.Data.Functor.TransSpec
+                       Spec.Data.List.NonEmptySpec
+                       Spec.Data.SemigroupSpec
+                       Spec.Data.String.UTF8Spec
+                       Spec.Data.TaggedSpec
+                       Spec.Data.TimeSpec
+                       Spec.Data.UnorderedContainersSpec
+                       Spec.Language.Haskell.THSpec
+                       Spec.System.Console.HaskelineSpec
+                       Spec.System.DirectorySpec
+                       Spec.System.LocaleSpec
+                       Spec.System.RandomSpec
+                       Spec.System.TimeSpec
+                       Spec.Text.PrettyPrintSpec
+                       Spec.Text.XHtmlSpec
+                       Spec.Trace.HpcSpec
+                       Spec.Utils
+                       
+                       -- Only exports functions if using Windows
+                       Spec.System.Win32Spec
+                       
+                       -- Only exports functions if not using Windows
+                       Spec.System.Console.TerminfoSpec
+                       Spec.System.PosixSpec
+  build-depends:       base                 >= 4.3    && < 5
+                     , base-compat          >= 0.8.1  && < 1
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
@@ -198,19 +213,18 @@ test-suite text-show-instances-properties
                      , haskeline            >= 0.7    && < 0.8
                      , hoopl                >= 3.8.7  && < 3.11
                      , hpc                  >= 0.5    && < 0.7
+                     , hspec                >= 2      && < 3
                      , old-locale           >= 1      && < 1.1
                      , old-time             >= 1      && < 1.2
                      , pretty               >= 1      && < 1.2
+                     , QuickCheck           >= 2.5    && < 3
                      , quickcheck-instances >= 0.1    && < 0.4
                      , random               >= 1.0.1  && < 1.2
                      , semigroups           >= 0.8.4  && < 1
                      , tagged               >= 0.4.4  && < 1
-                     , tasty                >= 0.8    && < 0.11
-                     , tasty-hunit          >= 0.8    && < 0.10
-                     , tasty-quickcheck     >= 0.8    && < 0.9
-                     , template-haskell     >= 2.4    && < 2.11
-                     , text-show            >= 0.5    && < 0.8
-                     , text-show-instances  == 0.3.0.1
+                     , template-haskell     >= 2.5    && < 2.11
+                     , text-show            >= 0.5    && < 0.9
+                     , text-show-instances  == 0.4
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5
                      , transformers-compat  >= 0.3    && < 1
@@ -220,16 +234,10 @@ test-suite text-show-instances-properties
                      , xhtml                >= 3000.2 && < 3000.3
   hs-source-dirs:      tests
   default-language:    Haskell2010
-  ghc-options:         -Wall
+  ghc-options:         -Wall -threaded -rtsopts
   
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
-    other-modules:     Instances.System.Win32
-                       Properties.System.Win32
   else
     build-depends:     terminfo             >= 0.3.2  && < 0.5
                      , unix                 >= 2      && < 2.8
-    other-modules:     Instances.System.Console.Terminfo
-                       Instances.System.Posix
-                       Properties.System.Console.Terminfo
-                       Properties.System.Posix

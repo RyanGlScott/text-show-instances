@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
@@ -18,11 +17,10 @@ module Instances.Control.Applicative.Trans () where
 import Control.Applicative.Backwards (Backwards(..))
 import Control.Applicative.Lift      (Lift(..))
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor ((<$>))
-#endif
+import Prelude ()
+import Prelude.Compat
 
-import Test.Tasty.QuickCheck (Arbitrary(..), oneof)
+import Test.QuickCheck (Arbitrary(..), oneof)
 
 deriving instance Arbitrary (f a) => Arbitrary (Backwards f a)
 

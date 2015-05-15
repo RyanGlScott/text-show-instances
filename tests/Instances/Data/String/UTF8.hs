@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.String.UTF8
@@ -12,12 +11,12 @@ Provides an 'Arbitrary' instance for 'UTF8' strings.
 -}
 module Instances.Data.String.UTF8 () where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor ((<$>))
-#endif
 import Data.String.UTF8 (UTF8, fromRep)
 
-import Test.Tasty.QuickCheck (Arbitrary(..))
+import Prelude ()
+import Prelude.Compat
+
+import Test.QuickCheck (Arbitrary(..))
 
 instance Arbitrary a => Arbitrary (UTF8 a) where
     arbitrary = fromRep <$> arbitrary
