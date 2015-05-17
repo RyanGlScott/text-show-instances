@@ -38,7 +38,7 @@ main = hspec spec
 spec :: Spec
 spec = parallel $
 #if defined(mingw32_HOST_OS)
-    describe "Text.Show.Text.System.Win32"
+    describe "Text.Show.Text.System.Win32" $ do
         prop "DebugEventInfo instance"             (prop_matchesShow :: Int -> DebugEventInfo -> Bool)
         prop "Exception instance"                  (prop_matchesShow :: Int -> Exception -> Bool)
         prop "BY_HANDLE_FILE_INFORMATION instance" (prop_matchesShow :: Int -> BY_HANDLE_FILE_INFORMATION -> Bool)
