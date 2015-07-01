@@ -25,5 +25,5 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.System.Random" $
-    prop "StdGen instance" (prop_matchesShow :: Int -> StdGen -> Bool)
+spec = parallel . describe "StdGen" $
+    prop "Show instance" (prop_matchesShow :: Int -> StdGen -> Bool)

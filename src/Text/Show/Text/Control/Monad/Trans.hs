@@ -14,13 +14,14 @@ Monomorphic 'Show' functions for monad transformers.
 /Since: 0.1/
 -}
 module Text.Show.Text.Control.Monad.Trans (
-      showbErrorTPrec
-    , showbExceptTPrec
-    , showbIdentityTPrec
+      showbErrorTPrecWith
+    , showbExceptTPrecWith
+    , showbIdentityTPrecWith
     , showbListTPrec
-    , showbMaybeTPrec
-    , showbWriterTLazyPrec
-    , showbWriterTStrictPrec
+    , showbListTPrecWith
+    , showbMaybeTPrecWith
+    , showbWriterTLazyPrecWith
+    , showbWriterTStrictPrecWith
     ) where
 
 import           Control.Monad.Trans.Error               (ErrorT(..))
@@ -33,112 +34,147 @@ import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT(..))
 
 import           Prelude hiding (Show)
 
-import           Text.Show.Text (Show(showbPrec), Show1(showbPrec1),
-                                 Builder, showbUnary1)
+import           Text.Show.Text (Show(showb, showbPrec), Show1(..), Builder,
+                                 showbPrec1, showbUnaryWith)
+import           Text.Show.Text.Data.Tuple (showb2TupleWith2)
 
 #include "inline.h"
 
--- | Convert an 'ErrorT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbErrorTPrec :: (Show e, Show1 m, Show a) => Int -> ErrorT e m a -> Builder
-showbErrorTPrec p (ErrorT m) = showbUnary1 "ErrorT" p m
-{-# INLINE showbErrorTPrec #-}
+-- | Convert an 'ErrorT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbErrorTPrecWith :: (Show e, Show1 m)
+                    => (Int -> a -> Builder)
+                    -> Int -> ErrorT e m a -> Builder
+showbErrorTPrecWith sp p (ErrorT m) =
+    showbUnaryWith (showbPrecWith (showbPrecWith sp)) "ErrorT" p m
+{-# INLINE showbErrorTPrecWith #-}
 
--- | Convert an 'ExceptT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbExceptTPrec :: (Show e, Show1 m, Show a) => Int -> ExceptT e m a -> Builder
-showbExceptTPrec p (ExceptT m) = showbUnary1 "ExceptT" p m
-{-# INLINE showbExceptTPrec #-}
+-- | Convert an 'ExceptT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbExceptTPrecWith :: (Show e, Show1 m)
+                     => (Int -> a -> Builder)
+                     -> Int -> ExceptT e m a -> Builder
+showbExceptTPrecWith sp p (ExceptT m) =
+    showbUnaryWith (showbPrecWith (showbPrecWith sp)) "ExceptT" p m
+{-# INLINE showbExceptTPrecWith #-}
 
--- | Convert an 'IdentityT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbIdentityTPrec :: (Show1 f, Show a) => Int -> IdentityT f a -> Builder
-showbIdentityTPrec p (IdentityT m) = showbUnary1 "IdentityT" p m
-{-# INLINE showbIdentityTPrec #-}
+-- | Convert an 'IdentityT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbIdentityTPrecWith :: Show1 f
+                       => (Int -> a -> Builder)
+                       -> Int -> IdentityT f a -> Builder
+showbIdentityTPrecWith sp p (IdentityT m) =
+    showbUnaryWith (showbPrecWith sp) "IdentityT" p m
+{-# INLINE showbIdentityTPrecWith #-}
 
 -- | Convert a 'ListT' value to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbListTPrec :: (Show1 m, Show a) => Int -> ListT m a -> Builder
-showbListTPrec p (ListT m) = showbUnary1 "ListT" p m
+showbListTPrec p (ListT m) = showbUnaryWith (showbPrecWith showbPrec) "ListT" p m
 {-# INLINE showbListTPrec #-}
 
--- | Convert a 'MaybeT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbMaybeTPrec :: (Show1 m, Show a) => Int -> MaybeT m a -> Builder
-showbMaybeTPrec p (MaybeT m) = showbUnary1 "MaybeT" p m
-{-# INLINE showbMaybeTPrec #-}
+-- | Convert a 'ListT' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbListTPrecWith :: Show1 m
+                   => (a -> Builder)
+                   -> Int -> ListT m a -> Builder
+showbListTPrecWith sp p (ListT m) =
+    showbUnaryWith (showbPrecWith (showbPrecWith (const sp))) "ListT" p m
+{-# INLINE showbListTPrecWith #-}
 
--- | Convert a lazy 'WL.WriterT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbWriterTLazyPrec :: (Show w, Show1 m, Show a) => Int -> WL.WriterT w m a -> Builder
-showbWriterTLazyPrec p (WL.WriterT m) = showbUnary1 "WriterT" p m
-{-# INLINE showbWriterTLazyPrec #-}
+-- | Convert a 'MaybeT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbMaybeTPrecWith :: Show1 m
+                    => (Int -> a -> Builder)
+                    -> Int -> MaybeT m a -> Builder
+showbMaybeTPrecWith sp p (MaybeT m) =
+    showbUnaryWith (showbPrecWith (showbPrecWith sp)) "MaybeT" p m
+{-# INLINE showbMaybeTPrecWith #-}
 
--- | Convert a strict 'WS.WriterT' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbWriterTStrictPrec :: (Show w, Show1 m, Show a) => Int -> WS.WriterT w m a -> Builder
-showbWriterTStrictPrec p (WS.WriterT m) = showbUnary1 "WriterT" p m
-{-# INLINE showbWriterTStrictPrec #-}
+-- | Convert a lazy 'WL.WriterT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbWriterTLazyPrecWith :: (Show w, Show1 m)
+                         => (a -> Builder)
+                         -> Int -> WL.WriterT w m a -> Builder
+showbWriterTLazyPrecWith sp p (WL.WriterT m) =
+    showbUnaryWith (showbPrecWith (const $ showb2TupleWith2 sp showb)) "WriterT" p m
+{-# INLINE showbWriterTLazyPrecWith #-}
+
+-- | Convert a strict 'WS.WriterT' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbWriterTStrictPrecWith :: (Show w, Show1 m)
+                           => (a -> Builder)
+                           -> Int -> WS.WriterT w m a -> Builder
+showbWriterTStrictPrecWith sp p (WS.WriterT m) =
+    showbUnaryWith (showbPrecWith (const $ showb2TupleWith2 sp showb)) "WriterT" p m
+{-# INLINE showbWriterTStrictPrecWith #-}
 
 instance (Show e, Show1 m, Show a) => Show (ErrorT e m a) where
-    showbPrec = showbErrorTPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show e, Show1 m) => Show1 (ErrorT e m) where
-    showbPrec1 = showbErrorTPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbErrorTPrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show e, Show1 m, Show a) => Show (ExceptT e m a) where
-    showbPrec = showbExceptTPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show e, Show1 m) => Show1 (ExceptT e m) where
-    showbPrec1 = showbExceptTPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbExceptTPrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show1 f, Show a) => Show (IdentityT f a) where
-    showbPrec = showbIdentityTPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance Show1 f => Show1 (IdentityT f) where
-    showbPrec1 = showbIdentityTPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbIdentityTPrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show1 m, Show a) => Show (ListT m a) where
     showbPrec = showbListTPrec
     INLINE_INST_FUN(showbPrec)
 
 instance Show1 m => Show1 (ListT m) where
-    showbPrec1 = showbListTPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith sp = showbListTPrecWith $ sp 0
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show1 m, Show a) => Show (MaybeT m a) where
-    showbPrec = showbMaybeTPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance Show1 m => Show1 (MaybeT m) where
-    showbPrec1 = showbMaybeTPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbMaybeTPrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show w, Show1 m, Show a) => Show (WL.WriterT w m a) where
-    showbPrec = showbWriterTLazyPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show w, Show1 m) => Show1 (WL.WriterT w m) where
-    showbPrec1 = showbWriterTLazyPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith sp = showbWriterTLazyPrecWith $ sp 0
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show w, Show1 m, Show a) => Show (WS.WriterT w m a) where
-    showbPrec = showbWriterTStrictPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show w, Show1 m) => Show1 (WS.WriterT w m) where
-    showbPrec1 = showbWriterTStrictPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith sp = showbWriterTStrictPrecWith $ sp 0
+    INLINE_INST_FUN(showbPrecWith)

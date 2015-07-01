@@ -25,5 +25,5 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.List.NonEmpty" $
-    prop "NonEmpty Char instance" (prop_matchesShow :: Int -> NonEmpty Char -> Bool)
+spec = parallel . describe "NonEmpty Char" $
+    prop "Show instance" (prop_matchesShow :: Int -> NonEmpty Char -> Bool)

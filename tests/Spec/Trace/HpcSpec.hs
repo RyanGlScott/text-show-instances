@@ -27,11 +27,18 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Trace.Hpc" $ do
-    prop "Mix instance"       (prop_matchesShow :: Int -> Mix -> Bool)
-    prop "BoxLabel instance"  (prop_matchesShow :: Int -> BoxLabel -> Bool)
-    prop "CondBox instance"   (prop_matchesShow :: Int -> CondBox -> Bool)
-    prop "Tix instance"       (prop_matchesShow :: Int -> Tix -> Bool)
-    prop "TixModule instance" (prop_matchesShow :: Int -> TixModule -> Bool)
-    prop "HpcPos instance"    (prop_matchesShow :: Int -> HpcPos -> Bool)
-    prop "Hash instance"      (prop_matchesShow :: Int -> Hash -> Bool)
+spec = parallel $ do
+    describe "Mix" $
+        prop "Show instance" (prop_matchesShow :: Int -> Mix -> Bool)
+    describe "BoxLabel" $
+        prop "Show instance" (prop_matchesShow :: Int -> BoxLabel -> Bool)
+    describe "CondBox" $
+        prop "Show instance" (prop_matchesShow :: Int -> CondBox -> Bool)
+    describe "Tix" $
+        prop "Show instance" (prop_matchesShow :: Int -> Tix -> Bool)
+    describe "TixModule" $
+        prop "Show instance" (prop_matchesShow :: Int -> TixModule -> Bool)
+    describe "HpcPos" $
+        prop "Show instance" (prop_matchesShow :: Int -> HpcPos -> Bool)
+    describe "Hash" $
+        prop "Show instance" (prop_matchesShow :: Int -> Hash -> Bool)

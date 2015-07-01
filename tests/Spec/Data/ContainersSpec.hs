@@ -31,12 +31,20 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Containers" $ do
-    prop "IntMap Char instance"   (prop_matchesShow :: Int -> IntMap Char -> Bool)
-    prop "IntSet instance"        (prop_matchesShow :: Int -> IntSet -> Bool)
-    prop "Map Char Char instance" (prop_matchesShow :: Int -> Map Char Char -> Bool)
-    prop "Sequence Char"          (prop_matchesShow :: Int -> Seq Char -> Bool)
-    prop "ViewL Int instance"     (prop_matchesShow :: Int -> ViewL Int -> Bool)
-    prop "ViewR Int instance"     (prop_matchesShow :: Int -> ViewR Int -> Bool)
-    prop "Set Char instance"      (prop_matchesShow :: Int -> Set Char -> Bool)
-    prop "Tree Char instance"     (prop_matchesShow :: Int -> Tree Char -> Bool)
+spec = parallel $ do
+    describe "IntMap Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> IntMap Char -> Bool)
+    describe "IntSet" $
+        prop "Show instance" (prop_matchesShow :: Int -> IntSet -> Bool)
+    describe "Map Char Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Map Char Char -> Bool)
+    describe "Sequence Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Seq Char -> Bool)
+    describe "ViewL Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> ViewL Char -> Bool)
+    describe "ViewR Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> ViewR Char -> Bool)
+    describe "Set Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Set Char -> Bool)
+    describe "Tree Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Tree Char -> Bool)

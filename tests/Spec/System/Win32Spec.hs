@@ -38,17 +38,26 @@ main = hspec spec
 spec :: Spec
 spec = parallel $
 #if defined(mingw32_HOST_OS)
-    describe "Text.Show.Text.System.Win32" $ do
-        prop "DebugEventInfo instance"             (prop_matchesShow :: Int -> DebugEventInfo -> Bool)
-        prop "Exception instance"                  (prop_matchesShow :: Int -> Exception -> Bool)
-        prop "BY_HANDLE_FILE_INFORMATION instance" (prop_matchesShow :: Int -> BY_HANDLE_FILE_INFORMATION -> Bool)
-        prop "WIN32_FILE_ATTRIBUTE_DATA instance"  (prop_matchesShow :: Int -> WIN32_FILE_ATTRIBUTE_DATA -> Bool)
-        prop "ProcessorArchitecture instance"      (prop_matchesShow :: Int -> ProcessorArchitecture -> Bool)
-        prop "SYSTEM_INFO instance"                (prop_matchesShow :: Int -> SYSTEM_INFO -> Bool)
-        prop "FILETIME instance"                   (prop_matchesShow :: Int -> FILETIME -> Bool)
-        prop "SYSTEMTIME instance"                 (prop_matchesShow :: Int -> SYSTEMTIME -> Bool)
-        prop "TIME_ZONE_INFORMATION instance"      (prop_matchesShow :: Int -> TIME_ZONE_INFORMATION -> Bool)
-        prop "TimeZoneId instance"                 (prop_matchesShow :: Int -> TimeZoneId -> Bool)
+    describe "DebugEventInfo" $
+        prop "Show instance" (prop_matchesShow :: Int -> DebugEventInfo -> Bool)
+    describe "Exception" $
+        prop "Show instance" (prop_matchesShow :: Int -> Exception -> Bool)
+    describe "BY_HANDLE_FILE_INFORMATION" $
+        prop "Show instance" (prop_matchesShow :: Int -> BY_HANDLE_FILE_INFORMATION -> Bool)
+    describe "WIN32_FILE_ATTRIBUTE_DATA" $
+        prop "Show instance" (prop_matchesShow :: Int -> WIN32_FILE_ATTRIBUTE_DATA -> Bool)
+    describe "ProcessorArchitecture" $
+        prop "Show instance" (prop_matchesShow :: Int -> ProcessorArchitecture -> Bool)
+    describe "SYSTEM_INFO" $
+        prop "Show instance" (prop_matchesShow :: Int -> SYSTEM_INFO -> Bool)
+    describe "FILETIME" $
+        prop "Show instance" (prop_matchesShow :: Int -> FILETIME -> Bool)
+    describe "SYSTEMTIME" $
+        prop "Show instance" (prop_matchesShow :: Int -> SYSTEMTIME -> Bool)
+    describe "TIME_ZONE_INFORMATION" $
+        prop "Show instance" (prop_matchesShow :: Int -> TIME_ZONE_INFORMATION -> Bool)
+    describe "TimeZoneId" $
+        prop "Show instance" (prop_matchesShow :: Int -> TimeZoneId -> Bool)
 #else
     pure ()
 #endif

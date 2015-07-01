@@ -27,13 +27,22 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Time" $ do
-    prop "Day instance"             (prop_matchesShow :: Int -> Day -> Bool)
-    prop "DiffTime instance"        (prop_matchesShow :: Int -> DiffTime -> Bool)
-    prop "UTCTime instance"         (prop_matchesShow :: Int -> UTCTime -> Bool)
-    prop "NominalDiffTime instance" (prop_matchesShow :: Int -> NominalDiffTime -> Bool)
-    prop "AbsoluteTime instance"    (prop_matchesShow :: Int -> AbsoluteTime -> Bool)
-    prop "TimeZone instance"        (prop_matchesShow :: Int -> TimeZone -> Bool)
-    prop "TimeOfDay instance"       (prop_matchesShow :: Int -> TimeOfDay -> Bool)
-    prop "LocalTime instance"       (prop_matchesShow :: Int -> LocalTime -> Bool)
-    prop "ZonedTime instance"       (prop_matchesShow :: Int -> ZonedTime -> Bool)
+spec = parallel $ do
+    describe "Day" $
+        prop "Show instance" (prop_matchesShow :: Int -> Day -> Bool)
+    describe "DiffTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> DiffTime -> Bool)
+    describe "UTCTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> UTCTime -> Bool)
+    describe "NominalDiffTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> NominalDiffTime -> Bool)
+    describe "AbsoluteTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> AbsoluteTime -> Bool)
+    describe "TimeZone" $
+        prop "Show instance" (prop_matchesShow :: Int -> TimeZone -> Bool)
+    describe "TimeOfDay" $
+        prop "Show instance" (prop_matchesShow :: Int -> TimeOfDay -> Bool)
+    describe "LocalTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> LocalTime -> Bool)
+    describe "ZonedTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> ZonedTime -> Bool)

@@ -25,6 +25,8 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.UnorderedContainers" $ do
-    prop "HashMap Char Char instance" (prop_matchesShow :: Int -> HashMap Char Char -> Bool)
-    prop "HashSet Char instance"      (prop_matchesShow :: Int -> HashSet Char -> Bool)
+spec = parallel $ do
+    describe "HashMap Char Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> HashMap Char Char -> Bool)
+    describe "HashSet Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> HashSet Char -> Bool)

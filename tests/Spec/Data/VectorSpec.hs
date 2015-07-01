@@ -29,9 +29,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Vector" $ do
-    prop "(boxed)     Vector Char instance" (prop_matchesShow :: Int -> B.Vector Char -> Bool)
-    prop "(primitive) Vector Char instance" (prop_matchesShow :: Int -> P.Vector Char -> Bool)
-    prop "(storable)  Vector Char instance" (prop_matchesShow :: Int -> S.Vector Char -> Bool)
-    prop "(unboxed)   Vector Char instance" (prop_matchesShow :: Int -> U.Vector Char -> Bool)
-    prop "Size instance"                    (prop_matchesShow :: Int -> Size -> Bool)
+spec = parallel $ do
+    describe "(boxed) Vector Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> B.Vector Char -> Bool)
+    describe "(primitive) Vector Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> P.Vector Char -> Bool)
+    describe "(storable) Vector Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> S.Vector Char -> Bool)
+    describe "(unboxed) Vector Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> U.Vector Char -> Bool)
+    describe "Size" $
+        prop "Show instance" (prop_matchesShow :: Int -> Size -> Bool)

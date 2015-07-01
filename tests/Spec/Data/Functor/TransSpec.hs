@@ -29,9 +29,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Functor.Trans" $ do
-    prop "Compose Maybe [] Char instance" (prop_matchesShow :: Int -> Compose Maybe [] Char -> Bool)
-    prop "Constant Int Char instance"     (prop_matchesShow :: Int -> Constant Int Char -> Bool)
-    prop "Product Maybe [] Char instance" (prop_matchesShow :: Int -> Product Maybe [] Char -> Bool)
-    prop "Reverse Maybe Int instance"     (prop_matchesShow :: Int -> Reverse Maybe Int -> Bool)
-    prop "Sum Maybe [] Char instance"     (prop_matchesShow :: Int -> Sum Maybe [] Char -> Bool)
+spec = parallel $ do
+    describe "Compose Maybe (Either Int) Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Compose Maybe (Either Int) Char -> Bool)
+    describe "Constant Int Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Constant Int Char -> Bool)
+    describe "Product Maybe (Either Int) Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Product Maybe (Either Int) Char -> Bool)
+    describe "Reverse Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Reverse Maybe Int -> Bool)
+    describe "Sum Maybe (Either Int) Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> Sum Maybe (Either Int) Char -> Bool)

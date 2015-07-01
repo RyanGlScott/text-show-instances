@@ -28,9 +28,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.System.Console.Haskeline" $ do
-    prop "Interrupt instance"       (prop_matchesShow :: Int -> Interrupt -> Bool)
---     prop "Prefs instance"           (prop_matchesShow :: Int -> Prefs -> Bool)
-    it "defaultPrefs Show output" $ showb (FromStringShow defaultPrefs) `shouldBe` showb defaultPrefs
-    prop "Completion instance"      (prop_matchesShow :: Int -> Completion -> Bool)
-    prop "History instance"         (prop_matchesShow :: Int -> History -> Bool)
+spec = parallel $ do
+    describe "Interrupt" $
+        prop "Show instance"                                      (prop_matchesShow :: Int -> Interrupt -> Bool)
+--     describe "Prefs" $
+--         prop "Show instance"                                      (prop_matchesShow :: Int -> Prefs -> Bool)
+    describe "defaultPrefs" $
+        it "should have coinciding string and text Show output" $ showb (FromStringShow defaultPrefs) `shouldBe` showb defaultPrefs
+    describe "Completion" $
+        prop "Show instance"                                      (prop_matchesShow :: Int -> Completion -> Bool)
+    describe "History" $
+        prop "Show instance"                                      (prop_matchesShow :: Int -> History -> Bool)

@@ -25,5 +25,5 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.System.Locale" $
-    prop "TimeLocale instance" (prop_matchesShow :: Int -> TimeLocale -> Bool)
+spec = parallel . describe "TimeLocale" $
+    prop "Show instance" (prop_matchesShow :: Int -> TimeLocale -> Bool)

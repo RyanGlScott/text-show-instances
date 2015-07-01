@@ -27,14 +27,24 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Compiler.Hoopl" $ do
-    prop "Label instance"           (prop_matchesShow :: Int -> Label -> Bool)
-    prop "LabelMap Char instance"   (prop_matchesShow :: Int -> LabelMap Char -> Bool)
-    prop "LabelSet instance"        (prop_matchesShow :: Int -> LabelSet -> Bool)
-    prop "Pointed C C Int instance" (prop_matchesShow :: Int -> Pointed C C Int -> Bool)
-    prop "Unique instance"          (prop_matchesShow :: Int -> Unique -> Bool)
-    prop "UniqueMap Char instance"  (prop_matchesShow :: Int -> UniqueMap Char -> Bool)
-    prop "UniqueSet instance"       (prop_matchesShow :: Int -> UniqueSet -> Bool)
-    prop "DominatorNode instance"   (prop_matchesShow :: Int -> DominatorNode -> Bool)
-    prop "DominatorTree instance"   (prop_matchesShow :: Int -> DominatorTree -> Bool)
-    prop "DPath instance"           (prop_matchesShow :: Int -> DPath -> Bool)
+spec = parallel $ do
+    describe "Label" $
+        prop "Show instance" (prop_matchesShow :: Int -> Label -> Bool)
+    describe "LabelMap Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> LabelMap Char -> Bool)
+    describe "LabelSet" $
+        prop "Show instance" (prop_matchesShow :: Int -> LabelSet -> Bool)
+    describe "Pointed C C Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Pointed C C Int -> Bool)
+    describe "Unique" $
+        prop "Show instance" (prop_matchesShow :: Int -> Unique -> Bool)
+    describe "UniqueMap Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> UniqueMap Char -> Bool)
+    describe "UniqueSet" $
+        prop "Show instance" (prop_matchesShow :: Int -> UniqueSet -> Bool)
+    describe "DominatorNode" $
+        prop "Show instance" (prop_matchesShow :: Int -> DominatorNode -> Bool)
+    describe "DominatorTree" $
+        prop "Show instance" (prop_matchesShow :: Int -> DominatorTree -> Bool)
+    describe "DPath" $
+        prop "Show instance" (prop_matchesShow :: Int -> DPath -> Bool)

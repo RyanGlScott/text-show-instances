@@ -24,9 +24,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.System.Time" $ do
-    prop "ClockTime instance"    (prop_matchesShow :: Int -> ClockTime -> Bool)
-    prop "TimeDiff instance"     (prop_matchesShow :: Int -> TimeDiff -> Bool)
-    prop "CalendarTime instance" (prop_matchesShow :: Int -> CalendarTime -> Bool)
-    prop "Month instance"        (prop_matchesShow :: Int -> Month -> Bool)
-    prop "Day instance"          (prop_matchesShow :: Int -> Day -> Bool)
+spec = parallel $ do
+    describe "ClockTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> ClockTime -> Bool)
+    describe "TimeDiff" $
+        prop "Show instance" (prop_matchesShow :: Int -> TimeDiff -> Bool)
+    describe "CalendarTime" $
+        prop "Show instance" (prop_matchesShow :: Int -> CalendarTime -> Bool)
+    describe "Month" $
+        prop "Show instance" (prop_matchesShow :: Int -> Month -> Bool)
+    describe "Day" $
+        prop "Show instance" (prop_matchesShow :: Int -> Day -> Bool)

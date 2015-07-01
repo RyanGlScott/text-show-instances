@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -13,26 +12,20 @@ Monomorphic 'Show' function for 'NonEmpty' lists.
 
 /Since: 0.1/
 -}
-module Text.Show.Text.Data.List.NonEmpty (showbNonEmptyPrec) where
+module Text.Show.Text.Data.List.NonEmpty (showbNonEmptyPrecWith) where
 
 import Data.List.NonEmpty (NonEmpty)
 
-import Prelude hiding (Show)
+import Text.Show.Text (Show1(..), Builder)
+import Text.Show.Text.TH (deriveShow, deriveShow1)
 
-import Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+-- | Convert a 'NonEmpty' list to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbNonEmptyPrecWith :: (Int -> a -> Builder) -> Int -> NonEmpty a -> Builder
+showbNonEmptyPrecWith = showbPrecWith
+{-# INLINE showbNonEmptyPrecWith #-}
 
-#include "inline.h"
-
--- | Convert a 'NonEmpty' list to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbNonEmptyPrec :: Show a => Int -> NonEmpty a -> Builder
-showbNonEmptyPrec = showbPrec
-{-# INLINE showbNonEmptyPrec #-}
-
-$(deriveShowPragmas defaultInlineShowbPrec ''NonEmpty)
-
-instance Show1 NonEmpty where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''NonEmpty)
+$(deriveShow1 ''NonEmpty)

@@ -14,105 +14,94 @@ Monomorphic 'Show' functions for @Semigroup@ data types.
 /Since: 0.1/
 -}
 module Text.Show.Text.Data.Semigroup (
-      showbMinPrec
-    , showbMaxPrec
-    , showbFirstPrec
-    , showbLastPrec
-    , showbWrappedMonoidPrec
-    , showbOptionPrec
-    , showbArgPrec
+      showbMinPrecWith
+    , showbMaxPrecWith
+    , showbFirstPrecWith
+    , showbLastPrecWith
+    , showbWrappedMonoidPrecWith
+    , showbOptionPrecWith
+    , showbArgPrecWith2
     ) where
 
 import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option, Arg)
 
 import Prelude hiding (Show)
 
-import Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder)
-import Text.Show.Text.TH (deriveShowPragmas, defaultInlineShowbPrec)
+import Text.Show.Text (Builder, showbPrecWith, showbPrecWith2)
+import Text.Show.Text.TH (deriveShow, deriveShow1, deriveShow2)
 
 #include "inline.h"
 
--- | Convert a 'Min' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbMinPrec :: Show a => Int -> Min a -> Builder
-showbMinPrec = showbPrec
-{-# INLINE showbMinPrec #-}
+-- | Convert a 'Min' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbMinPrecWith :: (Int -> a -> Builder) -> Int -> Min a -> Builder
+showbMinPrecWith = showbPrecWith
+{-# INLINE showbMinPrecWith #-}
 
--- | Convert a 'Max' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbMaxPrec :: Show a => Int -> Max a -> Builder
-showbMaxPrec = showbPrec
-{-# INLINE showbMaxPrec #-}
+-- | Convert a 'Max' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbMaxPrecWith :: (Int -> a -> Builder) -> Int -> Max a -> Builder
+showbMaxPrecWith = showbPrecWith
+{-# INLINE showbMaxPrecWith #-}
 
--- | Convert a 'First' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbFirstPrec :: Show a => Int -> First a -> Builder
-showbFirstPrec = showbPrec
-{-# INLINE showbFirstPrec #-}
+-- | Convert a 'First' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbFirstPrecWith :: (Int -> a -> Builder) -> Int -> First a -> Builder
+showbFirstPrecWith = showbPrecWith
+{-# INLINE showbFirstPrecWith #-}
 
--- | Convert a 'Last' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbLastPrec :: Show a => Int -> Last a -> Builder
-showbLastPrec = showbPrec
-{-# INLINE showbLastPrec #-}
+-- | Convert a 'Last' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbLastPrecWith :: (Int -> a -> Builder) -> Int -> Last a -> Builder
+showbLastPrecWith = showbPrecWith
+{-# INLINE showbLastPrecWith #-}
 
--- | Convert a 'WrappedMonoid' to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbWrappedMonoidPrec :: Show m => Int -> WrappedMonoid m -> Builder
-showbWrappedMonoidPrec = showbPrec
-{-# INLINE showbWrappedMonoidPrec #-}
+-- | Convert a 'WrappedMonoid' to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbWrappedMonoidPrecWith :: (Int -> m -> Builder) -> Int -> WrappedMonoid m -> Builder
+showbWrappedMonoidPrecWith = showbPrecWith
+{-# INLINE showbWrappedMonoidPrecWith #-}
 
--- | Convert an 'Option' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbOptionPrec :: Show a => Int -> Option a -> Builder
-showbOptionPrec = showbPrec
-{-# INLINE showbOptionPrec #-}
+-- | Convert an 'Option' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbOptionPrecWith :: (Int -> a -> Builder) -> Int -> Option a -> Builder
+showbOptionPrecWith = showbPrecWith
+{-# INLINE showbOptionPrecWith #-}
 
--- | Convert an 'Arg' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.3/
-showbArgPrec :: (Show a, Show b) => Int -> Arg a b -> Builder
-showbArgPrec = showbPrec
-{-# INLINE showbArgPrec #-}
+-- | Convert an 'Arg' value to a 'Builder' with the given show functions and precedence.
+--
+-- /Since: 1/
+showbArgPrecWith2 :: (Int -> a -> Builder) -> (Int -> b -> Builder)
+                  -> Int -> Arg a b -> Builder
+showbArgPrecWith2 = showbPrecWith2
+{-# INLINE showbArgPrecWith2 #-}
 
-$(deriveShowPragmas defaultInlineShowbPrec ''Min)
-$(deriveShowPragmas defaultInlineShowbPrec ''Max)
-$(deriveShowPragmas defaultInlineShowbPrec ''First)
-$(deriveShowPragmas defaultInlineShowbPrec ''Last)
-$(deriveShowPragmas defaultInlineShowbPrec ''WrappedMonoid)
-$(deriveShowPragmas defaultInlineShowbPrec ''Option)
-$(deriveShowPragmas defaultInlineShowbPrec ''Arg)
+$(deriveShow  ''Min)
+$(deriveShow1 ''Min)
 
-instance Show1 Min where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''Max)
+$(deriveShow1 ''Max)
 
-instance Show1 Max where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''First)
+$(deriveShow1 ''First)
 
-instance Show1 First where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''Last)
+$(deriveShow1 ''Last)
 
-instance Show1 Last where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''WrappedMonoid)
+$(deriveShow1 ''WrappedMonoid)
 
-instance Show1 WrappedMonoid where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''Option)
+$(deriveShow1 ''Option)
 
-instance Show1 Option where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
-
-instance Show a => Show1 (Arg a) where
-    showbPrec1 = showbPrec
-    INLINE_INST_FUN(showbPrec1)
+$(deriveShow  ''Arg)
+$(deriveShow1 ''Arg)
+$(deriveShow2 ''Arg)

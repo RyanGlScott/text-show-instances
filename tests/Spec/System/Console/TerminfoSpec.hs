@@ -33,11 +33,12 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel $
+spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
-    describe "Text.Show.Text.System.Console.Terminfo" $ do
-        prop "Color instance"          (prop_matchesShow :: Int -> Color -> Bool)
---         prop "SetupTermError instance" (prop_matchesShow :: Int -> SetupTermError -> Bool)
+    describe "Color" $
+        prop "Show instance" (prop_matchesShow :: Int -> Color -> Bool)
+--     describe "SetupTermError" $
+--         prop "Show instance" (prop_matchesShow :: Int -> SetupTermError -> Bool)
 #else
     pure ()
 #endif

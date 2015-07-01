@@ -25,5 +25,5 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Tagged" $
-    prop "Tagged Char Int instance" (prop_matchesShow :: Int -> Tagged Char Int -> Bool)
+spec = parallel . describe "Tagged Char Int" $
+    prop "Show instance" (prop_matchesShow :: Int -> Tagged Char Int -> Bool)

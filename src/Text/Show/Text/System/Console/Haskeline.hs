@@ -27,40 +27,41 @@ import System.Console.Haskeline (Interrupt, Prefs)
 import System.Console.Haskeline.Completion (Completion)
 import System.Console.Haskeline.History (History, historyLines)
 
-import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..), showbUnary)
-import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
+import Text.Show.Text (Show(showb, showbPrec), Builder, FromStringShow(..))
+import Text.Show.Text.TH (deriveShow)
+import Text.Show.Text.Utils (showbUnaryListWith)
 
 #include "inline.h"
 
 -- | Convert an 'Interrupt' to a 'Builder'.
--- 
+--
 -- /Since: 0.2/
 showbInterrupt :: Interrupt -> Builder
 showbInterrupt = showb
 {-# INLINE showbInterrupt #-}
 
 -- | Convert a 'Prefs' value to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.2/
 showbPrefsPrec :: Int -> Prefs -> Builder
 showbPrefsPrec p = showbPrec p . FromStringShow
 {-# INLINE showbPrefsPrec #-}
 
 -- | Convert a 'Completion' value to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.2/
 showbCompletionPrec :: Int -> Completion -> Builder
 showbCompletionPrec = showbPrec
 {-# INLINE showbCompletionPrec #-}
 
 -- | Convert a 'History' value to a 'Builder'.
--- 
+--
 -- /Since: 0.2/
 showbHistory :: History -> Builder
-showbHistory = showbUnary "fromList" 0 . historyLines
+showbHistory = showbUnaryListWith showb 0 . historyLines
 {-# INLINE showbHistory #-}
 
-$(deriveShowPragmas defaultInlineShowb ''Interrupt)
+$(deriveShow ''Interrupt)
 
 instance Show Prefs where
     showbPrec = showbPrefsPrec

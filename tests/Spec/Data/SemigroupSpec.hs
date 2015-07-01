@@ -25,11 +25,18 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Semigroup" $ do
-    prop "Min Int instance"           (prop_matchesShow :: Int -> Min Int -> Bool)
-    prop "Max Int instance"           (prop_matchesShow :: Int -> Max Int -> Bool)
-    prop "First Int instance"         (prop_matchesShow :: Int -> First Int -> Bool)
-    prop "Last Int Char"              (prop_matchesShow :: Int -> Last Int -> Bool)
-    prop "WrappedMonoid Int instance" (prop_matchesShow :: Int -> WrappedMonoid Int -> Bool)
-    prop "Option Int instance"        (prop_matchesShow :: Int -> Option Int -> Bool)
-    prop "Arg Int Int instance"       (prop_matchesShow :: Int -> Arg Int Int -> Bool)
+spec = parallel $ do
+    describe "Min Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Min Int -> Bool)
+    describe "Max Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Max Int -> Bool)
+    describe "First Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> First Int -> Bool)
+    describe "Last Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Last Int -> Bool)
+    describe "WrappedMonoid Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> WrappedMonoid Int -> Bool)
+    describe "Option Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Option Int -> Bool)
+    describe "Arg Int Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Arg Int Int -> Bool)

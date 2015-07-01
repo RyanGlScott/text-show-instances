@@ -25,9 +25,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Text.XHtml" $ do
-    prop "Html instance"      (prop_matchesShow :: Int -> Html -> Bool)
-    prop "[Html] instance"    (prop_matchesShow :: Int -> [Html] -> Bool)
-    prop "HtmlAttr instance"  (prop_matchesShow :: Int -> HtmlAttr -> Bool)
-    prop "HotLink instance"   (prop_matchesShow :: Int -> HotLink -> Bool)
-    prop "HtmlTable instance" (prop_matchesShow :: Int -> HtmlTable -> Bool)
+spec = parallel $ do
+    describe "Html" $
+        prop "Show instance" (prop_matchesShow :: Int -> Html -> Bool)
+    describe "[Html]" $
+        prop "Show instance" (prop_matchesShow :: Int -> [Html] -> Bool)
+    describe "HtmlAttr" $
+        prop "Show instance" (prop_matchesShow :: Int -> HtmlAttr -> Bool)
+    describe "HotLink" $
+        prop "Show instance" (prop_matchesShow :: Int -> HotLink -> Bool)
+    describe "HtmlTable" $
+        prop "Show instance" (prop_matchesShow :: Int -> HtmlTable -> Bool)

@@ -25,10 +25,9 @@ import Data.Monoid.Compat
 
 import Prelude hiding (Show)
 
-import Text.Show.Text (Show(..), Builder, FromStringShow(..), fromString)
+import Text.Show.Text (Show(..), Builder, FromStringShow(..), fromString, singleton)
 import Text.Show.Text.Data.Char (showbString)
 import Text.Show.Text.TH (deriveShow)
-import Text.Show.Text.Utils (s)
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink,
                             htmlAttrPair, renderHtmlFragment)
 import Text.XHtml.Table (HtmlTable)
@@ -36,36 +35,36 @@ import Text.XHtml.Table (HtmlTable)
 #include "inline.h"
 
 -- | Convert an 'Html' value to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbHtml :: Html -> Builder
 showbHtml = fromString . renderHtmlFragment
 {-# INLINE showbHtml #-}
 
 -- | Convert a list of 'Html' values to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbHtmlList :: [Html] -> Builder
 showbHtmlList = mconcat . map showb
 {-# INLINE showbHtmlList #-}
 
 -- | Convert an 'HtmlAttr' to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbHtmlAttr :: HtmlAttr -> Builder
 showbHtmlAttr ha = case htmlAttrPair ha of
-    (str, val) -> fromString str <> s '=' <> showbString val
+    (str, val) -> fromString str <> singleton '=' <> showbString val
 {-# INLINE showbHtmlAttr #-}
 
 -- | Convert a 'HotLink' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbHotLinkPrec :: Int -> HotLink -> Builder
 showbHotLinkPrec = showbPrec
 {-# INLINE showbHotLinkPrec #-}
 
 -- | Convert an 'HtmlTable' to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbHtmlTable :: HtmlTable -> Builder
 showbHtmlTable = showb . FromStringShow
@@ -74,7 +73,7 @@ showbHtmlTable = showb . FromStringShow
 instance Show Html where
     showb = showbHtml
     INLINE_INST_FUN(showb)
-    
+
     showbList = showbHtmlList
     INLINE_INST_FUN(showbList)
 

@@ -16,11 +16,11 @@ the 'Identity' transformer is found in @text-show@, since it is a part of
 /Since: 0.1/
 -}
 module Text.Show.Text.Data.Functor.Trans (
-      showbComposePrec
-    , showbConstantPrec
-    , showbProductPrec
-    , showbReversePrec
-    , showbSumPrec
+      showbComposePrecWith
+    , showbConstantPrecWith
+    , showbProductPrecWith
+    , showbReversePrecWith
+    , showbSumPrecWith
     ) where
 
 import Data.Functor.Compose  (Compose(..))
@@ -31,90 +31,101 @@ import Data.Functor.Sum      (Sum(..))
 
 import Prelude hiding (Show)
 
-import Text.Show.Text (Show(showbPrec), Show1(showbPrec1), Builder,
-                       showbUnary, showbUnary1, showbBinary1)
+import Text.Show.Text (Show(showbPrec), Show1(..), Show2(..), Builder,
+                       showbPrec1, showbUnaryWith, showbBinaryWith)
 
 #include "inline.h"
 
--- kludge to get type with the same instances as g a
-newtype Apply g a = Apply (g a)
+-- | Convert a 'Compose' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbComposePrecWith :: (Show1 f, Show1 g)
+                     => (Int -> a -> Builder)
+                     -> Int -> Compose f g a -> Builder
+showbComposePrecWith sp p (Compose x) =
+    showbUnaryWith (showbPrecWith (showbPrecWith sp)) "Compose" p x
+{-# INLINE showbComposePrecWith #-}
 
-instance (Show1 g, Show a) => Show (Apply g a) where
-    showbPrec p (Apply x) = showbPrec1 p x
+-- | Convert a 'Constant' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbConstantPrecWith :: (Int -> a -> Builder) -> Int -> Constant a b -> Builder
+showbConstantPrecWith sp p (Constant x) = showbUnaryWith sp "Constant" p x
+{-# INLINE showbConstantPrecWith #-}
+
+-- | Convert a 'Product' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbProductPrecWith :: (Show1 f, Show1 g)
+                     => (Int -> a -> Builder)
+                     -> Int -> Product f g a -> Builder
+showbProductPrecWith sp p (Pair x y) =
+    showbBinaryWith (showbPrecWith sp) (showbPrecWith sp) "Pair" p x y
+{-# INLINE showbProductPrecWith #-}
+
+-- | Convert a 'Reverse' value to a 'Builder' with the given show function
+-- and precedence.
+--
+-- /Since: 1/
+showbReversePrecWith :: Show1 f
+                     => (Int -> a -> Builder)
+                     -> Int -> Reverse f a -> Builder
+showbReversePrecWith sp p (Reverse x) = showbUnaryWith (showbPrecWith sp) "Reverse" p x
+{-# INLINE showbReversePrecWith #-}
+
+-- | Convert a 'Sum' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 1/
+showbSumPrecWith :: (Show1 f, Show1 g)
+                 => (Int -> a -> Builder)
+                 -> Int -> Sum f g a -> Builder
+showbSumPrecWith sp p (InL x) = showbUnaryWith (showbPrecWith sp) "InL" p x
+showbSumPrecWith sp p (InR y) = showbUnaryWith (showbPrecWith sp) "InR" p y
+{-# INLINE showbSumPrecWith #-}
+
+instance (Show1 f, Show1 g, Show a) => Show (Compose f g a) where
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
--- | Convert a 'Compose' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbComposePrec :: (Functor f, Show1 f, Show1 g, Show a) => Int -> Compose f g a -> Builder
-showbComposePrec p (Compose x) = showbUnary1 "Compose" p $ fmap Apply x
-{-# INLINE showbComposePrec #-}
-
--- | Convert a 'Constant' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbConstantPrec :: Show a => Int -> Constant a b -> Builder
-showbConstantPrec p (Constant x) = showbUnary "Constant" p x
-{-# INLINE showbConstantPrec #-}
-
--- | Convert a 'Product' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbProductPrec :: (Show1 f, Show1 g, Show a) => Int -> Product f g a -> Builder
-showbProductPrec p (Pair x y) = showbBinary1 "Pair" p x y
-{-# INLINE showbProductPrec #-}
-
--- | Convert a 'Reverse' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbReversePrec :: (Show1 f, Show a) => Int -> Reverse f a -> Builder
-showbReversePrec p (Reverse x) = showbUnary1 "Reverse" p x
-{-# INLINE showbReversePrec #-}
-
--- | Convert a 'Sum' value to a 'Builder' with the given precedence.
--- 
--- /Since: 0.1/
-showbSumPrec :: (Show1 f, Show1 g, Show a) => Int -> Sum f g a -> Builder
-showbSumPrec p (InL x) = showbUnary1 "InL" p x
-showbSumPrec p (InR y) = showbUnary1 "InR" p y
-{-# INLINE showbSumPrec #-}
-
-instance (Functor f, Show1 f, Show1 g, Show a) => Show (Compose f g a) where
-    showbPrec = showbComposePrec
-    INLINE_INST_FUN(showbPrec)
-
-instance (Functor f, Show1 f, Show1 g) => Show1 (Compose f g) where
-    showbPrec1 = showbComposePrec
-    INLINE_INST_FUN(showbPrec1)
+instance (Show1 f, Show1 g) => Show1 (Compose f g) where
+    showbPrecWith = showbComposePrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance Show a => Show (Constant a b) where
-    showbPrec = showbConstantPrec
+    showbPrec = showbPrecWith undefined
     INLINE_INST_FUN(showbPrec)
 
 instance Show a => Show1 (Constant a) where
-    showbPrec1 = showbConstantPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbPrecWith2 showbPrec
+    INLINE_INST_FUN(showbPrecWith)
+
+instance Show2 Constant where
+    showbPrecWith2 sp _ = showbConstantPrecWith sp
+    INLINE_INST_FUN(showbPrecWith2)
 
 instance (Show1 f, Show1 g, Show a) => Show (Product f g a) where
-    showbPrec = showbProductPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show1 f, Show1 g) => Show1 (Product f g) where
-    showbPrec1 = showbProductPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbProductPrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show1 f, Show a) => Show (Reverse f a) where
-    showbPrec = showbReversePrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance Show1 f => Show1 (Reverse f) where
-    showbPrec1 = showbReversePrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbReversePrecWith
+    INLINE_INST_FUN(showbPrecWith)
 
 instance (Show1 f, Show1 g, Show a) => Show (Sum f g a) where
-    showbPrec = showbSumPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance (Show1 f, Show1 g) => Show1 (Sum f g) where
-    showbPrec1 = showbSumPrec
-    INLINE_INST_FUN(showbPrec1)
+    showbPrecWith = showbSumPrecWith
+    INLINE_INST_FUN(showbPrecWith)

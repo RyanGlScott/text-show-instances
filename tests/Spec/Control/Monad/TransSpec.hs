@@ -32,11 +32,18 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Control.Monad.Trans" $ do
-    prop "ErrorT Char Maybe Int instance"           (prop_matchesShow :: Int -> ErrorT Char Maybe Int -> Bool)
-    prop "ExceptT Char Maybe Int instance"          (prop_matchesShow :: Int -> ExceptT Char Maybe Int -> Bool)
-    prop "IdentityT Maybe Int instance"             (prop_matchesShow :: Int -> IdentityT Maybe Int -> Bool)
-    prop "ListT Maybe Char instance"                (prop_matchesShow :: Int -> ListT Maybe Char -> Bool)
-    prop "Maybe [] Int instance"                    (prop_matchesShow :: Int -> MaybeT [] Int -> Bool)
-    prop "lazy WriterT String Maybe Int instance"   (prop_matchesShow :: Int -> WL.WriterT String Maybe Int -> Bool)
-    prop "strict WriterT String Maybe Int instance" (prop_matchesShow :: Int -> WS.WriterT String Maybe Int -> Bool)
+spec = parallel $ do
+    describe "ErrorT Char Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> ErrorT Char Maybe Int -> Bool)
+    describe "ExceptT Char Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> ExceptT Char Maybe Int -> Bool)
+    describe "IdentityT Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> IdentityT Maybe Int -> Bool)
+    describe "ListT Maybe Char" $
+        prop "Show instance" (prop_matchesShow :: Int -> ListT Maybe Char -> Bool)
+    describe "Maybe [] Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> MaybeT [] Int -> Bool)
+    describe "lazy WriterT String Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> WL.WriterT String Maybe Int -> Bool)
+    describe "strict WriterT String Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> WS.WriterT String Maybe Int -> Bool)

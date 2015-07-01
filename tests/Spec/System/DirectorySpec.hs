@@ -35,8 +35,8 @@ main = hspec spec
 spec :: Spec
 spec = parallel $
 #if MIN_VERSION_directory(1,1,0)
-    describe "Text.Show.Text.System.Directory" $
-        prop "Permissions instance" (prop_matchesShow :: Int -> Permissions -> Bool)
+    describe "Permissions" $
+        prop "Show instance" (prop_matchesShow :: Int -> Permissions -> Bool)
 #else
     pure ()
 #endif

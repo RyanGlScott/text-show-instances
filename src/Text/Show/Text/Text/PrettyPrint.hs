@@ -32,23 +32,21 @@ import Text.PrettyPrint.HughesPJ (Doc, Mode, Style(..), TextDetails(..),
                                   fullRender, style)
 #if MIN_VERSION_pretty(1,1,2)
 import Text.PrettyPrint.HughesPJClass (PrettyLevel)
-import Text.Show.Text.TH (defaultInlineShowbPrec)
 #endif
-import Text.Show.Text (Show(showb, showbPrec), Builder, fromString)
-import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
-import Text.Show.Text.Utils (s)
+import Text.Show.Text (Show(showb, showbPrec), Builder, fromString, singleton)
+import Text.Show.Text.TH (deriveShow)
 
 #include "inline.h"
 
 -- | Renders a 'Doc' to a 'Builder' using the default 'style'.
--- 
+--
 -- /Since: 0.3/
 renderB :: Doc -> Builder
 renderB = renderStyleB style
 {-# INLINE renderB #-}
 
 -- | Renders a 'Doc' to a 'Builder' using the given 'Style'.
--- 
+--
 -- /Since: 0.2/
 renderStyleB :: Style -> Doc -> Builder
 renderStyleB sty doc = fullRender (mode sty)
@@ -60,27 +58,27 @@ renderStyleB sty doc = fullRender (mode sty)
 {-# INLINE renderStyleB #-}
 
 txtPrinter :: TextDetails -> Builder -> Builder
-txtPrinter (Chr c)   b = s c <> b
+txtPrinter (Chr c)   b = singleton c <> b
 txtPrinter (Str s')  b = fromString s' <> b
 txtPrinter (PStr s') b = fromString s' <> b
 {-# INLINE txtPrinter #-}
 
 -- | Convert a 'Mode' to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbMode :: Mode -> Builder
 showbMode = showb
 {-# INLINE showbMode #-}
 
 -- | Convert a 'Style' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbStylePrec :: Int -> Style -> Builder
 showbStylePrec = showbPrec
 {-# INLINE showbStylePrec #-}
 
 -- | Convert 'TextDetails' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbTextDetailsPrec :: Int -> TextDetails -> Builder
 showbTextDetailsPrec = showbPrec
@@ -89,7 +87,7 @@ showbTextDetailsPrec = showbPrec
 #if MIN_VERSION_pretty(1,1,2)
 -- | Convert a 'PrettyLevel' value to a 'Builder' with the given precedence.
 -- This function is only available with @pretty-1.1.2.0@ or later.
--- 
+--
 -- /Since: 0.1/
 showbPrettyLevelPrec :: Int -> PrettyLevel -> Builder
 showbPrettyLevelPrec = showbPrec
@@ -100,10 +98,10 @@ instance Show Doc where
     showb = renderB
     INLINE_INST_FUN(showb)
 
-$(deriveShowPragmas defaultInlineShowb     ''Mode)
-$(deriveShow                               ''Style)
-$(deriveShow                               ''TextDetails)
+$(deriveShow ''Mode)
+$(deriveShow ''Style)
+$(deriveShow ''TextDetails)
 
 #if MIN_VERSION_pretty(1,1,2)
-$(deriveShowPragmas defaultInlineShowbPrec ''PrettyLevel)
+$(deriveShow ''PrettyLevel)
 #endif

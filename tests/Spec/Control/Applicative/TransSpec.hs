@@ -26,6 +26,8 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Control.Applicative.Trans" $ do
-    prop "Backwards Maybe Int instance" (prop_matchesShow :: Int -> Backwards Maybe Int -> Bool)
-    prop "Lift Maybe Int instance"      (prop_matchesShow :: Int -> Lift Maybe Int -> Bool)
+spec = parallel $ do
+    describe "Backwards Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Backwards Maybe Int -> Bool)
+    describe "Lift Maybe Int" $
+        prop "Show instance" (prop_matchesShow :: Int -> Lift Maybe Int -> Bool)

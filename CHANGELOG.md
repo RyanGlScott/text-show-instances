@@ -1,3 +1,8 @@
+# 1
+* Allow building with `text-show-1`. Also changed the monomorphic functions to match the naming conventions introduced in `text-show-1`.
+* Removed `utf8-string` instance, since it wasn't as useful as I had imagined
+* Revamped test suite
+
 # 0.4
 * Allow building with `text-show-0.8`
 * Modules which were previously exported only if using a recent-enough version of GHC/`base` (e.g., `Text.Show.Text.System.Win32`) are now always exposed. If the functionality that the module provides is not available on a given version of GHC/`base`, the module will not expose anything.

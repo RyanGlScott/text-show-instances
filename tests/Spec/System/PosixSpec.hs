@@ -35,14 +35,18 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel $
+spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
-    describe "Text.Show.Text.System.Posix" $ do
-        prop "RTLDFlags instance"     (prop_matchesShow :: Int -> RTLDFlags -> Bool)
-        prop "DL instance"            (prop_matchesShow :: Int -> DL -> Bool)
-        prop "ProcessStatus instance" (prop_matchesShow :: Int -> ProcessStatus -> Bool)
-        prop "GroupEntry instance"    (prop_matchesShow :: Int -> GroupEntry -> Bool)
-        prop "UserEntry instance"     (prop_matchesShow :: Int -> UserEntry -> Bool)
+    describe "RTLDFlags" $
+        prop "Show instance" (prop_matchesShow :: Int -> RTLDFlags -> Bool)
+    describe "DL" $
+        prop "Show instance" (prop_matchesShow :: Int -> DL -> Bool)
+    describe "ProcessStatus" $
+        prop "Show instance" (prop_matchesShow :: Int -> ProcessStatus -> Bool)
+    describe "GroupEntry" $
+        prop "Show instance" (prop_matchesShow :: Int -> GroupEntry -> Bool)
+    describe "UserEntry" $
+        prop "Show instance" (prop_matchesShow :: Int -> UserEntry -> Bool)
 #else
     pure ()
 #endif

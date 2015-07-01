@@ -25,5 +25,5 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Data.Binary" $
-    prop "Decoder Int instance" (prop_matchesShow :: Int -> Decoder Int -> Bool)
+spec = parallel . describe "Decoder Int" $
+    prop "Show instance" (prop_matchesShow :: Int -> Decoder Int -> Bool)

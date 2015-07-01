@@ -34,46 +34,46 @@ import System.Posix.Process (ProcessStatus)
 import System.Posix.User (GroupEntry, UserEntry)
 
 import Text.Show.Text (Builder, showb, showbPrec)
-import Text.Show.Text.TH (deriveShow, deriveShowPragmas, defaultInlineShowb)
+import Text.Show.Text.TH (deriveShow)
 
 -- | Convert an 'RTLDFlags' value to a 'Builder'.
--- 
+--
 -- /Since: 0.1/
 showbRTLDFlags :: RTLDFlags -> Builder
 showbRTLDFlags = showb
 {-# INLINE showbRTLDFlags #-}
 
 -- | Convert a 'DL' value to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbDLPrec :: Int -> DL -> Builder
 showbDLPrec = showbPrec
 {-# INLINE showbDLPrec #-}
 
 -- | Convert a 'ProcessStatus' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbProcessStatusPrec :: Int -> ProcessStatus -> Builder
 showbProcessStatusPrec = showbPrec
 {-# INLINE showbProcessStatusPrec #-}
 
 -- | Convert a 'GroupEntry' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbGroupEntryPrec :: Int -> GroupEntry -> Builder
 showbGroupEntryPrec = showbPrec
 {-# INLINE showbGroupEntryPrec #-}
 
 -- | Convert a 'UserEntry' to a 'Builder' with the given precedence.
--- 
+--
 -- /Since: 0.1/
 showbUserEntryPrec :: Int -> UserEntry -> Builder
 showbUserEntryPrec = showbPrec
 {-# INLINE showbUserEntryPrec #-}
 
-$(deriveShowPragmas defaultInlineShowb ''RTLDFlags)
-$(deriveShow                           ''DL)
-$(deriveShow                           ''ProcessStatus)
-$(deriveShow                           ''GroupEntry)
-$(deriveShow                           ''UserEntry)
+$(deriveShow ''RTLDFlags)
+$(deriveShow ''DL)
+$(deriveShow ''ProcessStatus)
+$(deriveShow ''GroupEntry)
+$(deriveShow ''UserEntry)
 #endif

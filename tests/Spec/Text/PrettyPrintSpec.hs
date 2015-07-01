@@ -29,15 +29,21 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel . describe "Text.Show.Text.Text.PrettyPrint" $ do
-    prop "Doc instance"         (prop_matchesShow :: Int -> Doc -> Bool)
+spec = parallel $ do
+    describe "Doc" $ do
+        prop "Show instance"                     (prop_matchesShow :: Int -> Doc -> Bool)
     -- TODO: Figure out why this randomly stalls forever
---     prop "renderStyleB output"  prop_renderStyle
-    prop "Mode instance"        (prop_matchesShow :: Int -> Mode -> Bool)
-    prop "Style instance"       (prop_matchesShow :: Int -> Style -> Bool)
-    prop "TextDetails instance" (prop_matchesShow :: Int -> TextDetails -> Bool)
+--     describe "renderStyleB" $ do
+--         prop "has the same output as renderStyle" prop_renderStyle
+    describe "Mode" $ do
+        prop "Show instance"                     (prop_matchesShow :: Int -> Mode -> Bool)
+    describe "Style" $ do
+        prop "Show instance"                     (prop_matchesShow :: Int -> Style -> Bool)
+    describe "TextDetails" $ do
+        prop "Show instance"                     (prop_matchesShow :: Int -> TextDetails -> Bool)
 #if MIN_VERSION_pretty(1,1,2)
-    prop "PrettyLevel instance" (prop_matchesShow :: Int -> PrettyLevel -> Bool)
+    describe "PrettyLevel" $ do
+        prop "Show instance"                     (prop_matchesShow :: Int -> PrettyLevel -> Bool)
 #endif
 
 -- | Verifies that the output of 'renderStyle' and 'renderStyleB' coincides.

@@ -9,18 +9,23 @@ Portability: GHC
 
 Miscellaneous utility functions.
 -}
-module Text.Show.Text.Utils where
+module Text.Show.Text.Utils (showbUnaryListWith, showbUnaryList) where
 
 import Prelude hiding (Show)
-import Text.Show.Text (Show, Builder, showbUnary, singleton)
 
--- | A shorter name for 'singleton' for convenience's sake (since it tends to be used
--- pretty often in @text-show-instances@).
-s :: Char -> Builder
-s = singleton
-{-# INLINE s #-}
+import Text.Show.Text (Show(showbPrec), Builder, showbUnaryWith)
+import Text.Show.Text.Data.List (showbListWith)
 
 -- | This pattern is used frequently when showing container types.
+showbUnaryListWith :: (a -> Builder) -> Int -> [a] -> Builder
+showbUnaryListWith sp p = showbUnaryWith (const $ showbListWith sp) "fromList" p
+{-# INLINE showbUnaryListWith #-}
+
+-- | This pattern is used frequently when showing container types.
+--
+-- We define this separately from 'showbUnaryListWith' since calling 'showbPrec' on
+-- a list may result in different output than 'showbListWith' (since a 'Show'
+-- instance may override 'showbList').
 showbUnaryList :: Show a => Int -> [a] -> Builder
-showbUnaryList p = showbUnary "fromList" p
+showbUnaryList p = showbUnaryWith showbPrec "fromList" p
 {-# INLINE showbUnaryList #-}
