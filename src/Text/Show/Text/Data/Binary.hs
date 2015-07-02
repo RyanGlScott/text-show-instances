@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+
 {-|
 Module:      Text.Show.Text.Data.Binary
 Copyright:   (C) 2014-2015 Ryan Scott

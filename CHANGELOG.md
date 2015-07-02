@@ -1,5 +1,6 @@
 # 1
 * Allow building with `text-show-1`. Also changed the monomorphic functions to match the naming conventions introduced in `text-show-1`.
+* Added instances for the `bifunctors` library
 * Removed `utf8-string` instance, since it wasn't as useful as I had imagined
 * Revamped test suite
 

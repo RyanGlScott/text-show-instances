@@ -17,6 +17,7 @@ import Text.Show.Text.Compiler.Hoopl            ()
 import Text.Show.Text.Control.Applicative.Trans ()
 import Text.Show.Text.Control.Monad.Trans       ()
 
+import Text.Show.Text.Data.Bifunctor            ()
 import Text.Show.Text.Data.Binary               ()
 import Text.Show.Text.Data.Containers           ()
 import Text.Show.Text.Data.Functor.Trans        ()

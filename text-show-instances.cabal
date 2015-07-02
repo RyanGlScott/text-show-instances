@@ -7,6 +7,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      encompassed by @text-show@. Currently, @text-show-instances@
                      covers these libraries:
                      .
+                     * @<http://hackage.haskell.org/package/bifunctors           bifunctors>@
+                     .
                      * @<http://hackage.haskell.org/package/binary               binary>@
                      .
                      * @<http://hackage.haskell.org/package/containers           containers>@
@@ -77,6 +79,7 @@ library
                        Text.Show.Text.Compiler.Hoopl
                        Text.Show.Text.Control.Applicative.Trans
                        Text.Show.Text.Control.Monad.Trans
+                       Text.Show.Text.Data.Bifunctor
                        Text.Show.Text.Data.Binary
                        Text.Show.Text.Data.Containers
                        Text.Show.Text.Data.Functor.Trans
@@ -105,6 +108,7 @@ library
   other-modules:       Text.Show.Text.Utils
   build-depends:       base                 >= 4.3    && < 5
                      , base-compat          >= 0.8.1  && < 1
+                     , bifunctors           >= 5      && < 6
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
@@ -146,6 +150,7 @@ test-suite text-show-instances-spec
   other-modules:       Instances.Compiler.Hoopl
                        Instances.Control.Applicative.Trans
                        Instances.Control.Monad.Trans
+                       Instances.Data.Bifunctor
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Functor.Trans
@@ -173,6 +178,7 @@ test-suite text-show-instances-spec
                        Spec.Compiler.HooplSpec
                        Spec.Control.Applicative.TransSpec
                        Spec.Control.Monad.TransSpec
+                       Spec.Data.BifunctorSpec
                        Spec.Data.BinarySpec
                        Spec.Data.ContainersSpec
                        Spec.Data.Functor.TransSpec
@@ -200,6 +206,7 @@ test-suite text-show-instances-spec
                        Spec.System.PosixSpec
   build-depends:       base                 >= 4.3    && < 5
                      , base-compat          >= 0.8.1  && < 1
+                     , bifunctors           >= 5      && < 6
                      , binary               >= 0.6    && < 0.8
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
