@@ -36,7 +36,7 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel $
+spec = parallel $ do
 #if defined(mingw32_HOST_OS)
     describe "DebugEventInfo" $
         prop "Show instance" (prop_matchesShow :: Int -> DebugEventInfo -> Bool)

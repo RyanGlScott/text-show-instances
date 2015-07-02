@@ -274,10 +274,6 @@ instance Arbitrary Loc where
     arbitrary = Loc <$> arbitrary <*> arbitrary <*> arbitrary
                     <*> arbitrary <*> arbitrary
 
-#if !(MIN_VERSION_template_haskell(2,10,0))
-deriving instance Show Loc
-#endif
-
 instance Arbitrary Match where
     arbitrary = Match <$> arbitrary <@> fBody <@> [fDec]
 --     arbitrary = Match <$> arbitrary <*> arbitrary <*> arbitrary
@@ -544,12 +540,6 @@ instance Arbitrary Pred where
 deriving instance Arbitrary ModName
 deriving instance Arbitrary OccName
 deriving instance Arbitrary PkgName
-
-#if !(MIN_VERSION_template_haskell(2,9,0))
-deriving instance Show ModName
-deriving instance Show OccName
-deriving instance Show PkgName
-#endif
 
 -------------------------------------------------------------------------------
 -- Workarounds to make Arbitrary instances faster
