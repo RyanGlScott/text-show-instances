@@ -13,7 +13,7 @@ Portability: GHC
 -}
 module Spec.Utils (prop_matchesShow, prop_genericShow, prop_genericShow1) where
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic, Rep)
 # if __GLASGOW_HASKELL__ >= 706
 import           GHC.Generics (Generic1, Rep1)
