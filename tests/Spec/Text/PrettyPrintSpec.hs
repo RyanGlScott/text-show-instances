@@ -14,6 +14,9 @@ module Spec.Text.PrettyPrintSpec (main, spec) where
 import Instances.Text.PrettyPrint ()
 
 import Spec.Utils (prop_matchesShow)
+#if MIN_VERSION_pretty(1,1,2)
+import Spec.Utils (prop_genericShow)
+#endif
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
@@ -30,19 +33,28 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-    describe "Doc" $ do
+    describe "Doc" $
         prop "Show instance"                     (prop_matchesShow :: Int -> Doc -> Bool)
     -- TODO: Figure out why this randomly stalls forever
 --     describe "renderStyleB" $ do
 --         prop "has the same output as renderStyle" prop_renderStyle
     describe "Mode" $ do
         prop "Show instance"                     (prop_matchesShow :: Int -> Mode -> Bool)
+#if MIN_VERSION_pretty(1,1,2)
+        prop "generic Show"                      (prop_genericShow :: Int -> Mode -> Bool)
+#endif
     describe "Style" $ do
         prop "Show instance"                     (prop_matchesShow :: Int -> Style -> Bool)
+#if MIN_VERSION_pretty(1,1,2)
+        prop "generic Show"                      (prop_genericShow :: Int -> Style -> Bool)
+#endif
     describe "TextDetails" $ do
         prop "Show instance"                     (prop_matchesShow :: Int -> TextDetails -> Bool)
 #if MIN_VERSION_pretty(1,1,2)
-    describe "PrettyLevel" $ do
+        prop "generic Show"                      (prop_genericShow :: Int -> TextDetails -> Bool)
+#endif
+#if MIN_VERSION_pretty(1,1,2)
+    describe "PrettyLevel" $
         prop "Show instance"                     (prop_matchesShow :: Int -> PrettyLevel -> Bool)
 #endif
 

@@ -226,6 +226,7 @@ test-suite text-show-instances-spec
                      , template-haskell     >= 2.5    && < 2.11
                      , text-show            >= 1      && < 1.1
                      , text-show-instances  == 1
+                     , th-orphans           >= 0.12   && < 1
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5
                      , transformers-compat  >= 0.3    && < 1
