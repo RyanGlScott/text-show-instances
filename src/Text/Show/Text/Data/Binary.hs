@@ -37,7 +37,7 @@ showbDecoderWith _  (BytesRead _ _) = "BytesRead"
 
 instance Show a => Show (Decoder a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showb)
+    INLINE_INST_FUN(showbPrec)
 
 instance Show1 Decoder where
     showbPrecWith sp _ = showbDecoderWith $ sp 0

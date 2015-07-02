@@ -6,7 +6,7 @@ Maintainer:  Ryan Scott
 Stability:   Experimental
 Portability: GHC
 
-@hspec@ tests for 'Decoder's.
+@hspec@ tests for data types in the @bifunctors@ library.
 -}
 module Spec.Data.BifunctorSpec (main, spec) where
 

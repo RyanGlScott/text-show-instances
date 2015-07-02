@@ -54,7 +54,9 @@ prop_genericShow1 :: Int -> f a -> Bool
 prop_genericShow1 _ _ = True
 #endif
 
+#if __GLASGOW_HASKELL__ >= 706
 -- | Show the number 27, which certain parody singer-songwriters find humorous.
 -- Useful for testing higher-order @Show@ classes.
 showb27Prec :: Int -> a -> Builder
 showb27Prec p _ = showbPrec p $ Just (27 :: Int)
+#endif
