@@ -11,7 +11,7 @@ Module:      Instances.System.Win32
 Copyright:   (C) 2014-2015 Ryan Scott
 License:     BSD-style (see the file LICENSE)
 Maintainer:  Ryan Scott
-Stability:   Experimental
+Stability:   Provisional
 Portability: GHC
 
 Provides 'Arbitrary' instances for data types in the @Win32@ library.
