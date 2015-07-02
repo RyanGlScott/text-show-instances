@@ -33,7 +33,7 @@ prop_matchesShow p x = showbPrec p (FromStringShow x) == showbPrec p x
 
 -- | Verifies that a type's @Show@ instance coincides with the output produced
 -- by the equivalent 'Generic' functions.
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 prop_genericShow :: (T.Show a, Generic a, GShow (Rep a))
                  => Int -> a -> Bool
 prop_genericShow p x = showbPrec p x == genericShowbPrec p x
