@@ -21,12 +21,12 @@ import Data.Bifunctor.Wrapped (WrappedBifunctor)
 
 import Instances.Data.Bifunctor ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Data.Bifunctor ()
+import TextShow.Data.Bifunctor ()
 
 main :: IO ()
 main = hspec spec
@@ -34,18 +34,18 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Biff Either [] Maybe Char Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Biff Either [] Maybe Char Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Biff Either [] Maybe Char Int -> Bool)
     describe "Clown [] Char Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Clown [] Char Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Clown [] Char Int -> Bool)
     describe "Flip Either Int Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Flip Either Int Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Flip Either Int Char -> Bool)
     describe "Join Either Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Join Either Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Join Either Int -> Bool)
     describe "Joker [] Char Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Joker [] Char Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Joker [] Char Int -> Bool)
     describe "Product Either ((,,) Bool) Int Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Product Either ((,,) Bool) Int Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Product Either ((,,) Bool) Int Char -> Bool)
     describe "Tannen Maybe Either Int Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Tannen Maybe Either Int Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tannen Maybe Either Int Char -> Bool)
     describe "WrappedBifunctor Either Int Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> WrappedBifunctor Either Int Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> WrappedBifunctor Either Int Char -> Bool)

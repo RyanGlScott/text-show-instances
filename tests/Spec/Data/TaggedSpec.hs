@@ -14,16 +14,16 @@ import Data.Tagged (Tagged)
 
 import Instances.Data.Tagged ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Data.Tagged ()
+import TextShow.Data.Tagged ()
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel . describe "Tagged Char Int" $
-    prop "Show instance" (prop_matchesShow :: Int -> Tagged Char Int -> Bool)
+    prop "TextShow instance" (prop_matchesTextShow :: Int -> Tagged Char Int -> Bool)

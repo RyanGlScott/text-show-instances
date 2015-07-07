@@ -10,7 +10,7 @@ Portability: GHC
 -}
 module Spec.System.TimeSpec (main, spec) where
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day)
 
@@ -18,7 +18,7 @@ import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
-import Text.Show.Text.System.Time ()
+import TextShow.System.Time ()
 
 main :: IO ()
 main = hspec spec
@@ -26,12 +26,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "ClockTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> ClockTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ClockTime -> Bool)
     describe "TimeDiff" $
-        prop "Show instance" (prop_matchesShow :: Int -> TimeDiff -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeDiff -> Bool)
     describe "CalendarTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> CalendarTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> CalendarTime -> Bool)
     describe "Month" $
-        prop "Show instance" (prop_matchesShow :: Int -> Month -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Month -> Bool)
     describe "Day" $
-        prop "Show instance" (prop_matchesShow :: Int -> Day -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Day -> Bool)

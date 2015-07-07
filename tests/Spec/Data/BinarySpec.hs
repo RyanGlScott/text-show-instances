@@ -14,16 +14,16 @@ import Data.Binary.Get.Internal (Decoder)
 
 import Instances.Data.Binary ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Data.Binary ()
+import TextShow.Data.Binary ()
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel . describe "Decoder Int" $
-    prop "Show instance" (prop_matchesShow :: Int -> Decoder Int -> Bool)
+    prop "TextShow instance" (prop_matchesTextShow :: Int -> Decoder Int -> Bool)

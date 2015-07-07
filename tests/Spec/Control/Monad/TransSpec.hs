@@ -21,12 +21,12 @@ import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT)
 
 import           Instances.Control.Monad.Trans ()
 
-import           Spec.Utils (prop_matchesShow)
+import           Spec.Utils (prop_matchesTextShow)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
 import           Test.Hspec.QuickCheck (prop)
 
-import           Text.Show.Text.Control.Monad.Trans ()
+import           TextShow.Control.Monad.Trans ()
 
 main :: IO ()
 main = hspec spec
@@ -34,16 +34,16 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "ErrorT Char Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> ErrorT Char Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ErrorT Char Maybe Int -> Bool)
     describe "ExceptT Char Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> ExceptT Char Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ExceptT Char Maybe Int -> Bool)
     describe "IdentityT Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> IdentityT Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> IdentityT Maybe Int -> Bool)
     describe "ListT Maybe Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> ListT Maybe Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ListT Maybe Char -> Bool)
     describe "Maybe [] Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> MaybeT [] Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> MaybeT [] Int -> Bool)
     describe "lazy WriterT String Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> WL.WriterT String Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> WL.WriterT String Maybe Int -> Bool)
     describe "strict WriterT String Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> WS.WriterT String Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> WS.WriterT String Maybe Int -> Bool)

@@ -17,13 +17,13 @@ import Language.Haskell.TH.Instances ()
 import Language.Haskell.TH.PprLib
 import Language.Haskell.TH.Syntax
 
-import Spec.Utils (prop_matchesShow, prop_genericShow)
+import Spec.Utils (prop_matchesTextShow, prop_genericTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text (fromString)
-import Text.Show.Text.Language.Haskell.TH (showbName')
+import TextShow (fromString)
+import TextShow.Language.Haskell.TH (showbName')
 
 main :: IO ()
 main = hspec spec
@@ -32,155 +32,155 @@ spec :: Spec
 spec = parallel $ do
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "AnnLookup" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> AnnLookup -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> AnnLookup -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> AnnLookup -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> AnnLookup -> Bool)
     describe "AnnTarget" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> AnnTarget -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> AnnTarget -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> AnnTarget -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> AnnTarget -> Bool)
 #endif
     describe "Body" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Body -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Body -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Body -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Body -> Bool)
     describe "Callconv" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Callconv -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Callconv -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Callconv -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Callconv -> Bool)
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
     describe "ClassInstance" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> ClassInstance -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> ClassInstance -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ClassInstance -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> ClassInstance -> Bool)
 #endif
     describe "Clause" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Clause -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Clause -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Clause -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Clause -> Bool)
     describe "Con" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Con -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Con -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Con -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Con -> Bool)
     describe "Dec" $ do
-        prop "Dec instance"                    (prop_matchesShow :: Int -> Dec -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Dec -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Dec -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Dec -> Bool)
     describe "Doc" $
-        prop "Show instance"                   (prop_matchesShow :: Int -> Doc -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Doc -> Bool)
     describe "Exp" $ do
-        prop "Exp instance"                    (prop_matchesShow :: Int -> Exp -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Exp -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Exp -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Exp -> Bool)
     describe "FamFlavour" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> FamFlavour -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> FamFlavour -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FamFlavour -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> FamFlavour -> Bool)
     describe "Fixity" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Fixity -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Fixity -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Fixity -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Fixity -> Bool)
     describe "FixityDirection" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> FixityDirection -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> FixityDirection -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FixityDirection -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> FixityDirection -> Bool)
     describe "Foreign" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Foreign -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Foreign -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Foreign -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Foreign -> Bool)
     describe "FunDep" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> FunDep -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> FunDep -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FunDep -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> FunDep -> Bool)
     describe "Guard" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Guard -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Guard -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Guard -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Guard -> Bool)
     describe "Info" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Info -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Info -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Info -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Info -> Bool)
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Inline" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Inline -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Inline -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Inline -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Inline -> Bool)
 #else
     describe "InlineSpec" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> InlineSpec -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> InlineSpec -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> InlineSpec -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> InlineSpec -> Bool)
 #endif
     describe "Kind" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Kind -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Kind -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Kind -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Kind -> Bool)
     describe "Lit" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Lit -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Lit -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Lit -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Lit -> Bool)
     describe "Loc" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Loc -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Loc -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Loc -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Loc -> Bool)
     describe "Match" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Match -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Match -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Match -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Match -> Bool)
     describe "ModName" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> ModName -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> ModName -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ModName -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> ModName -> Bool)
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "Module" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Module -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Module -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Module -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Module -> Bool)
     describe "ModuleInfo" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> ModuleInfo -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> ModuleInfo -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ModuleInfo -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> ModuleInfo -> Bool)
 #endif
     describe "Name" $
-        prop "Show instance"                   (prop_matchesShow :: Int -> Name -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Name -> Bool)
     describe "showbName'" $ do
         prop "has the same output as showName" prop_showName'
     describe "OccName" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> OccName -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> OccName -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> OccName -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> OccName -> Bool)
     describe "Pat" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Pat -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Pat -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pat -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Pat -> Bool)
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Phases" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Phases -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Phases -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Phases -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Phases -> Bool)
 #endif
     describe "PkgName" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> PkgName -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> PkgName -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PkgName -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> PkgName -> Bool)
     describe "Pred" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Pred -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Pred -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pred -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Pred -> Bool)
     describe "Pragma" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Pragma -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Pragma -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pragma -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Pragma -> Bool)
     describe "Range" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Range -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Range -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Range -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Range -> Bool)
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "Role" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Role -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Role -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Role -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Role -> Bool)
 #endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "RuleBndr" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> RuleBndr -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> RuleBndr -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> RuleBndr -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> RuleBndr -> Bool)
     describe "RuleMatch" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> RuleMatch -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> RuleMatch -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> RuleMatch -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> RuleMatch -> Bool)
 #endif
     describe "Safety" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Safety -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Safety -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Safety -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Safety -> Bool)
     describe "Stmt" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Stmt -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Stmt -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Stmt -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Stmt -> Bool)
     describe "Strict" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Strict -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Strict -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Strict -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Strict -> Bool)
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "TyLit" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> TyLit -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> TyLit -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TyLit -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> TyLit -> Bool)
 #endif
     describe "Type" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> Type -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> Type -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Type -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Type -> Bool)
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "TySynEqn" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> TySynEqn -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> TySynEqn -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TySynEqn -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> TySynEqn -> Bool)
 #endif
     describe "TyVarBndr" $ do
-        prop "Show instance"                   (prop_matchesShow :: Int -> TyVarBndr -> Bool)
-        prop "generic Show"                    (prop_genericShow :: Int -> TyVarBndr -> Bool)
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TyVarBndr -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> TyVarBndr -> Bool)
 
 -- | Verifies that `showName'` and `showbName'` have the same output.
 prop_showName' :: NameIs -> Name -> Bool

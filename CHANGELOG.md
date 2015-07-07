@@ -1,3 +1,6 @@
+# 2
+* Changed the top-level module name from `Text.Show.Text` to `TextShow`, since the former was extremely verbose without much benefit. As a result, this will break all existing code that depends on `text-show-instances`.
+
 # 1
 * Allow building with `text-show-1`. Also changed the monomorphic functions to match the naming conventions introduced in `text-show-1`.
 * Added instances for the `bifunctors` library

@@ -15,13 +15,13 @@ import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
 import Data.Time.Clock.TAI (AbsoluteTime)
 import Data.Time.LocalTime (TimeZone, TimeOfDay, LocalTime, ZonedTime)
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
-import Text.Show.Text.Data.Time ()
+import TextShow.Data.Time ()
 
 main :: IO ()
 main = hspec spec
@@ -29,20 +29,20 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Day" $
-        prop "Show instance" (prop_matchesShow :: Int -> Day -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Day -> Bool)
     describe "DiffTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> DiffTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> DiffTime -> Bool)
     describe "UTCTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> UTCTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> UTCTime -> Bool)
     describe "NominalDiffTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> NominalDiffTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> NominalDiffTime -> Bool)
     describe "AbsoluteTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> AbsoluteTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> AbsoluteTime -> Bool)
     describe "TimeZone" $
-        prop "Show instance" (prop_matchesShow :: Int -> TimeZone -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeZone -> Bool)
     describe "TimeOfDay" $
-        prop "Show instance" (prop_matchesShow :: Int -> TimeOfDay -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeOfDay -> Bool)
     describe "LocalTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> LocalTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> LocalTime -> Bool)
     describe "ZonedTime" $
-        prop "Show instance" (prop_matchesShow :: Int -> ZonedTime -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ZonedTime -> Bool)

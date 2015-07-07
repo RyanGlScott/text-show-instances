@@ -19,7 +19,7 @@ import Test.Hspec (Spec, hspec, parallel)
 #if !defined(mingw32_HOST_OS)
 import Instances.System.Posix ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import System.Posix.DynamicLinker (RTLDFlags, DL)
 import System.Posix.Process (ProcessStatus)
@@ -28,7 +28,7 @@ import System.Posix.User (GroupEntry, UserEntry)
 import Test.Hspec (describe)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.System.Posix ()
+import TextShow.System.Posix ()
 #endif
 
 main :: IO ()
@@ -38,15 +38,15 @@ spec :: Spec
 spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
     describe "RTLDFlags" $
-        prop "Show instance" (prop_matchesShow :: Int -> RTLDFlags -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> RTLDFlags -> Bool)
     describe "DL" $
-        prop "Show instance" (prop_matchesShow :: Int -> DL -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> DL -> Bool)
     describe "ProcessStatus" $
-        prop "Show instance" (prop_matchesShow :: Int -> ProcessStatus -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ProcessStatus -> Bool)
     describe "GroupEntry" $
-        prop "Show instance" (prop_matchesShow :: Int -> GroupEntry -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> GroupEntry -> Bool)
     describe "UserEntry" $
-        prop "Show instance" (prop_matchesShow :: Int -> UserEntry -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> UserEntry -> Bool)
 #else
     pure ()
 #endif

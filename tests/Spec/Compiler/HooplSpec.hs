@@ -16,12 +16,12 @@ import Compiler.Hoopl.Passes.Dominator (DominatorNode, DominatorTree, DPath)
 
 import Instances.Compiler.Hoopl ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Compiler.Hoopl ()
+import TextShow.Compiler.Hoopl ()
 
 main :: IO ()
 main = hspec spec
@@ -29,22 +29,22 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Label" $
-        prop "Show instance" (prop_matchesShow :: Int -> Label -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Label -> Bool)
     describe "LabelMap Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> LabelMap Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> LabelMap Char -> Bool)
     describe "LabelSet" $
-        prop "Show instance" (prop_matchesShow :: Int -> LabelSet -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> LabelSet -> Bool)
     describe "Pointed C C Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Pointed C C Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Pointed C C Int -> Bool)
     describe "Unique" $
-        prop "Show instance" (prop_matchesShow :: Int -> Unique -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Unique -> Bool)
     describe "UniqueMap Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> UniqueMap Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> UniqueMap Char -> Bool)
     describe "UniqueSet" $
-        prop "Show instance" (prop_matchesShow :: Int -> UniqueSet -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> UniqueSet -> Bool)
     describe "DominatorNode" $
-        prop "Show instance" (prop_matchesShow :: Int -> DominatorNode -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> DominatorNode -> Bool)
     describe "DominatorTree" $
-        prop "Show instance" (prop_matchesShow :: Int -> DominatorTree -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> DominatorTree -> Bool)
     describe "DPath" $
-        prop "Show instance" (prop_matchesShow :: Int -> DPath -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> DPath -> Bool)

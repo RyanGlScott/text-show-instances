@@ -15,12 +15,12 @@ import Control.Applicative.Lift      (Lift)
 
 import Instances.Control.Applicative.Trans ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Control.Applicative.Trans ()
+import TextShow.Control.Applicative.Trans ()
 
 main :: IO ()
 main = hspec spec
@@ -28,6 +28,6 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Backwards Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Backwards Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Backwards Maybe Int -> Bool)
     describe "Lift Maybe Int" $
-        prop "Show instance" (prop_matchesShow :: Int -> Lift Maybe Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Lift Maybe Int -> Bool)

@@ -13,9 +13,9 @@ module Spec.Text.PrettyPrintSpec (main, spec) where
 
 import Instances.Text.PrettyPrint ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 #if MIN_VERSION_pretty(1,1,2)
-import Spec.Utils (prop_genericShow)
+import Spec.Utils (prop_genericTextShow)
 #endif
 
 import Test.Hspec (Spec, describe, hspec, parallel)
@@ -25,8 +25,8 @@ import Text.PrettyPrint.HughesPJ (Doc, Mode, Style, TextDetails {-, renderStyle 
 #if MIN_VERSION_pretty(1,1,2)
 import Text.PrettyPrint.HughesPJClass (PrettyLevel)
 #endif
--- import Text.Show.Text (fromString)
-import Text.Show.Text.Text.PrettyPrint () -- (renderStyleB)
+-- import TextShow (fromString)
+import TextShow.Text.PrettyPrint () -- (renderStyleB)
 
 main :: IO ()
 main = hspec spec
@@ -34,28 +34,28 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Doc" $
-        prop "Show instance"                     (prop_matchesShow :: Int -> Doc -> Bool)
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Doc -> Bool)
     -- TODO: Figure out why this randomly stalls forever
 --     describe "renderStyleB" $ do
 --         prop "has the same output as renderStyle" prop_renderStyle
     describe "Mode" $ do
-        prop "Show instance"                     (prop_matchesShow :: Int -> Mode -> Bool)
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Mode -> Bool)
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic Show"                      (prop_genericShow :: Int -> Mode -> Bool)
+        prop "generic TextShow"                  (prop_genericTextShow :: Int -> Mode -> Bool)
 #endif
     describe "Style" $ do
-        prop "Show instance"                     (prop_matchesShow :: Int -> Style -> Bool)
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Style -> Bool)
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic Show"                      (prop_genericShow :: Int -> Style -> Bool)
+        prop "generic TextShow"                  (prop_genericTextShow :: Int -> Style -> Bool)
 #endif
     describe "TextDetails" $ do
-        prop "Show instance"                     (prop_matchesShow :: Int -> TextDetails -> Bool)
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> TextDetails -> Bool)
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic Show"                      (prop_genericShow :: Int -> TextDetails -> Bool)
+        prop "generic TextShow"                  (prop_genericTextShow :: Int -> TextDetails -> Bool)
 #endif
 #if MIN_VERSION_pretty(1,1,2)
     describe "PrettyLevel" $
-        prop "Show instance"                     (prop_matchesShow :: Int -> PrettyLevel -> Bool)
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> PrettyLevel -> Bool)
 #endif
 
 -- | Verifies that the output of 'renderStyle' and 'renderStyleB' coincides.

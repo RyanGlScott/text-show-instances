@@ -12,12 +12,12 @@ module Spec.Text.XHtmlSpec (main, spec) where
 
 import Instances.Text.XHtml ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Text.XHtml ()
+import TextShow.Text.XHtml ()
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink)
 import Text.XHtml.Table (HtmlTable)
 
@@ -27,12 +27,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Html" $
-        prop "Show instance" (prop_matchesShow :: Int -> Html -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Html -> Bool)
     describe "[Html]" $
-        prop "Show instance" (prop_matchesShow :: Int -> [Html] -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> [Html] -> Bool)
     describe "HtmlAttr" $
-        prop "Show instance" (prop_matchesShow :: Int -> HtmlAttr -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> HtmlAttr -> Bool)
     describe "HotLink" $
-        prop "Show instance" (prop_matchesShow :: Int -> HotLink -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> HotLink -> Bool)
     describe "HtmlTable" $
-        prop "Show instance" (prop_matchesShow :: Int -> HtmlTable -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> HtmlTable -> Bool)

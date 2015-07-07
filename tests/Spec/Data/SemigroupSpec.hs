@@ -14,12 +14,12 @@ import Data.Semigroup (Min, Max, First, Last, WrappedMonoid, Option, Arg)
 
 import Instances.Data.Semigroup ()
 
-import Spec.Utils (prop_matchesShow, prop_genericShow, prop_genericShow1)
+import Spec.Utils (prop_matchesTextShow, prop_genericTextShow, prop_genericTextShow1)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Data.Semigroup ()
+import TextShow.Data.Semigroup ()
 
 main :: IO ()
 main = hspec spec
@@ -27,30 +27,30 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Min Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> Min Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> Min Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> Min Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> Min Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> Min Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> Min Int -> Bool)
     describe "Max Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> Max Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> Max Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> Max Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> Max Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> Max Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> Max Int -> Bool)
     describe "First Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> First Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> First Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> First Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> First Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> First Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> First Int -> Bool)
     describe "Last Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> Last Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> Last Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> Last Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> Last Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> Last Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> Last Int -> Bool)
     describe "WrappedMonoid Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> WrappedMonoid Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> WrappedMonoid Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> WrappedMonoid Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> WrappedMonoid Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> WrappedMonoid Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> WrappedMonoid Int -> Bool)
     describe "Option Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> Option Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> Option Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> Option Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> Option Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> Option Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> Option Int -> Bool)
     describe "Arg Int Int" $ do
-        prop "Show instance" (prop_matchesShow  :: Int -> Arg Int Int -> Bool)
-        prop "generic Show"  (prop_genericShow  :: Int -> Arg Int Int -> Bool)
-        prop "generic Show1" (prop_genericShow1 :: Int -> Arg Int Int -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow  :: Int -> Arg Int Int -> Bool)
+        prop "generic TextShow"  (prop_genericTextShow  :: Int -> Arg Int Int -> Bool)
+        prop "generic TextShow1" (prop_genericTextShow1 :: Int -> Arg Int Int -> Bool)

@@ -19,13 +19,13 @@ import Data.Tree (Tree)
 
 import Instances.Data.Containers ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
-import Text.Show.Text.Data.Containers ()
+import TextShow.Data.Containers ()
 
 main :: IO ()
 main = hspec spec
@@ -33,18 +33,18 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "IntMap Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> IntMap Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> IntMap Char -> Bool)
     describe "IntSet" $
-        prop "Show instance" (prop_matchesShow :: Int -> IntSet -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> IntSet -> Bool)
     describe "Map Char Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Map Char Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Map Char Char -> Bool)
     describe "Sequence Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Seq Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Seq Char -> Bool)
     describe "ViewL Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> ViewL Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ViewL Char -> Bool)
     describe "ViewR Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> ViewR Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> ViewR Char -> Bool)
     describe "Set Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Set Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Set Char -> Bool)
     describe "Tree Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> Tree Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tree Char -> Bool)

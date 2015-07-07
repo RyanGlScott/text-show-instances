@@ -12,18 +12,18 @@ module Spec.System.RandomSpec (main, spec) where
 
 import Instances.System.Random ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import System.Random (StdGen)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.System.Random ()
+import TextShow.System.Random ()
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel . describe "StdGen" $
-    prop "Show instance" (prop_matchesShow :: Int -> StdGen -> Bool)
+    prop "TextShow instance" (prop_matchesTextShow :: Int -> StdGen -> Bool)

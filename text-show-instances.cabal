@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             1
+version:             2
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
@@ -52,9 +52,9 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/xhtml                xhtml>@
                      .
                      One can use these instances by importing
-                     "Text.Show.Text.Instances". Alternatively, there are monomorphic
+                     "TextShow.Instances". Alternatively, there are monomorphic
                      versions of the @showb@ function available in the other submodules
-                     of "Text.Show.Text".
+                     of "TextShow..
 homepage:            https://github.com/RyanGlScott/text-show-instances
 bug-reports:         https://github.com/RyanGlScott/text-show-instances/issues
 license:             BSD3
@@ -74,38 +74,38 @@ source-repository head
   location:            https://github.com/RyanGlScott/text-show-instances
 
 library
-  exposed-modules:     Text.Show.Text.Instances
+  exposed-modules:     TextShow.Instances
 
-                       Text.Show.Text.Compiler.Hoopl
-                       Text.Show.Text.Control.Applicative.Trans
-                       Text.Show.Text.Control.Monad.Trans
-                       Text.Show.Text.Data.Bifunctor
-                       Text.Show.Text.Data.Binary
-                       Text.Show.Text.Data.Containers
-                       Text.Show.Text.Data.Functor.Trans
-                       Text.Show.Text.Data.List.NonEmpty
-                       Text.Show.Text.Data.Semigroup
-                       Text.Show.Text.Data.Tagged
-                       Text.Show.Text.Data.Time
-                       Text.Show.Text.Data.UnorderedContainers
-                       Text.Show.Text.Data.Vector
-                       Text.Show.Text.Language.Haskell.TH
-                       Text.Show.Text.System.Console.Haskeline
-                       Text.Show.Text.System.Directory
-                       Text.Show.Text.System.Locale
-                       Text.Show.Text.System.Random
-                       Text.Show.Text.System.Time
-                       Text.Show.Text.Text.PrettyPrint
-                       Text.Show.Text.Text.XHtml
-                       Text.Show.Text.Trace.Hpc
+                       TextShow.Compiler.Hoopl
+                       TextShow.Control.Applicative.Trans
+                       TextShow.Control.Monad.Trans
+                       TextShow.Data.Bifunctor
+                       TextShow.Data.Binary
+                       TextShow.Data.Containers
+                       TextShow.Data.Functor.Trans
+                       TextShow.Data.List.NonEmpty
+                       TextShow.Data.Semigroup
+                       TextShow.Data.Tagged
+                       TextShow.Data.Time
+                       TextShow.Data.UnorderedContainers
+                       TextShow.Data.Vector
+                       TextShow.Language.Haskell.TH
+                       TextShow.System.Console.Haskeline
+                       TextShow.System.Directory
+                       TextShow.System.Locale
+                       TextShow.System.Random
+                       TextShow.System.Time
+                       TextShow.Text.PrettyPrint
+                       TextShow.Text.XHtml
+                       TextShow.Trace.Hpc
 
                        -- Only exports functions if using Windows
-                       Text.Show.Text.System.Win32
+                       TextShow.System.Win32
 
                        -- Only exports functions if not using Windows
-                       Text.Show.Text.System.Console.Terminfo
-                       Text.Show.Text.System.Posix
-  other-modules:       Text.Show.Text.Utils
+                       TextShow.System.Console.Terminfo
+                       TextShow.System.Posix
+  other-modules:       TextShow.Utils
   build-depends:       base                 >= 4.3    && < 5
                      , base-compat          >= 0.8.1  && < 1
                      , bifunctors           >= 5      && < 6
@@ -124,7 +124,7 @@ library
                      , tagged               >= 0.4.4  && < 1
                      , template-haskell     >= 2.5    && < 2.11
                      , text                 >= 0.11.1 && < 1.3
-                     , text-show            >= 1      && < 1.1
+                     , text-show            >= 2      && < 2.1
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5
                      , transformers-compat  >= 0.3    && < 1
@@ -225,8 +225,8 @@ test-suite text-show-instances-spec
                      , semigroups           >= 0.8.4  && < 1
                      , tagged               >= 0.4.4  && < 1
                      , template-haskell     >= 2.5    && < 2.11
-                     , text-show            >= 1      && < 1.1
-                     , text-show-instances  == 1
+                     , text-show            >= 2      && < 2.1
+                     , text-show-instances  == 2
                      , th-orphans           >= 0.12   && < 1
                      , time                 >= 0.1    && < 1.6
                      , transformers         >= 0.2.1  && < 0.5

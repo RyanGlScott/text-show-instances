@@ -19,14 +19,14 @@ import Test.Hspec (Spec, hspec, parallel)
 #if MIN_VERSION_directory(1,1,0)
 import Instances.System.Directory ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import System.Directory (Permissions)
 
 import Test.Hspec (describe)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.System.Directory ()
+import TextShow.System.Directory ()
 #endif
 
 main :: IO ()
@@ -36,7 +36,7 @@ spec :: Spec
 spec = parallel $
 #if MIN_VERSION_directory(1,1,0)
     describe "Permissions" $
-        prop "Show instance" (prop_matchesShow :: Int -> Permissions -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Permissions -> Bool)
 #else
     pure ()
 #endif

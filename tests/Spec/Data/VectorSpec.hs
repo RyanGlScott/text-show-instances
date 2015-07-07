@@ -18,12 +18,12 @@ import qualified Data.Vector.Unboxed as U (Vector)
 
 import           Instances.Data.Vector ()
 
-import           Spec.Utils (prop_matchesShow)
+import           Spec.Utils (prop_matchesTextShow)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
 import           Test.Hspec.QuickCheck (prop)
 
-import           Text.Show.Text.Data.Vector ()
+import           TextShow.Data.Vector ()
 
 main :: IO ()
 main = hspec spec
@@ -31,12 +31,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "(boxed) Vector Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> B.Vector Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> B.Vector Char -> Bool)
     describe "(primitive) Vector Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> P.Vector Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> P.Vector Char -> Bool)
     describe "(storable) Vector Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> S.Vector Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> S.Vector Char -> Bool)
     describe "(unboxed) Vector Char" $
-        prop "Show instance" (prop_matchesShow :: Int -> U.Vector Char -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> U.Vector Char -> Bool)
     describe "Size" $
-        prop "Show instance" (prop_matchesShow :: Int -> Size -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Size -> Bool)

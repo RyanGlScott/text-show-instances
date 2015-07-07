@@ -19,14 +19,14 @@ import Test.Hspec (Spec, hspec, parallel)
 #if !defined(mingw32_HOST_OS)
 import Instances.System.Console.Terminfo ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import System.Console.Terminfo.Color (Color)
 
 import Test.Hspec (describe)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.System.Console.Terminfo ()
+import TextShow.System.Console.Terminfo ()
 #endif
 
 main :: IO ()
@@ -36,9 +36,9 @@ spec :: Spec
 spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
     describe "Color" $
-        prop "Show instance" (prop_matchesShow :: Int -> Color -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Color -> Bool)
 --     describe "SetupTermError" $
---         prop "Show instance" (prop_matchesShow :: Int -> SetupTermError -> Bool)
+--         prop "TextShow instance" (prop_matchesTextShow :: Int -> SetupTermError -> Bool)
 #else
     pure ()
 #endif

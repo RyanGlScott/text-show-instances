@@ -12,12 +12,12 @@ module Spec.Trace.HpcSpec (main, spec) where
 
 import Instances.Trace.Hpc ()
 
-import Spec.Utils (prop_matchesShow)
+import Spec.Utils (prop_matchesTextShow)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
 
-import Text.Show.Text.Trace.Hpc ()
+import TextShow.Trace.Hpc ()
 
 import Trace.Hpc.Mix (Mix, BoxLabel, CondBox)
 import Trace.Hpc.Tix (Tix, TixModule)
@@ -29,16 +29,16 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Mix" $
-        prop "Show instance" (prop_matchesShow :: Int -> Mix -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Mix -> Bool)
     describe "BoxLabel" $
-        prop "Show instance" (prop_matchesShow :: Int -> BoxLabel -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> BoxLabel -> Bool)
     describe "CondBox" $
-        prop "Show instance" (prop_matchesShow :: Int -> CondBox -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> CondBox -> Bool)
     describe "Tix" $
-        prop "Show instance" (prop_matchesShow :: Int -> Tix -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tix -> Bool)
     describe "TixModule" $
-        prop "Show instance" (prop_matchesShow :: Int -> TixModule -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> TixModule -> Bool)
     describe "HpcPos" $
-        prop "Show instance" (prop_matchesShow :: Int -> HpcPos -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> HpcPos -> Bool)
     describe "Hash" $
-        prop "Show instance" (prop_matchesShow :: Int -> Hash -> Bool)
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Hash -> Bool)

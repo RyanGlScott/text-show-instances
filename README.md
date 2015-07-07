@@ -2,6 +2,7 @@
 
 `text-show-instances` is a supplemental library to [`text-show`](https://github.com/RyanGlScott/text-show) that provides additional `Show` instances for data types in common Haskell libraries and GHC dependencies that are not encompassed by `text-show`. Currently, `text-show-instances` covers these libraries:
 
+* [`bifunctors`](http://hackage.haskell.org/package/bifunctors)
 * [`binary`](http://hackage.haskell.org/package/binary)
 * [`containers`](http://hackage.haskell.org/package/containers)
 * [`directory`](http://hackage.haskell.org/package/directory)
@@ -20,7 +21,6 @@
 * [`transformers`](http://hackage.haskell.org/package/transformers)
 * [`unix`](http://hackage.haskell.org/package/unix)
 * [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
-* [`utf8-string`](http://hackage.haskell.org/package/utf8-string)
 * [`vector`](http://hackage.haskell.org/package/vector)
 * [`Win32`](http://hackage.haskell.org/package/Win32)
 * [`xhtml`](http://hackage.haskell.org/package/xhtml)
