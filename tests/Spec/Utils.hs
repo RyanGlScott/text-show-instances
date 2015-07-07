@@ -25,7 +25,10 @@ import GHC.Generics (Generic1, Rep1)
 import TextShow.Generic
 #endif
 
-import TextShow (TextShow(..), TextShow1(..), Builder, FromStringShow(..))
+import TextShow (TextShow(..), FromStringShow(..))
+#if __GLASGOW_HASKELL__ >= 706
+import TextShow (TextShow1(..), Builder)
+#endif
 
 -- | Verifies that a type's @Show@ instances coincide for both 'String's and 'Text',
 -- irrespective of precedence.
