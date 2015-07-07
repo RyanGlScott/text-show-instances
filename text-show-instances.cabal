@@ -54,7 +54,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      One can use these instances by importing
                      "TextShow.Instances". Alternatively, there are monomorphic
                      versions of the @showb@ function available in the other submodules
-                     of "TextShow..
+                     of "TextShow".
 homepage:            https://github.com/RyanGlScott/text-show-instances
 bug-reports:         https://github.com/RyanGlScott/text-show-instances/issues
 license:             BSD3

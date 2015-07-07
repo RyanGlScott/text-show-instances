@@ -25,4 +25,4 @@
 * [`Win32`](http://hackage.haskell.org/package/Win32)
 * [`xhtml`](http://hackage.haskell.org/package/xhtml)
 
-One can use these instances by importing `Text.Show.Text.Instances`. Alternatively, there are monomorphic versions of the `showb` function available in the other submodules of `Text.Show.Text`.
+One can use these instances by importing `TextShow.Instances`. Alternatively, there are monomorphic versions of the `showb` function available in the other submodules of `TextShow`.
