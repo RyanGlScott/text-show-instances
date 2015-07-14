@@ -25,7 +25,11 @@ module TextShow.Data.Vector (
     ) where
 
 import qualified Data.Vector as B (Vector)
+#if MIN_VERSION_vector(0,11,0)
+import           Data.Vector.Fusion.Bundle.Size (Size)
+#else
 import           Data.Vector.Fusion.Stream.Size (Size)
+#endif
 import qualified Data.Vector.Generic as G (Vector)
 import           Data.Vector.Generic (toList)
 import qualified Data.Vector.Primitive as P (Vector)
@@ -36,9 +40,11 @@ import           Data.Vector.Unboxed (Unbox)
 
 import           Foreign.Storable (Storable)
 
-import           TextShow (TextShow(showbPrec), TextShow1(..), Builder)
+import           TextShow (TextShow(..), TextShow1(..), Builder)
 import           TextShow.TH (deriveTextShow)
+#if !(MIN_VERSION_vector(0,11,0))
 import           TextShow.Utils (showbUnaryList, showbUnaryListWith)
+#endif
 
 #include "inline.h"
 
@@ -58,18 +64,28 @@ showbVectorPrecWith = showbVectorGenericPrecWith
 {-# INLINE showbVectorPrecWith #-}
 
 -- | Convert a generic 'G.Vector' to a 'Builder' with the given precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorGenericPrec :: (G.Vector v a, TextShow a) => Int -> v a -> Builder
+#if MIN_VERSION_vector(0,11,0)
+showbVectorGenericPrec _ = showb . toList
+#else
 showbVectorGenericPrec p = showbUnaryList p . toList
+#endif
 {-# INLINE showbVectorGenericPrec #-}
 
 -- | Convert a generic 'G.Vector' to a 'Builder' with the given show function
 -- and precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorGenericPrecWith :: G.Vector v a => (a -> Builder) -> Int -> v a -> Builder
+#if MIN_VERSION_vector(0,11,0)
+showbVectorGenericPrecWith sp p = showbPrecWith (const sp) p . toList
+#else
 showbVectorGenericPrecWith sp p = showbUnaryListWith sp p . toList
+#endif
 {-# INLINE showbVectorGenericPrecWith #-}
 
 -- | Convert a primitive 'P.Vector' to a 'Builder' with the given precedence.

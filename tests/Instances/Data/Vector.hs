@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Vector
@@ -12,7 +13,11 @@ Provides 'Arbitrary' instances for 'Vector' types.
 module Instances.Data.Vector () where
 
 import qualified Data.Vector as B (Vector)
+#if MIN_VERSION_vector(0,11,0)
+import           Data.Vector.Fusion.Bundle.Size (Size(..))
+#else
 import           Data.Vector.Fusion.Stream.Size (Size(..))
+#endif
 import qualified Data.Vector.Generic as G (Vector)
 import           Data.Vector.Generic (fromList)
 import qualified Data.Vector.Primitive as P (Vector)

@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 {-|
 Module:      Spec.Data.VectorSpec
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -11,7 +13,11 @@ Portability: GHC
 module Spec.Data.VectorSpec (main, spec) where
 
 import qualified Data.Vector as B (Vector)
+#if MIN_VERSION_vector(0,11,0)
+import           Data.Vector.Fusion.Bundle.Size (Size)
+#else
 import           Data.Vector.Fusion.Stream.Size (Size)
+#endif
 import qualified Data.Vector.Primitive as P (Vector)
 import qualified Data.Vector.Storable as S (Vector)
 import qualified Data.Vector.Unboxed as U (Vector)
