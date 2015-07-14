@@ -49,6 +49,7 @@ import           TextShow.Utils (showbUnaryList, showbUnaryListWith)
 #include "inline.h"
 
 -- | Convert a boxed 'B.Vector' to a 'Builder' with the given precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorPrec :: TextShow a => Int -> B.Vector a -> Builder
@@ -57,6 +58,7 @@ showbVectorPrec = showbVectorGenericPrec
 
 -- | Convert a boxed 'B.Vector' to a 'Builder' with the given show function
 -- and precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorPrecWith :: (a -> Builder) -> Int -> B.Vector a -> Builder
@@ -89,6 +91,7 @@ showbVectorGenericPrecWith sp p = showbUnaryListWith sp p . toList
 {-# INLINE showbVectorGenericPrecWith #-}
 
 -- | Convert a primitive 'P.Vector' to a 'Builder' with the given precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorPrimitivePrec :: (TextShow a, Prim a) => Int -> P.Vector a -> Builder
@@ -96,6 +99,7 @@ showbVectorPrimitivePrec = showbVectorGenericPrec
 {-# INLINE showbVectorPrimitivePrec #-}
 
 -- | Convert a storable 'S.Vector' to a 'Builder' with the given precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorStorablePrec :: (TextShow a, Storable a) => Int -> S.Vector a -> Builder
@@ -103,6 +107,7 @@ showbVectorStorablePrec = showbVectorGenericPrec
 {-# INLINE showbVectorStorablePrec #-}
 
 -- | Convert an unboxed 'U.Vector' to a 'Builder' with the given precedence.
+-- Note that with @vector-0.11@ and above, the precedence argument is ignored.
 --
 -- /Since: 2/
 showbVectorUnboxedPrec :: (TextShow a, Unbox a) => Int -> U.Vector a -> Builder
