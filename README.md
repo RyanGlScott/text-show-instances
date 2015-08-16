@@ -7,7 +7,7 @@
 
 [Hackage: text-show-instances]:
   http://hackage.haskell.org/package/text-show-instances
-  "text-show package on Hackage"
+  "text-show-instances package on Hackage"
 [Haskell.org]:
   http://www.haskell.org
   "The Haskell Programming Language"
