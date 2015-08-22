@@ -1,3 +1,6 @@
+## 2.1
+* Make `Tagged` instances poly-kinded
+
 ## 2.0.1
 * Allow building with `vector-0.11` and above. Be aware that the `Show` instances for `Vector` types in `vector-0.11.0` are different from other versions of `vector`.
 
