@@ -149,7 +149,7 @@ library
     build-depends:     terminfo             >= 0.3.2  && < 0.5
                      , unix                 >= 2      && < 2.8
 
-test-suite text-show-instances-spec
+test-suite spec
   type:                exitcode-stdio-1.0
   main-is:             Spec.hs
   other-modules:       Instances.Compiler.Hoopl
