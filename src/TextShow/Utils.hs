@@ -1,4 +1,6 @@
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
+
 {-|
 Module:      TextShow.Utils
 Copyright:   (C) 2014-2015 Ryan Scott
@@ -9,10 +11,29 @@ Portability: GHC
 
 Miscellaneous utility functions.
 -}
-module TextShow.Utils (showbUnaryListWith, showbUnaryList) where
+module TextShow.Utils (
+      mtimesDefault
+    , showbUnaryListWith
+    , showbUnaryList
+    ) where
+
+#if MIN_VERSION_semigroups(0,17,0)
+import Data.Semigroup (mtimesDefault)
+#else
+import Data.Semigroup (timesN)
+#endif
 
 import TextShow (TextShow(showbPrec), Builder, showbUnaryWith)
 import TextShow.Data.List (showbListWith)
+
+#if !(MIN_VERSION_semigroups(0,17,0))
+-- | Repeat a value @n@ times.
+--
+-- > mtimesDefault n a = a <> a <> ... <> a  -- using <> (n-1) times
+mtimesDefault :: (Integral b, Monoid a) => b -> a -> a
+mtimesDefault = timesN . fromIntegral
+{-# INLINE mtimesDefault #-}
+#endif
 
 -- | This pattern is used frequently when showing container types.
 showbUnaryListWith :: (a -> Builder) -> Int -> [a] -> Builder

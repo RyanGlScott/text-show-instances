@@ -11,7 +11,16 @@ by @text-show@.
 
 /Since: 2/
 -}
-module TextShow.Instances () where
+module TextShow.Instances (
+    -- * Class re-exports
+      TextShow(..)
+    , TextShow1(..)
+    , TextShow2(..)
+    -- * Module re-export
+    , module TextShow
+    ) where
+
+import TextShow
 
 import TextShow.Compiler.Hoopl            ()
 

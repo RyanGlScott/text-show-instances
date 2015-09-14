@@ -33,7 +33,6 @@ module TextShow.Data.Time (
 
 import Data.Fixed (Pico)
 import Data.Monoid.Compat
-import Data.Semigroup (timesN)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
 import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
@@ -45,6 +44,7 @@ import TextShow (TextShow(showb), Builder, FromStringShow(..),
                  fromString, lengthB, showbSpace, singleton)
 import TextShow.Data.Fixed (showbFixed)
 import TextShow.Data.Integral ()
+import TextShow.Utils (mtimesDefault)
 
 #if MIN_VERSION_time(1,5,0)
 import Data.Time.Format (TimeLocale)
@@ -131,7 +131,7 @@ pad1 _        b = b
 
 padN :: Int -> Char -> Builder -> Builder
 padN i _ b | i <= 0 = b
-padN i c b          = timesN (fromIntegral i) (singleton c) <> b
+padN i c b          = mtimesDefault i (singleton c) <> b
 {-# INLINE padN #-}
 
 showb2 :: (Num t, Ord t, TextShow t) => NumericPadOption -> t -> Builder
