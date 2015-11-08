@@ -12,6 +12,7 @@ module Spec.Data.BifunctorSpec (main, spec) where
 
 import Data.Bifunctor.Biff (Biff)
 import Data.Bifunctor.Clown (Clown)
+import Data.Bifunctor.Fix (Fix)
 import Data.Bifunctor.Flip (Flip)
 import Data.Bifunctor.Join (Join)
 import Data.Bifunctor.Joker (Joker)
@@ -37,6 +38,8 @@ spec = parallel $ do
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Biff Either [] Maybe Char Int -> Bool)
     describe "Clown [] Char Int" $
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Clown [] Char Int -> Bool)
+    describe "Fix Either Int" $
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Fix Either Int -> Bool)
     describe "Flip Either Int Char" $
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Flip Either Int Char -> Bool)
     describe "Join Either Int" $

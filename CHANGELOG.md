@@ -1,3 +1,6 @@
+## next
+* Add `TextShow`/`TextShow1` instances for `Fix` in `TextShow.Data.Bifunctor`
+
 ## 2.1
 * Reexport the `TextShow` classes and module from `TextShow.Instances`. This helps Haddock readers discover what new instances are added with `text-show-instances`.
 * Make `Tagged` instances poly-kinded

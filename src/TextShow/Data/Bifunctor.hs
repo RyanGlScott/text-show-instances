@@ -20,6 +20,8 @@ module TextShow.Data.Bifunctor (
     , showbBiffPrecWith2
     , showbClownPrec
     , showbClownPrecWith
+    , showbFixPrec
+    , showbFixPrecWith
     , showbFlipPrec
     , showbFlipPrecWith2
     , showbJoinPrec
@@ -36,6 +38,7 @@ module TextShow.Data.Bifunctor (
 
 import Data.Bifunctor.Biff (Biff)
 import Data.Bifunctor.Clown (Clown)
+import Data.Bifunctor.Fix (Fix(..))
 import Data.Bifunctor.Flip (Flip)
 import Data.Bifunctor.Join (Join(..))
 import Data.Bifunctor.Joker (Joker)
@@ -75,6 +78,20 @@ showbClownPrec = showbPrec
 showbClownPrecWith :: TextShow1 f => (Int -> a -> Builder) -> Int -> Clown f a b -> Builder
 showbClownPrecWith sp = showbPrecWith2 sp undefined
 {-# INLINE showbClownPrecWith #-}
+
+-- | Convert a 'Fix' value to a 'Builder' with the given precedence.
+--
+-- /Since: 3/
+showbFixPrec :: TextShow (p (Fix p a) a) => Int -> Fix p a -> Builder
+showbFixPrec = showbPrec
+{-# INLINE showbFixPrec #-}
+
+-- | Convert a 'Fix' value to a 'Builder' with the given show function and precedence.
+--
+-- /Since: 3/
+showbFixPrecWith :: TextShow2 p => (Int -> a -> Builder) -> Int -> Fix p a -> Builder
+showbFixPrecWith sp p = showbPrecWith2 (showbPrecWith sp) sp p . out
+{-# INLINE showbFixPrecWith #-}
 
 -- | Convert a 'Flip' value to a 'Builder' with the given precedence.
 --
@@ -181,6 +198,11 @@ instance TextShow (f a) => TextShow (Clown f a b) where
     showbPrec = $(makeShowbPrec ''Clown)
 $(deriveTextShow1 ''Clown)
 $(deriveTextShow2 ''Clown)
+
+instance TextShow (p (Fix p a) a) => TextShow (Fix p a) where
+    showbPrec = $(makeShowbPrec ''Fix)
+instance TextShow2 p => TextShow1 (Fix p) where
+    showbPrecWith = showbFixPrecWith
 
 instance TextShow (p b a) => TextShow (Flip p a b) where
     showbPrec = $(makeShowbPrec ''Flip)
