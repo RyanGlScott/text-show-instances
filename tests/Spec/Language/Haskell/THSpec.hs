@@ -38,6 +38,11 @@ spec = parallel $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> AnnTarget -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> AnnTarget -> Bool)
 #endif
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "Bang" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Bang -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> Bang -> Bool)
+#endif
     describe "Body" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Body -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Body -> Bool)
@@ -58,6 +63,11 @@ spec = parallel $ do
     describe "Dec" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Dec -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Dec -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "DecidedStrictness" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> DecidedStrictness -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> DecidedStrictness -> Bool)
+#endif
     describe "Doc" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Doc -> Bool)
     describe "Exp" $ do
@@ -66,6 +76,11 @@ spec = parallel $ do
     describe "FamFlavour" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> FamFlavour -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> FamFlavour -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "FamilyResultSig" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FamilyResultSig -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> FamilyResultSig -> Bool)
+#endif
     describe "Fixity" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Fixity -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Fixity -> Bool)
@@ -84,6 +99,11 @@ spec = parallel $ do
     describe "Info" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Info -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Info -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "InjectivityAnn" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> InjectivityAnn -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> InjectivityAnn -> Bool)
+#endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Inline" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Inline -> Bool)
@@ -159,6 +179,14 @@ spec = parallel $ do
     describe "Safety" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Safety -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Safety -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "SourceStrictness" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> SourceStrictness -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> SourceStrictness -> Bool)
+    describe "SourceUnpackedness" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> SourceUnpackedness -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> SourceUnpackedness -> Bool)
+#endif
     describe "Stmt" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Stmt -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Stmt -> Bool)
@@ -173,6 +201,11 @@ spec = parallel $ do
     describe "Type" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Type -> Bool)
         prop "generic TextShow"                (prop_genericTextShow :: Int -> Type -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "TypeFamilyHead" $ do
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TypeFamilyHead -> Bool)
+        prop "generic TextShow"                (prop_genericTextShow :: Int -> TypeFamilyHead -> Bool)
+#endif
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "TySynEqn" $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> TySynEqn -> Bool)

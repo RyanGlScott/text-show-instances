@@ -14,19 +14,14 @@ Monomorphic 'TextShow' functions for data types in the @containers@ library.
 /Since: 2/
 -}
 module TextShow.Data.Containers (
-      showbIntMapPrecWith
+      liftShowbIntMapPrec
     , showbIntSetPrec
-    , showbMapPrecWith2
-    , showbSequencePrec
-    , showbSequencePrecWith
-    , showbViewLPrec
-    , showbViewLPrecWith
-    , showbViewRPrec
-    , showbViewRPrecWith
-    , showbSetPrec
-    , showbSetPrecWith
-    , showbTreePrec
-    , showbTreePrecWith
+    , liftShowbMapPrec2
+    , liftShowbSequencePrec
+    , liftShowbViewLPrec
+    , liftShowbViewRPrec
+    , liftShowbSetPrec
+    , liftShowbTreePrec
     ) where
 
 import qualified Data.Foldable as F
@@ -42,113 +37,84 @@ import qualified Data.Set as Set
 import           Data.Set (Set)
 import           Data.Tree (Tree)
 
-import           TextShow (TextShow(showb, showbPrec), TextShow1(..), TextShow2(..),
+import           TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                            Builder, showbPrec1)
 import           TextShow.Data.Integral ()
-import           TextShow.Data.Tuple (showb2TupleWith2)
 import           TextShow.TH (deriveTextShow, deriveTextShow1)
-import           TextShow.Utils (showbUnaryList, showbUnaryListWith)
+import           TextShow.Utils (showbUnaryListWith)
 
 #include "inline.h"
 
 -- | Convert an 'IntMap' to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbIntMapPrecWith :: (v -> Builder) -> Int -> IntMap v -> Builder
-showbIntMapPrecWith sp p = showbUnaryListWith (showb2TupleWith2 showb sp) p . IM.toList
-{-# INLINE showbIntMapPrecWith #-}
+-- /Since: 3/
+liftShowbIntMapPrec :: (v -> Builder) -> Int -> IntMap v -> Builder
+liftShowbIntMapPrec sp p =
+    showbUnaryListWith (liftShowbList2 showbPrec undefined
+                                      (const sp) undefined) p . IM.toList
+{-# INLINE liftShowbIntMapPrec #-}
 
 -- | Convert an 'IntSet' to a 'Builder' with the given precedence.
 --
 -- /Since: 2/
 showbIntSetPrec :: Int -> IntSet -> Builder
-showbIntSetPrec p = showbUnaryListWith showb p . IS.toList
+showbIntSetPrec p = showbUnaryListWith showbList p . IS.toList
 {-# INLINE showbIntSetPrec #-}
 
 -- | Convert a 'Map' to a 'Builder' with the given show functions and precedence.
 --
--- /Since: 2/
-showbMapPrecWith2 :: (k -> Builder) -> (v -> Builder) -> Int -> Map k v -> Builder
-showbMapPrecWith2 sp1 sp2 p = showbUnaryListWith (showb2TupleWith2 sp1 sp2) p . M.toList
-{-# INLINE showbMapPrecWith2 #-}
-
--- | Convert a 'Sequence' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbSequencePrec :: TextShow a => Int -> Seq a -> Builder
-showbSequencePrec p = showbUnaryList p . F.toList
-{-# INLINE showbSequencePrec #-}
+-- /Since: 3/
+liftShowbMapPrec2 :: (k -> Builder) -> (v -> Builder) -> Int -> Map k v -> Builder
+liftShowbMapPrec2 sp1 sp2 p =
+    showbUnaryListWith (liftShowbList2 (const sp1) undefined
+                                       (const sp2) undefined) p . M.toList
+{-# INLINE liftShowbMapPrec2 #-}
 
 -- | Convert a 'Sequence' to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbSequencePrecWith :: (a -> Builder) -> Int -> Seq a -> Builder
-showbSequencePrecWith sp p = showbUnaryListWith sp p . F.toList
-{-# INLINE showbSequencePrecWith #-}
-
--- | Convert a 'ViewL' value to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbViewLPrec :: TextShow a => Int -> ViewL a -> Builder
-showbViewLPrec = showbPrec
-{-# INLINE showbViewLPrec #-}
+-- /Since: 3/
+liftShowbSequencePrec :: ([a] -> Builder) -> Int -> Seq a -> Builder
+liftShowbSequencePrec sl p = showbUnaryListWith sl p . F.toList
+{-# INLINE liftShowbSequencePrec #-}
 
 -- | Convert a 'ViewL' value to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbViewLPrecWith :: (a -> Builder) -> Int -> ViewL a -> Builder
-showbViewLPrecWith sp = showbPrecWith $ const sp
-{-# INLINE showbViewLPrecWith #-}
-
--- | Convert a 'ViewR' value to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbViewRPrec :: TextShow a => Int -> ViewR a -> Builder
-showbViewRPrec = showbPrec
-{-# INLINE showbViewRPrec #-}
+-- /Since: 3/
+liftShowbViewLPrec :: (Int -> a -> Builder) -> ([a] -> Builder)
+                   -> Int -> ViewL a -> Builder
+liftShowbViewLPrec = liftShowbPrec
+{-# INLINE liftShowbViewLPrec #-}
 
 -- | Convert a 'ViewR' value to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbViewRPrecWith :: (a -> Builder) -> Int -> ViewR a -> Builder
-showbViewRPrecWith sp = showbPrecWith $ const sp
-{-# INLINE showbViewRPrecWith #-}
-
--- | Convert a 'Set' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbSetPrec :: TextShow a => Int -> Set a -> Builder
-showbSetPrec p = showbUnaryList p . Set.toList
-{-# INLINE showbSetPrec #-}
+-- /Since: 3/
+liftShowbViewRPrec :: (Int -> a -> Builder) -> ([a] -> Builder)
+                   -> Int -> ViewR a -> Builder
+liftShowbViewRPrec = liftShowbPrec
+{-# INLINE liftShowbViewRPrec #-}
 
 -- | Convert a 'Set' to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbSetPrecWith :: (a -> Builder) -> Int -> Set a -> Builder
-showbSetPrecWith sp p = showbUnaryListWith sp p . Set.toList
-{-# INLINE showbSetPrecWith #-}
+-- /Since: 3/
+liftShowbSetPrec :: ([a] -> Builder) -> Int -> Set a -> Builder
+liftShowbSetPrec sl p = showbUnaryListWith sl p . Set.toList
+{-# INLINE liftShowbSetPrec #-}
 
--- | Convert a 'Tree' to a 'Builder' with the given precedence.
+-- | Convert a 'Tree' to a 'Builder' with the given show functions and precedence.
 --
--- /Since: 2/
-showbTreePrec :: TextShow a => Int -> Tree a -> Builder
-showbTreePrec = showbPrec
-{-# INLINE showbTreePrec #-}
-
--- | Convert a 'Tree' to a 'Builder' with the given show function and precedence.
---
--- /Since: 2/
-showbTreePrecWith :: (a -> Builder) -> Int -> Tree a -> Builder
-showbTreePrecWith sp = showbPrecWith $ const sp
-{-# INLINE showbTreePrecWith #-}
+-- /Since: 3/
+liftShowbTreePrec :: (Int -> a -> Builder) -> ([a] -> Builder)
+                  -> Int -> Tree a -> Builder
+liftShowbTreePrec = liftShowbPrec
+{-# INLINE liftShowbTreePrec #-}
 
 instance TextShow v => TextShow (IntMap v) where
     showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 IntMap where
-    showbPrecWith sp = showbIntMapPrecWith $ sp 0
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec sp _ = liftShowbIntMapPrec (sp 0)
+    INLINE_INST_FUN(liftShowbPrec)
 
 instance TextShow IntSet where
     showbPrec = showbIntSetPrec
@@ -159,20 +125,20 @@ instance (TextShow k, TextShow v) => TextShow (Map k v) where
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow k => TextShow1 (Map k) where
-    showbPrecWith = showbPrecWith2 showbPrec
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec = liftShowbPrec2 showbPrec showbList
+    INLINE_INST_FUN(liftShowbPrec)
 
 instance TextShow2 Map where
-    showbPrecWith2 sp1 sp2 = showbMapPrecWith2 (sp1 0) (sp2 0)
-    INLINE_INST_FUN(showbPrecWith2)
+    liftShowbPrec2 sp1 _ sp2 _ = liftShowbMapPrec2 (sp1 0) (sp2 0)
+    INLINE_INST_FUN(liftShowbPrec2)
 
 instance TextShow a => TextShow (Seq a) where
-    showbPrec = showbSequencePrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 Seq where
-    showbPrecWith sp = showbSequencePrecWith $ sp 0
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec _ = liftShowbSequencePrec
+    INLINE_INST_FUN(liftShowbPrec)
 
 $(deriveTextShow  ''ViewL)
 $(deriveTextShow1 ''ViewL)
@@ -181,12 +147,12 @@ $(deriveTextShow  ''ViewR)
 $(deriveTextShow1 ''ViewR)
 
 instance TextShow a => TextShow (Set a) where
-    showbPrec = showbSetPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 Set where
-    showbPrecWith sp = showbSetPrecWith $ sp 0
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec _ = liftShowbSetPrec
+    INLINE_INST_FUN(liftShowbPrec)
 
 $(deriveTextShow  ''Tree)
 $(deriveTextShow1 ''Tree)

@@ -25,7 +25,7 @@ module TextShow.Trace.Hpc (
 
 import Data.Monoid.Compat
 
-import TextShow (TextShow(showb, showbPrec), Builder, FromStringShow(..), singleton)
+import TextShow (TextShow(..), Builder, FromStringShow(..), singleton)
 import TextShow.Data.Integral (showbIntPrec)
 import TextShow.Data.Time ()
 import TextShow.TH (deriveTextShow)

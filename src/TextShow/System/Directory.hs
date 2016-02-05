@@ -16,7 +16,7 @@ module TextShow.System.Directory (showbPermissionsPrec) where
 
 import System.Directory (Permissions)
 
-import TextShow (TextShow(showbPrec), Builder)
+import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
 -- | Convert 'Permissions' to a 'Builder' with the given precedence.

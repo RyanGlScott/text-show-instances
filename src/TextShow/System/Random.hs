@@ -15,7 +15,7 @@ Monomorphic 'TextShow' function for 'StdGen'.
 module TextShow.System.Random (showbStdGenPrec) where
 
 import System.Random (StdGen)
-import TextShow (TextShow(showbPrec), Builder, FromStringShow(..))
+import TextShow (TextShow(..), Builder, FromStringShow(..))
 
 #include "inline.h"
 

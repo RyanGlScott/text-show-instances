@@ -1,5 +1,11 @@
-## next
-* Add `TextShow`/`TextShow1` instances for `Fix` in `TextShow.Data.Bifunctor`
+## 3
+* GHC 8.0 support
+* Rename functions that previously ended with the suffix `-With` to instead have the prefix `lift-`, consistent with `text-show-3`
+* Removed the `TextShow.Data.Semigroup` and `TextShow.Data.List.NonEmpty` modules, as they have been moved to `text-show-3` (as part of moving `Semigroup` into `base`)
+* Removed the functions for `Compose`, `Product`, and `Sum` in `TextShow.Data.Functor.Trans`, as they have been moved to `text-show-3` (as part of moving them to `base`)
+* Add `TextShow`/`TextShow1` instances for `Fix` and `Sum` in `TextShow.Data.Bifunctor`
+* Add `TextShow`/`TextShow1` instances for the datatypes in `Text.PrettyPrint.Annotated` (introduced in @pretty-1.1.1.3@)
+* Add `TextShow` instances for the new datatypes in @template-haskell-2.11.0.0@
 
 ## 2.1
 * Reexport the `TextShow` classes and module from `TextShow.Instances`. This helps Haddock readers discover what new instances are added with `text-show-instances`.

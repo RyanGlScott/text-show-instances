@@ -50,10 +50,14 @@ instance Arbitrary Clause where
 --     arbitrary = Clause <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Con where
-    arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
-                      , RecC    <$> arbitrary <*> arbitrary
-                      , InfixC  <$> arbitrary <*> arbitrary <*> arbitrary
-                      , ForallC <$> arbitrary <@> [fPred]   <@> fCon
+    arbitrary = oneof [ NormalC  <$> arbitrary <*> arbitrary
+                      , RecC     <$> arbitrary <*> arbitrary
+                      , InfixC   <$> arbitrary <*> arbitrary <*> arbitrary
+                      , ForallC  <$> arbitrary <@> [fPred]   <@> fCon
+#if MIN_VERSION_template_haskell(2,11,0)
+                      , GadtC    <$> arbitrary <*> arbitrary <*> arbitrary
+                      , RecGadtC <$> arbitrary <*> arbitrary <*> arbitrary
+#endif
                       ]
 --     arbitrary = oneof [ NormalC <$> arbitrary <*> arbitrary
 --                       , RecC    <$> arbitrary <*> arbitrary
@@ -65,22 +69,50 @@ instance Arbitrary Dec where
     arbitrary = oneof [
           FunD <$> arbitrary <@> [fClause]
         , pure $ ValD fPat fBody [fDec]
-        , DataD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , NewtypeD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataD [fPred] <$> arbitrary
+                        <*> arbitrary
+#if MIN_VERSION_template_haskell(2,11,0)
+                        <*> arbitrary
+#endif
+                        <*> arbitrary
+                        <*> arbitrary
+        , NewtypeD [fPred] <$> arbitrary
+                           <*> arbitrary
+#if MIN_VERSION_template_haskell(2,11,0)
+                           <*> arbitrary
+#endif
+                           <*> arbitrary
+                           <*> arbitrary
         , TySynD <$> arbitrary <*> arbitrary <*> arbitrary
         , ClassD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <@> [fDec]
         , InstanceD [fPred] <$> arbitrary <@> [fDec]
         , SigD <$> arbitrary <*> arbitrary
         , ForeignD <$> arbitrary
         , PragmaD <$> arbitrary
-        , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , DataInstD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , NewtypeInstD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataInstD [fPred] <$> arbitrary
+                            <*> arbitrary
+#if MIN_VERSION_template_haskell(2,11,0)
+                            <*> arbitrary
+#endif
+                            <*> arbitrary
+                            <*> arbitrary
+        , NewtypeInstD [fPred] <$> arbitrary
+                               <*> arbitrary
+#if MIN_VERSION_template_haskell(2,11,0)
+                               <*> arbitrary
+#endif
+                               <*> arbitrary
+                               <*> arbitrary
 #if MIN_VERSION_template_haskell(2,8,0)
         , InfixD <$> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,9,0)
-        , ClosedTypeFamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , ClosedTypeFamilyD <$> arbitrary
+                            <*> arbitrary
+# if !(MIN_VERSION_template_haskell(2,11,0))
+                            <*> arbitrary
+                            <*> arbitrary
+# endif
         , RoleAnnotD <$> arbitrary <*> arbitrary
         , TySynInstD <$> arbitrary <*> arbitrary
 #else
@@ -89,6 +121,12 @@ instance Arbitrary Dec where
 #if MIN_VERSION_template_haskell(2,10,0)
         , StandaloneDerivD <$> arbitrary <*> arbitrary
         , DefaultSigD <$> arbitrary <*> arbitrary
+#endif
+#if MIN_VERSION_template_haskell(2,11,0)
+        , DataFamilyD <$> arbitrary <*> arbitrary <*> arbitrary
+        , OpenTypeFamilyD <$> arbitrary
+#else
+        , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 #endif
         ]
 --     arbitrary = oneof [
@@ -157,6 +195,9 @@ instance Arbitrary Exp where
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
                       , pure $ StaticE fExp
+#endif
+#if MIN_VERSION_template_haskell(2,11,0)
+                      , UnboundVarE <$> arbitrary
 #endif
                       ]
 --     arbitrary = oneof [ VarE        <$> arbitrary
@@ -229,11 +270,26 @@ instance Arbitrary Info where
 #else
           pure $ ClassI fDec
 #endif
-        , ClassOpI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , ClassOpI   <$> arbitrary
+                     <*> arbitrary
+                     <*> arbitrary
+#if !(MIN_VERSION_template_haskell(2,11,0))
+                     <*> arbitrary
+#endif
         , pure $ TyConI fDec
         , PrimTyConI <$> arbitrary <*> arbitrary <*> arbitrary
-        , DataConI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , VarI       <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , DataConI   <$> arbitrary
+                     <*> arbitrary
+                     <*> arbitrary
+#if !(MIN_VERSION_template_haskell(2,11,0))
+                     <*> arbitrary
+#endif
+        , VarI       <$> arbitrary
+                     <*> arbitrary
+                     <*> arbitrary
+#if !(MIN_VERSION_template_haskell(2,11,0))
+                     <*> arbitrary
+#endif
         , TyVarI     <$> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,7,0)
         , pure $ FamilyI fDec [fDec]
@@ -267,6 +323,9 @@ instance Arbitrary Lit where
                       , DoublePrimL <$> arbitrary
 #if MIN_VERSION_template_haskell(2,5,0)
                       , StringPrimL <$> arbitrary
+#endif
+#if MIN_VERSION_template_haskell(2,11,0)
+                      , CharPrimL   <$> arbitrary
 #endif
                       ]
 
@@ -403,11 +462,6 @@ instance Arbitrary Stmt where
 --                       , ParS    <$> arbitrary
 --                       ]
 
-deriving instance Bounded Strict
-deriving instance Enum Strict
-instance Arbitrary Strict where
-    arbitrary = arbitraryBoundedEnum
-
 instance Arbitrary Type where
     arbitrary = oneof [ pure $ ForallT [fTyVarBndr] [fPred] fType
                       , VarT <$> arbitrary
@@ -431,6 +485,12 @@ instance Arbitrary Type where
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
                       , pure EqualityT
+#endif
+#if MIN_VERSION_template_haskell(2,11,0)
+                      , InfixT  fType <$> arbitrary <@> fType
+                      , UInfixT fType <$> arbitrary <@> fType
+                      , pure $ ParensT fType
+                      , pure WildCardT
 #endif
                       ]
 --     arbitrary = oneof [ ForallT        <$> arbitrary <*> arbitrary <*> arbitrary
@@ -511,7 +571,7 @@ instance Arbitrary AnnTarget where
 
 instance Arbitrary Module where
     arbitrary = Module <$> arbitrary <*> arbitrary
-                      
+
 instance Arbitrary ModuleInfo where
     arbitrary = ModuleInfo <$> arbitrary
 
@@ -535,6 +595,46 @@ instance Arbitrary Pred where
 --     arbitrary = oneof [ ClassP <$> arbitrary <*> arbitrary
 --                       , EqualP <$> arbitrary <*> arbitrary
 --                       ]
+#endif
+
+#if MIN_VERSION_template_haskell(2,11,0)
+instance Arbitrary Bang where
+    arbitrary = Bang <$> arbitrary <*> arbitrary
+
+deriving instance Bounded DecidedStrictness
+deriving instance Enum DecidedStrictness
+instance Arbitrary DecidedStrictness where
+    arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary FamilyResultSig where
+    arbitrary = oneof [ pure NoSig
+                      , pure $ KindSig fKind
+                      , pure $ TyVarSig fTyVarBndr
+                      ]
+
+instance Arbitrary InjectivityAnn where
+    arbitrary = pure $ InjectivityAnn fName [fName]
+
+deriving instance Bounded SourceStrictness
+deriving instance Enum SourceStrictness
+instance Arbitrary SourceStrictness where
+    arbitrary = arbitraryBoundedEnum
+
+deriving instance Bounded SourceUnpackedness
+deriving instance Enum SourceUnpackedness
+instance Arbitrary SourceUnpackedness where
+    arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary TypeFamilyHead where
+    arbitrary = TypeFamilyHead fName
+                               [fTyVarBndr]
+                           <$> arbitrary
+                           <*> arbitrary
+#else
+deriving instance Bounded Strict
+deriving instance Enum Strict
+instance Arbitrary Strict where
+    arbitrary = arbitraryBoundedEnum
 #endif
 
 deriving instance Arbitrary ModName

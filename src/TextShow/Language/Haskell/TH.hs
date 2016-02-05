@@ -1,10 +1,8 @@
 {-# LANGUAGE CPP                  #-}
 {-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE MagicHash            #-}
 {-# LANGUAGE TemplateHaskell      #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-#if !(MIN_VERSION_template_haskell(2,10,0))
-{-# LANGUAGE MagicHash            #-}
-#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      TextShow.Language.Haskell.TH
@@ -23,6 +21,9 @@ module TextShow.Language.Haskell.TH (
       showbAnnLookupPrec
     , showbAnnTargetPrec,
 #endif
+#if MIN_VERSION_template_haskell(2,11,0)
+      showbBangPrec,
+#endif
       showbBodyPrec
     , showbCallconv
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
@@ -30,15 +31,24 @@ module TextShow.Language.Haskell.TH (
 #endif
     , showbClausePrec
     , showbConPrec
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbDecidedStrictness
+#endif
     , showbDecPrec
     , showbExpPrec
     , showbFamFlavour
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbFamilyResultSigPrec
+#endif
     , showbFixityPrec
     , showbFixityDirection
     , showbForeignPrec
     , showbFunDepPrec
     , showbGuardPrec
     , showbInfoPrec
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbInjectivityAnnPrec
+#endif
 #if MIN_VERSION_template_haskell(2,8,0)
     , showbInline
 #else
@@ -72,16 +82,23 @@ module TextShow.Language.Haskell.TH (
     , showbRuleMatch
 #endif
     , showbSafety
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbSourceStrictness
+    , showbSourceUnpackedness
+#endif
     , showbStmtPrec
-    , showbStrict
+    , showbStrictPrec
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbTypeFamilyHeadPrec
+#endif
 #if MIN_VERSION_template_haskell(2,8,0)
     , showbTyLitPrec
 #endif
     , showbTypePrec
-    , showbTyVarBndrPrec
 #if MIN_VERSION_template_haskell(2,9,0)
     , showbTySynEqnPrec
 #endif
+    , showbTyVarBndrPrec
     , showbDoc
     ) where
 
@@ -98,7 +115,7 @@ import           GHC.Exts (Int(I#))
 import           Language.Haskell.TH.PprLib (Doc, to_HPJ_Doc)
 import           Language.Haskell.TH.Syntax
 
-import           TextShow (TextShow(showb, showbPrec), Builder,
+import           TextShow (TextShow(..), Builder,
                            fromString, singleton, toLazyText)
 import           TextShow.Data.Integral (showbIntPrec)
 import           TextShow.Text.PrettyPrint (renderB)
@@ -330,11 +347,18 @@ showbSafety = showb
 showbStmtPrec :: Int -> Stmt -> Builder
 showbStmtPrec = showbPrec
 
--- | Convert a 'Strict' to a 'Builder'.
+-- | Convert a 'Strict' to a 'Builder' with the given precedence.
+-- Note that 'Strict' is a type synonym for 'Bang' on @template-haskell-2.11.0.0@
+-- and later, and precedence matters for 'Bang'. On earlier versions of
+-- @template-haskell@, however, the precedence argument is ignored.
 --
--- /Since: 2/
-showbStrict :: Strict -> Builder
-showbStrict = showb
+-- /Since: 3/
+showbStrictPrec :: Int -> Strict -> Builder
+#if MIN_VERSION_template_haskell(2,11,0)
+showbStrictPrec = showbBangPrec
+#else
+showbStrictPrec = showbPrec
+#endif
 
 -- | Convert a 'Type' to a 'Builder' with the given precedence.
 --
@@ -451,6 +475,57 @@ showbTySynEqnPrec :: Int -> TySynEqn -> Builder
 showbTySynEqnPrec = showbPrec
 #endif
 
+#if MIN_VERSION_template_haskell(2,11,0)
+-- | Convert a 'Bang' to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbBangPrec :: Int -> Bang -> Builder
+showbBangPrec = showbPrec
+
+-- | Convert a 'DecidedStrictness' to a 'Builder'.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbDecidedStrictness :: DecidedStrictness -> Builder
+showbDecidedStrictness = showb
+
+-- | Convert a 'FamilyResultSig' to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbFamilyResultSigPrec :: Int -> FamilyResultSig -> Builder
+showbFamilyResultSigPrec = showbPrec
+
+-- | Convert an 'InjectivityAnn' to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbInjectivityAnnPrec :: Int -> InjectivityAnn -> Builder
+showbInjectivityAnnPrec = showbPrec
+
+-- | Convert a 'SourceStrictness' to a 'Builder'.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbSourceStrictness :: SourceStrictness -> Builder
+showbSourceStrictness = showb
+
+-- | Convert a 'SourceUnpackedness' to a 'Builder'.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbSourceUnpackedness :: SourceUnpackedness -> Builder
+showbSourceUnpackedness = showb
+
+-- | Convert an 'TypeFamilyHead' to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
+showbTypeFamilyHeadPrec :: Int -> TypeFamilyHead -> Builder
+showbTypeFamilyHeadPrec = showbPrec
+#endif
+
 $(deriveTextShow ''Body)
 $(deriveTextShow ''Callconv)
 $(deriveTextShow ''Clause)
@@ -479,7 +554,6 @@ $(deriveTextShow ''Pragma)
 $(deriveTextShow ''Range)
 $(deriveTextShow ''Safety)
 $(deriveTextShow ''Stmt)
-$(deriveTextShow ''Strict)
 $(deriveTextShow ''Type)
 $(deriveTextShow ''TyVarBndr)
 
@@ -512,4 +586,16 @@ $(deriveTextShow ''TySynEqn)
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 $(deriveTextShow ''Pred)
+#endif
+
+#if MIN_VERSION_template_haskell(2,11,0)
+$(deriveTextShow ''Bang)
+$(deriveTextShow ''DecidedStrictness)
+$(deriveTextShow ''FamilyResultSig)
+$(deriveTextShow ''InjectivityAnn)
+$(deriveTextShow ''SourceStrictness)
+$(deriveTextShow ''SourceUnpackedness)
+$(deriveTextShow ''TypeFamilyHead)
+#else
+$(deriveTextShow ''Strict)
 #endif

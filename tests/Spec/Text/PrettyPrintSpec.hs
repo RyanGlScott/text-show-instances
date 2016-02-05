@@ -11,22 +11,27 @@ Portability: GHC
 -}
 module Spec.Text.PrettyPrintSpec (main, spec) where
 
-import Instances.Text.PrettyPrint ()
+import           Instances.Text.PrettyPrint ()
 
-import Spec.Utils (prop_matchesTextShow)
+import           Spec.Utils (prop_matchesTextShow)
 #if MIN_VERSION_pretty(1,1,2)
-import Spec.Utils (prop_genericTextShow)
+import           Spec.Utils (prop_genericTextShow)
 #endif
 
-import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
+import           Test.Hspec (Spec, describe, hspec, parallel)
+import           Test.Hspec.QuickCheck (prop)
 
-import Text.PrettyPrint.HughesPJ (Doc, Mode, Style, TextDetails {-, renderStyle -})
+import           Text.PrettyPrint.HughesPJ (Doc, Mode, Style, TextDetails {-, renderStyle -})
 #if MIN_VERSION_pretty(1,1,2)
-import Text.PrettyPrint.HughesPJClass (PrettyLevel)
+import           Text.PrettyPrint.HughesPJClass (PrettyLevel)
 #endif
--- import TextShow (fromString)
-import TextShow.Text.PrettyPrint () -- (renderStyleB)
+#if MIN_VERSION_pretty(1,1,3)
+import qualified Text.PrettyPrint.Annotated.HughesPJ as Annot (Doc)
+import           Text.PrettyPrint.Annotated.HughesPJ (AnnotDetails, Span)
+import qualified Text.PrettyPrint.Annotated.HughesPJClass as Annot (PrettyLevel)
+#endif
+-- import           TextShow (fromString)
+import           TextShow.Text.PrettyPrint () -- (renderStyleB)
 
 main :: IO ()
 main = hspec spec
@@ -56,6 +61,16 @@ spec = parallel $ do
 #if MIN_VERSION_pretty(1,1,2)
     describe "PrettyLevel" $
         prop "TextShow instance"                 (prop_matchesTextShow :: Int -> PrettyLevel -> Bool)
+#endif
+#if MIN_VERSION_pretty(1,1,3)
+    describe "AnnotDetails Int" $
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> AnnotDetails Int -> Bool)
+    describe "Doc Int (annotated)" $
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Annot.Doc Int -> Bool)
+    describe "PrettyLevel (annotated)" $
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Annot.PrettyLevel -> Bool)
+    describe "Span Int" $
+        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Span Int -> Bool)
 #endif
 
 -- | Verifies that the output of 'renderStyle' and 'renderStyleB' coincides.

@@ -25,7 +25,7 @@ import System.IO.Unsafe (unsafePerformIO)
 import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day,
                     calendarTimeToString, toCalendarTime)
 
-import TextShow (TextShow(showb, showbPrec), Builder, fromString)
+import TextShow (TextShow(..), Builder, fromString)
 import TextShow.TH (deriveTextShow)
 
 #include "inline.h"

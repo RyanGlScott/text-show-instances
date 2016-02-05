@@ -39,7 +39,7 @@ import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
 import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 
-import TextShow (Builder, showb, showbPrec)
+import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
 -- | Convert a 'DebugEventInfo' value to a 'Builder' with the given precedence.

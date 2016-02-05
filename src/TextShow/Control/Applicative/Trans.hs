@@ -14,51 +14,51 @@ Monomorphic 'TextShow' functions for applicative functor transformers.
 /Since: 2/
 -}
 module TextShow.Control.Applicative.Trans (
-      showbBackwardsPrecWith
-    , showbLiftPrecWith
+      liftShowbBackwardsPrec
+    , liftShowbLiftPrec
     ) where
 
 import Control.Applicative.Backwards (Backwards(..))
 import Control.Applicative.Lift (Lift(..))
 
-import TextShow (TextShow(showbPrec), TextShow1(..),
+import TextShow (TextShow(..), TextShow1(..),
                  Builder, showbPrec1, showbUnaryWith)
 
 #include "inline.h"
 
--- | Convert a 'Backwards' value to a 'Builder' with the given show function
+-- | Convert a 'Backwards' value to a 'Builder' with the given show functions
 -- and precedence.
 --
--- /Since: 2/
-showbBackwardsPrecWith :: TextShow1 f
-                       => (Int -> a -> Builder)
+-- /Since: 3/
+liftShowbBackwardsPrec :: TextShow1 f
+                       => (Int -> a -> Builder) -> ([a] -> Builder)
                        -> Int -> Backwards f a -> Builder
-showbBackwardsPrecWith sp p (Backwards x)
-    = showbUnaryWith (showbPrecWith sp) "Backwards" p x
-{-# INLINE showbBackwardsPrecWith #-}
+liftShowbBackwardsPrec sp sl p (Backwards x)
+    = showbUnaryWith (liftShowbPrec sp sl) "Backwards" p x
+{-# INLINE liftShowbBackwardsPrec #-}
 
--- | Convert a 'Lift' value to a 'Builder' with the given show function and precedence.
+-- | Convert a 'Lift' value to a 'Builder' with the given show functions and precedence.
 --
--- /Since: 2/
-showbLiftPrecWith :: TextShow1 f
-                  => (Int -> a -> Builder)
+-- /Since: 3/
+liftShowbLiftPrec :: TextShow1 f
+                  => (Int -> a -> Builder) -> ([a] -> Builder)
                   -> Int -> Lift f a -> Builder
-showbLiftPrecWith sp p (Pure  x) = showbUnaryWith sp                 "Pure" p x
-showbLiftPrecWith sp p (Other y) = showbUnaryWith (showbPrecWith sp) "Other" p y
-{-# INLINE showbLiftPrecWith #-}
+liftShowbLiftPrec sp _  p (Pure  x) = showbUnaryWith sp                    "Pure" p x
+liftShowbLiftPrec sp sl p (Other y) = showbUnaryWith (liftShowbPrec sp sl) "Other" p y
+{-# INLINE liftShowbLiftPrec #-}
 
 instance (TextShow1 f, TextShow a) => TextShow (Backwards f a) where
     showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 f => TextShow1 (Backwards f) where
-    showbPrecWith = showbBackwardsPrecWith
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec = liftShowbBackwardsPrec
+    INLINE_INST_FUN(liftShowbPrec)
 
 instance (TextShow1 f, TextShow a) => TextShow (Lift f a) where
     showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 f => TextShow1 (Lift f) where
-    showbPrecWith = showbLiftPrecWith
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec = liftShowbLiftPrec
+    INLINE_INST_FUN(liftShowbPrec)

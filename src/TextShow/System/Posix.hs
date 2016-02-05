@@ -33,7 +33,7 @@ import System.Posix.DynamicLinker (RTLDFlags, DL)
 import System.Posix.Process (ProcessStatus)
 import System.Posix.User (GroupEntry, UserEntry)
 
-import TextShow (Builder, showb, showbPrec)
+import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
 -- | Convert an 'RTLDFlags' value to a 'Builder'.

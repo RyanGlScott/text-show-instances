@@ -29,7 +29,7 @@ module TextShow.System.Console.Terminfo (
 import System.Console.Terminfo.Base (SetupTermError)
 import System.Console.Terminfo.Color (Color)
 
-import TextShow (TextShow(showb, showbPrec), Builder, FromStringShow(..))
+import TextShow (TextShow(..), Builder, FromStringShow(..))
 import TextShow.TH (deriveTextShow)
 
 #include "inline.h"

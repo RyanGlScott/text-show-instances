@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             2.1
+version:             3
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
@@ -71,6 +71,7 @@ tested-with:         GHC == 7.0.4
                    , GHC == 7.6.3
                    , GHC == 7.8.4
                    , GHC == 7.10.3
+                   , GHC == 8.0.1
 extra-source-files:  CHANGELOG.md, README.md, include/inline.h
 cabal-version:       >=1.10
 
@@ -93,8 +94,6 @@ library
                        TextShow.Data.Binary
                        TextShow.Data.Containers
                        TextShow.Data.Functor.Trans
-                       TextShow.Data.List.NonEmpty
-                       TextShow.Data.Semigroup
                        TextShow.Data.Tagged
                        TextShow.Data.Time
                        TextShow.Data.UnorderedContainers
@@ -119,7 +118,7 @@ library
   build-depends:       base                 >= 4.3    && < 5
                      , base-compat          >= 0.8.1  && < 1
                      , bifunctors           >= 5.1    && < 6
-                     , binary               >= 0.6    && < 0.8
+                     , binary               >= 0.6    && < 0.9
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
@@ -134,10 +133,10 @@ library
                      , tagged               >= 0.4.4  && < 1
                      , template-haskell     >= 2.5    && < 2.12
                      , text                 >= 0.11.1 && < 1.3
-                     , text-show            >= 2      && < 2.2
-                     , time                 >= 0.1    && < 1.6
+                     , text-show            >= 3      && < 4
+                     , time                 >= 0.1    && < 1.7
                      , transformers         >= 0.2.1  && < 0.6
-                     , transformers-compat  >= 0.3    && < 1
+                     , transformers-compat  >= 0.5    && < 1
                      , unordered-containers >= 0.2    && < 0.3
                      , vector               >= 0.9    && < 0.12
                      , xhtml                >= 3000.2 && < 3000.3
@@ -164,8 +163,6 @@ test-suite spec
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Functor.Trans
-                       Instances.Data.List.NonEmpty
-                       Instances.Data.Semigroup
                        Instances.Data.Tagged
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
@@ -192,8 +189,6 @@ test-suite spec
                        Spec.Data.BinarySpec
                        Spec.Data.ContainersSpec
                        Spec.Data.Functor.TransSpec
-                       Spec.Data.List.NonEmptySpec
-                       Spec.Data.SemigroupSpec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
                        Spec.Data.UnorderedContainersSpec
@@ -217,10 +212,11 @@ test-suite spec
   build-depends:       base                 >= 4.3    && < 5
                      , base-compat          >= 0.8.1  && < 1
                      , bifunctors           >= 5.1    && < 6
-                     , binary               >= 0.6    && < 0.8
+                     , binary               >= 0.6    && < 0.9
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
                      , directory            >= 1      && < 1.3
+                     , generic-deriving     >= 1.9    && < 2
                      , ghc-prim
                      , haskeline            >= 0.7    && < 0.8
                      , hoopl                >= 3.8.7  && < 3.11
@@ -232,21 +228,20 @@ test-suite spec
                      , QuickCheck           >= 2.5    && < 3
                      , quickcheck-instances >= 0.1    && < 0.4
                      , random               >= 1.0.1  && < 1.2
-                     , semigroups           >= 0.8.4  && < 1
+                     , semigroups           >= 0.17   && < 1
                      , tagged               >= 0.4.4  && < 1
                      , template-haskell     >= 2.5    && < 2.12
-                     , text-show            >= 2      && < 2.2
+                     , text                 >= 0.11.1 && < 1.3
+                     , text-show            >= 3      && < 4
                      , th-orphans           >= 0.12   && < 1
-                     , time                 >= 0.1    && < 1.6
+                     , time                 >= 0.1    && < 1.7
                      , transformers         >= 0.2.1  && < 0.6
-                     , transformers-compat  >= 0.3    && < 1
+                     , transformers-compat  >= 0.5    && < 1
                      , unordered-containers >= 0.2    && < 0.3
                      , vector               >= 0.9    && < 0.12
                      , xhtml                >= 3000.2 && < 3000.3
-  if flag(developer)
-    build-depends:     text                 >= 0.11.1 && < 1.3
-  else
-    build-depends:     text-show-instances  == 2.1
+  if !flag(developer)
+    build-depends:     text-show-instances  == 3
 
   hs-source-dirs:      tests
   if flag(developer)
@@ -254,6 +249,9 @@ test-suite spec
 
   default-language:    Haskell2010
   ghc-options:         -Wall -threaded -rtsopts
+  include-dirs:        include
+  includes:            inline.h
+  install-includes:    inline.h
 
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4

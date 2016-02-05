@@ -17,11 +17,11 @@ Monomorphic 'TextShow' functions for data types in the @hoopl@ library.
 -}
 module TextShow.Compiler.Hoopl (
       showbLabel
-    , showbLabelMapPrecWith
+    , liftShowbLabelMapPrec
     , showbLabelSetPrec
-    , showbPointedWith
+    , liftShowbPointed
     , showbUnique
-    , showbUniqueMapPrecWith
+    , liftShowbUniqueMapPrec
     , showbUniqueSetPrec
     , showbDominatorNode
     , showbDominatorTree
@@ -39,8 +39,8 @@ import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DP
 
 import Data.Monoid.Compat
 
-import TextShow (TextShow(showb, showbPrec), TextShow1(..),
-                 TextShow2(..), Builder, singleton)
+import TextShow (TextShow(..), TextShow1(..),
+                 TextShow2(..), Builder, singleton, showbPrec1)
 import TextShow.Data.Containers ()
 import TextShow.Data.Integral (showbIntPrec)
 import TextShow.TH (deriveTextShow, deriveTextShow1)
@@ -56,10 +56,10 @@ showbLabel l = singleton 'L' <> showbUnique (lblToUnique l)
 
 -- | Convert a 'LabelMap' to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbLabelMapPrecWith :: (Int -> v -> Builder) -> Int -> LabelMap v -> Builder
-showbLabelMapPrecWith = showbPrecWith
-{-# INLINE showbLabelMapPrecWith #-}
+-- /Since: 3/
+liftShowbLabelMapPrec :: (v -> Builder) -> Int -> LabelMap v -> Builder
+liftShowbLabelMapPrec sp = liftShowbPrec (const sp) undefined
+{-# INLINE liftShowbLabelMapPrec #-}
 
 -- | Convert a 'LabelSet' to a 'Builder' with the given precedence.
 --
@@ -70,12 +70,12 @@ showbLabelSetPrec = showbPrec
 
 -- | Convert a 'Pointed' value to a 'Builder' with the given show function.
 --
--- /Since: 2/
-showbPointedWith :: (a -> Builder) -> Pointed t b a -> Builder
-showbPointedWith _  Bot       = "_|_"
-showbPointedWith _  Top       = singleton 'T'
-showbPointedWith sp (PElem a) = sp a
-{-# INLINE showbPointedWith #-}
+-- /Since: 3/
+liftShowbPointed :: (a -> Builder) -> Pointed t b a -> Builder
+liftShowbPointed _  Bot       = "_|_"
+liftShowbPointed _  Top       = singleton 'T'
+liftShowbPointed sp (PElem a) = sp a
+{-# INLINE liftShowbPointed #-}
 
 -- | Convert a 'Unique' value to a 'Builder'.
 --
@@ -90,10 +90,10 @@ showbUnique = showbIntPrec 0 . uniqueToInt
 
 -- | Convert a 'UniqueMap' to a 'Builder' with the given show function and precedence.
 --
--- /Since: 2/
-showbUniqueMapPrecWith :: (Int -> v -> Builder) -> Int -> UniqueMap v -> Builder
-showbUniqueMapPrecWith = showbPrecWith
-{-# INLINE showbUniqueMapPrecWith #-}
+-- /Since: 3/
+liftShowbUniqueMapPrec :: (v -> Builder) -> Int -> UniqueMap v -> Builder
+liftShowbUniqueMapPrec sp = liftShowbPrec (const sp) undefined
+{-# INLINE liftShowbUniqueMapPrec #-}
 
 -- | Convert a 'UniqueSet' to a 'Builder' with the given precedence.
 --
@@ -156,16 +156,16 @@ $(deriveTextShow1 ''LabelMap)
 $(deriveTextShow  ''LabelSet)
 
 instance TextShow a => TextShow (Pointed t b a) where
-    showbPrec = showbPrecWith showbPrec
+    showbPrec = showbPrec1
     INLINE_INST_FUN(showbPrec)
 
 instance TextShow1 (Pointed t b) where
-    showbPrecWith sp _ = showbPointedWith $ sp 0
-    INLINE_INST_FUN(showbPrecWith)
+    liftShowbPrec sp _ _ = liftShowbPointed $ sp 0
+    INLINE_INST_FUN(liftShowbPrec)
 
 instance TextShow2 (Pointed t) where
-    showbPrecWith2 _ = showbPrecWith
-    INLINE_INST_FUN(showbPrecWith2)
+    liftShowbPrec2 _ _ = liftShowbPrec
+    INLINE_INST_FUN(liftShowbPrec2)
 
 #if !(MIN_VERSION_hoopl(3,9,0))
 instance TextShow Unique where

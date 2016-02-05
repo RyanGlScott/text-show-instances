@@ -25,7 +25,7 @@ import System.Console.Haskeline (Interrupt, Prefs)
 import System.Console.Haskeline.Completion (Completion)
 import System.Console.Haskeline.History (History, historyLines)
 
-import TextShow (TextShow(showb, showbPrec), Builder, FromStringShow(..))
+import TextShow (TextShow(..), Builder, FromStringShow(..))
 import TextShow.TH (deriveTextShow)
 import TextShow.Utils (showbUnaryListWith)
 

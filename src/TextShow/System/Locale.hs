@@ -16,7 +16,7 @@ module TextShow.System.Locale (showbTimeLocalePrec) where
 
 import System.Locale (TimeLocale)
 
-import TextShow (TextShow(showbPrec), Builder)
+import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
 -- | Convert a 'TimeLocale' to a 'Builder' with the given precedence.

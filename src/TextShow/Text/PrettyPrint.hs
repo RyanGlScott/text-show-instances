@@ -16,24 +16,41 @@ Monomorphic 'TextShow' functions for data types in the @pretty@ library.
 module TextShow.Text.PrettyPrint (
       renderB
     , renderStyleB
+#if MIN_VERSION_pretty(1,1,3)
+    , renderAnnotB
+    , renderStyleAnnotB
+#endif
     , showbMode
     , showbStylePrec
     , showbTextDetailsPrec
 #if MIN_VERSION_pretty(1,1,2)
     , showbPrettyLevelPrec
 #endif
+#if MIN_VERSION_pretty(1,1,3)
+    , liftShowbAnnotDetailsPrec
+    , showbPrettyLevelAnnotPrec
+    , liftShowbSpanPrec
+#endif
     ) where
 
-import Data.Monoid.Compat
+import           Data.Monoid.Compat
 
-import Text.PrettyPrint.HughesPJ (Doc, Mode, Style(..), TextDetails(..),
-                                  fullRender, style)
+import           Text.PrettyPrint.HughesPJ (Doc, Mode, Style(..), TextDetails(..),
+                                            fullRender, style)
 #if MIN_VERSION_pretty(1,1,2)
-import Text.PrettyPrint.HughesPJClass (PrettyLevel)
+import           Text.PrettyPrint.HughesPJClass (PrettyLevel)
+#endif
+#if MIN_VERSION_pretty(1,1,3)
+import qualified Text.PrettyPrint.Annotated.HughesPJ as Annot (Doc, fullRender, style)
+import           Text.PrettyPrint.Annotated.HughesPJ (AnnotDetails, Span)
+import qualified Text.PrettyPrint.Annotated.HughesPJClass as Annot (PrettyLevel)
+
+import           TextShow (TextShow1(..))
+import           TextShow.TH (deriveTextShow1)
 #endif
 
-import TextShow (TextShow(showb, showbPrec), Builder, fromString, singleton)
-import TextShow.TH (deriveTextShow)
+import           TextShow (TextShow(..), Builder, fromString, singleton)
+import           TextShow.TH (deriveTextShow)
 
 #include "inline.h"
 
@@ -93,6 +110,53 @@ showbPrettyLevelPrec = showbPrec
 {-# INLINE showbPrettyLevelPrec #-}
 #endif
 
+#if MIN_VERSION_pretty(1,1,3)
+-- | Renders an annotated 'Doc' to a 'Builder' using the default 'Annot.style'.
+-- This function is only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
+renderAnnotB :: Annot.Doc a -> Builder
+renderAnnotB = renderStyleAnnotB Annot.style
+{-# INLINE renderAnnotB #-}
+
+-- | Renders an annotated 'Doc' to a 'Builder' using the given 'Style'.
+-- This function is only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
+renderStyleAnnotB :: Style -> Annot.Doc a -> Builder
+renderStyleAnnotB sty doc =
+    Annot.fullRender (mode sty)
+                     (lineLength sty)
+                     (ribbonsPerLine sty)
+                     txtPrinter
+                     mempty
+                     doc
+
+-- | Convert an 'AnnotDetais' value to a 'Builder' with the given show function
+-- and precedence. This function is only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
+liftShowbAnnotDetailsPrec :: (Int -> a -> Builder) -> Int -> AnnotDetails a -> Builder
+liftShowbAnnotDetailsPrec sp = liftShowbPrec sp undefined
+{-# INLINE liftShowbAnnotDetailsPrec #-}
+
+-- | Convert an annotated 'PrettyLevel' value to a 'Builder' with the given precedence.
+-- This function is only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
+showbPrettyLevelAnnotPrec :: Int -> Annot.PrettyLevel -> Builder
+showbPrettyLevelAnnotPrec = showbPrec
+{-# INLINE showbPrettyLevelAnnotPrec #-}
+
+-- | Convert a 'Span' to a 'Builder' with the given show function and precedence.
+-- This function is only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
+liftShowbSpanPrec :: (Int -> a -> Builder) -> Int -> Span a -> Builder
+liftShowbSpanPrec sp = liftShowbPrec sp undefined
+{-# INLINE liftShowbSpanPrec #-}
+#endif
+
 instance TextShow Doc where
     showb = renderB
     INLINE_INST_FUN(showb)
@@ -103,4 +167,21 @@ $(deriveTextShow ''TextDetails)
 
 #if MIN_VERSION_pretty(1,1,2)
 $(deriveTextShow ''PrettyLevel)
+#endif
+
+#if MIN_VERSION_pretty(1,1,3)
+$(deriveTextShow  ''AnnotDetails)
+$(deriveTextShow1 ''AnnotDetails)
+
+instance TextShow (Annot.Doc a) where
+    showb = renderAnnotB
+    INLINE_INST_FUN(showb)
+instance TextShow1 Annot.Doc where
+    liftShowbPrec _ _ = showbPrec
+    INLINE_INST_FUN(liftShowbPrec)
+
+$(deriveTextShow ''Annot.PrettyLevel)
+
+$(deriveTextShow  ''Span)
+$(deriveTextShow1 ''Span)
 #endif
