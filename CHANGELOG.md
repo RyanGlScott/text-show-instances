@@ -1,4 +1,4 @@
-### 0.3.1
+### 3.0.1
 * Require quickcheck-instances >= 0.3.12 in test suite due to presence of new orphan Arbitrary instances for `vector` datatypes
 
 # 3
