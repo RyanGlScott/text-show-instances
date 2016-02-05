@@ -1,4 +1,7 @@
-## 3
+### 0.3.1
+* Require quickcheck-instances >= 0.3.12 in test suite due to presence of new orphan Arbitrary instances for `vector` datatypes
+
+# 3
 * GHC 8.0 support
 * Rename functions that previously ended with the suffix `-With` to instead have the prefix `lift-`, consistent with `text-show-3`
 * Removed the `TextShow.Data.Semigroup` and `TextShow.Data.List.NonEmpty` modules, as they have been moved to `text-show-3` (as part of moving `Semigroup` into `base`)
