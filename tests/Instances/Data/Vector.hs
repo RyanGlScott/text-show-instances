@@ -21,9 +21,6 @@ import qualified Data.Vector.Generic as G (Vector)
 import           Data.Vector.Generic (fromList)
 import qualified Data.Vector.Primitive as P (Vector)
 import           Data.Vector.Primitive (Prim)
-import           Data.Vector.Unboxed (Unbox)
-
-import           Foreign.Storable (Storable)
 
 import           Prelude ()
 import           Prelude.Compat
