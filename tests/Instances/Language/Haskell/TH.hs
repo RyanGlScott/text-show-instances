@@ -85,7 +85,13 @@ instance Arbitrary Dec where
                            <*> arbitrary
         , TySynD <$> arbitrary <*> arbitrary <*> arbitrary
         , ClassD [fPred] <$> arbitrary <*> arbitrary <*> arbitrary <@> [fDec]
-        , InstanceD [fPred] <$> arbitrary <@> [fDec]
+        , pure InstanceD
+#if MIN_VERSION_template_haskell(2,11,0)
+                         <*> arbitrary
+#endif
+                         <@> [fPred]
+                         <*> arbitrary
+                         <@> [fDec]
         , SigD <$> arbitrary <*> arbitrary
         , ForeignD <$> arbitrary
         , PragmaD <$> arbitrary
@@ -614,6 +620,11 @@ instance Arbitrary FamilyResultSig where
 
 instance Arbitrary InjectivityAnn where
     arbitrary = pure $ InjectivityAnn fName [fName]
+
+deriving instance Bounded Overlap
+deriving instance Enum Overlap
+instance Arbitrary Overlap where
+    arbitrary = arbitraryBoundedEnum
 
 deriving instance Bounded SourceStrictness
 deriving instance Enum SourceStrictness

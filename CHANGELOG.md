@@ -1,3 +1,7 @@
+### 3.2.1
+* Fix build with GHC 8.0
+* Add `TextShow` instance for `Overlap` in `TextShow.Language.Haskell.TH`
+
 ## 3.2
 * Allow build with `text-show-3.2`
 

@@ -66,6 +66,9 @@ module TextShow.Language.Haskell.TH (
     , showbName
     , showbName'
     , showbOccNamePrec
+#if MIN_VERSION_template_haskell(2,11,0)
+    , showbOverlap
+#endif
     , showbPatPrec
 #if MIN_VERSION_template_haskell(2,8,0)
     , showbPhasesPrec
@@ -504,6 +507,13 @@ showbFamilyResultSigPrec = showbPrec
 showbInjectivityAnnPrec :: Int -> InjectivityAnn -> Builder
 showbInjectivityAnnPrec = showbPrec
 
+-- | Convert an 'Overlap' to a 'Builder'.
+-- This function is only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3.2.1/
+showbOverlap :: Overlap -> Builder
+showbOverlap = showb
+
 -- | Convert a 'SourceStrictness' to a 'Builder'.
 -- This function is only available with @template-haskell-2.11.0.0@ or later.
 --
@@ -593,6 +603,7 @@ $(deriveTextShow ''Bang)
 $(deriveTextShow ''DecidedStrictness)
 $(deriveTextShow ''FamilyResultSig)
 $(deriveTextShow ''InjectivityAnn)
+$(deriveTextShow ''Overlap)
 $(deriveTextShow ''SourceStrictness)
 $(deriveTextShow ''SourceUnpackedness)
 $(deriveTextShow ''TypeFamilyHead)

@@ -113,6 +113,10 @@ spec = parallel $ do
         prop "has the same output as showName" prop_showName'
     describe "OccName" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> OccName -> Bool)
+#if MIN_VERSION_template_haskell(2,11,0)
+    describe "Overlap" $
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Overlap -> Bool)
+#endif
     describe "Pat" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pat -> Bool)
 #if MIN_VERSION_template_haskell(2,8,0)
