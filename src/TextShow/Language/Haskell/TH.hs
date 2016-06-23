@@ -65,11 +65,18 @@ module TextShow.Language.Haskell.TH (
 #endif
     , showbName
     , showbName'
+    , showbName
+    , showbNameFlavourPrec
+    , showbNameSpace
     , showbOccNamePrec
 #if MIN_VERSION_template_haskell(2,11,0)
     , showbOverlap
 #endif
     , showbPatPrec
+#if __GLASGOW_HASKELL__ >= 801
+    , showbPatSynArgsPrec
+    , showbPatSynDirPrec
+#endif
 #if MIN_VERSION_template_haskell(2,8,0)
     , showbPhasesPrec
 #endif
@@ -297,6 +304,17 @@ showbName' ni nm = case ni of
                                        else classify $ TL.tail t'
                             else False
 
+-- | Convert a 'NameFlavour' to a 'Builder' with the given precedence.
+--
+-- /Since: 3.3/
+showbNameFlavourPrec :: Int -> NameFlavour -> Builder
+showbNameFlavourPrec = showbPrec
+
+-- | Convert a 'NameSpace' to a 'Builder'.
+--
+-- /Since: 3.3/
+showbNameSpace :: Int -> NameSpace -> Builder
+showbNameSpace = showb
 
 -- | Convert an 'OccName' to a 'Builder' with the given precedence.
 --
@@ -536,6 +554,22 @@ showbTypeFamilyHeadPrec :: Int -> TypeFamilyHead -> Builder
 showbTypeFamilyHeadPrec = showbPrec
 #endif
 
+#if __GLASGOW_HASKELL__ >= 801
+-- | Convert a 'PatSynArgs' value to a 'Builder' with the given precedence.
+-- This function is only available with GHC 8.1 or later.
+--
+-- /Since: 3.3/
+showbPatSynArgsPrec :: Int -> PatSynArgs -> Builder
+showbPatSynArgsPrec = showbPrec
+
+-- | Convert a 'PatSynDir' value to a 'Builder' with the given precedence.
+-- This function is only available with GHC 8.1 or later.
+--
+-- /Since: 3.3/
+showbPatSynDirPrec :: Int -> PatSynDir -> Builder
+showbPatSynDirPrec = showbPrec
+#endif
+
 $(deriveTextShow ''Body)
 $(deriveTextShow ''Callconv)
 $(deriveTextShow ''Clause)
@@ -557,6 +591,8 @@ $(deriveTextShow ''ModName)
 instance TextShow Name where
     showb = showbName
 
+$(deriveTextShow ''NameFlavour)
+$(deriveTextShow ''NameSpace)
 $(deriveTextShow ''OccName)
 $(deriveTextShow ''Pat)
 $(deriveTextShow ''PkgName)
@@ -609,4 +645,9 @@ $(deriveTextShow ''SourceUnpackedness)
 $(deriveTextShow ''TypeFamilyHead)
 #else
 $(deriveTextShow ''Strict)
+#endif
+
+#if __GLASGOW_HASKELL__ >= 801
+$(deriveTextShow ''PatSynArgs)
+$(deriveTextShow ''PatSynDir)
 #endif

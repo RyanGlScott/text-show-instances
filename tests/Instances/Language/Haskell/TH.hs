@@ -134,6 +134,10 @@ instance Arbitrary Dec where
 #else
         , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 #endif
+#if __GLASGOW_HASKELL__ >= 801
+        , PatSynD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+        , PatSynSigD <$> arbitrary <*> arbitrary
+#endif
         ]
 --     arbitrary = oneof [
 --           FunD              <$> arbitrary <*> arbitrary
@@ -299,6 +303,9 @@ instance Arbitrary Info where
         , TyVarI     <$> arbitrary <*> arbitrary
 #if MIN_VERSION_template_haskell(2,7,0)
         , pure $ FamilyI fDec [fDec]
+#endif
+#if __GLASGOW_HASKELL__ >= 801
+        , PatSynI    <$> arbitrary <*> arbitrary
 #endif
         ]
 --     arbitrary = oneof [
@@ -646,6 +653,17 @@ deriving instance Bounded Strict
 deriving instance Enum Strict
 instance Arbitrary Strict where
     arbitrary = arbitraryBoundedEnum
+#endif
+
+#if __GLASGOW_HASKELL__ >= 801
+instance Arbitrary PatSynArgs where
+    arbitrary = oneof $ map pure [ PrefixPatsyn [fName]
+                                 , InfixPatSyn fName fName
+                                 , RecordPatSyn [fName]
+                                 ]
+
+instance Arbitrary PatSynDir where
+    arbitrary = oneof $ map pure [ Unidir, ImplBidir, ExplBidir [fClause] ]
 #endif
 
 deriving instance Arbitrary ModName

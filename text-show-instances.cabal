@@ -15,6 +15,10 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
+                     * @<http://hackage.haskell.org/package/ghc-boot             ghc-boot>@ and
+                       @<http://hackage.haskell.org/package/ghc-boot-th          ghc-boot-th>@
+                       (formerly @bin-package-db@)
+                     .
                      * @<http://hackage.haskell.org/package/haskeline            haskeline>@
                      .
                      * @<http://hackage.haskell.org/package/hoopl                hoopl>@

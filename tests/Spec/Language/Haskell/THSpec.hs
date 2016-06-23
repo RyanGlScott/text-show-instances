@@ -111,6 +111,10 @@ spec = parallel $ do
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Name -> Bool)
     describe "showbName'" $
         prop "has the same output as showName" prop_showName'
+    describe "NameFlavour" $
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> NameFlavour -> Bool)
+    describe "NameSpace" $
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> NameSpace -> Bool)
     describe "OccName" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> OccName -> Bool)
 #if MIN_VERSION_template_haskell(2,11,0)
@@ -119,6 +123,12 @@ spec = parallel $ do
 #endif
     describe "Pat" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pat -> Bool)
+#if __GLASGOW_HASKELL__ >= 801
+    describe "PatSynArgs" $
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PatSynArgs -> Bool)
+    describe "PatSynDir" $
+        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PatSynDir -> Bool)
+#endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Phases" $
         prop "TextShow instance"               (prop_matchesTextShow :: Int -> Phases -> Bool)

@@ -1,3 +1,7 @@
+## 3.3
+* Add `TextShow` instances for `NameFlavour`, `NameSpace`, `PatSynArgs`, and `PatSynDir` in `TextShow.Language.Haskell.TH`
+* Fix GHC HEAD build
+
 ### 3.2.1
 * Fix build with GHC 8.0
 * Add `TextShow` instance for `Overlap` in `TextShow.Language.Haskell.TH`
