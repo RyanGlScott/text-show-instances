@@ -21,7 +21,7 @@
 * [`binary`](http://hackage.haskell.org/package/binary)
 * [`containers`](http://hackage.haskell.org/package/containers)
 * [`directory`](http://hackage.haskell.org/package/directory)
-* [`ghc-boot`](http://hackage.haskell.org/package/ghc-boot) and [`ghc-boot-th`](http://hackage.haskell.org/package/ghc-boot-th) (formerly `bin-package-db`)
+* [`ghc-boot`](http://hackage.haskell.org/package/ghc-boot)
 * [`haskeline`](http://hackage.haskell.org/package/haskeline)
 * [`hoopl`](http://hackage.haskell.org/package/hoopl)
 * [`hpc`](http://hackage.haskell.org/package/hpc)

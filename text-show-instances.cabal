@@ -15,9 +15,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
-                     * @<http://hackage.haskell.org/package/ghc-boot             ghc-boot>@ and
-                       @<http://hackage.haskell.org/package/ghc-boot-th          ghc-boot-th>@
-                       (formerly @bin-package-db@)
+                     * @<http://hackage.haskell.org/package/ghc-boot             ghc-boot>@
                      .
                      * @<http://hackage.haskell.org/package/haskeline            haskeline>@
                      .
@@ -88,6 +86,11 @@ flag developer
   default:             False
   manual:              True
 
+flag ghc-boot
+  description:         Depend on the ghc-boot package.
+  default:             True
+  manual:              False
+
 library
   exposed-modules:     TextShow.Instances
 
@@ -111,6 +114,10 @@ library
                        TextShow.Text.PrettyPrint
                        TextShow.Text.XHtml
                        TextShow.Trace.Hpc
+
+                       -- Only exports functions if using ghc-boot
+                       TextShow.GHC.LanguageExtensions.Type
+                       TextShow.GHC.PackageDb
 
                        -- Only exports functions if using Windows
                        TextShow.System.Win32
@@ -151,6 +158,9 @@ library
   includes:            inline.h
   install-includes:    inline.h
 
+  if flag(ghc-boot)
+    build-depends:     ghc-boot
+
   if os(windows)
     build-depends:     Win32                >= 2.1    && < 2.4
   else
@@ -179,10 +189,14 @@ test-suite spec
                        Instances.Trace.Hpc
                        Instances.Utils
 
-                       -- Only exports functions if using Windows
+                       -- Only defines instances if using ghc-boot
+                       Instances.GHC.LanguageExtensions.Type
+                       Instances.GHC.PackageDb
+
+                       -- Only defines instances if using Windows
                        Instances.System.Win32
 
-                       -- Only exports functions if not using Windows
+                       -- Only defines instances if not using Windows
                        Instances.System.Console.Terminfo
                        Instances.System.Posix
 
@@ -207,10 +221,14 @@ test-suite spec
                        Spec.Trace.HpcSpec
                        Spec.Utils
 
-                       -- Only exports functions if using Windows
+                       -- Only defines tests if using ghc-boot
+                       Spec.GHC.LanguageExtensions.TypeSpec
+                       Spec.GHC.PackageDbSpec
+
+                       -- Only defines tests if using Windows
                        Spec.System.Win32Spec
 
-                       -- Only exports functions if not using Windows
+                       -- Only defines tests if not using Windows
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
   build-depends:       base                 >= 4.3    && < 5
@@ -237,7 +255,7 @@ test-suite spec
                      , template-haskell     >= 2.5    && < 2.12
                      , text                 >= 0.11.1 && < 1.3
                      , text-show            >= 3.2    && < 4
-                     , th-orphans           >= 0.12   && < 1
+                     , th-orphans           >= 0.13.1 && < 1
                      , time                 >= 0.1    && < 1.7
                      , transformers         >= 0.2.1  && < 0.6
                      , transformers-compat  >= 0.5    && < 1
@@ -246,6 +264,9 @@ test-suite spec
                      , xhtml                >= 3000.2 && < 3000.3
   if !flag(developer)
     build-depends:     text-show-instances  == 3.2.1
+
+  if flag(ghc-boot)
+    build-depends:     ghc-boot
 
   hs-source-dirs:      tests
   if flag(developer)

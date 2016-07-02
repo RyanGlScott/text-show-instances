@@ -65,7 +65,6 @@ module TextShow.Language.Haskell.TH (
 #endif
     , showbName
     , showbName'
-    , showbName
     , showbNameFlavourPrec
     , showbNameSpace
     , showbOccNamePrec
@@ -313,7 +312,7 @@ showbNameFlavourPrec = showbPrec
 -- | Convert a 'NameSpace' to a 'Builder'.
 --
 -- /Since: 3.3/
-showbNameSpace :: Int -> NameSpace -> Builder
+showbNameSpace :: NameSpace -> Builder
 showbNameSpace = showb
 
 -- | Convert an 'OccName' to a 'Builder' with the given precedence.

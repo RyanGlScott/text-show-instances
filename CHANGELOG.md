@@ -1,4 +1,5 @@
 ## 3.3
+* Add the `TextShow.GHC.LanguageExtensions.Type` and `TextShow.GHC.PackageDb` modules, which define instances if using `ghc-boot`
 * Add `TextShow` instances for `NameFlavour`, `NameSpace`, `PatSynArgs`, and `PatSynDir` in `TextShow.Language.Haskell.TH`
 * Fix GHC HEAD build
 

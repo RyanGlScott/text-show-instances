@@ -28,29 +28,32 @@ module TextShow.Instances (
 
 import TextShow
 
-import TextShow.Compiler.Hoopl            ()
+import TextShow.Compiler.Hoopl              ()
 
-import TextShow.Control.Applicative.Trans ()
-import TextShow.Control.Monad.Trans       ()
+import TextShow.Control.Applicative.Trans   ()
+import TextShow.Control.Monad.Trans         ()
 
-import TextShow.Data.Bifunctor            ()
-import TextShow.Data.Binary               ()
-import TextShow.Data.Containers           ()
-import TextShow.Data.Functor.Trans        ()
-import TextShow.Data.Tagged               ()
-import TextShow.Data.Time                 ()
-import TextShow.Data.UnorderedContainers  ()
-import TextShow.Data.Vector               ()
+import TextShow.Data.Bifunctor              ()
+import TextShow.Data.Binary                 ()
+import TextShow.Data.Containers             ()
+import TextShow.Data.Functor.Trans          ()
+import TextShow.Data.Tagged                 ()
+import TextShow.Data.Time                   ()
+import TextShow.Data.UnorderedContainers    ()
+import TextShow.Data.Vector                 ()
 
-import TextShow.Language.Haskell.TH       ()
+import TextShow.GHC.LanguageExtensions.Type ()
+import TextShow.GHC.PackageDb               ()
 
-import TextShow.System.Console.Haskeline  ()
-import TextShow.System.Console.Terminfo   ()
-import TextShow.System.Locale             ()
-import TextShow.System.Posix              ()
-import TextShow.System.Random             ()
-import TextShow.System.Time               ()
-import TextShow.System.Win32              ()
+import TextShow.Language.Haskell.TH         ()
+
+import TextShow.System.Console.Haskeline    ()
+import TextShow.System.Console.Terminfo     ()
+import TextShow.System.Locale               ()
+import TextShow.System.Posix                ()
+import TextShow.System.Random               ()
+import TextShow.System.Time                 ()
+import TextShow.System.Win32                ()
 
 import TextShow.Text.PrettyPrint          ()
 
