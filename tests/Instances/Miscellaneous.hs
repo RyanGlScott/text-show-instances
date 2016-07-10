@@ -16,7 +16,9 @@ module Instances.Miscellaneous () where
 
 #include "HsBaseConfig.h"
 
+#if !(MIN_VERSION_QuickCheck(2,9,0))
 import Data.Version (Version(..))
+#endif
 
 import Foreign.Ptr (Ptr, nullPtr, plusPtr)
 
@@ -56,9 +58,11 @@ instance Arbitrary ExitCode where
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary
 
+#if !(MIN_VERSION_QuickCheck(2,9,0))
 instance Arbitrary Version where
     arbitrary = pure $ Version [0] [""]
 --     arbitrary = Version <$> arbitrary <*> arbitrary
+#endif
 
 #if MIN_VERSION_base(4,5,0)
 
