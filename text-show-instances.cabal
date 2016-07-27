@@ -31,8 +31,6 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/random               random>@
                      .
-                     * @<http://hackage.haskell.org/package/semigroups           semigroups>@
-                     .
                      * @<http://hackage.haskell.org/package/tagged               tagged>@
                      .
                      * @<http://hackage.haskell.org/package/template-haskell     template-haskell>@

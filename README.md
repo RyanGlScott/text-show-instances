@@ -29,7 +29,6 @@
 * [`old-time`](http://hackage.haskell.org/package/old-time)
 * [`pretty`](http://hackage.haskell.org/package/pretty)
 * [`random`](http://hackage.haskell.org/package/random)
-* [`semigroups`](http://hackage.haskell.org/package/semigroups)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
 * [`template-haskell`](http://hackage.haskell.org/package/template-haskell)
 * [`terminfo`](http://hackage.haskell.org/package/terminfo)
