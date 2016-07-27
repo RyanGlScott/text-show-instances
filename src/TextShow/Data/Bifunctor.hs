@@ -229,7 +229,7 @@ $(deriveTextShow2 ''Biff)
 
 instance TextShow (f a) => TextShow (Clown f a b) where
     showbPrec = $(makeShowbPrec ''Clown)
-instance (TextShow1 f, TextShow a) => TextShow1 (Clown f a) where
+instance TextShow (f a) => TextShow1 (Clown f a) where
     liftShowbPrec = $(makeLiftShowbPrec ''Clown)
 $(deriveTextShow2 ''Clown)
 

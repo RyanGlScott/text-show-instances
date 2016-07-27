@@ -1,6 +1,7 @@
 ## 3.3
 * Add the `TextShow.GHC.LanguageExtensions.Type` and `TextShow.GHC.PackageDb` modules, which define instances if using `ghc-boot`
 * Add `TextShow` instances for `NameFlavour`, `NameSpace`, `PatSynArgs`, and `PatSynDir` in `TextShow.Language.Haskell.TH`
+* Require `text-show-3.3` or later, which has slightly different TH derivation behavior. As a result, the context for the `TextShow1` instance for `Clown` in `TextShow.Data.Bifunctor` had to be changed slightly.
 * Allow building with `QuickCheck-2.9`
 * Fix GHC HEAD build
 

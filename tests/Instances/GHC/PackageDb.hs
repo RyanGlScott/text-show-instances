@@ -39,14 +39,12 @@ instance ( Arbitrary srcpkgid
                ) where
     arbitrary = InstalledPackageInfo <$> arbitrary <*> arbitrary <*> arbitrary
                                      <*> arbitrary <*> arbitrary <@> []
+                                     <*> arbitrary <@> []        <@> []
                                      <@> []        <@> []        <@> []
                                      <@> []        <@> []        <@> []
                                      <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <*> arbitrary
-                                     <*> arbitrary
+                                     <@> []        <*> arbitrary <*> arbitrary
+                                     <*> arbitrary <*> arbitrary
 
 # if __GLASGOW_HASKELL__ >= 801
 instance (Arbitrary unitid, Arbitrary modulename)

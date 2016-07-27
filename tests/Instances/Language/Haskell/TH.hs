@@ -657,7 +657,7 @@ instance Arbitrary Strict where
 
 #if __GLASGOW_HASKELL__ >= 801
 instance Arbitrary PatSynArgs where
-    arbitrary = oneof $ map pure [ PrefixPatsyn [fName]
+    arbitrary = oneof $ map pure [ PrefixPatSyn [fName]
                                  , InfixPatSyn fName fName
                                  , RecordPatSyn [fName]
                                  ]

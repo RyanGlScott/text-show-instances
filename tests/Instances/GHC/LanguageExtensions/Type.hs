@@ -19,7 +19,7 @@ module Instances.GHC.LanguageExtensions.Type () where
 
 #if defined(MIN_VERSION_ghc_boot)
 import GHC.LanguageExtensions.Type (Extension(..))
-import Test.QuickCheck (Arbitrary, arbitraryBoundedEnum)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 
 deriving instance Bounded Extension
 instance Arbitrary Extension where
