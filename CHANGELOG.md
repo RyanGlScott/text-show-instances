@@ -1,3 +1,7 @@
+## 3.4
+* Require `text-show-3.4` or later
+* Update testsuite to be buildable with `text-show-3.4`
+
 ## 3.3
 * Add the `TextShow.GHC.LanguageExtensions.Type` and `TextShow.GHC.PackageDb` modules, which define instances if using `ghc-boot`
 * Add `TextShow` instances for `NameFlavour`, `NameSpace`, `PatSynArgs`, and `PatSynDir` in `TextShow.Language.Haskell.TH`
