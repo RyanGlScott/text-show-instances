@@ -14,23 +14,23 @@ Testing-related utility functions.
 module Spec.Utils (
       prop_matchesTextShow
     , prop_matchesTextShow1
-#if !(MIN_VERSION_transformers(0,4,0)) || MIN_VERSION_transformers(0,5,0)
+#if defined(NEW_FUNCTOR_CLASSES)
     , prop_matchesTextShow2
 #endif
     , prop_genericTextShow
     , prop_genericTextShow1
     ) where
 
-import           Data.Functor.Classes (Show1, showsPrec1)
+import Data.Functor.Classes (Show1, showsPrec1)
 
-import           Generics.Deriving.Base
+import Generics.Deriving.Base
 
-import           TextShow (TextShow(..), TextShow1(..), showbPrec1, fromString)
-import           TextShow.Generic
+import TextShow (TextShow(..), TextShow1(..), showbPrec1, fromString)
+import TextShow.Generic
 
-#if !(MIN_VERSION_transformers(0,4,0)) || MIN_VERSION_transformers(0,5,0)
-import           Data.Functor.Classes (Show2, showsPrec2)
-import           TextShow (TextShow2(..), showbPrec2)
+#if defined(NEW_FUNCTOR_CLASSES)
+import Data.Functor.Classes (Show2, showsPrec2)
+import TextShow (TextShow2(..), showbPrec2)
 #endif
 
 -- | Verifies that a type's @Show@ instances coincide for both 'String's and 'Text',
@@ -43,7 +43,7 @@ prop_matchesTextShow p x = fromString (showsPrec p x "") == showbPrec p x
 prop_matchesTextShow1 :: (Show1 f, Show a, TextShow1 f, TextShow a) => Int -> f a -> Bool
 prop_matchesTextShow1 p x = fromString (showsPrec1 p x "") == showbPrec1 p x
 
-#if !(MIN_VERSION_transformers(0,4,0)) || MIN_VERSION_transformers(0,5,0)
+#if defined(NEW_FUNCTOR_CLASSES)
 -- | Verifies that a type's @Show2@ instances coincide for both 'String's and 'Text',
 -- irrespective of precedence.
 prop_matchesTextShow2 :: (Show2 f, Show a, Show b, TextShow2 f, TextShow a, TextShow b)
