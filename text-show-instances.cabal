@@ -135,7 +135,7 @@ library
                        TextShow.System.Posix
   other-modules:       TextShow.Utils
   build-depends:       base-compat          >= 0.8.1  && < 1
-                     , bifunctors           >= 5.1    && < 6
+                     , bifunctors           >= 5.2    && < 6
                      , binary               >= 0.6    && < 0.9
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6
@@ -252,7 +252,7 @@ test-suite spec
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
   build-depends:       base-compat          >= 0.8.1  && < 1
-                     , bifunctors           >= 5.1    && < 6
+                     , bifunctors           >= 5.2    && < 6
                      , binary               >= 0.6    && < 0.9
                      , bytestring           >= 0.9    && < 0.11
                      , containers           >= 0.1    && < 0.6

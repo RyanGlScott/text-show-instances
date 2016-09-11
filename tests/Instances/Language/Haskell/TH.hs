@@ -23,6 +23,7 @@ import GHC.Exts (Int(I#))
 
 import Instances.Utils ((<@>))
 
+import Language.Haskell.TH.Instances ()
 import Language.Haskell.TH.PprLib (Doc, text)
 import Language.Haskell.TH.Syntax
 #if !(MIN_VERSION_template_haskell(2,8,0))
@@ -32,7 +33,7 @@ import Language.Haskell.TH.Syntax.Internals
 import Prelude ()
 import Prelude.Compat
 
-import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary, oneof)
 
 instance Arbitrary Body where
     arbitrary = oneof $ map pure [ GuardedB [(fGuard, fExp)]
@@ -249,7 +250,7 @@ instance Arbitrary FamFlavour where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Fixity where
-    arbitrary = Fixity <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 deriving instance Bounded FixityDirection
 deriving instance Enum FixityDirection
@@ -257,13 +258,10 @@ instance Arbitrary FixityDirection where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Foreign where
-    arbitrary = oneof [ ImportF <$> arbitrary <*> arbitrary <*> arbitrary
-                                <*> arbitrary <*> arbitrary
-                      , ExportF <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary FunDep where
-    arbitrary = FunDep <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary Guard where
         arbitrary = oneof $ map pure [ NormalG fExp
@@ -326,45 +324,20 @@ instance Arbitrary Info where
 --         ]
 
 instance Arbitrary Lit where
-    arbitrary = oneof [ CharL       <$> arbitrary
-                      , StringL     <$> arbitrary
-                      , IntegerL    <$> arbitrary
-                      , RationalL   <$> arbitrary
-                      , IntPrimL    <$> arbitrary
-                      , WordPrimL   <$> arbitrary
-                      , FloatPrimL  <$> arbitrary
-                      , DoublePrimL <$> arbitrary
-#if MIN_VERSION_template_haskell(2,5,0)
-                      , StringPrimL <$> arbitrary
-#endif
-#if MIN_VERSION_template_haskell(2,11,0)
-                      , CharPrimL   <$> arbitrary
-#endif
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary Loc where
-    arbitrary = Loc <$> arbitrary <*> arbitrary <*> arbitrary
-                    <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary Match where
     arbitrary = Match <$> arbitrary <@> fBody <@> [fDec]
 --     arbitrary = Match <$> arbitrary <*> arbitrary <*> arbitrary
 
 instance Arbitrary Name where
-    arbitrary = Name <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary NameFlavour where
-    arbitrary = oneof [ pure NameS
-                      , NameQ <$> arbitrary
-#if MIN_VERSION_template_haskell(2,10,0)
-                      , NameU <$> arbitrary
-                      , NameL <$> arbitrary
-#else
-                      , (\(I# i#) -> NameU i#) <$> arbitrary
-                      , (\(I# i#) -> NameL i#) <$> arbitrary
-#endif
-                      , NameG <$> arbitrary <*> arbitrary <*> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 deriving instance Bounded NameIs
 deriving instance Enum NameIs
@@ -426,25 +399,7 @@ instance Arbitrary Pat where
 --                       ]
 
 instance Arbitrary Pragma where
-    arbitrary = oneof
-        [
-#if MIN_VERSION_template_haskell(2,8,0)
-          InlineP         <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , SpecialiseP     <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-        , SpecialiseInstP <$> arbitrary
-        , RuleP           <$> arbitrary <*> arbitrary <*> arbitrary
-                          <*> arbitrary <*> arbitrary
-# if MIN_VERSION_template_haskell(2,9,0)
-        , AnnP            <$> arbitrary <*> arbitrary
-# endif
-# if MIN_VERSION_template_haskell(2,10,0)
-        , LineP           <$> arbitrary <*> arbitrary
-# endif
-#else
-          InlineP     <$> arbitrary <*> arbitrary
-        , SpecialiseP <$> arbitrary <*> arbitrary <*> arbitrary
-#endif
-        ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary Range where
     arbitrary = oneof $ map pure [ FromR       fExp
@@ -537,8 +492,7 @@ instance Arbitrary TyVarBndr where
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
 instance Arbitrary ClassInstance where
-    arbitrary = ClassInstance <$> arbitrary <*> arbitrary <*> arbitrary
-                              <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 #endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
@@ -548,13 +502,10 @@ instance Arbitrary Inline where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Phases where
-    arbitrary = oneof [ pure AllPhases
-                      , FromPhase   <$> arbitrary
-                      , BeforePhase <$> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary RuleBndr where
-    arbitrary = oneof [RuleVar <$> arbitrary, TypedRuleVar <$> arbitrary <*> arbitrary]
+    arbitrary = genericArbitrary
 
 deriving instance Bounded RuleMatch
 deriving instance Enum RuleMatch
@@ -562,10 +513,10 @@ instance Arbitrary RuleMatch where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary TyLit where
-    arbitrary = oneof [NumTyLit <$> arbitrary, StrTyLit <$> arbitrary]
+    arbitrary = genericArbitrary
 #else
 instance Arbitrary InlineSpec where
-    arbitrary = InlineSpec <$> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary Kind where
     arbitrary = oneof [pure StarK, pure $ ArrowK fKind fKind]
@@ -574,19 +525,16 @@ instance Arbitrary Kind where
 
 #if MIN_VERSION_template_haskell(2,9,0)
 instance Arbitrary AnnLookup where
-    arbitrary = oneof [AnnLookupModule <$> arbitrary, AnnLookupName <$> arbitrary]
+    arbitrary = genericArbitrary
 
 instance Arbitrary AnnTarget where
-    arbitrary = oneof [ pure ModuleAnnotation
-                      , TypeAnnotation  <$> arbitrary
-                      , ValueAnnotation <$> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary Module where
-    arbitrary = Module <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary ModuleInfo where
-    arbitrary = ModuleInfo <$> arbitrary
+    arbitrary = genericArbitrary
 
 deriving instance Bounded Role
 deriving instance Enum Role
@@ -594,7 +542,7 @@ instance Arbitrary Role where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary TySynEqn where
-    arbitrary = TySynEqn <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 #endif
 
 instance Arbitrary Doc where
@@ -612,7 +560,7 @@ instance Arbitrary Pred where
 
 #if MIN_VERSION_template_haskell(2,11,0)
 instance Arbitrary Bang where
-    arbitrary = Bang <$> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 deriving instance Bounded DecidedStrictness
 deriving instance Enum DecidedStrictness

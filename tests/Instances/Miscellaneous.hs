@@ -18,12 +18,14 @@ module Instances.Miscellaneous () where
 
 import Foreign.Ptr (Ptr, nullPtr, plusPtr)
 
+import Generics.Deriving.Instances ()
+
 import Prelude ()
 import Prelude.Compat
 
 import System.Exit (ExitCode(..))
 
-import Test.QuickCheck (Arbitrary(..), oneof)
+import Test.QuickCheck (Arbitrary(..), genericArbitrary)
 
 #if MIN_VERSION_base(4,5,0)
 
@@ -49,7 +51,7 @@ import Test.QuickCheck (arbitrarySizedBoundedIntegral)
 #endif
 
 instance Arbitrary ExitCode where
-    arbitrary = oneof [pure ExitSuccess, ExitFailure <$> arbitrary]
+    arbitrary = genericArbitrary
 
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary

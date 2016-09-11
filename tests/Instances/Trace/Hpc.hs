@@ -1,4 +1,12 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE TypeFamilies       #-}
+
+#if __GLASGOW_HASKELL__ >= 706
+{-# LANGUAGE DataKinds          #-}
+#endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Trace.Hpc
@@ -12,17 +20,19 @@ Provides 'Arbitrary' instances for data types in the @hpc@ library.
 -}
 module Instances.Trace.Hpc () where
 
-import Instances.Utils ((<@>))
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
 
-import Prelude ()
-import Prelude.Compat
+import           Instances.Utils ((<@>))
 
-import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
-import Test.QuickCheck.Instances ()
+import           Prelude ()
+import           Prelude.Compat
 
-import Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
-import Trace.Hpc.Tix (Tix(..), TixModule(..))
-import Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
+import           Test.QuickCheck.Instances ()
+
+import           Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
+import           Trace.Hpc.Tix (Tix(..), TixModule(..))
+import           Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
 
 instance Arbitrary Mix where
     arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
@@ -31,11 +41,7 @@ instance Arbitrary Mix where
 --                     <*> arbitrary <*> arbitrary
 
 instance Arbitrary BoxLabel where
-    arbitrary = oneof [ ExpBox      <$> arbitrary
-                      , TopLevelBox <$> arbitrary
-                      , LocalBox    <$> arbitrary
-                      , BinBox      <$> arbitrary <*> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 deriving instance Bounded CondBox
 deriving instance Enum CondBox
@@ -43,17 +49,16 @@ instance Arbitrary CondBox where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary Tix where
-    arbitrary = Tix <$> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary TixModule where
-    arbitrary = TixModule <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary HpcPos where
-    arbitrary = toHpcPos <$> ((,,,) <$> arbitrary <*> arbitrary
-                                    <*> arbitrary <*> arbitrary)
+    arbitrary = genericArbitrary
 
 instance Arbitrary Hash where
-    arbitrary = fromInteger <$> arbitrary
+    arbitrary = genericArbitrary
 
 -------------------------------------------------------------------------------
 -- Workarounds to make Arbitrary instances faster
@@ -61,3 +66,9 @@ instance Arbitrary Hash where
 
 fMixEntry :: MixEntry
 fMixEntry = (toHpcPos (0, 1, 2, 3), ExpBox True)
+
+$(Generics.deriveAll0 ''BoxLabel)
+$(Generics.deriveAll0 ''Tix)
+$(Generics.deriveAll0 ''TixModule)
+$(Generics.deriveAll0 ''HpcPos)
+$(Generics.deriveAll0 ''Hash)

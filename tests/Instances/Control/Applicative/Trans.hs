@@ -1,6 +1,12 @@
+{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
+
+#if __GLASGOW_HASKELL__ >= 702
+{-# LANGUAGE DeriveGeneric              #-}
+#endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Control.Applicative.Trans
@@ -14,15 +20,24 @@ Provides 'Arbitrary' instances for applicative functor transformers.
 -}
 module Instances.Control.Applicative.Trans () where
 
-import Control.Applicative.Backwards (Backwards(..))
-import Control.Applicative.Lift      (Lift(..))
+import           Control.Applicative.Backwards (Backwards(..))
+import           Control.Applicative.Lift      (Lift(..))
 
-import Prelude ()
-import Prelude.Compat
+#if __GLASGOW_HASKELL__ >= 702
+import           GHC.Generics (Generic)
+#else
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
+#endif
 
-import Test.QuickCheck (Arbitrary(..), oneof)
+import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
 
 deriving instance Arbitrary (f a) => Arbitrary (Backwards f a)
 
 instance (Arbitrary a, Arbitrary (f a)) => Arbitrary (Lift f a) where
-    arbitrary = oneof [Pure <$> arbitrary, Other <$> arbitrary]
+    arbitrary = genericArbitrary
+
+#if __GLASGOW_HASKELL__ >= 702
+deriving instance Generic (Lift f a)
+#else
+$(Generics.deriveAll0 ''Lift)
+#endif

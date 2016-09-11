@@ -17,6 +17,7 @@ import Data.Bifunctor.Flip (Flip)
 import Data.Bifunctor.Join (Join)
 import Data.Bifunctor.Joker (Joker)
 import Data.Bifunctor.Product (Product)
+import Data.Bifunctor.Sum (Sum)
 import Data.Bifunctor.Tannen (Tannen)
 import Data.Bifunctor.Wrapped (WrappedBifunctor)
 
@@ -48,6 +49,8 @@ spec = parallel $ do
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Joker [] Char Int -> Bool)
     describe "Product Either ((,,) Bool) Int Char" $
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Product Either ((,,) Bool) Int Char -> Bool)
+    describe "Sum Either ((,,) Bool) Int Char" $
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> Sum Either ((,,) Bool) Int Char -> Bool)
     describe "Tannen Maybe Either Int Char" $
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Tannen Maybe Either Int Char -> Bool)
     describe "WrappedBifunctor Either Int Char" $

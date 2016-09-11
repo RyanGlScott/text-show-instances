@@ -1,3 +1,12 @@
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE TypeFamilies       #-}
+
+#if __GLASGOW_HASKELL__ >= 702
+{-# LANGUAGE DeriveGeneric      #-}
+#endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Console.Haskeline
@@ -11,24 +20,38 @@ Provides 'Arbitrary' instances for data types in the @haskeline@ library.
 -}
 module Instances.System.Console.Haskeline () where
 
-import Instances.Utils ((<@>))
+#if __GLASGOW_HASKELL__ >= 702
+import           GHC.Generics (Generic)
+#else
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
+#endif
 
-import Prelude ()
-import Prelude.Compat
+import           Instances.Utils ((<@>))
 
-import System.Console.Haskeline (Interrupt(..))
-import System.Console.Haskeline.Completion (Completion(..))
-import System.Console.Haskeline.History (History, addHistory, emptyHistory)
+import           Prelude ()
+import           Prelude.Compat
 
-import Test.QuickCheck (Arbitrary(..))
+import           System.Console.Haskeline (Interrupt(..))
+import           System.Console.Haskeline.Completion (Completion(..))
+import           System.Console.Haskeline.History (History, addHistory, emptyHistory)
 
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
+
+deriving instance Bounded Interrupt
+deriving instance Enum Interrupt
 instance Arbitrary Interrupt where
-    arbitrary = pure Interrupt
+    arbitrary = arbitraryBoundedEnum
 
 -- instance Arbitrary Prefs
 
 instance Arbitrary Completion where
-    arbitrary = Completion <$> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary History where
     arbitrary = addHistory <$> arbitrary <@> emptyHistory
+
+#if __GLASGOW_HASKELL__ >= 702
+deriving instance Generic Completion
+#else
+$(Generics.deriveAll0 ''Completion)
+#endif

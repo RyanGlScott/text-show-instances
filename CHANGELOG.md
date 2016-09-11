@@ -1,5 +1,6 @@
 # next [YYYY.MM.DD]
 * Require `QuickCheck-2.9` or later
+* Refactor the test suite to use features introduced in QuickCheck-???
 
 ## 3.4
 * Require `text-show-3.4` or later

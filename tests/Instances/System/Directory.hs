@@ -1,4 +1,11 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP             #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeFamilies    #-}
+
+#if __GLASGOW_HASKELL__ >= 706
+{-# LANGUAGE DataKinds       #-}
+#endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Directory
@@ -13,19 +20,11 @@ Provides an 'Arbitrary' instance for 'Permissions'.
 module Instances.System.Directory () where
 
 #if MIN_VERSION_directory(1,1,0)
-import Control.Applicative ((<**>))
-
-import Prelude ()
-import Prelude.Compat
-
-import System.Directory (Permissions, emptyPermissions, setOwnerReadable,
-                         setOwnerWritable, setOwnerExecutable, setOwnerSearchable)
-
-import Test.QuickCheck (Arbitrary(..))
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
+import           System.Directory (Permissions)
+import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
 
 instance Arbitrary Permissions where
-    arbitrary = ($ emptyPermissions) <$> (setOwnerReadable   <$> arbitrary)
-                                    <**> (setOwnerWritable   <$> arbitrary)
-                                    <**> (setOwnerExecutable <$> arbitrary)
-                                    <**> (setOwnerSearchable <$> arbitrary)
+    arbitrary = genericArbitrary
+$(Generics.deriveAll0 ''Permissions)
 #endif
