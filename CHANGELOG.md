@@ -1,3 +1,6 @@
+# next [YYYY.MM.DD]
+* Require `QuickCheck-2.9` or later
+
 ## 3.4
 * Require `text-show-3.4` or later
 * Update testsuite to be buildable with `text-show-3.4`
