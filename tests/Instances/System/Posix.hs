@@ -2,6 +2,13 @@
 
 #if !defined(mingw32_HOST_OS)
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE TypeFamilies       #-}
+
+# if __GLASGOW_HASKELL__ >= 702
+{-# LANGUAGE DeriveGeneric      #-}
+# endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
 
@@ -18,16 +25,22 @@ Provides 'Arbitrary' instances for data types in the @unix@ library.
 module Instances.System.Posix () where
 
 #if !defined(mingw32_HOST_OS)
-import Instances.Miscellaneous ()
+# if __GLASGOW_HASKELL__ >= 702
+import           GHC.Generics (Generic)
+# else
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
+# endif
 
-import Prelude ()
-import Prelude.Compat
+import           Instances.Miscellaneous ()
 
-import System.Posix.DynamicLinker (RTLDFlags(..), DL(..))
-import System.Posix.Process (ProcessStatus(..))
-import System.Posix.User (GroupEntry(..), UserEntry(..))
+import           Prelude ()
+import           Prelude.Compat
 
-import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import           System.Posix.DynamicLinker (RTLDFlags(..), DL(..))
+import           System.Posix.Process (ProcessStatus(..))
+import           System.Posix.User (GroupEntry(..), UserEntry(..))
+
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
 
 deriving instance Bounded RTLDFlags
 deriving instance Enum RTLDFlags
@@ -35,22 +48,26 @@ instance Arbitrary RTLDFlags where
     arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary DL where
-    arbitrary = oneof [pure Null, pure Next, pure Default, DLHandle <$> arbitrary]
+    arbitrary = genericArbitrary
 
 instance Arbitrary ProcessStatus where
-    arbitrary = oneof [ Exited     <$> arbitrary
-# if MIN_VERSION_unix(2,7,0)
-                      , Terminated <$> arbitrary <*> arbitrary
-# else
-                      , Terminated <$> arbitrary
-# endif
-                      , Stopped    <$> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary GroupEntry where
-    arbitrary = GroupEntry <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary UserEntry where
-    arbitrary = UserEntry <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                          <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
+
+# if __GLASGOW_HASKELL__ >= 702
+deriving instance Generic DL
+deriving instance Generic ProcessStatus
+deriving instance Generic GroupEntry
+deriving instance Generic UserEntry
+# else
+$(Generics.deriveAll0 ''DL)
+$(Generics.deriveAll0 ''ProcessStatus)
+$(Generics.deriveAll0 ''GroupEntry)
+$(Generics.deriveAll0 ''UserEntry)
+# endif
 #endif

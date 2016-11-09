@@ -3,6 +3,13 @@
 #if defined(mingw32_HOST_OS)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
+
+# if __GLASGOW_HASKELL __ >= 702
+{-# LANGUAGE DeriveGeneric              #-}
+# endif
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
 
@@ -19,91 +26,70 @@ Provides 'Arbitrary' instances for data types in the @Win32@ library.
 module Instances.System.Win32 () where
 
 #if defined(mingw32_HOST_OS)
-import Instances.Miscellaneous ()
+# if __GLASGOW_HASKELL__ >= 702
+import           GHC.Generics (Generic)
+# else
+import qualified Generics.Deriving.TH as Generics (deriveAll0)
+# endif
 
-import Prelude ()
-import Prelude.Compat
+import           Instances.Miscellaneous ()
 
-import System.Win32.DebugApi (DebugEventInfo(..), Exception(..))
-import System.Win32.File (BY_HANDLE_FILE_INFORMATION(..), WIN32_FILE_ATTRIBUTE_DATA(..))
-import System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
-import System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
-                          TIME_ZONE_INFORMATION(..), TimeZoneId(..))
+import           System.Win32.DebugApi (DebugEventInfo(..), Exception(..))
+import           System.Win32.File (BY_HANDLE_FILE_INFORMATION(..), WIN32_FILE_ATTRIBUTE_DATA(..))
+import           System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
+import           System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
+                                    TIME_ZONE_INFORMATION(..), TimeZoneId(..))
 
-import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
 
 instance Arbitrary DebugEventInfo where
-    arbitrary = oneof [ pure UnknownDebugEvent
-                      , Exception     <$> arbitrary <*> arbitrary
-                      , CreateThread  <$> arbitrary
-                      , CreateProcess <$> arbitrary <*> arbitrary <*> arbitrary
-                      , ExitThread    <$> arbitrary
-                      , ExitProcess   <$> arbitrary
-                      , LoadDll       <$> arbitrary
-                      , UnloadDll     <$> arbitrary
-                      , DebugString   <$> arbitrary <*> arbitrary <*> arbitrary
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary Exception where
-    arbitrary = oneof [ pure UnknownException
-                      , AccessViolation <$> arbitrary <*> arbitrary
-                      , pure ArrayBoundsExceeded
-                      , pure Breakpoint
-                      , pure DataTypeMisalignment
-                      , pure FltDenormalOperand
-                      , pure FltDivideByZero
-                      , pure FltInexactResult
-                      , pure FltInvalidOperation
-                      , pure FltOverflow
-                      , pure FltStackCheck
-                      , pure FltUnderflow
-                      , pure IllegalInstruction
-                      , pure InPageError
-                      , pure IntDivideByZero
-                      , pure IntOverflow
-                      , pure InvalidDisposition
-                      , pure NonContinuable
-                      , pure PrivilegedInstruction
-                      , pure SingleStep
-                      , pure StackOverflow
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary BY_HANDLE_FILE_INFORMATION where
-    arbitrary = BY_HANDLE_FILE_INFORMATION <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                                           <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary WIN32_FILE_ATTRIBUTE_DATA where
-    arbitrary = WIN32_FILE_ATTRIBUTE_DATA <$> arbitrary <*> arbitrary <*> arbitrary
-                                          <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary ProcessorArchitecture where
-    arbitrary = oneof [ PaUnknown <$> arbitrary
-                      , pure PaIntel
-                      , pure PaMips
-                      , pure PaAlpha
-                      , pure PaPpc
-                      , pure PaIa64
-                      , pure PaIa32OnIa64
-                      , pure PaAmd64
-                      ]
+    arbitrary = genericArbitrary
 
 instance Arbitrary SYSTEM_INFO where
-    arbitrary = SYSTEM_INFO <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                            <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 deriving instance Arbitrary FILETIME
 
 instance Arbitrary SYSTEMTIME where
-    arbitrary = SYSTEMTIME <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                           <*> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 instance Arbitrary TIME_ZONE_INFORMATION where
-    arbitrary = TIME_ZONE_INFORMATION <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
-                                      <*> arbitrary <*> arbitrary <*> arbitrary
+    arbitrary = genericArbitrary
 
 deriving instance Bounded TimeZoneId
 deriving instance Enum TimeZoneId
 instance Arbitrary TimeZoneId where
     arbitrary = arbitraryBoundedEnum
+
+# if __GLASGOW_HASKELL__ >= 702
+deriving instance Generic DebugEventInfo
+deriving instance Generic Exception
+deriving instance Generic BY_HANDLE_FILE_INFORMATION
+deriving instance Generic WIN32_FILE_INFORMATION
+deriving instance Generic ProcessorArchitecture
+deriving instance Generic SYSTEM_INFO
+deriving instance Generic SYSTEMTIME
+deriving instance Generic TIME_ZONE_INFORMATION
+# else
+$(Generics.deriveAll0 ''DebugEventInfo)
+$(Generics.deriveAll0 ''Exception)
+$(Generics.deriveAll0 ''BY_HANDLE_FILE_INFORMATION)
+$(Generics.deriveAll0 ''WIN32_FILE_INFORMATION)
+$(Generics.deriveAll0 ''ProcessorArchitecture)
+$(Generics.deriveAll0 ''SYSTEM_INFO)
+$(Generics.deriveAll0 ''SYSTEMTIME)
+$(Generics.deriveAll0 ''TIME_ZONE_INFORMATION)
+# endif
 #endif

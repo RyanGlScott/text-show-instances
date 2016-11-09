@@ -21,7 +21,7 @@ import Instances.System.Console.Terminfo ()
 
 import Spec.Utils (prop_matchesTextShow)
 
-import System.Console.Terminfo.Color (Color)
+import System.Console.Terminfo (Color, SetupTermError)
 
 import Test.Hspec (describe)
 import Test.Hspec.QuickCheck (prop)
@@ -37,8 +37,8 @@ spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
     describe "Color" $
         prop "TextShow instance" (prop_matchesTextShow :: Int -> Color -> Bool)
---     describe "SetupTermError" $
---         prop "TextShow instance" (prop_matchesTextShow :: Int -> SetupTermError -> Bool)
+    describe "SetupTermError" $
+        prop "TextShow instance" (prop_matchesTextShow :: Int -> SetupTermError -> Bool)
 #else
     pure ()
 #endif

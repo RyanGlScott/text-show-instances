@@ -13,7 +13,6 @@ module Spec.Language.Haskell.THSpec (main, spec) where
 
 import Instances.Language.Haskell.TH ()
 
-import Language.Haskell.TH.Instances ()
 import Language.Haskell.TH.PprLib
 import Language.Haskell.TH.Syntax
 
