@@ -22,19 +22,21 @@ module Instances.Data.Binary () where
 
 import           Data.Binary.Get.Internal (Decoder(..))
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 706
 import           GHC.Generics (Generic)
 #else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 #endif
 
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
+import           Test.QuickCheck (Arbitrary(..))
 import           Test.QuickCheck.Instances ()
 
 instance Arbitrary a => Arbitrary (Decoder a) where
     arbitrary = genericArbitrary
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 706
 deriving instance Generic (Decoder a)
 #else
 $(Generics.deriveAll0 ''Decoder)

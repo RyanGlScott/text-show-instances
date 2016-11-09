@@ -1,5 +1,7 @@
 {-# LANGUAGE CPP                #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE TypeFamilies       #-}
 
 #if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric      #-}
@@ -18,16 +20,18 @@ Provides 'Arbitrary' instances for data types in the @xhtml@ library.
 -}
 module Instances.Text.XHtml () where
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
 #else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 #endif
 
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
 import           Prelude ()
 import           Prelude.Compat
 
-import           Test.QuickCheck (Arbitrary(..), Gen, genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..), Gen)
 
 import           Text.XHtml.Frameset (Html, HtmlAttr, HotLink(..), strAttr, toHtml)
 import           Text.XHtml.Table (HtmlTable, cell)
@@ -44,7 +48,7 @@ instance Arbitrary HotLink where
 instance Arbitrary HtmlTable where
     arbitrary = cell <$> (arbitrary :: Gen Html)
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic HotLink
 #else
 $(Generics.deriveAll0 ''HotLink)

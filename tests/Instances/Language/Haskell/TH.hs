@@ -17,11 +17,8 @@ Provides 'Arbitrary' instances for data types in the @template-haskell@ library.
 -}
 module Instances.Language.Haskell.TH () where
 
-#if !(MIN_VERSION_template_haskell(2,10,0))
-import GHC.Exts (Int(I#))
-#endif
-
 import Instances.Utils ((<@>))
+import Instances.Utils.GenericArbitrary (genericArbitrary)
 
 import Language.Haskell.TH.Instances ()
 import Language.Haskell.TH.PprLib (Doc, text)
@@ -33,7 +30,7 @@ import Language.Haskell.TH.Syntax.Internals
 import Prelude ()
 import Prelude.Compat
 
-import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary, oneof)
+import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, oneof)
 
 instance Arbitrary Body where
     arbitrary = oneof $ map pure [ GuardedB [(fGuard, fExp)]

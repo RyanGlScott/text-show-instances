@@ -2,6 +2,8 @@
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
 
 #if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric              #-}
@@ -23,20 +25,22 @@ module Instances.Control.Applicative.Trans () where
 import           Control.Applicative.Backwards (Backwards(..))
 import           Control.Applicative.Lift      (Lift(..))
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 706
 import           GHC.Generics (Generic)
 #else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 #endif
 
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
+import           Test.QuickCheck (Arbitrary(..))
 
 deriving instance Arbitrary (f a) => Arbitrary (Backwards f a)
 
 instance (Arbitrary a, Arbitrary (f a)) => Arbitrary (Lift f a) where
     arbitrary = genericArbitrary
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 706
 deriving instance Generic (Lift f a)
 #else
 $(Generics.deriveAll0 ''Lift)

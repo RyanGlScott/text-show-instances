@@ -23,14 +23,16 @@ module Instances.Data.Containers () where
 import           Data.Sequence (ViewL(..), ViewR(..))
 
 #if !(MIN_VERSION_containers(0,5,8))
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 706
 import           GHC.Generics (Generic)
 # else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 # endif
 #endif
 
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
+import           Test.QuickCheck (Arbitrary(..))
 import           Test.QuickCheck.Instances ()
 
 instance Arbitrary a => Arbitrary (ViewL a) where
@@ -40,7 +42,7 @@ instance Arbitrary a => Arbitrary (ViewR a) where
     arbitrary = genericArbitrary
 
 #if !(MIN_VERSION_containers(0,5,8))
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 706
 deriving instance Generic (ViewL a)
 deriving instance Generic (ViewR a)
 # else

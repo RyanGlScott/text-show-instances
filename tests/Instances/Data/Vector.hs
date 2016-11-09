@@ -29,16 +29,18 @@ import           Data.Vector.Generic (fromList)
 import qualified Data.Vector.Primitive as P (Vector)
 import           Data.Vector.Primitive (Prim)
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
 #else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 #endif
 
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
 import           Prelude ()
 import           Prelude.Compat
 
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..))
 import           Test.QuickCheck.Instances ()
 
 instance (Arbitrary a, Prim a) => Arbitrary (P.Vector a) where
@@ -47,7 +49,7 @@ instance (Arbitrary a, Prim a) => Arbitrary (P.Vector a) where
 instance Arbitrary Size where
     arbitrary = genericArbitrary
 
-#if __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic Size
 #else
 $(Generics.deriveAll0 ''Size)

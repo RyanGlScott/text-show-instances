@@ -1,6 +1,8 @@
 {-# LANGUAGE CPP                        #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
 
 #if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric              #-}
@@ -20,10 +22,12 @@ Provides 'Arbitrary' instances for data types in the @pretty@ library
 -}
 module Instances.Text.PrettyPrint () where
 
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
 import           Prelude ()
 import           Prelude.Compat
 
-import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 
 import           Text.PrettyPrint.HughesPJ (Doc, Mode(..), Style(..),
                                             TextDetails(..), text)
@@ -38,7 +42,7 @@ import qualified Text.PrettyPrint.Annotated.HughesPJClass as Annot (PrettyLevel(
 #endif
 
 #if !(MIN_VERSION_pretty(1,1,2)) || MIN_VERSION_pretty(1,1,3)
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
 # else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
@@ -66,7 +70,7 @@ deriving instance Show Mode
 deriving instance Show Style
 deriving instance Show TextDetails
 
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic Style
 deriving instance Generic TextDetails
 # else
@@ -87,7 +91,7 @@ deriving instance Arbitrary Annot.PrettyLevel
 instance Arbitrary a => Arbitrary (Span a) where
     arbitrary = genericArbitrary
 
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic (AnnotDetails a)
 deriving instance Generic (Span a)
 # else

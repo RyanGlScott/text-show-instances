@@ -25,8 +25,9 @@ module Instances.System.Console.Terminfo () where
 
 #if !defined(mingw32_HOST_OS)
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
 import           System.Console.Terminfo (Color, SetupTermError)
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..))
 
 instance Arbitrary Color where
     arbitrary = genericArbitrary

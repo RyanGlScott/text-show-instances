@@ -26,13 +26,14 @@ Provides 'Arbitrary' instances for data types in the @Win32@ library.
 module Instances.System.Win32 () where
 
 #if defined(mingw32_HOST_OS)
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
 # else
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 # endif
 
 import           Instances.Miscellaneous ()
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
 import           System.Win32.DebugApi (DebugEventInfo(..), Exception(..))
 import           System.Win32.File (BY_HANDLE_FILE_INFORMATION(..), WIN32_FILE_ATTRIBUTE_DATA(..))
@@ -40,7 +41,7 @@ import           System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
 import           System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
                                     TIME_ZONE_INFORMATION(..), TimeZoneId(..))
 
-import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 
 instance Arbitrary DebugEventInfo where
     arbitrary = genericArbitrary
@@ -73,7 +74,7 @@ deriving instance Enum TimeZoneId
 instance Arbitrary TimeZoneId where
     arbitrary = arbitraryBoundedEnum
 
-# if __GLASGOW_HASKELL__ >= 702
+# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic DebugEventInfo
 deriving instance Generic Exception
 deriving instance Generic BY_HANDLE_FILE_INFORMATION

@@ -20,12 +20,14 @@ import Foreign.Ptr (Ptr, nullPtr, plusPtr)
 
 import Generics.Deriving.Instances ()
 
+import Instances.Utils.GenericArbitrary (genericArbitrary)
+
 import Prelude ()
 import Prelude.Compat
 
 import System.Exit (ExitCode(..))
 
-import Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import Test.QuickCheck (Arbitrary(..))
 
 #if MIN_VERSION_base(4,5,0)
 

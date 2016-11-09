@@ -34,7 +34,9 @@ import           Data.Bifunctor.Wrapped (WrappedBifunctor(..))
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 #endif
 
-import           Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
+
+import           Test.QuickCheck (Arbitrary(..))
 
 deriving instance Arbitrary (p (f a) (g b)) => Arbitrary (Biff p f g a b)
 deriving instance Arbitrary (f a)           => Arbitrary (Clown f a b)

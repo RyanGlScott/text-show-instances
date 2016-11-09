@@ -23,11 +23,12 @@ module Instances.Trace.Hpc () where
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 
 import           Instances.Utils ((<@>))
+import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
 import           Prelude ()
 import           Prelude.Compat
 
-import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum, genericArbitrary)
+import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 import           Test.QuickCheck.Instances ()
 
 import           Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
