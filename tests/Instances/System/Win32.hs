@@ -6,7 +6,7 @@
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
 
-# if __GLASGOW_HASKELL __ >= 702
+# if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric              #-}
 # endif
 
@@ -78,7 +78,7 @@ instance Arbitrary TimeZoneId where
 deriving instance Generic DebugEventInfo
 deriving instance Generic Exception
 deriving instance Generic BY_HANDLE_FILE_INFORMATION
-deriving instance Generic WIN32_FILE_INFORMATION
+deriving instance Generic WIN32_FILE_ATTRIBUTE_DATA
 deriving instance Generic ProcessorArchitecture
 deriving instance Generic SYSTEM_INFO
 deriving instance Generic SYSTEMTIME
@@ -87,7 +87,7 @@ deriving instance Generic TIME_ZONE_INFORMATION
 $(Generics.deriveAll0 ''DebugEventInfo)
 $(Generics.deriveAll0 ''Exception)
 $(Generics.deriveAll0 ''BY_HANDLE_FILE_INFORMATION)
-$(Generics.deriveAll0 ''WIN32_FILE_INFORMATION)
+$(Generics.deriveAll0 ''WIN32_FILE_ATTRIBUTE_DATA)
 $(Generics.deriveAll0 ''ProcessorArchitecture)
 $(Generics.deriveAll0 ''SYSTEM_INFO)
 $(Generics.deriveAll0 ''SYSTEMTIME)
