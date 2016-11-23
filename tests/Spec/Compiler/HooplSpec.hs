@@ -14,12 +14,13 @@ import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed,
                        Unique, UniqueMap, UniqueSet, C)
 import Compiler.Hoopl.Passes.Dominator (DominatorNode, DominatorTree, DPath)
 
+import Data.Proxy (Proxy(..))
+
 import Instances.Compiler.Hoopl ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Compiler.Hoopl ()
 
@@ -29,22 +30,22 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Label" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Label -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Label)
     describe "LabelMap Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> LabelMap Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (LabelMap Char))
     describe "LabelSet" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> LabelSet -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy LabelSet)
     describe "Pointed C C Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Pointed C C Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Pointed C C Int))
     describe "Unique" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Unique -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Unique)
     describe "UniqueMap Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> UniqueMap Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (UniqueMap Char))
     describe "UniqueSet" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> UniqueSet -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy UniqueSet)
     describe "DominatorNode" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DominatorNode -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DominatorNode)
     describe "DominatorTree" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DominatorTree -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DominatorTree)
     describe "DPath" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DPath -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DPath)

@@ -13,12 +13,13 @@ module Spec.Control.Applicative.TransSpec (main, spec) where
 import Control.Applicative.Backwards (Backwards)
 import Control.Applicative.Lift      (Lift)
 
+import Data.Proxy (Proxy(..))
+
 import Instances.Control.Applicative.Trans ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Control.Applicative.Trans ()
 
@@ -28,6 +29,6 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Backwards Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Backwards Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Backwards Maybe Int))
     describe "Lift Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Lift Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Lift Maybe Int))

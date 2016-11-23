@@ -10,12 +10,13 @@ Portability: GHC
 -}
 module Spec.Trace.HpcSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
+
 import Instances.Trace.Hpc ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Trace.Hpc ()
 
@@ -29,16 +30,16 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Mix" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Mix -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Mix)
     describe "BoxLabel" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> BoxLabel -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy BoxLabel)
     describe "CondBox" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> CondBox -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy CondBox)
     describe "Tix" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tix -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Tix)
     describe "TixModule" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> TixModule -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TixModule)
     describe "HpcPos" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HpcPos -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy HpcPos)
     describe "Hash" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Hash -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Hash)

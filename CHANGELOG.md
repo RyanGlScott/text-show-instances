@@ -1,5 +1,5 @@
 ### next [YYYY.MM.DD]
-* Refactor test suite to make use of a generic default implementation for arbitrary
+* Refactor test suite
 
 ## 3.4
 * Require `text-show-3.4` or later

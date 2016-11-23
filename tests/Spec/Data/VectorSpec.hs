@@ -12,6 +12,7 @@ Portability: GHC
 -}
 module Spec.Data.VectorSpec (main, spec) where
 
+import           Data.Proxy (Proxy(..))
 import qualified Data.Vector as B (Vector)
 #if MIN_VERSION_vector(0,11,0)
 import           Data.Vector.Fusion.Bundle.Size (Size)
@@ -24,10 +25,9 @@ import qualified Data.Vector.Unboxed as U (Vector)
 
 import           Instances.Data.Vector ()
 
-import           Spec.Utils (prop_matchesTextShow)
+import           Spec.Utils (matchesTextShowSpec)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
-import           Test.Hspec.QuickCheck (prop)
 
 import           TextShow.Data.Vector ()
 
@@ -37,12 +37,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "(boxed) Vector Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> B.Vector Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (B.Vector Char))
     describe "(primitive) Vector Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> P.Vector Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (P.Vector Char))
     describe "(storable) Vector Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> S.Vector Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (S.Vector Char))
     describe "(unboxed) Vector Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> U.Vector Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (U.Vector Char))
     describe "Size" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Size -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Size)

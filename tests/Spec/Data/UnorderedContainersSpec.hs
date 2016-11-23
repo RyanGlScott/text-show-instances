@@ -12,11 +12,11 @@ module Spec.Data.UnorderedContainersSpec (main, spec) where
 
 import Data.HashMap.Lazy (HashMap)
 import Data.HashSet (HashSet)
+import Data.Proxy (Proxy(..))
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
 import TextShow.Data.UnorderedContainers ()
@@ -27,6 +27,6 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "HashMap Char Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HashMap Char Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (HashMap Char Char))
     describe "HashSet Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HashSet Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (HashSet Char))

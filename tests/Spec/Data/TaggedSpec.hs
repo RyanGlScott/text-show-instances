@@ -10,14 +10,14 @@ Portability: GHC
 -}
 module Spec.Data.TaggedSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
 import Data.Tagged (Tagged)
 
 import Instances.Data.Tagged ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Data.Tagged ()
 
@@ -26,4 +26,4 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel . describe "Tagged Char Int" $
-    prop "TextShow instance" (prop_matchesTextShow :: Int -> Tagged Char Int -> Bool)
+    matchesTextShowSpec (Proxy :: Proxy (Tagged Char Int))

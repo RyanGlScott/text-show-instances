@@ -11,12 +11,14 @@ Portability: GHC
 -}
 module Spec.Language.Haskell.THSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
+
 import Instances.Language.Haskell.TH ()
 
 import Language.Haskell.TH.PprLib
 import Language.Haskell.TH.Syntax
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 import Test.Hspec.QuickCheck (prop)
@@ -31,153 +33,153 @@ spec :: Spec
 spec = parallel $ do
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "AnnLookup" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> AnnLookup -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy AnnLookup)
     describe "AnnTarget" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> AnnTarget -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy AnnTarget)
 #endif
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "Bang" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Bang -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Bang)
 #endif
     describe "Body" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Body -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Body)
     describe "Callconv" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Callconv -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Callconv)
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
     describe "ClassInstance" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ClassInstance -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ClassInstance)
 #endif
     describe "Clause" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Clause -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Clause)
     describe "Con" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Con -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Con)
     describe "Dec" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Dec -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Dec)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "DecidedStrictness" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> DecidedStrictness -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DecidedStrictness)
 #endif
     describe "Doc" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Doc -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Doc)
     describe "Exp" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Exp -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Exp)
     describe "FamFlavour" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FamFlavour -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy FamFlavour)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "FamilyResultSig" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FamilyResultSig -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy FamilyResultSig)
 #endif
     describe "Fixity" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Fixity -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Fixity)
     describe "FixityDirection" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FixityDirection -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy FixityDirection)
     describe "Foreign" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Foreign -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Foreign)
     describe "FunDep" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> FunDep -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy FunDep)
     describe "Guard" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Guard -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Guard)
     describe "Info" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Info -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Info)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "InjectivityAnn" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> InjectivityAnn -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy InjectivityAnn)
 #endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Inline" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Inline -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Inline)
 #else
     describe "InlineSpec" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> InlineSpec -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy InlineSpec)
 #endif
     describe "Kind" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Kind -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Kind)
     describe "Lit" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Lit -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Lit)
     describe "Loc" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Loc -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Loc)
     describe "Match" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Match -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Match)
     describe "ModName" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ModName -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ModName)
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "Module" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Module -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Module)
     describe "ModuleInfo" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> ModuleInfo -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ModuleInfo)
 #endif
     describe "Name" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Name -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Name)
     describe "showbName'" $
         prop "has the same output as showName" prop_showName'
     describe "NameFlavour" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> NameFlavour -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy NameFlavour)
     describe "NameSpace" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> NameSpace -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy NameSpace)
     describe "OccName" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> OccName -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy OccName)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "Overlap" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Overlap -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Overlap)
 #endif
     describe "Pat" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pat -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Pat)
 #if __GLASGOW_HASKELL__ >= 801
     describe "PatSynArgs" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PatSynArgs -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy PatSynArgs)
     describe "PatSynDir" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PatSynDir -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy PatSynDir)
 #endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "Phases" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Phases -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Phases)
 #endif
     describe "PkgName" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> PkgName -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy PkgName)
     describe "Pred" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pred -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Pred)
     describe "Pragma" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Pragma -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Pragma)
     describe "Range" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Range -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Range)
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "Role" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Role -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Role)
 #endif
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "RuleBndr" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> RuleBndr -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy RuleBndr)
     describe "RuleMatch" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> RuleMatch -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy RuleMatch)
 #endif
     describe "Safety" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Safety -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Safety)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "SourceStrictness" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> SourceStrictness -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy SourceStrictness)
     describe "SourceUnpackedness" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> SourceUnpackedness -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy SourceUnpackedness)
 #endif
     describe "Stmt" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Stmt -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Stmt)
     describe "Strict" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Strict -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Strict)
 #if MIN_VERSION_template_haskell(2,8,0)
     describe "TyLit" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TyLit -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TyLit)
 #endif
     describe "Type" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> Type -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Type)
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "TypeFamilyHead" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TypeFamilyHead -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TypeFamilyHead)
 #endif
 #if MIN_VERSION_template_haskell(2,9,0)
     describe "TySynEqn" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TySynEqn -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TySynEqn)
 #endif
     describe "TyVarBndr" $
-        prop "TextShow instance"               (prop_matchesTextShow :: Int -> TyVarBndr -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TyVarBndr)
 
 -- | Verifies that `showName'` and `showbName'` have the same output.
 prop_showName' :: NameIs -> Name -> Bool

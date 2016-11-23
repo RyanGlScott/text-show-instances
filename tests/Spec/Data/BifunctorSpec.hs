@@ -20,13 +20,13 @@ import Data.Bifunctor.Product (Product)
 import Data.Bifunctor.Sum (Sum)
 import Data.Bifunctor.Tannen (Tannen)
 import Data.Bifunctor.Wrapped (WrappedBifunctor)
+import Data.Proxy (Proxy(..))
 
 import Instances.Data.Bifunctor ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Data.Bifunctor ()
 
@@ -36,22 +36,22 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Biff Either [] Maybe Char Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Biff Either [] Maybe Char Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Biff Either [] Maybe Char Int))
     describe "Clown [] Char Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Clown [] Char Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Clown [] Char Int))
     describe "Fix Either Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Fix Either Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Fix Either Int))
     describe "Flip Either Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Flip Either Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Flip Either Int Char))
     describe "Join Either Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Join Either Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Join Either Int))
     describe "Joker [] Char Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Joker [] Char Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Joker [] Char Int))
     describe "Product Either ((,,) Bool) Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Product Either ((,,) Bool) Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Product Either ((,,) Bool) Int Char))
     describe "Sum Either ((,,) Bool) Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Sum Either ((,,) Bool) Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Sum Either ((,,) Bool) Int Char))
     describe "Tannen Maybe Either Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tannen Maybe Either Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Tannen Maybe Either Int Char))
     describe "WrappedBifunctor Either Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> WrappedBifunctor Either Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (WrappedBifunctor Either Int Char))

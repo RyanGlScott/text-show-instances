@@ -15,13 +15,13 @@ import Data.Functor.Constant (Constant)
 import Data.Functor.Product  (Product)
 import Data.Functor.Reverse  (Reverse)
 import Data.Functor.Sum      (Sum)
+import Data.Proxy            (Proxy(..))
 
 import Instances.Data.Functor.Trans ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Data.Functor.Trans ()
 
@@ -31,12 +31,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Compose Maybe (Either Int) Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Compose Maybe (Either Int) Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Compose Maybe (Either Int) Char))
     describe "Constant Int Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Constant Int Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Constant Int Char))
     describe "Product Maybe (Either Int) Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Product Maybe (Either Int) Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Product Maybe (Either Int) Char))
     describe "Reverse Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Reverse Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Reverse Maybe Int))
     describe "Sum Maybe (Either Int) Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Sum Maybe (Either Int) Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Sum Maybe (Either Int) Char))

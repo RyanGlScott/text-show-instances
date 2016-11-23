@@ -17,15 +17,11 @@ import Prelude.Compat
 import Test.Hspec (Spec, hspec, parallel)
 
 #if MIN_VERSION_directory(1,1,0)
+import Data.Proxy (Proxy(..))
 import Instances.System.Directory ()
-
-import Spec.Utils (prop_matchesTextShow)
-
+import Spec.Utils (matchesTextShowSpec)
 import System.Directory (Permissions)
-
 import Test.Hspec (describe)
-import Test.Hspec.QuickCheck (prop)
-
 import TextShow.System.Directory ()
 #endif
 
@@ -36,7 +32,7 @@ spec :: Spec
 spec = parallel $
 #if MIN_VERSION_directory(1,1,0)
     describe "Permissions" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Permissions -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Permissions)
 #else
     pure ()
 #endif

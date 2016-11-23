@@ -13,16 +13,16 @@ module Spec.Data.ContainersSpec (main, spec) where
 import Data.IntMap (IntMap)
 import Data.IntSet (IntSet)
 import Data.Map (Map)
+import Data.Proxy (Proxy(..))
 import Data.Sequence (Seq, ViewL, ViewR)
 import Data.Set (Set)
 import Data.Tree (Tree)
 
 import Instances.Data.Containers ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
 import TextShow.Data.Containers ()
@@ -33,18 +33,18 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "IntMap Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> IntMap Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (IntMap Char))
     describe "IntSet" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> IntSet -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy IntSet)
     describe "Map Char Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Map Char Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Map Char Char))
     describe "Sequence Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Seq Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Seq Char))
     describe "ViewL Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ViewL Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ViewL Char))
     describe "ViewR Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ViewR Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ViewR Char))
     describe "Set Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Set Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Set Char))
     describe "Tree Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Tree Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Tree Char))

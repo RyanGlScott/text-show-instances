@@ -10,15 +10,11 @@ Portability: GHC
 -}
 module Spec.System.RandomSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
 import Instances.System.Random ()
-
-import Spec.Utils (prop_matchesTextShow)
-
+import Spec.Utils (matchesTextShowSpec)
 import System.Random (StdGen)
-
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
-
 import TextShow.System.Random ()
 
 main :: IO ()
@@ -26,4 +22,4 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel . describe "StdGen" $
-    prop "TextShow instance" (prop_matchesTextShow :: Int -> StdGen -> Bool)
+    matchesTextShowSpec (Proxy :: Proxy StdGen)

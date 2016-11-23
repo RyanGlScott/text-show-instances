@@ -11,15 +11,17 @@ Portability: GHC
 -}
 module Spec.Text.PrettyPrintSpec (main, spec) where
 
+import           Data.Proxy (Proxy(..))
+
 import           Instances.Text.PrettyPrint ()
 
-import           Spec.Utils (prop_matchesTextShow)
+import           Spec.Utils (matchesTextShowSpec)
 #if MIN_VERSION_pretty(1,1,2)
-import           Spec.Utils (prop_genericTextShow)
+import           Spec.Utils (genericTextShowSpec)
 #endif
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
-import           Test.Hspec.QuickCheck (prop)
+-- import           Test.Hspec.QuickCheck (prop)
 
 import           Text.PrettyPrint.HughesPJ (Doc, Mode, Style, TextDetails {-, renderStyle -})
 #if MIN_VERSION_pretty(1,1,2)
@@ -39,38 +41,44 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Doc" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Doc -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Doc)
     -- TODO: Figure out why this randomly stalls forever
 --     describe "renderStyleB" $ do
 --         prop "has the same output as renderStyle" prop_renderStyle
     describe "Mode" $ do
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Mode -> Bool)
+        let p :: Proxy Mode
+            p = Proxy
+        matchesTextShowSpec p
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic TextShow"                  (prop_genericTextShow :: Int -> Mode -> Bool)
+        genericTextShowSpec p
 #endif
     describe "Style" $ do
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Style -> Bool)
+        let p :: Proxy Style
+            p = Proxy
+        matchesTextShowSpec p
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic TextShow"                  (prop_genericTextShow :: Int -> Style -> Bool)
+        genericTextShowSpec p
 #endif
     describe "TextDetails" $ do
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> TextDetails -> Bool)
+        let p :: Proxy TextDetails
+            p = Proxy
+        matchesTextShowSpec p
 #if MIN_VERSION_pretty(1,1,2)
-        prop "generic TextShow"                  (prop_genericTextShow :: Int -> TextDetails -> Bool)
+        genericTextShowSpec p
 #endif
 #if MIN_VERSION_pretty(1,1,2)
     describe "PrettyLevel" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> PrettyLevel -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy PrettyLevel)
 #endif
 #if MIN_VERSION_pretty(1,1,3)
     describe "AnnotDetails Int" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> AnnotDetails Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (AnnotDetails Int))
     describe "Doc Int (annotated)" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Annot.Doc Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Annot.Doc Int))
     describe "PrettyLevel (annotated)" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Annot.PrettyLevel -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Annot.PrettyLevel)
     describe "Span Int" $
-        prop "TextShow instance"                 (prop_matchesTextShow :: Int -> Span Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (Span Int))
 #endif
 
 -- | Verifies that the output of 'renderStyle' and 'renderStyleB' coincides.

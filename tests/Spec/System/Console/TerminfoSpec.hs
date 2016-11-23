@@ -17,15 +17,11 @@ import Prelude.Compat
 import Test.Hspec (Spec, hspec, parallel)
 
 #if !defined(mingw32_HOST_OS)
+import Data.Proxy (Proxy(..))
 import Instances.System.Console.Terminfo ()
-
-import Spec.Utils (prop_matchesTextShow)
-
+import Spec.Utils (matchesTextShowSpec)
 import System.Console.Terminfo (Color, SetupTermError)
-
 import Test.Hspec (describe)
-import Test.Hspec.QuickCheck (prop)
-
 import TextShow.System.Console.Terminfo ()
 #endif
 
@@ -36,9 +32,9 @@ spec :: Spec
 spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
     describe "Color" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Color -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Color)
     describe "SetupTermError" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> SetupTermError -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy SetupTermError)
 #else
     pure ()
 #endif

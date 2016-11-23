@@ -10,12 +10,13 @@ Portability: GHC
 -}
 module Spec.System.TimeSpec (main, spec) where
 
-import Spec.Utils (prop_matchesTextShow)
+import Data.Proxy (Proxy(..))
+
+import Spec.Utils (matchesTextShowSpec)
 
 import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
 import TextShow.System.Time ()
@@ -26,12 +27,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "ClockTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ClockTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ClockTime)
     describe "TimeDiff" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeDiff -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TimeDiff)
     describe "CalendarTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> CalendarTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy CalendarTime)
     describe "Month" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Month -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Month)
     describe "Day" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Day -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Day)

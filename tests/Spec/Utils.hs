@@ -14,17 +14,12 @@ Testing-related utility functions.
 -}
 module Spec.Utils (
       matchesTextShowSpec
-    , prop_matchesTextShow
     , matchesTextShow1Spec
-    , prop_matchesTextShow1
 #if defined(NEW_FUNCTOR_CLASSES)
     , matchesTextShow2Spec
-    , prop_matchesTextShow2
 #endif
     , genericTextShowSpec
-    , prop_genericTextShow
     , genericTextShow1Spec
-    , prop_genericTextShow1
     ) where
 
 import Data.Functor.Classes (Show1, showsPrec1)

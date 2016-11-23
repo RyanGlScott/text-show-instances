@@ -10,16 +10,17 @@ Portability: GHC
 -}
 module Spec.System.Console.HaskelineSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
+
 import Instances.System.Console.Haskeline ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import System.Console.Haskeline (Interrupt, defaultPrefs)
 import System.Console.Haskeline.Completion (Completion)
 import System.Console.Haskeline.History (History)
 
 import Test.Hspec (Spec, describe, hspec, it, parallel, shouldBe)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow (FromStringShow(..), showb)
 import TextShow.System.Console.Haskeline ()
@@ -30,12 +31,13 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Interrupt" $
-        prop "TextShow instance"                                  (prop_matchesTextShow :: Int -> Interrupt -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Interrupt)
 --     describe "Prefs" $
---         prop "TextShow instance"                                  (prop_matchesTextShow :: Int -> Prefs -> Bool)
+--         matchesTextShowSpec (Proxy :: Proxy Prefs)
     describe "defaultPrefs" $
-        it "should have coinciding string and text Show output" $ showb (FromStringShow defaultPrefs) `shouldBe` showb defaultPrefs
+        it "should have coinciding string and text Show output" $
+            showb (FromStringShow defaultPrefs) `shouldBe` showb defaultPrefs
     describe "Completion" $
-        prop "TextShow instance"                                  (prop_matchesTextShow :: Int -> Completion -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Completion)
     describe "History" $
-        prop "TextShow instance"                                  (prop_matchesTextShow :: Int -> History -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy History)

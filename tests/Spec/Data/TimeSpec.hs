@@ -10,15 +10,15 @@ Portability: GHC
 -}
 module Spec.Data.TimeSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
 import Data.Time.Calendar (Day)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
 import Data.Time.Clock.TAI (AbsoluteTime)
 import Data.Time.LocalTime (TimeZone, TimeOfDay, LocalTime, ZonedTime)
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck.Instances ()
 
 import TextShow.Data.Time ()
@@ -29,20 +29,20 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Day" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Day -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Day)
     describe "DiffTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DiffTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DiffTime)
     describe "UTCTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> UTCTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy UTCTime)
     describe "NominalDiffTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> NominalDiffTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy NominalDiffTime)
     describe "AbsoluteTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> AbsoluteTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy AbsoluteTime)
     describe "TimeZone" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeZone -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TimeZone)
     describe "TimeOfDay" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> TimeOfDay -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy TimeOfDay)
     describe "LocalTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> LocalTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy LocalTime)
     describe "ZonedTime" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ZonedTime -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ZonedTime)

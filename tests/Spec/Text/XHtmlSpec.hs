@@ -10,12 +10,13 @@ Portability: GHC
 -}
 module Spec.Text.XHtmlSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
+
 import Instances.Text.XHtml ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.Text.XHtml ()
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink)
@@ -27,12 +28,12 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "Html" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Html -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Html)
     describe "[Html]" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> [Html] -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy [Html])
     describe "HtmlAttr" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HtmlAttr -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy HtmlAttr)
     describe "HotLink" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HotLink -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy HotLink)
     describe "HtmlTable" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> HtmlTable -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy HtmlTable)

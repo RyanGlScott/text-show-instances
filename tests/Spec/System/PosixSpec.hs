@@ -17,16 +17,17 @@ import Prelude.Compat
 import Test.Hspec (Spec, hspec, parallel)
 
 #if !defined(mingw32_HOST_OS)
+import Data.Proxy (Proxy(..))
+
 import Instances.System.Posix ()
 
-import Spec.Utils (prop_matchesTextShow)
+import Spec.Utils (matchesTextShowSpec)
 
 import System.Posix.DynamicLinker (RTLDFlags, DL)
 import System.Posix.Process (ProcessStatus)
 import System.Posix.User (GroupEntry, UserEntry)
 
 import Test.Hspec (describe)
-import Test.Hspec.QuickCheck (prop)
 
 import TextShow.System.Posix ()
 #endif
@@ -38,15 +39,15 @@ spec :: Spec
 spec = parallel $ do
 #if !defined(mingw32_HOST_OS)
     describe "RTLDFlags" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> RTLDFlags -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy RTLDFlags)
     describe "DL" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DL -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy DL)
     describe "ProcessStatus" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ProcessStatus -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy ProcessStatus)
     describe "GroupEntry" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> GroupEntry -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy GroupEntry)
     describe "UserEntry" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> UserEntry -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy UserEntry)
 #else
     pure ()
 #endif

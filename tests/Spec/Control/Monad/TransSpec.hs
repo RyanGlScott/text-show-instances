@@ -19,12 +19,13 @@ import           Control.Monad.Trans.Maybe               (MaybeT)
 import qualified Control.Monad.Trans.Writer.Lazy   as WL (WriterT)
 import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT)
 
+import           Data.Proxy (Proxy(..))
+
 import           Instances.Control.Monad.Trans ()
 
-import           Spec.Utils (prop_matchesTextShow)
+import           Spec.Utils (matchesTextShowSpec)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
-import           Test.Hspec.QuickCheck (prop)
 
 import           TextShow.Control.Monad.Trans ()
 
@@ -34,16 +35,16 @@ main = hspec spec
 spec :: Spec
 spec = parallel $ do
     describe "ErrorT Char Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ErrorT Char Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ErrorT Char Maybe Int))
     describe "ExceptT Char Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ExceptT Char Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ExceptT Char Maybe Int))
     describe "IdentityT Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> IdentityT Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (IdentityT Maybe Int))
     describe "ListT Maybe Char" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ListT Maybe Char -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ListT Maybe Char))
     describe "Maybe [] Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> MaybeT [] Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (MaybeT [] Int))
     describe "lazy WriterT String Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> WL.WriterT String Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (WL.WriterT String Maybe Int))
     describe "strict WriterT String Maybe Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> WS.WriterT String Maybe Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (WS.WriterT String Maybe Int))
