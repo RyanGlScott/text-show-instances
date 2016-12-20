@@ -20,9 +20,10 @@ Provides 'Arbitrary' instances for data types located in @containers@.
 -}
 module Instances.Data.Containers () where
 
+import           Data.Graph (SCC(..))
 import           Data.Sequence (ViewL(..), ViewR(..))
 
-#if !(MIN_VERSION_containers(0,5,8))
+#if !(MIN_VERSION_containers(0,5,9))
 # if __GLASGOW_HASKELL__ >= 706
 import           GHC.Generics (Generic)
 # else
@@ -34,6 +35,9 @@ import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
 import           Test.QuickCheck (Arbitrary(..))
 import           Test.QuickCheck.Instances ()
+
+instance Arbitrary vertex => Arbitrary (SCC vertex) where
+    arbitrary = genericArbitrary
 
 instance Arbitrary a => Arbitrary (ViewL a) where
     arbitrary = genericArbitrary
@@ -48,5 +52,15 @@ deriving instance Generic (ViewR a)
 # else
 $(Generics.deriveAll0 ''ViewL)
 $(Generics.deriveAll0 ''ViewR)
+# endif
+#endif
+
+#if !(MIN_VERSION_containers(0,5,9))
+deriving instance Show vertex => Show (SCC vertex)
+
+# if __GLASGOW_HASKELL__ >= 706
+deriving instance Generic (SCC vertex)
+# else
+$(Generics.deriveAll0 ''SCC)
 # endif
 #endif

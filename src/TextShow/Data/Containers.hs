@@ -17,6 +17,7 @@ module TextShow.Data.Containers (
       liftShowbIntMapPrec
     , showbIntSetPrec
     , liftShowbMapPrec2
+    , liftShowbSCCPrec
     , liftShowbSequencePrec
     , liftShowbViewLPrec
     , liftShowbViewRPrec
@@ -25,7 +26,7 @@ module TextShow.Data.Containers (
     ) where
 
 import qualified Data.Foldable as F
-
+import           Data.Graph (SCC)
 import qualified Data.IntMap as IM
 import           Data.IntMap (IntMap)
 import qualified Data.IntSet as IS
@@ -69,6 +70,14 @@ liftShowbMapPrec2 sp1 sp2 p =
     showbUnaryListWith (liftShowbList2 (const sp1) undefined
                                        (const sp2) undefined) p . M.toList
 {-# INLINE liftShowbMapPrec2 #-}
+
+-- | Convert an 'SCC' to a 'Builder' with the given show functions and precedence.
+--
+-- /Since: next/
+liftShowbSCCPrec :: (Int -> vertex -> Builder) -> ([vertex] -> Builder)
+                 -> Int -> SCC vertex -> Builder
+liftShowbSCCPrec = liftShowbPrec
+{-# INLINE liftShowbSCCPrec #-}
 
 -- | Convert a 'Sequence' to a 'Builder' with the given show function and precedence.
 --
@@ -154,5 +163,7 @@ instance TextShow1 Set where
     liftShowbPrec _ = liftShowbSetPrec
     INLINE_INST_FUN(liftShowbPrec)
 
+$(deriveTextShow  ''SCC)
+$(deriveTextShow1 ''SCC)
 $(deriveTextShow  ''Tree)
 $(deriveTextShow1 ''Tree)

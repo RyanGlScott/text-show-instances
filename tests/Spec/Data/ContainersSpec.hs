@@ -10,6 +10,7 @@ Portability: GHC
 -}
 module Spec.Data.ContainersSpec (main, spec) where
 
+import Data.Graph (SCC)
 import Data.IntMap (IntMap)
 import Data.IntSet (IntSet)
 import Data.Map (Map)
@@ -44,6 +45,8 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy (ViewL Char))
     describe "ViewR Char" $
         matchesTextShowSpec (Proxy :: Proxy (ViewR Char))
+    describe "SCC Char" $
+        matchesTextShowSpec (Proxy :: Proxy (SCC Char))
     describe "Set Char" $
         matchesTextShowSpec (Proxy :: Proxy (Set Char))
     describe "Tree Char" $

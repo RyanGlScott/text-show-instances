@@ -1,4 +1,5 @@
 ### next [YYYY.MM.DD]
+* Add `TextShow(1)` instances for `Data.Graph.SCC`
 * Remove `TextShow.GHC.PackageDb` module
 * Refactor test suite
 
