@@ -35,6 +35,10 @@ module TextShow.Language.Haskell.TH (
     , showbDecidedStrictness
 #endif
     , showbDecPrec
+#if MIN_VERSION_template_haskell(2,12,0)
+    , showbDerivClausePrec
+    , showbDerivStrategy
+#endif
     , showbExpPrec
     , showbFamFlavour
 #if MIN_VERSION_template_haskell(2,11,0)
@@ -72,7 +76,7 @@ module TextShow.Language.Haskell.TH (
     , showbOverlap
 #endif
     , showbPatPrec
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
     , showbPatSynArgsPrec
     , showbPatSynDirPrec
 #endif
@@ -553,16 +557,30 @@ showbTypeFamilyHeadPrec :: Int -> TypeFamilyHead -> Builder
 showbTypeFamilyHeadPrec = showbPrec
 #endif
 
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
+-- | Convert a 'DerivClause' value to a 'Builder' with the given precedence.
+-- This function is only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: next/
+showbDerivClausePrec :: Int -> DerivClause -> Builder
+showbDerivClausePrec = showbPrec
+
+-- | Convert a 'DerivStrategy' to a 'Builder'.
+-- This function is only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: next/
+showbDerivStrategy :: DerivStrategy -> Builder
+showbDerivStrategy = showb
+
 -- | Convert a 'PatSynArgs' value to a 'Builder' with the given precedence.
--- This function is only available with GHC 8.1 or later.
+-- This function is only available with @template-haskell-2.12.0.0@ or later.
 --
 -- /Since: 3.3/
 showbPatSynArgsPrec :: Int -> PatSynArgs -> Builder
 showbPatSynArgsPrec = showbPrec
 
 -- | Convert a 'PatSynDir' value to a 'Builder' with the given precedence.
--- This function is only available with GHC 8.1 or later.
+-- This function is only available with @template-haskell-2.12.0.0@ or later.
 --
 -- /Since: 3.3/
 showbPatSynDirPrec :: Int -> PatSynDir -> Builder
@@ -646,7 +664,9 @@ $(deriveTextShow ''TypeFamilyHead)
 $(deriveTextShow ''Strict)
 #endif
 
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
+$(deriveTextShow ''DerivClause)
+$(deriveTextShow ''DerivStrategy)
 $(deriveTextShow ''PatSynArgs)
 $(deriveTextShow ''PatSynDir)
 #endif

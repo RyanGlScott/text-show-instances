@@ -23,7 +23,7 @@ module TextShow.GHC.PackageDb (
     ) where
 #else
       liftShowbInstalledPackageInfoPrec2
-# if __GLASGOW_HASKELL__ >= 801
+# if MIN_VERSION_ghc_boot(8,1,0)
     , liftShowbDbModulePrec2
 # else
     , liftShowbOriginalModulePrec2
@@ -41,32 +41,35 @@ import TextShow.TH (deriveTextShow, deriveTextShow1, deriveTextShow2)
 -- This function is only available when using @ghc-boot@ and GHC 8.1 or later.
 --
 -- /Since: 3.3/
-liftShowbInstalledPackageInfoPrec2 :: ( TextShow srcpkgid
+liftShowbInstalledPackageInfoPrec2 :: ( TextShow compid
+                                      , TextShow srcpkgid
+# if MIN_VERSION_ghc_boot(8,1,0)
                                       , TextShow srcpkgname
-# if __GLASGOW_HASKELL__ >= 801
+                                      , TextShow instunitid
                                       , TextShow unitid
 # endif
                                       )
                                    => (Int -> a -> Builder) -> ([a] -> Builder)
                                    -> (Int -> b -> Builder) -> ([b] -> Builder)
                                    -> Int
-                                   -> InstalledPackageInfo srcpkgid srcpkgname
-# if __GLASGOW_HASKELL__ >= 801
-                                                           unitid
+                                   -> InstalledPackageInfo compid srcpkgid
+# if MIN_VERSION_ghc_boot(8,1,0)
+                                                           srcpkgname instunitid unitid
 # endif
                                                            a b
                                    -> Builder
 liftShowbInstalledPackageInfoPrec2 = liftShowbPrec2
 
-# if __GLASGOW_HASKELL__ >= 801
+# if MIN_VERSION_ghc_boot(8,1,0)
 -- | Convert a 'DbModule' value to a 'Builder' with the given show functions
 -- and precedence.
--- This function is only available when using @ghc-boot@.
+-- This function is only available when using @ghc-boot-8.2@ or later.
 --
 -- /Since: 3.3/
-liftShowbDbModulePrec2 :: (Int -> unitid     -> Builder) -> ([unitid]     -> Builder)
-                       -> (Int -> modulename -> Builder) -> ([modulename] -> Builder)
-                       -> Int -> DbModule unitid modulename -> Builder
+liftShowbDbModulePrec2 :: (TextShow instunitid, TextShow compid, TextShow unitid)
+                       => (Int -> modulename -> Builder) -> ([modulename] -> Builder)
+                       -> (Int -> mod        -> Builder) -> ([mod]        -> Builder)
+                       -> Int -> DbModule instunitid compid unitid modulename mod-> Builder
 liftShowbDbModulePrec2 = liftShowbPrec2
 # else
 -- | Convert an 'OriginalModule' value to a 'Builder' with the given show functions
@@ -93,7 +96,7 @@ liftShowbExposedModulePrec2 = liftShowbPrec2
 $(deriveTextShow  ''InstalledPackageInfo)
 $(deriveTextShow1 ''InstalledPackageInfo)
 $(deriveTextShow2 ''InstalledPackageInfo)
-# if __GLASGOW_HASKELL__ >= 801
+# if MIN_VERSION_ghc_boot(8,1,0)
 $(deriveTextShow  ''DbModule)
 $(deriveTextShow1 ''DbModule)
 $(deriveTextShow2 ''DbModule)

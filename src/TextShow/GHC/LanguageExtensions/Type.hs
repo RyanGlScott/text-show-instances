@@ -1,6 +1,6 @@
 {-# LANGUAGE CPP             #-}
 
-#if defined(MIN_VERSION_ghc_boot)
+#if defined(MIN_VERSION_ghc_boot_th)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
@@ -14,12 +14,12 @@ Stability:   Provisional
 Portability: GHC
 
 Monomorphic 'TextShow' function for the 'Extension' data type.
-This module only exports functions if using @ghc-boot@.
+This module only exports functions if using @ghc-boot-th@.
 
 /Since: 3.3/
 -}
 module TextShow.GHC.LanguageExtensions.Type (
-#if !defined(MIN_VERSION_ghc_boot)
+#if !defined(MIN_VERSION_ghc_boot_th)
     ) where
 #else
       showbExtension

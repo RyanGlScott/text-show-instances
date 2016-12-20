@@ -24,35 +24,46 @@ import GHC.PackageDb
 
 import Instances.Miscellaneous ()
 import Instances.Utils ((<@>))
+import Instances.Utils.GenericArbitrary (genericArbitrary)
 
-import Test.QuickCheck (Arbitrary(..), genericArbitrary)
+import Test.QuickCheck (Arbitrary(..))
 
-instance ( Arbitrary srcpkgid
+instance ( Arbitrary compid
+         , Arbitrary srcpkgid
          , Arbitrary srcpkgname
+         , Arbitrary instunitid
+# if MIN_VERSION_ghc_boot(8,1,0)
          , Arbitrary unitid
          , Arbitrary modulename
-# if __GLASGOW_HASKELL__ >= 801
          , Arbitrary mod
 # endif
          )
-  => Arbitrary ( InstalledPackageInfo srcpkgid srcpkgname unitid modulename
-# if __GLASGOW_HASKELL__ >= 801
-                 mod
+  => Arbitrary ( InstalledPackageInfo compid srcpkgid srcpkgname instunitid
+# if MIN_VERSION_ghc_boot(8,1,0)
+                 unitid modulename mod
 # endif
                ) where
-    arbitrary = InstalledPackageInfo <$> arbitrary <*> arbitrary <*> arbitrary
-                                     <*> arbitrary <*> arbitrary <@> []
-                                     <*> arbitrary <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <@> []        <@> []
-                                     <@> []        <*> arbitrary <*> arbitrary
-                                     <*> arbitrary <*> arbitrary
+    arbitrary = pure InstalledPackageInfo
+#if MIN_VERSION_ghc_boot(8,1,0)
+                     <*> arbitrary <*> arbitrary <*> arbitrary
+#endif
+                     <*> arbitrary <*> arbitrary <*> arbitrary
+                     <*> arbitrary <*> arbitrary <@> []
+                     <*> arbitrary <@> []        <@> []
+                     <@> []        <@> []        <@> []
+                     <@> []        <@> []        <@> []
+                     <@> []        <@> []        <@> []
+                     <@> []        <*> arbitrary <*> arbitrary
+                     <*> arbitrary <*> arbitrary
+#if MIN_VERSION_ghc_boot(8,1,0)
+                     <*> arbitrary
+#endif
 
-# if __GLASGOW_HASKELL__ >= 801
-deriving instance Generic (DbModule unitid modulename)
-instance (Arbitrary unitid, Arbitrary modulename)
-  => Arbitrary (DbModule unitid modulename) where
+# if MIN_VERSION_ghc_boot(8,1,0)
+deriving instance Generic (DbModule instunitid compid unitid modulename mod)
+instance (Arbitrary instunitid, Arbitrary compid, Arbitrary unitid,
+          Arbitrary modulename, Arbitrary mod)
+  => Arbitrary (DbModule instunitid compid unitid modulename mod) where
     arbitrary = genericArbitrary
 # else
 deriving instance Generic (ExposedModule unitid modulename)

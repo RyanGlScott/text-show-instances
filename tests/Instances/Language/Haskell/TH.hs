@@ -123,7 +123,11 @@ instance Arbitrary Dec where
         , TySynInstD <$> arbitrary <*> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,10,0)
-        , StandaloneDerivD <$> arbitrary <*> arbitrary
+        , StandaloneDerivD <$> arbitrary
+                           <*> arbitrary
+# if MIN_VERSION_template_haskell(2,12,0)
+                           <*> arbitrary
+# endif
         , DefaultSigD <$> arbitrary <*> arbitrary
 #endif
 #if MIN_VERSION_template_haskell(2,11,0)
@@ -132,7 +136,7 @@ instance Arbitrary Dec where
 #else
         , FamilyD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 #endif
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
         , PatSynD <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
         , PatSynSigD <$> arbitrary <*> arbitrary
 #endif
@@ -299,7 +303,7 @@ instance Arbitrary Info where
 #if MIN_VERSION_template_haskell(2,7,0)
         , pure $ FamilyI fDec [fDec]
 #endif
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
         , PatSynI    <$> arbitrary <*> arbitrary
 #endif
         ]
@@ -600,7 +604,15 @@ instance Arbitrary Strict where
     arbitrary = arbitraryBoundedEnum
 #endif
 
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
+instance Arbitrary DerivClause where
+    arbitrary = genericArbitrary
+
+deriving instance Bounded DerivStrategy
+deriving instance Enum DerivStrategy
+instance Arbitrary DerivStrategy where
+    arbitrary = arbitraryBoundedEnum
+
 instance Arbitrary PatSynArgs where
     arbitrary = oneof $ map pure [ PrefixPatSyn [fName]
                                  , InfixPatSyn fName fName

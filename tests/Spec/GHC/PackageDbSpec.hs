@@ -17,21 +17,17 @@ import Prelude.Compat
 import Test.Hspec (Spec, hspec, parallel)
 
 #if defined(MIN_VERSION_ghc_boot)
+import Data.Proxy (Proxy(..))
 import GHC.PackageDb
-
 import Instances.GHC.PackageDb ()
-
-import Spec.Utils (prop_matchesTextShow)
-
+import Spec.Utils (matchesTextShowSpec)
 import Test.Hspec (describe)
-import Test.Hspec.QuickCheck (prop)
-
 import TextShow.GHC.PackageDb ()
 
 ipiString :: String
-# if __GLASGOW_HASKELL__ >= 801
-type IPI = InstalledPackageInfo Int Int Int Int Int
-ipiString = "InstalledPackageInfo Int Int Int Int Int"
+# if MIN_VERSION_ghc_boot(8,1,0)
+type IPI = InstalledPackageInfo Int Int Int Int Int Int Int
+ipiString = "InstalledPackageInfo Int Int Int Int Int Int Int"
 # else
 type IPI = InstalledPackageInfo Int Int Int Int
 ipiString = "InstalledPackageInfo Int Int Int Int"
@@ -45,15 +41,15 @@ spec :: Spec
 spec = parallel $ do
 #if defined(MIN_VERSION_ghc_boot)
     describe ipiString $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> IPI -> Bool)
-# if __GLASGOW_HASKELL__ >= 801
-    describe "DbModule Int Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> DbModule Int Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy IPI)
+# if MIN_VERSION_ghc_boot(8,1,0)
+    describe "DbModule Int Int Int Int Int" $
+        matchesTextShowSpec (Proxy :: Proxy (DbModule Int Int Int Int Int))
 # else
     describe "OriginalModule Int Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> OriginalModule Int Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (OriginalModule Int Int))
     describe "ExposedModule Int Int" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> ExposedModule Int Int -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy (ExposedModule Int Int))
 # endif
 #else
     pure ()

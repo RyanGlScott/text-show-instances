@@ -59,6 +59,12 @@ spec = parallel $ do
     describe "DecidedStrictness" $
         matchesTextShowSpec (Proxy :: Proxy DecidedStrictness)
 #endif
+#if MIN_VERSION_template_haskell(2,12,0)
+    describe "DerivClause" $
+        matchesTextShowSpec (Proxy :: Proxy DerivClause)
+    describe "DerivStrategy" $
+        matchesTextShowSpec (Proxy :: Proxy DerivStrategy)
+#endif
     describe "Doc" $
         matchesTextShowSpec (Proxy :: Proxy Doc)
     describe "Exp" $
@@ -124,7 +130,7 @@ spec = parallel $ do
 #endif
     describe "Pat" $
         matchesTextShowSpec (Proxy :: Proxy Pat)
-#if __GLASGOW_HASKELL__ >= 801
+#if MIN_VERSION_template_haskell(2,12,0)
     describe "PatSynArgs" $
         matchesTextShowSpec (Proxy :: Proxy PatSynArgs)
     describe "PatSynDir" $

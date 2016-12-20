@@ -16,16 +16,12 @@ import Prelude.Compat
 
 import Test.Hspec (Spec, hspec, parallel)
 
-#if defined(MIN_VERSION_ghc_boot)
+#if defined(MIN_VERSION_ghc_boot_th)
+import Data.Proxy (Proxy(..))
 import GHC.LanguageExtensions.Type (Extension)
-
 import Instances.GHC.LanguageExtensions.Type ()
-
-import Spec.Utils (prop_matchesTextShow)
-
+import Spec.Utils (matchesTextShowSpec)
 import Test.Hspec (describe)
-import Test.Hspec.QuickCheck (prop)
-
 import TextShow.GHC.LanguageExtensions.Type ()
 #endif
 
@@ -34,9 +30,9 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-#if defined(MIN_VERSION_ghc_boot)
+#if defined(MIN_VERSION_ghc_boot_th)
     describe "Extension" $
-        prop "TextShow instance" (prop_matchesTextShow :: Int -> Extension -> Bool)
+        matchesTextShowSpec (Proxy :: Proxy Extension)
 #else
     pure ()
 #endif
