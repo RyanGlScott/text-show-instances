@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP             #-}
 
 #if defined(MIN_VERSION_ghc_boot_th)
+{-# LANGUAGE PackageImports  #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
@@ -25,10 +26,10 @@ module TextShow.GHC.LanguageExtensions.Type (
       showbExtension
     ) where
 
-import GHC.LanguageExtensions.Type (Extension)
+import "ghc-boot-th" GHC.LanguageExtensions.Type (Extension)
 
-import TextShow (TextShow(..), Builder)
-import TextShow.TH (deriveTextShow)
+import               TextShow (TextShow(..), Builder)
+import               TextShow.TH (deriveTextShow)
 
 -- | Convert an 'Extension' to a 'Builder'.
 -- This function is only available when using @ghc-boot@.

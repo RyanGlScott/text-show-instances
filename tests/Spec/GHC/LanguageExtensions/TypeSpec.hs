@@ -1,4 +1,6 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP            #-}
+{-# LANGUAGE PackageImports #-}
+
 {-|
 Module:      Spec.GHC.LanguageExtensions.TypeSpec
 Copyright:   (C) 2014-2016 Ryan Scott
@@ -11,18 +13,18 @@ Portability: GHC
 -}
 module Spec.GHC.LanguageExtensions.TypeSpec (main, spec) where
 
-import Prelude ()
-import Prelude.Compat
+import               Prelude ()
+import               Prelude.Compat
 
-import Test.Hspec (Spec, hspec, parallel)
+import               Test.Hspec (Spec, hspec, parallel)
 
 #if defined(MIN_VERSION_ghc_boot_th)
-import Data.Proxy (Proxy(..))
-import GHC.LanguageExtensions.Type (Extension)
-import Instances.GHC.LanguageExtensions.Type ()
-import Spec.Utils (matchesTextShowSpec)
-import Test.Hspec (describe)
-import TextShow.GHC.LanguageExtensions.Type ()
+import               Data.Proxy (Proxy(..))
+import "ghc-boot-th" GHC.LanguageExtensions.Type (Extension)
+import               Instances.GHC.LanguageExtensions.Type ()
+import               Spec.Utils (matchesTextShowSpec)
+import               Test.Hspec (describe)
+import               TextShow.GHC.LanguageExtensions.Type ()
 #endif
 
 main :: IO ()
