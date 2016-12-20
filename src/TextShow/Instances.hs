@@ -43,7 +43,6 @@ import TextShow.Data.UnorderedContainers    ()
 import TextShow.Data.Vector                 ()
 
 import TextShow.GHC.LanguageExtensions.Type ()
-import TextShow.GHC.PackageDb               ()
 
 import TextShow.Language.Haskell.TH         ()
 

@@ -1,4 +1,5 @@
 ### next [YYYY.MM.DD]
+* Remove `TextShow.GHC.PackageDb` module
 * Refactor test suite
 
 ## 3.4

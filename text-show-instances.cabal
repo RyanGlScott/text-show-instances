@@ -15,7 +15,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
-                     * @<http://hackage.haskell.org/package/ghc-boot             ghc-boot>@
+                     * @<http://hackage.haskell.org/package/ghc-boot-th          ghc-boot-th>@
                      .
                      * @<http://hackage.haskell.org/package/haskeline            haskeline>@
                      .
@@ -88,10 +88,6 @@ flag base-4-9
   description:         Use base-4.9 or later.
   default:             True
 
-flag ghc-boot
-  description:         Build with @ghc-boot@ as a dependency.
-  default:             True
-
 flag template-haskell-2-11
   description:         Use template-haskell-2.11.0.0 or later.
   default:             True
@@ -129,9 +125,6 @@ library
 
                        -- Only exports functions if using ghc-boot-th
                        TextShow.GHC.LanguageExtensions.Type
-
-                       -- Only exports functions if using ghc-boot
-                       TextShow.GHC.PackageDb
 
                        -- Only exports functions if using Windows
                        TextShow.System.Win32
@@ -173,9 +166,6 @@ library
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
     build-depends:     base                >= 4.3 && < 4.9
-
-  if flag(ghc-boot)
-    build-depends:     ghc-boot            >= 8.0  && < 8.3
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell    >= 2.11 && < 2.13
@@ -219,9 +209,8 @@ test-suite spec
                        Instances.Utils
                        Instances.Utils.GenericArbitrary
 
-                       -- Only defines instances if using ghc-boot
+                       -- Only defines instances if using ghc-boot-th
                        Instances.GHC.LanguageExtensions.Type
-                       Instances.GHC.PackageDb
 
                        -- Only defines instances if using Windows
                        Instances.System.Win32
@@ -251,9 +240,8 @@ test-suite spec
                        Spec.Trace.HpcSpec
                        Spec.Utils
 
-                       -- Only defines tests if using ghc-boot
+                       -- Only defines tests if using ghc-boot-th
                        Spec.GHC.LanguageExtensions.TypeSpec
-                       Spec.GHC.PackageDbSpec
 
                        -- Only defines tests if using Windows
                        Spec.System.Win32Spec
@@ -294,9 +282,6 @@ test-suite spec
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
     build-depends:     base                >= 4.3 && < 4.9
-
-  if flag(ghc-boot)
-    build-depends:     ghc-boot            >= 8.0  && < 8.3
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell    >= 2.11 && < 2.13
