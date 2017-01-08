@@ -26,6 +26,9 @@ import qualified Data.Vector.Unboxed as U (Vector)
 import           Instances.Data.Vector ()
 
 import           Spec.Utils (matchesTextShowSpec)
+#if MIN_VERSION_vector(0,12,0)
+import           Spec.Utils (matchesTextShow1Spec)
+#endif
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
 
@@ -36,8 +39,13 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-    describe "(boxed) Vector Char" $
-        matchesTextShowSpec (Proxy :: Proxy (B.Vector Char))
+    describe "(boxed) Vector Char" $ do
+        let p :: Proxy (B.Vector Char)
+            p = Proxy
+        matchesTextShowSpec  p
+#if MIN_VERSION_vector(0,12,0)
+        matchesTextShow1Spec p
+#endif
     describe "(primitive) Vector Char" $
         matchesTextShowSpec (Proxy :: Proxy (P.Vector Char))
     describe "(storable) Vector Char" $
