@@ -152,7 +152,7 @@ library
                      , text-show            >= 3.4    && < 4
                      , time                 >= 0.1    && < 1.7
                      , unordered-containers >= 0.2    && < 0.3
-                     , vector               >= 0.9    && < 0.12
+                     , vector               >= 0.9    && < 0.13
                      , xhtml                >= 3000.2 && < 3000.3
   hs-source-dirs:      src
   default-language:    Haskell2010
@@ -274,7 +274,7 @@ test-suite spec
                      , th-orphans           >= 0.13.3 && < 1
                      , time                 >= 0.1    && < 1.7
                      , unordered-containers >= 0.2    && < 0.3
-                     , vector               >= 0.9    && < 0.12
+                     , vector               >= 0.9    && < 0.13
                      , xhtml                >= 3000.2 && < 3000.3
 
   if flag(base-4-9)
