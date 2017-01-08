@@ -1,4 +1,4 @@
-### next [YYYY.MM.DD]
+### 3.5 [2017.01.07]
 * Add `TextShow(1)` instances for `Data.Graph.SCC`
 * `TextShow.Instances` no longer reexports the entirety of `TextShow`. Doing so meant that `text-show-instances` would be burdened with bumping its major version number every time that `text-show` made an API change in `TextShow` in order to follow the PVP.
 * Remove `TextShow.GHC.PackageDb` module
