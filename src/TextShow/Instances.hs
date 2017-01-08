@@ -22,11 +22,9 @@ module TextShow.Instances (
       TextShow(..)
     , TextShow1(..)
     , TextShow2(..)
-    -- * Module re-export
-    , module TextShow
     ) where
 
-import TextShow
+import TextShow (TextShow(..), TextShow1(..), TextShow2(..))
 
 import TextShow.Compiler.Hoopl              ()
 
@@ -54,6 +52,6 @@ import TextShow.System.Random               ()
 import TextShow.System.Time                 ()
 import TextShow.System.Win32                ()
 
-import TextShow.Text.PrettyPrint          ()
+import TextShow.Text.PrettyPrint            ()
 
-import TextShow.Trace.Hpc                 ()
+import TextShow.Trace.Hpc                   ()
