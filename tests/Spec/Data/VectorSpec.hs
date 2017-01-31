@@ -26,7 +26,7 @@ import qualified Data.Vector.Unboxed as U (Vector)
 import           Instances.Data.Vector ()
 
 import           Spec.Utils (matchesTextShowSpec)
-#if MIN_VERSION_vector(0,12,0)
+#if MIN_VERSION_base(4,9,0) && MIN_VERSION_vector(0,12,0)
 import           Spec.Utils (matchesTextShow1Spec)
 #endif
 
@@ -43,7 +43,7 @@ spec = parallel $ do
         let p :: Proxy (B.Vector Char)
             p = Proxy
         matchesTextShowSpec  p
-#if MIN_VERSION_vector(0,12,0)
+#if MIN_VERSION_base(4,9,0) && MIN_VERSION_vector(0,12,0)
         matchesTextShow1Spec p
 #endif
     describe "(primitive) Vector Char" $
