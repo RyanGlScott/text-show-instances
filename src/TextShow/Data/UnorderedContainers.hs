@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      TextShow.Data.UnorderedContainers
@@ -26,8 +25,6 @@ import           TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                            Builder, showbPrec1)
 import           TextShow.Utils (showbUnaryListWith)
 
-#include "inline.h"
-
 -- | Convert a 'HashMap' to a 'Builder' with the given show functions and precedence.
 --
 -- /Since: 3/
@@ -47,20 +44,20 @@ liftShowbHashSetPrec sl p = showbUnaryListWith sl p . HS.toList
 
 instance (TextShow k, TextShow v) => TextShow (HashMap k v) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow k => TextShow1 (HashMap k) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance TextShow2 HashMap where
     liftShowbPrec2 sp1 _ sp2 _ = liftShowbHashMapPrec2 (sp1 0) (sp2 0)
-    INLINE_INST_FUN(liftShowbPrec2)
+    {-# INLINE liftShowbPrec2 #-}
 
 instance TextShow a => TextShow (HashSet a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 HashSet where
     liftShowbPrec _ = liftShowbHashSetPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}

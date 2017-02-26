@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -33,8 +32,6 @@ import TextShow.TH (deriveTextShow)
 import Trace.Hpc.Mix (Mix, BoxLabel, CondBox)
 import Trace.Hpc.Tix (Tix, TixModule)
 import Trace.Hpc.Util (HpcPos, Hash, fromHpcPos)
-
-#include "inline.h"
 
 -- | Convert a 'Mix' value to a 'Builder' with the given precedence.
 --
@@ -97,8 +94,8 @@ $(deriveTextShow ''TixModule)
 
 instance TextShow HpcPos where
     showb = showbHpcPos
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow Hash where
     showb = showbHash
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}

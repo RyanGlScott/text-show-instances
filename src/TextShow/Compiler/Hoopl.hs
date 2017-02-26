@@ -45,8 +45,6 @@ import TextShow.Data.Containers ()
 import TextShow.Data.Integral (showbIntPrec)
 import TextShow.TH (deriveTextShow, deriveTextShow1)
 
-#include "inline.h"
-
 -- | Convert a 'Label' to a 'Builder'.
 --
 -- /Since: 2/
@@ -148,7 +146,7 @@ showbDPath (DPath ls) = mconcat $ foldr (\l path ->showbLabel l <> " -> " : path
 
 instance TextShow Label where
     showb = showbLabel
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 $(deriveTextShow  ''LabelMap)
 $(deriveTextShow1 ''LabelMap)
@@ -157,20 +155,20 @@ $(deriveTextShow  ''LabelSet)
 
 instance TextShow a => TextShow (Pointed t b a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 (Pointed t b) where
     liftShowbPrec sp _ _ = liftShowbPointed $ sp 0
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance TextShow2 (Pointed t) where
     liftShowbPrec2 _ _ = liftShowbPrec
-    INLINE_INST_FUN(liftShowbPrec2)
+    {-# INLINE liftShowbPrec2 #-}
 
 #if !(MIN_VERSION_hoopl(3,9,0))
 instance TextShow Unique where
     showb = showbUnique
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 #endif
 
 $(deriveTextShow  ''UniqueMap)
@@ -180,12 +178,12 @@ $(deriveTextShow  ''UniqueSet)
 
 instance TextShow DominatorNode where
     showb = showbDominatorNode
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow DominatorTree where
     showb = showbDominatorTree
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow DPath where
     showb = showbDPath
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}

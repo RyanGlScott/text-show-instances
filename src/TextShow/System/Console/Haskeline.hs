@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
@@ -28,8 +27,6 @@ import System.Console.Haskeline.History (History, historyLines)
 import TextShow (TextShow(..), Builder, FromStringShow(..))
 import TextShow.TH (deriveTextShow)
 import TextShow.Utils (showbUnaryListWith)
-
-#include "inline.h"
 
 -- | Convert an 'Interrupt' to a 'Builder'.
 --
@@ -63,10 +60,10 @@ $(deriveTextShow ''Interrupt)
 
 instance TextShow Prefs where
     showbPrec = showbPrefsPrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 $(deriveTextShow ''Completion)
 
 instance TextShow History where
     showb = showbHistory
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}

@@ -24,8 +24,6 @@ import Data.Tagged (Tagged(..))
 import TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                  Builder, showbPrec1, showbUnaryWith)
 
-#include "inline.h"
-
 -- | Convert a 'Tagged' value to a 'Builder' with the given show function and precedence.
 --
 -- /Since: 3/
@@ -35,12 +33,12 @@ liftShowbTaggedPrec sp p (Tagged b) = showbUnaryWith sp "Tagged" p b
 
 instance TextShow b => TextShow (Tagged s b) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 (Tagged s) where
     liftShowbPrec sp _ = liftShowbTaggedPrec sp
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance TextShow2 Tagged where
     liftShowbPrec2 _ _ sp _ = liftShowbTaggedPrec sp
-    INLINE_INST_FUN(liftShowbPrec2)
+    {-# INLINE liftShowbPrec2 #-}

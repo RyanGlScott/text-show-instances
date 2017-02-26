@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS -fno-warn-orphans #-}
 {-|
@@ -43,8 +42,6 @@ import           TextShow (TextShow(..), TextShow1(..), TextShow2(..),
 import           TextShow.Data.Integral ()
 import           TextShow.TH (deriveTextShow, deriveTextShow1)
 import           TextShow.Utils (showbUnaryListWith)
-
-#include "inline.h"
 
 -- | Convert an 'IntMap' to a 'Builder' with the given show function and precedence.
 --
@@ -119,35 +116,35 @@ liftShowbTreePrec = liftShowbPrec
 
 instance TextShow v => TextShow (IntMap v) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 IntMap where
     liftShowbPrec sp _ = liftShowbIntMapPrec (sp 0)
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance TextShow IntSet where
     showbPrec = showbIntSetPrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow k, TextShow v) => TextShow (Map k v) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow k => TextShow1 (Map k) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance TextShow2 Map where
     liftShowbPrec2 sp1 _ sp2 _ = liftShowbMapPrec2 (sp1 0) (sp2 0)
-    INLINE_INST_FUN(liftShowbPrec2)
+    {-# INLINE liftShowbPrec2 #-}
 
 instance TextShow a => TextShow (Seq a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 Seq where
     liftShowbPrec _ = liftShowbSequencePrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 $(deriveTextShow  ''ViewL)
 $(deriveTextShow1 ''ViewL)
@@ -157,11 +154,11 @@ $(deriveTextShow1 ''ViewR)
 
 instance TextShow a => TextShow (Set a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 Set where
     liftShowbPrec _ = liftShowbSetPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 $(deriveTextShow  ''SCC)
 $(deriveTextShow1 ''SCC)

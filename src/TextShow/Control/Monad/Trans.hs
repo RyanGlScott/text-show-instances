@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -fno-warn-orphans -fno-warn-warnings-deprecations #-}
 {-|
@@ -33,8 +32,6 @@ import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT(..))
 
 import           TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                            Builder, showbPrec1, showbUnaryWith)
-
-#include "inline.h"
 
 -- | Convert an 'ErrorT' value to a 'Builder' with the given show functions
 -- and precedence.
@@ -122,56 +119,56 @@ liftShowbWriterTStrictPrec sp sl p (WS.WriterT m) =
 
 instance (TextShow e, TextShow1 m, TextShow a) => TextShow (ErrorT e m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow e, TextShow1 m) => TextShow1 (ErrorT e m) where
     liftShowbPrec = liftShowbErrorTPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow e, TextShow1 m, TextShow a) => TextShow (ExceptT e m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow e, TextShow1 m) => TextShow1 (ExceptT e m) where
     liftShowbPrec = liftShowbExceptTPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow1 f, TextShow a) => TextShow (IdentityT f a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 f => TextShow1 (IdentityT f) where
     liftShowbPrec = liftShowbIdentityTPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow1 m, TextShow a) => TextShow (ListT m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 m => TextShow1 (ListT m) where
     liftShowbPrec = liftShowbListTPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow1 m, TextShow a) => TextShow (MaybeT m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 m => TextShow1 (MaybeT m) where
     liftShowbPrec = liftShowbMaybeTPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow w, TextShow1 m, TextShow a) => TextShow (WL.WriterT w m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow w, TextShow1 m) => TextShow1 (WL.WriterT w m) where
     liftShowbPrec = liftShowbWriterTLazyPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow w, TextShow1 m, TextShow a) => TextShow (WS.WriterT w m a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow w, TextShow1 m) => TextShow1 (WS.WriterT w m) where
     liftShowbPrec = liftShowbWriterTStrictPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}

@@ -32,8 +32,6 @@ import System.Console.Terminfo.Color (Color)
 import TextShow (TextShow(..), Builder, FromStringShow(..))
 import TextShow.TH (deriveTextShow)
 
-#include "inline.h"
-
 -- | Convert a 'Color' to a 'Builder' with the given precedence.
 --
 -- /Since: 2/
@@ -52,5 +50,5 @@ $(deriveTextShow ''Color)
 
 instance TextShow SetupTermError where
     showb = showbSetupTermError
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 #endif

@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      TextShow.System.Random
@@ -17,8 +16,6 @@ module TextShow.System.Random (showbStdGenPrec) where
 import System.Random (StdGen)
 import TextShow (TextShow(..), Builder, FromStringShow(..))
 
-#include "inline.h"
-
 -- | Convert a 'StdGen' to a 'Builder' with the given precedence.
 --
 -- /Since: 2/
@@ -28,4 +25,4 @@ showbStdGenPrec p = showbPrec p . FromStringShow
 
 instance TextShow StdGen where
     showbPrec = showbStdGenPrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}

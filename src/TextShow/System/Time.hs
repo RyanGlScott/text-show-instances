@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -27,8 +26,6 @@ import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day,
 
 import TextShow (TextShow(..), Builder, fromString)
 import TextShow.TH (deriveTextShow)
-
-#include "inline.h"
 
 -- | Convert a 'ClockTime' to a 'Builder'.
 --
@@ -66,7 +63,7 @@ showbDay = showb
 
 instance TextShow ClockTime where
     showb = showbClockTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 $(deriveTextShow ''TimeDiff)
 $(deriveTextShow ''CalendarTime)

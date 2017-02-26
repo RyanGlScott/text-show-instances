@@ -51,8 +51,6 @@ import Data.Time.Format (TimeLocale)
 import TextShow.TH (deriveTextShow)
 #endif
 
-#include "inline.h"
-
 -- | Convert a 'Day' into a 'Builder'.
 --
 -- /Since: 2/
@@ -190,39 +188,39 @@ showbTimeLocalePrec = showbPrec
 
 instance TextShow Day where
     showb = showbDay
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow DiffTime where
     showb = showbDiffTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow UTCTime where
     showb = showbUTCTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow NominalDiffTime where
     showb = showbNominalDiffTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow AbsoluteTime where
     showb = showbAbsoluteTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow TimeZone where
     showb = showbTimeZone
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow TimeOfDay where
     showb = showbTimeOfDay
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow LocalTime where
     showb = showbLocalTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 instance TextShow ZonedTime where
     showb = showbZonedTime
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 #if MIN_VERSION_time(1,5,0)
 $(deriveTextShow ''TimeLocale)

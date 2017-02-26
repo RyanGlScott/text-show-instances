@@ -45,8 +45,6 @@ import           TextShow.TH (deriveTextShow)
 import           TextShow.Utils (showbUnaryList, showbUnaryListWith)
 #endif
 
-#include "inline.h"
-
 -- | Convert a boxed 'B.Vector' to a 'Builder' with the given show function
 -- and precedence.
 -- Note that with @vector-0.11@ and above, the precedence argument is ignored.
@@ -114,22 +112,22 @@ showbSizePrec = showbPrec
 
 instance TextShow a => TextShow (B.Vector a) where
     showbPrec = showbVectorGenericPrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 B.Vector where
     liftShowbPrec _ sl = liftShowbVectorPrec sl
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow a, Prim a) => TextShow (P.Vector a) where
     showbPrec = showbVectorPrimitivePrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow a, Storable a) => TextShow (S.Vector a) where
     showbPrec = showbVectorStorablePrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance (TextShow a, Unbox a) => TextShow (U.Vector a) where
     showbPrec = showbVectorUnboxedPrec
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 $(deriveTextShow ''Size)

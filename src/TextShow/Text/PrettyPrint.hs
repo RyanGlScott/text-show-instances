@@ -52,8 +52,6 @@ import           TextShow.TH (deriveTextShow1)
 import           TextShow (TextShow(..), Builder, fromString, singleton)
 import           TextShow.TH (deriveTextShow)
 
-#include "inline.h"
-
 -- | Renders a 'Doc' to a 'Builder' using the default 'style'.
 --
 -- /Since: 2/
@@ -159,7 +157,7 @@ liftShowbSpanPrec sp = liftShowbPrec sp undefined
 
 instance TextShow Doc where
     showb = renderB
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 $(deriveTextShow ''Mode)
 $(deriveTextShow ''Style)
@@ -175,10 +173,10 @@ $(deriveTextShow1 ''AnnotDetails)
 
 instance TextShow (Annot.Doc a) where
     showb = renderAnnotB
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 instance TextShow1 Annot.Doc where
     liftShowbPrec _ _ = showbPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 $(deriveTextShow ''Annot.PrettyLevel)
 

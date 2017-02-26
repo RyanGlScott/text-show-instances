@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -24,8 +23,6 @@ import Control.Applicative.Lift (Lift(..))
 import TextShow (TextShow(..), TextShow1(..),
                  Builder, showbPrec1, showbUnaryWith)
 
-#include "inline.h"
-
 -- | Convert a 'Backwards' value to a 'Builder' with the given show functions
 -- and precedence.
 --
@@ -49,16 +46,16 @@ liftShowbLiftPrec sp sl p (Other y) = showbUnaryWith (liftShowbPrec sp sl) "Othe
 
 instance (TextShow1 f, TextShow a) => TextShow (Backwards f a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 f => TextShow1 (Backwards f) where
     liftShowbPrec = liftShowbBackwardsPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}
 
 instance (TextShow1 f, TextShow a) => TextShow (Lift f a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 f => TextShow1 (Lift f) where
     liftShowbPrec = liftShowbLiftPrec
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}

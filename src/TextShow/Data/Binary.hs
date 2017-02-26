@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
@@ -21,8 +20,6 @@ import Data.Monoid.Compat
 
 import TextShow (TextShow(..), TextShow1(..), Builder, fromString, showbPrec1)
 
-#include "inline.h"
-
 -- | Convert a 'Decoder' to a 'Builder' with the given show function.
 --
 -- /Since: 3/
@@ -34,8 +31,8 @@ liftShowbDecoder _  (BytesRead _ _) = "BytesRead"
 
 instance TextShow a => TextShow (Decoder a) where
     showbPrec = showbPrec1
-    INLINE_INST_FUN(showbPrec)
+    {-# INLINE showbPrec #-}
 
 instance TextShow1 Decoder where
     liftShowbPrec sp _ _ = liftShowbDecoder $ sp 0
-    INLINE_INST_FUN(liftShowbPrec)
+    {-# INLINE liftShowbPrec #-}

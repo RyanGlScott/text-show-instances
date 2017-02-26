@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -30,8 +29,6 @@ import Text.XHtml.Table (HtmlTable)
 import TextShow (TextShow(..), Builder, FromStringShow(..), fromString, singleton)
 import TextShow.Data.Char (showbString)
 import TextShow.TH (deriveTextShow)
-
-#include "inline.h"
 
 -- | Convert an 'Html' value to a 'Builder'.
 --
@@ -71,17 +68,17 @@ showbHtmlTable = showb . FromStringShow
 
 instance TextShow Html where
     showb = showbHtml
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
     showbList = showbHtmlList
-    INLINE_INST_FUN(showbList)
+    {-# INLINE showbList #-}
 
 instance TextShow HtmlAttr where
     showb = showbHtmlAttr
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
 
 $(deriveTextShow ''HotLink)
 
 instance TextShow HtmlTable where
     showb = showbHtmlTable
-    INLINE_INST_FUN(showb)
+    {-# INLINE showb #-}
