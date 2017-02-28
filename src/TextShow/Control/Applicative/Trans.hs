@@ -8,54 +8,36 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for applicative functor transformers.
+'TextShow' instances for applicative functor transformers.
 
 /Since: 2/
 -}
-module TextShow.Control.Applicative.Trans (
-      liftShowbBackwardsPrec
-    , liftShowbLiftPrec
-    ) where
+module TextShow.Control.Applicative.Trans () where
 
 import Control.Applicative.Backwards (Backwards(..))
 import Control.Applicative.Lift (Lift(..))
 
 import TextShow (TextShow(..), TextShow1(..),
-                 Builder, showbPrec1, showbUnaryWith)
+                 showbPrec1, showbUnaryWith)
+import TextShow.Utils (liftShowbUnaryWith)
 
--- | Convert a 'Backwards' value to a 'Builder' with the given show functions
--- and precedence.
---
--- /Since: 3/
-liftShowbBackwardsPrec :: TextShow1 f
-                       => (Int -> a -> Builder) -> ([a] -> Builder)
-                       -> Int -> Backwards f a -> Builder
-liftShowbBackwardsPrec sp sl p (Backwards x)
-    = showbUnaryWith (liftShowbPrec sp sl) "Backwards" p x
-{-# INLINE liftShowbBackwardsPrec #-}
-
--- | Convert a 'Lift' value to a 'Builder' with the given show functions and precedence.
---
--- /Since: 3/
-liftShowbLiftPrec :: TextShow1 f
-                  => (Int -> a -> Builder) -> ([a] -> Builder)
-                  -> Int -> Lift f a -> Builder
-liftShowbLiftPrec sp _  p (Pure  x) = showbUnaryWith sp                    "Pure" p x
-liftShowbLiftPrec sp sl p (Other y) = showbUnaryWith (liftShowbPrec sp sl) "Other" p y
-{-# INLINE liftShowbLiftPrec #-}
-
+-- | /Since: 2/
 instance (TextShow1 f, TextShow a) => TextShow (Backwards f a) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 f => TextShow1 (Backwards f) where
-    liftShowbPrec = liftShowbBackwardsPrec
+    liftShowbPrec sp sl p (Backwards x) = liftShowbUnaryWith sp sl "Backwards" p x
     {-# INLINE liftShowbPrec #-}
 
+-- | /Since: 2/
 instance (TextShow1 f, TextShow a) => TextShow (Lift f a) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 f => TextShow1 (Lift f) where
-    liftShowbPrec = liftShowbLiftPrec
+    liftShowbPrec sp _  p (Pure  x) = showbUnaryWith sp                    "Pure"  p x
+    liftShowbPrec sp sl p (Other y) = showbUnaryWith (liftShowbPrec sp sl) "Other" p y
     {-# INLINE liftShowbPrec #-}

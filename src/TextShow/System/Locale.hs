@@ -8,22 +8,14 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' function for old 'TimeLocale's.
+'TextShow' instance for the old 'TimeLocale'.
 
 /Since: 2/
 -}
-module TextShow.System.Locale (showbTimeLocalePrec) where
+module TextShow.System.Locale () where
 
 import System.Locale (TimeLocale)
-
-import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
--- | Convert a 'TimeLocale' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbTimeLocalePrec :: Int -> TimeLocale -> Builder
-showbTimeLocalePrec = showbPrec
-{-# INLINE showbTimeLocalePrec #-}
-
+-- | /Since: 2/
 $(deriveTextShow ''TimeLocale)

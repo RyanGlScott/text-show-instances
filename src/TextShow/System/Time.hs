@@ -8,64 +8,28 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @old-time@ library.
+'TextShow' instances for data types in the @old-time@ library.
 
 /Since: 2/
 -}
-module TextShow.System.Time (
-      showbClockTime
-    , showbTimeDiffPrec
-    , showbCalendarTimePrec
-    , showbMonth
-    , showbDay
-    ) where
+module TextShow.System.Time () where
 
 import System.IO.Unsafe (unsafePerformIO)
 import System.Time (ClockTime, TimeDiff, CalendarTime, Month, Day,
                     calendarTimeToString, toCalendarTime)
 
-import TextShow (TextShow(..), Builder, fromString)
+import TextShow (TextShow(..), fromString)
 import TextShow.TH (deriveTextShow)
 
--- | Convert a 'ClockTime' to a 'Builder'.
---
--- /Since: 2/
-showbClockTime :: ClockTime -> Builder
-showbClockTime = fromString . calendarTimeToString . unsafePerformIO . toCalendarTime
-
--- | Convert a 'TimeDiff' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbTimeDiffPrec :: Int -> TimeDiff -> Builder
-showbTimeDiffPrec = showbPrec
-{-# INLINE showbTimeDiffPrec #-}
-
--- | Convert a 'CalendarTime' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbCalendarTimePrec :: Int -> CalendarTime -> Builder
-showbCalendarTimePrec = showbPrec
-{-# INLINE showbCalendarTimePrec #-}
-
--- | Convert a 'Month' to a 'Builder'.
---
--- /Since: 2/
-showbMonth :: Month -> Builder
-showbMonth = showb
-{-# INLINE showbMonth #-}
-
--- | Convert a 'Day' to a 'Builder'.
---
--- /Since: 2/
-showbDay :: Day -> Builder
-showbDay = showb
-{-# INLINE showbDay #-}
-
+-- | /Since: 2/
 instance TextShow ClockTime where
-    showb = showbClockTime
-    {-# INLINE showb #-}
+    showb = fromString . calendarTimeToString . unsafePerformIO . toCalendarTime
 
+-- | /Since: 2/
 $(deriveTextShow ''TimeDiff)
+-- | /Since: 2/
 $(deriveTextShow ''CalendarTime)
+-- | /Since: 2/
 $(deriveTextShow ''Month)
+-- | /Since: 2/
 $(deriveTextShow ''Day)

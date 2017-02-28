@@ -12,24 +12,11 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @time@ library.
+'TextShow' instances for data types in the @time@ library.
 
 /Since: 2/
 -}
-module TextShow.Data.Time (
-      showbDay
-    , showbDiffTime
-    , showbUTCTime
-    , showbNominalDiffTime
-    , showbAbsoluteTime
-    , showbTimeZone
-    , showbTimeOfDay
-    , showbLocalTime
-    , showbZonedTime
-#if MIN_VERSION_time(1,5,0)
-    , showbTimeLocalePrec
-#endif
-    ) where
+module TextShow.Data.Time () where
 
 import Data.Fixed (Pico)
 import Data.Monoid.Compat
@@ -50,75 +37,6 @@ import TextShow.Data.Integral ()
 import Data.Time.Format (TimeLocale)
 import TextShow.TH (deriveTextShow)
 #endif
-
--- | Convert a 'Day' into a 'Builder'.
---
--- /Since: 2/
-showbDay :: Day -> Builder
-showbDay = showbGregorian
-{-# INLINE showbDay #-}
-
--- | Convert a 'DiffTime' into a 'Builder'.
---
--- /Since: 2/
-showbDiffTime :: DiffTime -> Builder
-showbDiffTime = showb . FromStringShow
-{-# INLINE showbDiffTime #-}
-
--- | Convert a 'UTCTime' into a 'Builder'.
---
--- /Since: 2/
-showbUTCTime :: UTCTime -> Builder
-showbUTCTime = showb . utcToZonedTime utc
-{-# INLINE showbUTCTime #-}
-
--- | Convert a 'NominalDiffTime' into a 'Builder'.
---
--- /Since: 2/
-showbNominalDiffTime :: NominalDiffTime -> Builder
-showbNominalDiffTime = showb . FromStringShow
-{-# INLINE showbNominalDiffTime #-}
-
--- | Convert a 'AbsoluteTime' into a 'Builder'.
---
--- /Since: 2/
-showbAbsoluteTime :: AbsoluteTime -> Builder
-showbAbsoluteTime t = showbLocalTime (utcToLocalTime utc $ taiToUTCTime (const 0) t)
-                      <> " TAI" -- ugly, but standard apparently
-{-# INLINE showbAbsoluteTime #-}
-
--- | Convert a 'TimeZone' into a 'Builder'.
---
--- /Since: 2/
-showbTimeZone :: TimeZone -> Builder
-showbTimeZone zone@(TimeZone _ _ "") = timeZoneOffsetBuilder zone
-showbTimeZone (TimeZone _ _ name)    = fromString name
-{-# INLINE showbTimeZone #-}
-
--- | Convert a 'TimeOfDay' into a 'Builder'.
---
--- /Since: 2/
-showbTimeOfDay :: TimeOfDay -> Builder
-showbTimeOfDay (TimeOfDay h m sec) = showb2      zeroOpt h
-                                  <> singleton ':'
-                                  <> showb2      zeroOpt m
-                                  <> singleton ':'
-                                  <> showb2Fixed zeroOpt sec
-{-# INLINE showbTimeOfDay #-}
-
--- | Convert a 'LocalTime' into a 'Builder'.
---
--- /Since: 2/
-showbLocalTime :: LocalTime -> Builder
-showbLocalTime (LocalTime d t) = showbGregorian d <> showbSpace <> showb t
-{-# INLINE showbLocalTime #-}
-
--- | Convert a 'ZonedTime' into a 'Builder'.
---
--- /Since: 2/
-showbZonedTime :: ZonedTime -> Builder
-showbZonedTime (ZonedTime t zone) = showb t <> showbSpace <> showb zone
-{-# INLINE showbZonedTime #-}
 
 pad1 :: NumericPadOption -> Builder -> Builder
 pad1 (Just c) b = singleton c <> b
@@ -176,52 +94,60 @@ zeroOpt :: NumericPadOption
 zeroOpt = Just '0'
 {-# INLINE zeroOpt #-}
 
+-- | /Since: 2/
+instance TextShow Day where
+    showb = showbGregorian
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow DiffTime where
+    showb = showb . FromStringShow
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow UTCTime where
+    showb = showb . utcToZonedTime utc
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow NominalDiffTime where
+    showb = showb . FromStringShow
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow AbsoluteTime where
+    showb t = showb (utcToLocalTime utc $ taiToUTCTime (const 0) t)
+              <> " TAI" -- ugly, but standard apparently
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow TimeZone where
+    showb zone@(TimeZone _ _ "") = timeZoneOffsetBuilder zone
+    showb (TimeZone _ _ name)    = fromString name
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow TimeOfDay where
+    showb (TimeOfDay h m sec) = showb2      zeroOpt h
+                             <> singleton ':'
+                             <> showb2      zeroOpt m
+                             <> singleton ':'
+                             <> showb2Fixed zeroOpt sec
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow LocalTime where
+    showb (LocalTime d t) = showbGregorian d <> showbSpace <> showb t
+    {-# INLINE showb #-}
+
+-- | /Since: 2/
+instance TextShow ZonedTime where
+    showb (ZonedTime t zone) = showb t <> showbSpace <> showb zone
+    {-# INLINE showb #-}
+
 #if MIN_VERSION_time(1,5,0)
--- | Convert a 'TimeLocale' to a 'Builder' with the given precedence. This function is
--- available with @time-1.5@ or later.
+-- | Only available with @time-1.5@ or later.
 --
 -- /Since: 2/
-showbTimeLocalePrec :: Int -> TimeLocale -> Builder
-showbTimeLocalePrec = showbPrec
-{-# INLINE showbTimeLocalePrec #-}
-#endif
-
-instance TextShow Day where
-    showb = showbDay
-    {-# INLINE showb #-}
-
-instance TextShow DiffTime where
-    showb = showbDiffTime
-    {-# INLINE showb #-}
-
-instance TextShow UTCTime where
-    showb = showbUTCTime
-    {-# INLINE showb #-}
-
-instance TextShow NominalDiffTime where
-    showb = showbNominalDiffTime
-    {-# INLINE showb #-}
-
-instance TextShow AbsoluteTime where
-    showb = showbAbsoluteTime
-    {-# INLINE showb #-}
-
-instance TextShow TimeZone where
-    showb = showbTimeZone
-    {-# INLINE showb #-}
-
-instance TextShow TimeOfDay where
-    showb = showbTimeOfDay
-    {-# INLINE showb #-}
-
-instance TextShow LocalTime where
-    showb = showbLocalTime
-    {-# INLINE showb #-}
-
-instance TextShow ZonedTime where
-    showb = showbZonedTime
-    {-# INLINE showb #-}
-
-#if MIN_VERSION_time(1,5,0)
 $(deriveTextShow ''TimeLocale)
 #endif

@@ -13,29 +13,17 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' function for the 'Extension' data type.
-This module only exports functions if using @ghc-boot-th@.
+'TextShow' instance for the 'Extension' data type.
+Only provided if using @ghc-boot-th@.
 
 /Since: 3.3/
 -}
-module TextShow.GHC.LanguageExtensions.Type (
-#if !defined(MIN_VERSION_ghc_boot_th)
-    ) where
-#else
-      showbExtension
-    ) where
+module TextShow.GHC.LanguageExtensions.Type () where
 
+#if defined(MIN_VERSION_ghc_boot_th)
 import GHC.LanguageExtensions.Type (Extension)
-
-import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
--- | Convert an 'Extension' to a 'Builder'.
--- This function is only available when using @ghc-boot@.
---
--- /Since: 3.3/
-showbExtension :: Extension -> Builder
-showbExtension = showb
-
+-- | /Since: 3.3/
 $(deriveTextShow ''Extension)
 #endif

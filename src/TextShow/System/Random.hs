@@ -7,22 +7,16 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' function for 'StdGen'.
+'TextShow' instances for 'StdGen'.
 
 /Since: 2/
 -}
-module TextShow.System.Random (showbStdGenPrec) where
+module TextShow.System.Random () where
 
 import System.Random (StdGen)
-import TextShow (TextShow(..), Builder, FromStringShow(..))
+import TextShow (TextShow(..), FromStringShow(..))
 
--- | Convert a 'StdGen' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbStdGenPrec :: Int -> StdGen -> Builder
-showbStdGenPrec p = showbPrec p . FromStringShow
-{-# INLINE showbStdGenPrec #-}
-
+-- | /Since: 2/
 instance TextShow StdGen where
-    showbPrec = showbStdGenPrec
+    showbPrec p = showbPrec p . FromStringShow
     {-# INLINE showbPrec #-}

@@ -1,4 +1,6 @@
 ### next [????.??.??]
+* Remove most monomorphic `TextShow` functions, as their utility is questionable, and their maintenance burden is undeniable
+* Made the instances in `TextShow.Data.Bifunctor` poly-kinded when possible
 * Fix testsuite compilation on older GHCs
 
 ### 3.5 [2017.01.07]

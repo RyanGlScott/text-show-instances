@@ -14,7 +14,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for functor transformers.
+'TextShow' instances for functor transformers.
 
 Note that :
 
@@ -26,49 +26,42 @@ Note that :
 
 /Since: 2/
 -}
-module TextShow.Data.Functor.Trans (liftShowbConstantPrec, liftShowbReversePrec) where
+module TextShow.Data.Functor.Trans () where
 
 import Data.Functor.Constant (Constant(..))
 import Data.Functor.Reverse  (Reverse(..))
 
 import TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                  Builder, showbPrec1, showbUnaryWith)
+import TextShow.Utils (liftShowbUnaryWith)
 
 -- | Convert a 'Constant' value to a 'Builder' with the given show function
 -- and precedence.
---
--- /Since: 3/
 liftShowbConstantPrec :: (Int -> a -> Builder) -> Int -> Constant a b -> Builder
 liftShowbConstantPrec sp p (Constant x) = showbUnaryWith sp "Constant" p x
 {-# INLINE liftShowbConstantPrec #-}
 
--- | Convert a 'Reverse' value to a 'Builder' with the given show functions
--- and precedence.
---
--- /Since: 3/
-liftShowbReversePrec :: TextShow1 f
-                     => (Int -> a -> Builder) -> ([a] -> Builder)
-                     -> Int -> Reverse f a -> Builder
-liftShowbReversePrec sp sl p (Reverse x) =
-    showbUnaryWith (liftShowbPrec sp sl) "Reverse" p x
-{-# INLINE liftShowbReversePrec #-}
-
+-- | /Since: 2/
 instance TextShow a => TextShow (Constant a b) where
     showbPrec = liftShowbConstantPrec showbPrec
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow a => TextShow1 (Constant a) where
     liftShowbPrec _ _ = liftShowbConstantPrec showbPrec
     {-# INLINE liftShowbPrec #-}
 
+-- | /Since: 2/
 instance TextShow2 Constant where
     liftShowbPrec2 sp _ _ _ = liftShowbConstantPrec sp
     {-# INLINE liftShowbPrec2 #-}
 
+-- | /Since: 2/
 instance (TextShow1 f, TextShow a) => TextShow (Reverse f a) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 f => TextShow1 (Reverse f) where
-    liftShowbPrec = liftShowbReversePrec
+    liftShowbPrec sp sl p (Reverse x) = liftShowbUnaryWith sp sl "Reverse" p x
     {-# INLINE liftShowbPrec #-}

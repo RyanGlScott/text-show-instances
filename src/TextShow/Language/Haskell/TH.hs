@@ -12,108 +12,11 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @template-haskell@ library.
+'TextShow' instances for data types in the @template-haskell@ library.
 
 /Since: 2/
 -}
-module TextShow.Language.Haskell.TH (
-#if MIN_VERSION_template_haskell(2,9,0)
-      showbAnnLookupPrec
-    , showbAnnTargetPrec,
-#endif
-#if MIN_VERSION_template_haskell(2,11,0)
-      showbBangPrec,
-#endif
-      showbBodyPrec
-    , showbCallconv
-#if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
-    , showbClassInstancePrec
-#endif
-    , showbClausePrec
-    , showbConPrec
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbDecidedStrictness
-#endif
-    , showbDecPrec
-#if MIN_VERSION_template_haskell(2,12,0)
-    , showbDerivClausePrec
-    , showbDerivStrategy
-#endif
-    , showbExpPrec
-    , showbFamFlavour
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbFamilyResultSigPrec
-#endif
-    , showbFixityPrec
-    , showbFixityDirection
-    , showbForeignPrec
-    , showbFunDepPrec
-    , showbGuardPrec
-    , showbInfoPrec
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbInjectivityAnnPrec
-#endif
-#if MIN_VERSION_template_haskell(2,8,0)
-    , showbInline
-#else
-    , showbInlineSpecPrec
-#endif
-    , showbKindPrec
-    , showbLitPrec
-    , showbLocPrec
-    , showbMatchPrec
-    , showbModNamePrec
-#if MIN_VERSION_template_haskell(2,9,0)
-    , showbModulePrec
-    , showbModuleInfoPrec
-#endif
-    , showbName
-    , showbName'
-    , showbNameFlavourPrec
-    , showbNameSpace
-    , showbOccNamePrec
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbOverlap
-#endif
-    , showbPatPrec
-#if MIN_VERSION_template_haskell(2,12,0)
-    , showbPatSynArgsPrec
-    , showbPatSynDirPrec
-#endif
-#if MIN_VERSION_template_haskell(2,8,0)
-    , showbPhasesPrec
-#endif
-    , showbPkgNamePrec
-    , showbPragmaPrec
-    , showbPredPrec
-    , showbRangePrec
-#if MIN_VERSION_template_haskell(2,9,0)
-    , showbRole
-#endif
-#if MIN_VERSION_template_haskell(2,8,0)
-    , showbRuleBndrPrec
-    , showbRuleMatch
-#endif
-    , showbSafety
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbSourceStrictness
-    , showbSourceUnpackedness
-#endif
-    , showbStmtPrec
-    , showbStrictPrec
-#if MIN_VERSION_template_haskell(2,11,0)
-    , showbTypeFamilyHeadPrec
-#endif
-#if MIN_VERSION_template_haskell(2,8,0)
-    , showbTyLitPrec
-#endif
-    , showbTypePrec
-#if MIN_VERSION_template_haskell(2,9,0)
-    , showbTySynEqnPrec
-#endif
-    , showbTyVarBndrPrec
-    , showbDoc
-    ) where
+module TextShow.Language.Haskell.TH (showbName, showbName') where
 
 import           Data.Char (isAlpha)
 import           Data.Maybe (fromJust)
@@ -133,118 +36,6 @@ import           TextShow (TextShow(..), Builder,
 import           TextShow.Data.Integral (showbIntPrec)
 import           TextShow.Text.PrettyPrint (renderB)
 import           TextShow.TH (deriveTextShow)
-
--- | Convert a 'Body' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbBodyPrec :: Int -> Body -> Builder
-showbBodyPrec = showbPrec
-
--- | Convert a 'Callconv' to a 'Builder'.
---
--- /Since: 2/
-showbCallconv :: Callconv -> Builder
-showbCallconv = showb
-
--- | Convert a 'Clause' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbClausePrec :: Int -> Clause -> Builder
-showbClausePrec = showbPrec
-
--- | Convert a 'Con' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbConPrec :: Int -> Con -> Builder
-showbConPrec = showbPrec
-
--- | Convert a 'Dec' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbDecPrec :: Int -> Dec -> Builder
-showbDecPrec = showbPrec
-
--- | Convert an 'Exp' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbExpPrec :: Int -> Exp -> Builder
-showbExpPrec = showbPrec
-
--- | Convert a 'FamFlavour' to a 'Builder'.
---
--- /Since: 2/
-showbFamFlavour :: FamFlavour -> Builder
-showbFamFlavour = showb
-
--- | Convert a 'Fixity' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbFixityPrec :: Int -> Fixity -> Builder
-showbFixityPrec = showbPrec
-
--- | Convert a 'FixityDirection' to a 'Builder'.
---
--- /Since: 2/
-showbFixityDirection :: FixityDirection -> Builder
-showbFixityDirection = showb
-
--- | Convert a 'Foreign' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbForeignPrec :: Int -> Foreign -> Builder
-showbForeignPrec = showbPrec
-
--- | Convert a 'FunDep' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbFunDepPrec :: Int -> FunDep -> Builder
-showbFunDepPrec = showbPrec
-
--- | Convert a 'Guard' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbGuardPrec :: Int -> Guard -> Builder
-showbGuardPrec = showbPrec
-
--- | Convert an 'Info' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbInfoPrec :: Int -> Info -> Builder
-showbInfoPrec = showbPrec
-
--- | Convert a 'Kind' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbKindPrec :: Int -> Kind -> Builder
-#if MIN_VERSION_template_haskell(2,8,0)
-showbKindPrec = showbTypePrec
-#else
-showbKindPrec = showbPrec
-#endif
-
--- | Convert a 'Lit' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbLitPrec :: Int -> Dec -> Builder
-showbLitPrec = showbPrec
-
--- | Convert a 'Loc' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbLocPrec :: Int -> Loc -> Builder
-showbLocPrec = showbPrec
-
--- | Convert a 'Match' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbMatchPrec :: Int -> Match -> Builder
-showbMatchPrec = showbPrec
-
--- | Convert a 'ModName' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbModNamePrec :: Int -> ModName -> Builder
-showbModNamePrec = showbPrec
 
 -- | Convert a 'Name' to a 'Builder'.
 --
@@ -307,366 +98,200 @@ showbName' ni nm = case ni of
                                        else classify $ TL.tail t'
                             else False
 
--- | Convert a 'NameFlavour' to a 'Builder' with the given precedence.
---
--- /Since: 3.3/
-showbNameFlavourPrec :: Int -> NameFlavour -> Builder
-showbNameFlavourPrec = showbPrec
-
--- | Convert a 'NameSpace' to a 'Builder'.
---
--- /Since: 3.3/
-showbNameSpace :: NameSpace -> Builder
-showbNameSpace = showb
-
--- | Convert an 'OccName' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbOccNamePrec :: Int -> OccName -> Builder
-showbOccNamePrec = showbPrec
-
--- | Convert a 'Pat' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbPatPrec :: Int -> Pat -> Builder
-showbPatPrec = showbPrec
-
--- | Convert a 'PkgName' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbPkgNamePrec :: Int -> PkgName -> Builder
-showbPkgNamePrec = showbPrec
-
--- | Convert a 'Pragma' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbPragmaPrec :: Int -> Pragma -> Builder
-showbPragmaPrec = showbPrec
-
--- | Convert a 'Pred' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbPredPrec :: Int -> Pred -> Builder
-#if MIN_VERSION_template_haskell(2,10,0)
-showbPredPrec = showbTypePrec
-#else
-showbPredPrec = showbPrec
-#endif
-
--- | Convert a 'Range' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbRangePrec :: Int -> Range -> Builder
-showbRangePrec = showbPrec
-
--- | Convert a 'Safety' to a 'Builder'.
---
--- /Since: 2/
-showbSafety :: Safety -> Builder
-showbSafety = showb
-
--- | Convert a 'Stmt' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbStmtPrec :: Int -> Stmt -> Builder
-showbStmtPrec = showbPrec
-
--- | Convert a 'Strict' to a 'Builder' with the given precedence.
--- Note that 'Strict' is a type synonym for 'Bang' on @template-haskell-2.11.0.0@
--- and later, and precedence matters for 'Bang'. On earlier versions of
--- @template-haskell@, however, the precedence argument is ignored.
---
--- /Since: 3/
-showbStrictPrec :: Int -> Strict -> Builder
-#if MIN_VERSION_template_haskell(2,11,0)
-showbStrictPrec = showbBangPrec
-#else
-showbStrictPrec = showbPrec
-#endif
-
--- | Convert a 'Type' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbTypePrec :: Int -> Type -> Builder
-showbTypePrec = showbPrec
-
--- | Convert a 'TyVarBndr' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbTyVarBndrPrec :: Int -> TyVarBndr -> Builder
-showbTyVarBndrPrec = showbPrec
-
--- | Convert a 'Doc' to a 'Builder'.
---
--- /Since: 2/
-showbDoc :: Doc -> Builder
-showbDoc = renderB . to_HPJ_Doc
-
-#if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
--- | Convert a 'ClassInstance' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell@ 2.5.0.0 or 2.6.0.0.
---
--- /Since: 2/
-showbClassInstancePrec :: Int -> ClassInstance -> Builder
-showbClassInstancePrec = showbPrec
-#endif
-
-#if MIN_VERSION_template_haskell(2,8,0)
--- | Convert an 'Inline' to a 'Builder'.
--- This function is only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-showbInline :: Inline -> Builder
-showbInline = showb
-
--- | Convert a 'Phases' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-showbPhasesPrec :: Int -> Phases -> Builder
-showbPhasesPrec = showbPrec
-
--- | Convert a 'RuleMatch' to a 'Builder'.
--- This function is only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-showbRuleMatch :: RuleMatch -> Builder
-showbRuleMatch = showb
-
--- | Convert a 'RuleBndr' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-showbRuleBndrPrec :: Int -> RuleBndr -> Builder
-showbRuleBndrPrec = showbPrec
-
--- | Convert a 'TyLit' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-showbTyLitPrec :: Int -> TyLit -> Builder
-showbTyLitPrec = showbPrec
-#else
--- | Convert an 'InlineSpec' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.7.0.0@ or earlier.
---
--- /Since: 2/
-showbInlineSpecPrec :: Int -> InlineSpec -> Builder
-showbInlineSpecPrec = showbPrec
-#endif
-
-#if MIN_VERSION_template_haskell(2,9,0)
--- | Convert an 'AnnLookup' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbAnnLookupPrec :: Int -> AnnLookup -> Builder
-showbAnnLookupPrec = showbPrec
-
--- | Convert an 'AnnTarget' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbAnnTargetPrec :: Int -> AnnTarget -> Builder
-showbAnnTargetPrec = showbPrec
-
--- | Convert a 'Module' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbModulePrec :: Int -> Module -> Builder
-showbModulePrec = showbPrec
-
--- | Convert a 'ModuleInfo' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbModuleInfoPrec :: Int -> ModuleInfo -> Builder
-showbModuleInfoPrec = showbPrec
-
--- | Convert a 'Role' to a 'Builder'.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbRole :: Role -> Builder
-showbRole = showb
-
--- | Convert a 'TySynEqn' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-showbTySynEqnPrec :: Int -> TySynEqn -> Builder
-showbTySynEqnPrec = showbPrec
-#endif
-
-#if MIN_VERSION_template_haskell(2,11,0)
--- | Convert a 'Bang' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbBangPrec :: Int -> Bang -> Builder
-showbBangPrec = showbPrec
-
--- | Convert a 'DecidedStrictness' to a 'Builder'.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbDecidedStrictness :: DecidedStrictness -> Builder
-showbDecidedStrictness = showb
-
--- | Convert a 'FamilyResultSig' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbFamilyResultSigPrec :: Int -> FamilyResultSig -> Builder
-showbFamilyResultSigPrec = showbPrec
-
--- | Convert an 'InjectivityAnn' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbInjectivityAnnPrec :: Int -> InjectivityAnn -> Builder
-showbInjectivityAnnPrec = showbPrec
-
--- | Convert an 'Overlap' to a 'Builder'.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3.2.1/
-showbOverlap :: Overlap -> Builder
-showbOverlap = showb
-
--- | Convert a 'SourceStrictness' to a 'Builder'.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbSourceStrictness :: SourceStrictness -> Builder
-showbSourceStrictness = showb
-
--- | Convert a 'SourceUnpackedness' to a 'Builder'.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbSourceUnpackedness :: SourceUnpackedness -> Builder
-showbSourceUnpackedness = showb
-
--- | Convert an 'TypeFamilyHead' to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-showbTypeFamilyHeadPrec :: Int -> TypeFamilyHead -> Builder
-showbTypeFamilyHeadPrec = showbPrec
-#endif
-
-#if MIN_VERSION_template_haskell(2,12,0)
--- | Convert a 'DerivClause' value to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: next/
-showbDerivClausePrec :: Int -> DerivClause -> Builder
-showbDerivClausePrec = showbPrec
-
--- | Convert a 'DerivStrategy' to a 'Builder'.
--- This function is only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: next/
-showbDerivStrategy :: DerivStrategy -> Builder
-showbDerivStrategy = showb
-
--- | Convert a 'PatSynArgs' value to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.3/
-showbPatSynArgsPrec :: Int -> PatSynArgs -> Builder
-showbPatSynArgsPrec = showbPrec
-
--- | Convert a 'PatSynDir' value to a 'Builder' with the given precedence.
--- This function is only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.3/
-showbPatSynDirPrec :: Int -> PatSynDir -> Builder
-showbPatSynDirPrec = showbPrec
-#endif
-
+-- | /Since: 2/
 $(deriveTextShow ''Body)
+-- | /Since: 2/
 $(deriveTextShow ''Callconv)
+-- | /Since: 2/
 $(deriveTextShow ''Clause)
+-- | /Since: 2/
 $(deriveTextShow ''Con)
+-- | /Since: 2/
 $(deriveTextShow ''Dec)
+-- | /Since: 2/
 $(deriveTextShow ''Exp)
+-- | /Since: 2/
 $(deriveTextShow ''FamFlavour)
+-- | /Since: 2/
 $(deriveTextShow ''Fixity)
+-- | /Since: 2/
 $(deriveTextShow ''FixityDirection)
+-- | /Since: 2/
 $(deriveTextShow ''Foreign)
+-- | /Since: 2/
 $(deriveTextShow ''FunDep)
+-- | /Since: 2/
 $(deriveTextShow ''Guard)
+-- | /Since: 2/
 $(deriveTextShow ''Info)
+-- | /Since: 2/
 $(deriveTextShow ''Lit)
+-- | /Since: 2/
 $(deriveTextShow ''Loc)
+-- | /Since: 2/
 $(deriveTextShow ''Match)
+-- | /Since: 2/
 $(deriveTextShow ''ModName)
 
+-- | /Since: 2/
 instance TextShow Name where
     showb = showbName
 
+-- | /Since: 3.3/
 $(deriveTextShow ''NameFlavour)
+-- | /Since: 3.3/
 $(deriveTextShow ''NameSpace)
+-- | /Since: 2/
 $(deriveTextShow ''OccName)
+-- | /Since: 2/
 $(deriveTextShow ''Pat)
+-- | /Since: 2/
 $(deriveTextShow ''PkgName)
+-- | /Since: 2/
 $(deriveTextShow ''Pragma)
+-- | /Since: 2/
 $(deriveTextShow ''Range)
+-- | /Since: 2/
 $(deriveTextShow ''Safety)
+-- | /Since: 2/
 $(deriveTextShow ''Stmt)
+-- | /Since: 2/
 $(deriveTextShow ''Type)
+-- | /Since: 2/
 $(deriveTextShow ''TyVarBndr)
 
+-- | /Since: 2/
 instance TextShow Doc where
-    showb = showbDoc
+    showb = renderB . to_HPJ_Doc
 
 #if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
+-- | Only available with @template-haskell-2.5@.
+--
+-- /Since: 2/
 $(deriveTextShow ''ClassInstance)
 #endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
+-- | Only available with @template-haskell-2.8.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''Inline)
+-- | Only available with @template-haskell-2.8.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''Phases)
+-- | Only available with @template-haskell-2.8.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''RuleBndr)
+-- | Only available with @template-haskell-2.8.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''RuleMatch)
+-- | Only available with @template-haskell-2.8.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''TyLit)
 #else
+-- | Only available with @template-haskell-2.7@ or earlier.
+--
+-- /Since: 2/
 $(deriveTextShow ''InlineSpec)
+-- | Only available with @template-haskell-2.7@ or earlier.
+--
+-- /Since: 2/
 $(deriveTextShow ''Kind)
 #endif
 
 #if MIN_VERSION_template_haskell(2,9,0)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''AnnLookup)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''AnnTarget)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''Module)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''ModuleInfo)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''Role)
+-- | Only available with @template-haskell-2.9.0.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''TySynEqn)
 #endif
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
+-- | Only available with @template-haskell-2.10@ or earlier.
+--
+-- /Since: 2/
 $(deriveTextShow ''Pred)
 #endif
 
 #if MIN_VERSION_template_haskell(2,11,0)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''Bang)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''DecidedStrictness)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''FamilyResultSig)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''InjectivityAnn)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''Overlap)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''SourceStrictness)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''SourceUnpackedness)
+-- | Only available with @template-haskell-2.11.0.0@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''TypeFamilyHead)
 #else
+-- | Only available with @template-haskell-2.11@ or earlier.
+--
+-- /Since: 3/
 $(deriveTextShow ''Strict)
 #endif
 
 #if MIN_VERSION_template_haskell(2,12,0)
+-- | Only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: next/
 $(deriveTextShow ''DerivClause)
+-- | Only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: next/
 $(deriveTextShow ''DerivStrategy)
+-- | Only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: 3.3/
 $(deriveTextShow ''PatSynArgs)
+-- | Only available with @template-haskell-2.12.0.0@ or later.
+--
+-- /Since: 3.3/
 $(deriveTextShow ''PatSynDir)
 #endif

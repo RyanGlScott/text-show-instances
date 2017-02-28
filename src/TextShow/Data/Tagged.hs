@@ -14,7 +14,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' function for 'Tagged' values.
+'TextShow' instance for 'Tagged'.
 
 /Since: 2/
 -}
@@ -25,20 +25,21 @@ import TextShow (TextShow(..), TextShow1(..), TextShow2(..),
                  Builder, showbPrec1, showbUnaryWith)
 
 -- | Convert a 'Tagged' value to a 'Builder' with the given show function and precedence.
---
--- /Since: 3/
 liftShowbTaggedPrec :: (Int -> b -> Builder) -> Int -> Tagged s b -> Builder
 liftShowbTaggedPrec sp p (Tagged b) = showbUnaryWith sp "Tagged" p b
 {-# INLINE liftShowbTaggedPrec #-}
 
+-- | /Since: 2/
 instance TextShow b => TextShow (Tagged s b) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 (Tagged s) where
     liftShowbPrec sp _ = liftShowbTaggedPrec sp
     {-# INLINE liftShowbPrec #-}
 
+-- | /Since: 2/
 instance TextShow2 Tagged where
     liftShowbPrec2 _ _ sp _ = liftShowbTaggedPrec sp
     {-# INLINE liftShowbPrec2 #-}

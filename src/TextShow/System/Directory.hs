@@ -8,22 +8,14 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' function for 'Permissions'.
+'TextShow' instance for 'Permissions'.
 
 /Since: 2/
 -}
-module TextShow.System.Directory (showbPermissionsPrec) where
+module TextShow.System.Directory () where
 
 import System.Directory (Permissions)
-
-import TextShow (TextShow(..), Builder)
 import TextShow.TH (deriveTextShow)
 
--- | Convert 'Permissions' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbPermissionsPrec :: Int -> Permissions -> Builder
-showbPermissionsPrec = showbPrec
-{-# INLINE showbPermissionsPrec #-}
-
+-- | /Since: 2/
 $(deriveTextShow ''Permissions)

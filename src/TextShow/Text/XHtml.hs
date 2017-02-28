@@ -8,17 +8,11 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @xhtml@ library.
+'TextShow' instances for data types in the @xhtml@ library.
 
 /Since: 2/
 -}
-module TextShow.Text.XHtml (
-      showbHtml
-    , showbHtmlList
-    , showbHtmlAttr
-    , showbHotLinkPrec
-    , showbHtmlTable
-    ) where
+module TextShow.Text.XHtml () where
 
 import Data.Monoid.Compat
 
@@ -26,59 +20,27 @@ import Text.XHtml.Frameset (Html, HtmlAttr, HotLink,
                             htmlAttrPair, renderHtmlFragment)
 import Text.XHtml.Table (HtmlTable)
 
-import TextShow (TextShow(..), Builder, FromStringShow(..), fromString, singleton)
-import TextShow.Data.Char (showbString)
+import TextShow (TextShow(..), FromStringShow(..), fromString, singleton)
 import TextShow.TH (deriveTextShow)
 
--- | Convert an 'Html' value to a 'Builder'.
---
--- /Since: 2/
-showbHtml :: Html -> Builder
-showbHtml = fromString . renderHtmlFragment
-{-# INLINE showbHtml #-}
-
--- | Convert a list of 'Html' values to a 'Builder'.
---
--- /Since: 2/
-showbHtmlList :: [Html] -> Builder
-showbHtmlList = mconcat . map showb
-{-# INLINE showbHtmlList #-}
-
--- | Convert an 'HtmlAttr' to a 'Builder'.
---
--- /Since: 2/
-showbHtmlAttr :: HtmlAttr -> Builder
-showbHtmlAttr ha = case htmlAttrPair ha of
-    (str, val) -> fromString str <> singleton '=' <> showbString val
-{-# INLINE showbHtmlAttr #-}
-
--- | Convert a 'HotLink' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbHotLinkPrec :: Int -> HotLink -> Builder
-showbHotLinkPrec = showbPrec
-{-# INLINE showbHotLinkPrec #-}
-
--- | Convert an 'HtmlTable' to a 'Builder'.
---
--- /Since: 2/
-showbHtmlTable :: HtmlTable -> Builder
-showbHtmlTable = showb . FromStringShow
-{-# INLINE showbHtmlTable #-}
-
+-- | /Since: 2/
 instance TextShow Html where
-    showb = showbHtml
+    showb = fromString . renderHtmlFragment
     {-# INLINE showb #-}
 
-    showbList = showbHtmlList
+    showbList = mconcat . map showb
     {-# INLINE showbList #-}
 
+-- | /Since: 2/
 instance TextShow HtmlAttr where
-    showb = showbHtmlAttr
+    showb ha = case htmlAttrPair ha of
+       (str, val) -> fromString str <> singleton '=' <> showb val
     {-# INLINE showb #-}
 
+-- | /Since: 2/
 $(deriveTextShow ''HotLink)
 
+-- | /Since: 2/
 instance TextShow HtmlTable where
-    showb = showbHtmlTable
+    showb = showb . FromStringShow
     {-# INLINE showb #-}

@@ -11,28 +11,18 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @hoopl@ library.
+'TextShow' instances for data types in the @hoopl@ library.
 
 /Since: 2/
 -}
-module TextShow.Compiler.Hoopl (
-      showbLabel
-    , liftShowbLabelMapPrec
-    , showbLabelSetPrec
-    , liftShowbPointed
-    , showbUnique
-    , liftShowbUniqueMapPrec
-    , showbUniqueSetPrec
-    , showbDominatorNode
-    , showbDominatorTree
-    , showbDPath
-    ) where
+module TextShow.Compiler.Hoopl () where
 
 import Compiler.Hoopl (Label, LabelMap, LabelSet, Pointed(..),
-                       Unique, UniqueMap, UniqueSet)
+                       UniqueMap, UniqueSet)
 #if MIN_VERSION_hoopl(3,9,0)
 import Compiler.Hoopl.Internals (lblToUnique)
 #else
+import Compiler.Hoopl (Unique)
 import Compiler.Hoopl.GHC (lblToUnique, uniqueToInt)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
@@ -42,148 +32,87 @@ import Data.Monoid.Compat
 import TextShow (TextShow(..), TextShow1(..),
                  TextShow2(..), Builder, singleton, showbPrec1)
 import TextShow.Data.Containers ()
-import TextShow.Data.Integral (showbIntPrec)
 import TextShow.TH (deriveTextShow, deriveTextShow1)
 
--- | Convert a 'Label' to a 'Builder'.
---
--- /Since: 2/
-showbLabel :: Label -> Builder
-showbLabel l = singleton 'L' <> showbUnique (lblToUnique l)
-{-# INLINE showbLabel #-}
-
--- | Convert a 'LabelMap' to a 'Builder' with the given show function and precedence.
---
--- /Since: 3/
-liftShowbLabelMapPrec :: (v -> Builder) -> Int -> LabelMap v -> Builder
-liftShowbLabelMapPrec sp = liftShowbPrec (const sp) undefined
-{-# INLINE liftShowbLabelMapPrec #-}
-
--- | Convert a 'LabelSet' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbLabelSetPrec :: Int -> LabelSet -> Builder
-showbLabelSetPrec = showbPrec
-{-# INLINE showbLabelSetPrec #-}
-
--- | Convert a 'Pointed' value to a 'Builder' with the given show function.
---
--- /Since: 3/
-liftShowbPointed :: (a -> Builder) -> Pointed t b a -> Builder
-liftShowbPointed _  Bot       = "_|_"
-liftShowbPointed _  Top       = singleton 'T'
-liftShowbPointed sp (PElem a) = sp a
-{-# INLINE liftShowbPointed #-}
-
--- | Convert a 'Unique' value to a 'Builder'.
---
--- /Since: 2/
-showbUnique :: Unique -> Builder
-#if MIN_VERSION_hoopl(3,9,0)
-showbUnique = showbIntPrec 0
-#else
-showbUnique = showbIntPrec 0 . uniqueToInt
-#endif
-{-# INLINE showbUnique #-}
-
--- | Convert a 'UniqueMap' to a 'Builder' with the given show function and precedence.
---
--- /Since: 3/
-liftShowbUniqueMapPrec :: (v -> Builder) -> Int -> UniqueMap v -> Builder
-liftShowbUniqueMapPrec sp = liftShowbPrec (const sp) undefined
-{-# INLINE liftShowbUniqueMapPrec #-}
-
--- | Convert a 'UniqueSet' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbUniqueSetPrec :: Int -> UniqueSet -> Builder
-showbUniqueSetPrec = showbPrec
-{-# INLINE showbUniqueSetPrec #-}
-
--- | Convert a 'DominatorNode' to a 'Builder'.
---
--- /Since: 2/
-showbDominatorNode :: DominatorNode -> Builder
-showbDominatorNode Entry        = "entryNode"
-showbDominatorNode (Labelled l) = showbLabel l
-{-# INLINE showbDominatorNode #-}
-
--- | Convert a 'DominatorTree' to a 'Builder'.
---
--- /Since: 2/
-showbDominatorTree :: DominatorTree -> Builder
-showbDominatorTree t = mconcat $ "digraph {\n" : dot t ["}\n"]
-  where
-    dot :: DominatorTree -> [Builder] -> [Builder]
-    dot (Dominates root trees) =
-        (dotnode root :) . outedges trees . flip (foldl subtree) trees
-      where
-        outedges :: [DominatorTree] -> [Builder] -> [Builder]
-        outedges [] = id
-        outedges (Dominates n _ : ts) =
-              \bs -> "  "
-            : showbDominatorNode root
-            : " -> "
-            : showbDominatorNode n
-            : singleton '\n'
-            : outedges ts bs
-
-        dotnode :: DominatorNode -> Builder
-        dotnode Entry        = "  entryNode [shape=plaintext, label=\"entry\"]\n"
-        dotnode (Labelled l) = "  " <> showbLabel l <> singleton '\n'
-
-        subtree :: [Builder] -> DominatorTree -> [Builder]
-        subtree = flip dot
-
--- | Convert a 'DPath' to a 'Builder'.
---
--- /Since: 2/
-showbDPath :: DPath -> Builder
-showbDPath (DPath ls) = mconcat $ foldr (\l path ->showbLabel l <> " -> " : path)
-                                        ["entry"]
-                                        ls
-{-# INLINE showbDPath #-}
-
+-- | /Since: 2/
 instance TextShow Label where
-    showb = showbLabel
+    showb l = singleton 'L' <> showb (lblToUnique l)
     {-# INLINE showb #-}
 
+-- | /Since: 2/
 $(deriveTextShow  ''LabelMap)
+-- | /Since: 2/
 $(deriveTextShow1 ''LabelMap)
 
+-- | /Since: 2/
 $(deriveTextShow  ''LabelSet)
 
+-- | /Since: 2/
 instance TextShow a => TextShow (Pointed t b a) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 (Pointed t b) where
-    liftShowbPrec sp _ _ = liftShowbPointed $ sp 0
+    liftShowbPrec _  _ _ Bot       = "_|_"
+    liftShowbPrec _  _ _ Top       = singleton 'T'
+    liftShowbPrec sp _ _ (PElem a) = sp 0 a
     {-# INLINE liftShowbPrec #-}
 
+-- | /Since: 2/
 instance TextShow2 (Pointed t) where
     liftShowbPrec2 _ _ = liftShowbPrec
     {-# INLINE liftShowbPrec2 #-}
 
 #if !(MIN_VERSION_hoopl(3,9,0))
+-- | /Since: 2/
 instance TextShow Unique where
-    showb = showbUnique
+    showb = showb . uniqueToInt
     {-# INLINE showb #-}
 #endif
 
+-- | /Since: 2/
 $(deriveTextShow  ''UniqueMap)
+-- | /Since: 2/
 $(deriveTextShow1 ''UniqueMap)
 
+-- | /Since: 2/
 $(deriveTextShow  ''UniqueSet)
 
+-- | /Since: 2/
 instance TextShow DominatorNode where
-    showb = showbDominatorNode
+    showb Entry        = "entryNode"
+    showb (Labelled l) = showb l
     {-# INLINE showb #-}
 
+-- | /Since: 2/
 instance TextShow DominatorTree where
-    showb = showbDominatorTree
-    {-# INLINE showb #-}
+    showb t = mconcat $ "digraph {\n" : dot t ["}\n"]
+      where
+        dot :: DominatorTree -> [Builder] -> [Builder]
+        dot (Dominates root trees) =
+            (dotnode root :) . outedges trees . flip (foldl subtree) trees
+          where
+            outedges :: [DominatorTree] -> [Builder] -> [Builder]
+            outedges [] = id
+            outedges (Dominates n _ : ts) =
+                  \bs -> "  "
+                : showb root
+                : " -> "
+                : showb n
+                : singleton '\n'
+                : outedges ts bs
 
+            dotnode :: DominatorNode -> Builder
+            dotnode Entry        = "  entryNode [shape=plaintext, label=\"entry\"]\n"
+            dotnode (Labelled l) = "  " <> showb l <> singleton '\n'
+
+            subtree :: [Builder] -> DominatorTree -> [Builder]
+            subtree = flip dot
+
+-- | /Since: 2/
 instance TextShow DPath where
-    showb = showbDPath
+    showb (DPath ls) = mconcat $ foldr (\l path -> showb l <> " -> " : path)
+                                       ["entry"]
+                                       ls
     {-# INLINE showb #-}

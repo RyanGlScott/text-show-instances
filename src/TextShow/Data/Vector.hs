@@ -9,18 +9,13 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for @Vector@ types.
+'TextShow' instances for @Vector@ types.
 
 /Since: 2/
 -}
 module TextShow.Data.Vector (
-      liftShowbVectorPrec
-    , showbVectorGenericPrec
+      showbVectorGenericPrec
     , liftShowbVectorGenericPrec
-    , showbVectorPrimitivePrec
-    , showbVectorStorablePrec
-    , showbVectorUnboxedPrec
-    , showbSizePrec
     ) where
 
 import qualified Data.Vector as B (Vector)
@@ -44,15 +39,6 @@ import           TextShow.TH (deriveTextShow)
 #if !(MIN_VERSION_vector(0,11,0))
 import           TextShow.Utils (showbUnaryList, showbUnaryListWith)
 #endif
-
--- | Convert a boxed 'B.Vector' to a 'Builder' with the given show function
--- and precedence.
--- Note that with @vector-0.11@ and above, the precedence argument is ignored.
---
--- /Since: 3/
-liftShowbVectorPrec :: ([a] -> Builder) -> Int -> B.Vector a -> Builder
-liftShowbVectorPrec = liftShowbVectorGenericPrec
-{-# INLINE liftShowbVectorPrec #-}
 
 -- | Convert a generic 'G.Vector' to a 'Builder' with the given precedence.
 -- Note that with @vector-0.11@ and above, the precedence argument is ignored.
@@ -79,55 +65,30 @@ liftShowbVectorGenericPrec sl p = showbUnaryListWith sl p . toList
 #endif
 {-# INLINE liftShowbVectorGenericPrec #-}
 
--- | Convert a primitive 'P.Vector' to a 'Builder' with the given precedence.
--- Note that with @vector-0.11@ and above, the precedence argument is ignored.
---
--- /Since: 2/
-showbVectorPrimitivePrec :: (TextShow a, Prim a) => Int -> P.Vector a -> Builder
-showbVectorPrimitivePrec = showbVectorGenericPrec
-{-# INLINE showbVectorPrimitivePrec #-}
-
--- | Convert a storable 'S.Vector' to a 'Builder' with the given precedence.
--- Note that with @vector-0.11@ and above, the precedence argument is ignored.
---
--- /Since: 2/
-showbVectorStorablePrec :: (TextShow a, Storable a) => Int -> S.Vector a -> Builder
-showbVectorStorablePrec = showbVectorGenericPrec
-{-# INLINE showbVectorStorablePrec #-}
-
--- | Convert an unboxed 'U.Vector' to a 'Builder' with the given precedence.
--- Note that with @vector-0.11@ and above, the precedence argument is ignored.
---
--- /Since: 2/
-showbVectorUnboxedPrec :: (TextShow a, Unbox a) => Int -> U.Vector a -> Builder
-showbVectorUnboxedPrec = showbVectorGenericPrec
-{-# INLINE showbVectorUnboxedPrec #-}
-
--- | Convert a 'Size' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbSizePrec :: Int -> Size -> Builder
-showbSizePrec = showbPrec
-{-# INLINE showbSizePrec #-}
-
+-- | /Since: 2/
 instance TextShow a => TextShow (B.Vector a) where
     showbPrec = showbVectorGenericPrec
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance TextShow1 B.Vector where
-    liftShowbPrec _ sl = liftShowbVectorPrec sl
+    liftShowbPrec _ sl = liftShowbVectorGenericPrec sl
     {-# INLINE liftShowbPrec #-}
 
+-- | /Since: 2/
 instance (TextShow a, Prim a) => TextShow (P.Vector a) where
-    showbPrec = showbVectorPrimitivePrec
+    showbPrec = showbVectorGenericPrec
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance (TextShow a, Storable a) => TextShow (S.Vector a) where
-    showbPrec = showbVectorStorablePrec
+    showbPrec = showbVectorGenericPrec
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 instance (TextShow a, Unbox a) => TextShow (U.Vector a) where
-    showbPrec = showbVectorUnboxedPrec
+    showbPrec = showbVectorGenericPrec
     {-# INLINE showbPrec #-}
 
+-- | /Since: 2/
 $(deriveTextShow ''Size)

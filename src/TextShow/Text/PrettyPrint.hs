@@ -9,7 +9,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Monomorphic 'TextShow' functions for data types in the @pretty@ library.
+Provides 'TextShow' instances for data types in the @pretty@ library.
 
 /Since: 2/
 -}
@@ -19,17 +19,6 @@ module TextShow.Text.PrettyPrint (
 #if MIN_VERSION_pretty(1,1,3)
     , renderAnnotB
     , renderStyleAnnotB
-#endif
-    , showbMode
-    , showbStylePrec
-    , showbTextDetailsPrec
-#if MIN_VERSION_pretty(1,1,2)
-    , showbPrettyLevelPrec
-#endif
-#if MIN_VERSION_pretty(1,1,3)
-    , liftShowbAnnotDetailsPrec
-    , showbPrettyLevelAnnotPrec
-    , liftShowbSpanPrec
 #endif
     ) where
 
@@ -77,37 +66,6 @@ txtPrinter (Str s')  b = fromString s' <> b
 txtPrinter (PStr s') b = fromString s' <> b
 {-# INLINE txtPrinter #-}
 
--- | Convert a 'Mode' to a 'Builder'.
---
--- /Since: 2/
-showbMode :: Mode -> Builder
-showbMode = showb
-{-# INLINE showbMode #-}
-
--- | Convert a 'Style' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbStylePrec :: Int -> Style -> Builder
-showbStylePrec = showbPrec
-{-# INLINE showbStylePrec #-}
-
--- | Convert 'TextDetails' to a 'Builder' with the given precedence.
---
--- /Since: 2/
-showbTextDetailsPrec :: Int -> TextDetails -> Builder
-showbTextDetailsPrec = showbPrec
-{-# INLINE showbTextDetailsPrec #-}
-
-#if MIN_VERSION_pretty(1,1,2)
--- | Convert a 'PrettyLevel' value to a 'Builder' with the given precedence.
--- This function is only available with @pretty-1.1.2.0@ or later.
---
--- /Since: 2/
-showbPrettyLevelPrec :: Int -> PrettyLevel -> Builder
-showbPrettyLevelPrec = showbPrec
-{-# INLINE showbPrettyLevelPrec #-}
-#endif
-
 #if MIN_VERSION_pretty(1,1,3)
 -- | Renders an annotated 'Doc' to a 'Builder' using the default 'Annot.style'.
 -- This function is only available with @pretty-1.1.3@ or later.
@@ -129,57 +87,61 @@ renderStyleAnnotB sty doc =
                      txtPrinter
                      mempty
                      doc
-
--- | Convert an 'AnnotDetais' value to a 'Builder' with the given show function
--- and precedence. This function is only available with @pretty-1.1.3@ or later.
---
--- /Since: 3/
-liftShowbAnnotDetailsPrec :: (Int -> a -> Builder) -> Int -> AnnotDetails a -> Builder
-liftShowbAnnotDetailsPrec sp = liftShowbPrec sp undefined
-{-# INLINE liftShowbAnnotDetailsPrec #-}
-
--- | Convert an annotated 'PrettyLevel' value to a 'Builder' with the given precedence.
--- This function is only available with @pretty-1.1.3@ or later.
---
--- /Since: 3/
-showbPrettyLevelAnnotPrec :: Int -> Annot.PrettyLevel -> Builder
-showbPrettyLevelAnnotPrec = showbPrec
-{-# INLINE showbPrettyLevelAnnotPrec #-}
-
--- | Convert a 'Span' to a 'Builder' with the given show function and precedence.
--- This function is only available with @pretty-1.1.3@ or later.
---
--- /Since: 3/
-liftShowbSpanPrec :: (Int -> a -> Builder) -> Int -> Span a -> Builder
-liftShowbSpanPrec sp = liftShowbPrec sp undefined
-{-# INLINE liftShowbSpanPrec #-}
 #endif
 
+-- | /Since: 2/
 instance TextShow Doc where
     showb = renderB
     {-# INLINE showb #-}
 
+-- | /Since: 2/
 $(deriveTextShow ''Mode)
+-- | /Since: 2/
 $(deriveTextShow ''Style)
+-- | /Since: 2/
 $(deriveTextShow ''TextDetails)
 
 #if MIN_VERSION_pretty(1,1,2)
+-- | Only available with @pretty-1.1.2.0@ or later.
+--
+-- /Since: 2/
 $(deriveTextShow ''PrettyLevel)
 #endif
 
 #if MIN_VERSION_pretty(1,1,3)
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow  ''AnnotDetails)
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow1 ''AnnotDetails)
 
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 instance TextShow (Annot.Doc a) where
     showb = renderAnnotB
     {-# INLINE showb #-}
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 instance TextShow1 Annot.Doc where
     liftShowbPrec _ _ = showbPrec
     {-# INLINE liftShowbPrec #-}
 
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow ''Annot.PrettyLevel)
 
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow  ''Span)
+-- | Only available with @pretty-1.1.3@ or later.
+--
+-- /Since: 3/
 $(deriveTextShow1 ''Span)
 #endif
