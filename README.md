@@ -28,6 +28,7 @@
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)
 * [`pretty`](http://hackage.haskell.org/package/pretty)
+* [`process`](http://hackage.haskell.org/package/process)
 * [`random`](http://hackage.haskell.org/package/random)
 * [`tagged`](http://hackage.haskell.org/package/tagged)
 * [`template-haskell`](http://hackage.haskell.org/package/template-haskell)

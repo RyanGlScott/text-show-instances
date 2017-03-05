@@ -26,8 +26,9 @@ import Prelude ()
 import Prelude.Compat
 
 import System.Exit (ExitCode(..))
+import System.IO (Handle, stdin, stdout, stderr)
 
-import Test.QuickCheck (Arbitrary(..))
+import Test.QuickCheck (Arbitrary(..), oneof)
 
 #if MIN_VERSION_base(4,5,0)
 
@@ -54,6 +55,9 @@ import Test.QuickCheck (arbitrarySizedBoundedIntegral)
 
 instance Arbitrary ExitCode where
     arbitrary = genericArbitrary
+
+instance Arbitrary Handle where
+    arbitrary = oneof $ map pure [stdin, stdout, stderr]
 
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary
