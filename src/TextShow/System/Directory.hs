@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP             #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
@@ -15,7 +16,18 @@ Portability: GHC
 module TextShow.System.Directory () where
 
 import System.Directory (Permissions)
+#if MIN_VERSION_directory(1,2,3)
+import System.Directory (XdgDirectory)
+#endif
+
 import TextShow.TH (deriveTextShow)
 
 -- | /Since: 2/
 $(deriveTextShow ''Permissions)
+
+#if MIN_VERSION_directory(1,2,3)
+-- | Only available with @directory-1.2.3.0@ or later.
+--
+-- /Since: next/
+$(deriveTextShow ''XdgDirectory)
+#endif

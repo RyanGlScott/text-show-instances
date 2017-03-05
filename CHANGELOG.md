@@ -1,4 +1,7 @@
 ### next [????.??.??]
+* New `TextShow` instances:
+  * `directory`: `XdgDirectory` (from `System.Directory`)
+  * `time`: `UniversalTime` (from `Data.Time.Clock`)
 * Remove most monomorphic `TextShow` functions, as their utility is questionable, and their maintenance burden is undeniable
 * Made the instances in `TextShow.Data.Bifunctor` poly-kinded when possible
 * Fix testsuite compilation on older GHCs
