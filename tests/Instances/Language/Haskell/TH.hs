@@ -211,6 +211,10 @@ instance Arbitrary Exp where
 #if MIN_VERSION_template_haskell(2,11,0)
                       , UnboundVarE <$> arbitrary
 #endif
+#if MIN_VERSION_template_haskell(2,12,0)
+                      , pure $ AppTypeE fExp fType
+                      , UnboxedSumE fExp <$> arbitrary <*> arbitrary
+#endif
                       ]
 --     arbitrary = oneof [ VarE        <$> arbitrary
 --                       , ConE        <$> arbitrary
@@ -374,6 +378,9 @@ instance Arbitrary Pat where
                       , UInfixP fPat <$> arbitrary <@> fPat
                       , pure $ ParensP fPat
 #endif
+#if MIN_VERSION_template_haskell(2,12,0)
+                      , UnboxedSumP fPat <$> arbitrary <*> arbitrary
+#endif
                       ]
 --     arbitrary = oneof [ LitP        <$> arbitrary
 --                       , VarP        <$> arbitrary
@@ -460,6 +467,9 @@ instance Arbitrary Type where
                       , UInfixT fType <$> arbitrary <@> fType
                       , pure $ ParensT fType
                       , pure WildCardT
+#endif
+#if MIN_VERSION_template_haskell(2,12,0)
+                      , UnboxedSumT <$> arbitrary
 #endif
                       ]
 --     arbitrary = oneof [ ForallT        <$> arbitrary <*> arbitrary <*> arbitrary
