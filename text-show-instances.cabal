@@ -29,8 +29,6 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/pretty               pretty>@
                      .
-                     * @<http://hackage.haskell.org/package/process              process>@
-                     .
                      * @<http://hackage.haskell.org/package/random               random>@
                      .
                      * @<http://hackage.haskell.org/package/tagged               tagged>@
@@ -119,7 +117,6 @@ library
                        TextShow.System.Console.Haskeline
                        TextShow.System.Directory
                        TextShow.System.Locale
-                       TextShow.System.Process
                        TextShow.System.Random
                        TextShow.System.Time
                        TextShow.Text.PrettyPrint
@@ -203,7 +200,6 @@ test-suite spec
                        Instances.System.Console.Haskeline
                        Instances.System.Directory
                        Instances.System.Locale
-                       Instances.System.Process
                        Instances.System.Random
                        Instances.Text.PrettyPrint
                        Instances.Text.XHtml
@@ -235,7 +231,6 @@ test-suite spec
                        Spec.System.Console.HaskelineSpec
                        Spec.System.DirectorySpec
                        Spec.System.LocaleSpec
-                       Spec.System.ProcessSpec
                        Spec.System.RandomSpec
                        Spec.System.TimeSpec
                        Spec.Text.PrettyPrintSpec
