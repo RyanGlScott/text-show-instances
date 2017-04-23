@@ -37,6 +37,8 @@ spec = parallel $ do
 # if MIN_VERSION_ghc_boot_th(8,2,0)
     describe "ForeignSrcLang" $
         matchesTextShowSpec (Proxy :: Proxy ForeignSrcLang)
+# else
+    pure ()
 # endif
 #else
     pure ()
