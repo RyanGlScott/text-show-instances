@@ -1,8 +1,10 @@
 {-# LANGUAGE CPP             #-}
 
-#if defined(MIN_VERSION_ghc_boot_th) && MIN_VERSION_ghc_boot_th(8,2,0)
+#if defined(MIN_VERSION_ghc_boot_th)
+# if MIN_VERSION_ghc_boot_th(8,2,0)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+# endif
 #endif
 
 {-|
@@ -20,10 +22,12 @@ Only provided if using @ghc-boot-th-8.2@ or later.
 -}
 module TextShow.GHC.ForeignSrcLang.Type () where
 
-#if defined(MIN_VERSION_ghc_boot_th) && MIN_VERSION_ghc_boot_th(8,2,0)
+#if defined(MIN_VERSION_ghc_boot_th)
+# if MIN_VERSION_ghc_boot_th(8,2,0)
 import GHC.ForeignSrcLang.Type (ForeignSrcLang)
 import TextShow.TH (deriveTextShow)
 
 -- | /Since: next/
 $(deriveTextShow ''ForeignSrcLang)
+# endif
 #endif
