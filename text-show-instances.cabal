@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             3.5
+version:             3.6
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
@@ -126,6 +126,9 @@ library
                        -- Only exports functions if using ghc-boot-th
                        TextShow.GHC.LanguageExtensions.Type
 
+                       -- Only exports functions if using ghc-boot-th-8.2 or later
+                       TextShow.GHC.ForeignSrcLang.Type
+
                        -- Only exports functions if using Windows
                        TextShow.System.Win32
 
@@ -145,12 +148,13 @@ library
                      , old-locale           >= 1      && < 1.1
                      , old-time             >= 1      && < 1.2
                      , pretty               >= 1      && < 1.2
+                     , process              >= 1      && < 1.7
                      , random               >= 1.0.1  && < 1.2
                      , semigroups           >= 0.16.2 && < 1
                      , tagged               >= 0.4.4  && < 1
                      , text                 >= 0.11.1 && < 1.3
                      , text-show            >= 3.4    && < 4
-                     , time                 >= 0.1    && < 1.7
+                     , time                 >= 0.1    && < 1.9
                      , unordered-containers >= 0.2    && < 0.3
                      , vector               >= 0.9    && < 0.13
                      , xhtml                >= 3000.2 && < 3000.3
@@ -178,7 +182,7 @@ library
     build-depends:     transformers == 0.4.*
 
   if os(windows)
-    build-depends:     Win32                >= 2.1    && < 2.4
+    build-depends:     Win32                >= 2.1    && < 2.6
   else
     build-depends:     terminfo             >= 0.3.2  && < 0.5
                      , unix                 >= 2      && < 2.8
@@ -208,6 +212,12 @@ test-suite spec
 
                        -- Only defines instances if using ghc-boot-th
                        Instances.GHC.LanguageExtensions.Type
+
+                       -- Only defines instances if using ghc-boot-th-8.2 or later
+                       Instances.GHC.ForeignSrcLang.Type
+
+                       -- Only defines instances if using time-1.8 or later
+                       Instances.Data.Time
 
                        -- Only defines instances if using Windows
                        Instances.System.Win32
@@ -240,6 +250,9 @@ test-suite spec
                        -- Only defines tests if using ghc-boot-th
                        Spec.GHC.LanguageExtensions.TypeSpec
 
+                       -- Only exports functions if using ghc-boot-th-8.2 or later
+                       Spec.GHC.ForeignSrcLang.TypeSpec
+
                        -- Only defines tests if using Windows
                        Spec.System.Win32Spec
 
@@ -261,6 +274,7 @@ test-suite spec
                      , old-locale           >= 1      && < 1.1
                      , old-time             >= 1      && < 1.2
                      , pretty               >= 1      && < 1.2
+                     , process              >= 1      && < 1.7
                      , QuickCheck           >= 2.9    && < 3
                      , quickcheck-instances >= 0.3.12 && < 0.4
                      , random               >= 1.0.1  && < 1.2
@@ -269,7 +283,7 @@ test-suite spec
                      , text                 >= 0.11.1 && < 1.3
                      , text-show            >= 3.4    && < 4
                      , th-orphans           >= 0.13.3 && < 1
-                     , time                 >= 0.1    && < 1.7
+                     , time                 >= 0.1    && < 1.9
                      , unordered-containers >= 0.2    && < 0.3
                      , vector               >= 0.9    && < 0.13
                      , xhtml                >= 3000.2 && < 3000.3
@@ -303,7 +317,7 @@ test-suite spec
   ghc-options:         -Wall -threaded -rtsopts
 
   if os(windows)
-    build-depends:     Win32                >= 2.1    && < 2.4
+    build-depends:     Win32                >= 2.1    && < 2.6
   else
     build-depends:     terminfo             >= 0.3.2  && < 0.5
                      , unix                 >= 2      && < 2.8

@@ -33,7 +33,6 @@ import           Language.Haskell.TH.Syntax
 
 import           TextShow (TextShow(..), Builder,
                            fromString, singleton, toLazyText)
-import           TextShow.Data.Integral (showbIntPrec)
 import           TextShow.Text.PrettyPrint (renderB)
 import           TextShow.TH (deriveTextShow)
 
@@ -67,8 +66,8 @@ showbName' ni nm = case ni of
                Name occ NameS         -> occB occ
                Name occ (NameQ m)     -> modB m   <> singleton '.' <> occB occ
                Name occ (NameG _ _ m) -> modB m   <> singleton '.' <> occB occ
-               Name occ (NameU u)     -> occB occ <> singleton '_' <> showbIntPrec 0 (mkInt u)
-               Name occ (NameL u)     -> occB occ <> singleton '_' <> showbIntPrec 0 (mkInt u)
+               Name occ (NameU u)     -> occB occ <> singleton '_' <> showb (mkInt u)
+               Name occ (NameL u)     -> occB occ <> singleton '_' <> showb (mkInt u)
 
 #if MIN_VERSION_template_haskell(2,10,0)
     mkInt = id
@@ -280,11 +279,11 @@ $(deriveTextShow ''Strict)
 #if MIN_VERSION_template_haskell(2,12,0)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''DerivClause)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''DerivStrategy)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --

@@ -26,12 +26,13 @@ import Prelude ()
 import Prelude.Compat
 
 import System.Exit (ExitCode(..))
+import System.IO (Handle, stdin, stdout, stderr)
 
-import Test.QuickCheck (Arbitrary(..))
+import Test.QuickCheck (Arbitrary(..), oneof)
 
 #if MIN_VERSION_base(4,5,0)
 
-import Foreign.C.Types (CInt(..))
+import Foreign.C.Types (CInt(..), CUIntPtr(..))
 # if defined(HTYPE_GID_T)
 import System.Posix.Types (CGid(..))
 # endif
@@ -41,7 +42,7 @@ import System.Posix.Types (CUid(..))
 
 #else
 
-import Foreign.C.Types (CInt)
+import Foreign.C.Types (CInt, CUIntPtr)
 # if defined(HTYPE_GID_T)
 import System.Posix.Types (CGid)
 # endif
@@ -55,12 +56,16 @@ import Test.QuickCheck (arbitrarySizedBoundedIntegral)
 instance Arbitrary ExitCode where
     arbitrary = genericArbitrary
 
+instance Arbitrary Handle where
+    arbitrary = oneof $ map pure [stdin, stdout, stderr]
+
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary
 
 #if MIN_VERSION_base(4,5,0)
 
 deriving instance Arbitrary CInt
+deriving instance Arbitrary CUIntPtr
 
 # if defined(HTYPE_GID_T)
 deriving instance Arbitrary CGid
@@ -73,6 +78,9 @@ deriving instance Arbitrary CUid
 #else
 
 instance Arbitrary CInt where
+    arbitrary = arbitrarySizedBoundedIntegral
+
+instance Arbitrary CUIntPtr where
     arbitrary = arbitrarySizedBoundedIntegral
 
 # if defined(HTYPE_GID_T)

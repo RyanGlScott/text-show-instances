@@ -18,10 +18,18 @@ import Test.Hspec (Spec, hspec, parallel)
 
 #if MIN_VERSION_directory(1,1,0)
 import Data.Proxy (Proxy(..))
+
 import Instances.System.Directory ()
+
 import Spec.Utils (matchesTextShowSpec)
+
 import System.Directory (Permissions)
+# if MIN_VERSION_directory(1,2,3)
+import System.Directory (XdgDirectory)
+# endif
+
 import Test.Hspec (describe)
+
 import TextShow.System.Directory ()
 #endif
 
@@ -29,10 +37,14 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = parallel $
+spec = parallel $ do
 #if MIN_VERSION_directory(1,1,0)
     describe "Permissions" $
         matchesTextShowSpec (Proxy :: Proxy Permissions)
+# if MIN_VERSION_directory(1,2,3)
+    describe "XdgDirectory" $
+        matchesTextShowSpec (Proxy :: Proxy XdgDirectory)
+# endif
 #else
     pure ()
 #endif

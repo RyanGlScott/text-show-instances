@@ -25,7 +25,17 @@ import           Instances.Utils.GenericArbitrary (genericArbitrary)
 import           System.Directory (Permissions)
 import           Test.QuickCheck (Arbitrary(..))
 
+# if MIN_VERSION_directory(1,2,3)
+import           System.Directory (XdgDirectory(..))
+import           Test.QuickCheck (arbitraryBoundedEnum)
+# endif
+
 instance Arbitrary Permissions where
     arbitrary = genericArbitrary
 $(Generics.deriveAll0 ''Permissions)
+
+# if MIN_VERSION_directory(1,2,3)
+instance Arbitrary XdgDirectory where
+    arbitrary = arbitraryBoundedEnum
+# endif
 #endif

@@ -41,6 +41,18 @@ import           System.Win32.Info (ProcessorArchitecture(..), SYSTEM_INFO(..))
 import           System.Win32.Time (FILETIME(..), SYSTEMTIME(..),
                                     TIME_ZONE_INFORMATION(..), TimeZoneId(..))
 
+#if MIN_VERSION_Win32(2,5,0)
+import           Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION(..))
+import           System.Win32.Automation.Input (HARDWAREINPUT(..), INPUT(..))
+import           System.Win32.Automation.Input.Key (KEYBDINPUT(..))
+import           System.Win32.Automation.Input.Mouse (MOUSEINPUT(..))
+import           System.Win32.Exception.Unsupported (Unsupported(..))
+import           System.Win32.Info.Version (ProductType(..), OSVERSIONINFOEX(..))
+import           System.Win32.Mem (MEMORY_BASIC_INFORMATION(..))
+import           System.Win32.SimpleMAPI (RecipientClass(..), Recipient(..), FileTag(..),
+                                          Attachment(..), Message(..))
+#endif
+
 import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 
 instance Arbitrary DebugEventInfo where
@@ -74,6 +86,51 @@ deriving instance Enum TimeZoneId
 instance Arbitrary TimeZoneId where
     arbitrary = arbitraryBoundedEnum
 
+#if MIN_VERSION_Win32(2,5,0)
+instance Arbitrary BLENDFUNCTION where
+    arbitrary = genericArbitrary
+
+instance Arbitrary KEYBDINPUT where
+    arbitrary = genericArbitrary
+
+instance Arbitrary MOUSEINPUT where
+    arbitrary = genericArbitrary
+
+instance Arbitrary HARDWAREINPUT where
+    arbitrary = genericArbitrary
+
+instance Arbitrary INPUT where
+    arbitrary = genericArbitrary
+
+instance Arbitrary ProductType where
+    arbitrary = genericArbitrary
+
+instance Arbitrary OSVERSIONINFOEX where
+    arbitrary = genericArbitrary
+
+instance Arbitrary MEMORY_BASIC_INFORMATION where
+    arbitrary = genericArbitrary
+
+deriving instance Bounded RecipientClass
+instance Arbitrary RecipientClass where
+    arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary Recipient where
+    arbitrary = genericArbitrary
+
+instance Arbitrary FileTag where
+    arbitrary = genericArbitrary
+
+instance Arbitrary Attachment where
+    arbitrary = genericArbitrary
+
+instance Arbitrary Message where
+    arbitrary = genericArbitrary
+
+instance Arbitrary Unsupported where
+    arbitrary = genericArbitrary
+#endif
+
 # if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic DebugEventInfo
 deriving instance Generic Exception
@@ -83,6 +140,22 @@ deriving instance Generic ProcessorArchitecture
 deriving instance Generic SYSTEM_INFO
 deriving instance Generic SYSTEMTIME
 deriving instance Generic TIME_ZONE_INFORMATION
+#  if MIN_VERSION_Win32(2,5,0)
+deriving instance Generic BLENDFUNCTION
+deriving instance Generic KEYBDINPUT
+deriving instance Generic MOUSEINPUT
+deriving instance Generic HARDWAREINPUT
+deriving instance Generic INPUT
+deriving instance Generic ProductType
+deriving instance Generic OSVERSIONINFOEX
+deriving instance Generic MEMORY_BASIC_INFORMATION
+deriving instance Generic RecipientClass
+deriving instance Generic Recipient
+deriving instance Generic FileTag
+deriving instance Generic Attachment
+deriving instance Generic Message
+deriving instance Generic Unsupported
+#  endif
 # else
 $(Generics.deriveAll0 ''DebugEventInfo)
 $(Generics.deriveAll0 ''Exception)

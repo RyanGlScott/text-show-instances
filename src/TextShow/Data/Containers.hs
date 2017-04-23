@@ -96,9 +96,9 @@ instance TextShow1 Set where
     liftShowbPrec _ sl p = showbUnaryListWith sl p . Set.toList
     {-# INLINE liftShowbPrec #-}
 
--- | /Since: next/
+-- | /Since: 3.6/
 $(deriveTextShow  ''SCC)
--- | /Since: next/
+-- | /Since: 3.6/
 $(deriveTextShow1 ''SCC)
 
 -- | /Since: 2/

@@ -22,11 +22,11 @@ import Data.Fixed (Pico)
 import Data.Monoid.Compat
 import Data.Semigroup (mtimesDefault)
 import Data.Time.Calendar (Day, toGregorian)
-import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
+import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime, UniversalTime)
 import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
 import Data.Time.Format (NumericPadOption)
 import Data.Time.LocalTime (TimeZone(..), TimeOfDay(..), LocalTime(..), ZonedTime(..),
-                            utc, utcToLocalTime, utcToZonedTime)
+                            ut1ToLocalTime, utc, utcToLocalTime, utcToZonedTime)
 
 import TextShow (TextShow(..), Builder, FromStringShow(..),
                  fromString, lengthB, showbSpace, singleton)
@@ -36,6 +36,14 @@ import TextShow.Data.Integral ()
 #if MIN_VERSION_time(1,5,0)
 import Data.Time.Format (TimeLocale)
 import TextShow.TH (deriveTextShow)
+#endif
+
+#if MIN_VERSION_time(1,7,0)
+import Data.Maybe (fromJust)
+#endif
+
+#if MIN_VERSION_time(1,8,0)
+import Data.Time.Clock.System (SystemTime)
 #endif
 
 pad1 :: NumericPadOption -> Builder -> Builder
@@ -116,7 +124,12 @@ instance TextShow NominalDiffTime where
 
 -- | /Since: 2/
 instance TextShow AbsoluteTime where
-    showb t = showb (utcToLocalTime utc $ taiToUTCTime (const 0) t)
+    showb t = showb (utcToLocalTime utc $
+#if MIN_VERSION_time(1,7,0)
+                                          fromJust $ taiToUTCTime (const (Just 0)) t)
+#else
+                                          taiToUTCTime (const 0) t)
+#endif
               <> " TAI" -- ugly, but standard apparently
     {-# INLINE showb #-}
 
@@ -145,9 +158,21 @@ instance TextShow ZonedTime where
     showb (ZonedTime t zone) = showb t <> showbSpace <> showb zone
     {-# INLINE showb #-}
 
+-- | /Since: 3.6/
+instance TextShow UniversalTime where
+    showb t = showb $ ut1ToLocalTime 0 t
+    {-# INLINE showb #-}
+
 #if MIN_VERSION_time(1,5,0)
 -- | Only available with @time-1.5@ or later.
 --
 -- /Since: 2/
 $(deriveTextShow ''TimeLocale)
+#endif
+
+#if MIN_VERSION_time(1,8,0)
+-- | Only available with @time-1.8@ or later.
+--
+-- /Since: 3.6/
+$(deriveTextShow ''SystemTime)
 #endif
