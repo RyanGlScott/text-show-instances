@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             3.5
+version:             3.6
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in

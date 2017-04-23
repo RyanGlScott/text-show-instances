@@ -27,7 +27,7 @@ module TextShow.GHC.ForeignSrcLang.Type () where
 import GHC.ForeignSrcLang.Type (ForeignSrcLang)
 import TextShow.TH (deriveTextShow)
 
--- | /Since: next/
+-- | /Since: 3.6/
 $(deriveTextShow ''ForeignSrcLang)
 # endif
 #endif

@@ -67,60 +67,60 @@ $(deriveTextShow ''TimeZoneId)
 # if MIN_VERSION_Win32(2,5,0)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''BLENDFUNCTION)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''KEYBDINPUT)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''MOUSEINPUT)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''HARDWAREINPUT)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''INPUT)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''ProductType)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''OSVERSIONINFOEX)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''MEMORY_BASIC_INFORMATION)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''RecipientClass)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''Recipient)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''FileTag)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''Attachment)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''Message)
 
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 instance TextShow Unsupported where
   showb (MissingLibrary  name reason)
     = "Can't load library \"" <> fromString name <> "\". "  <> fromString reason

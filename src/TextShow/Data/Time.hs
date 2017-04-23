@@ -158,7 +158,7 @@ instance TextShow ZonedTime where
     showb (ZonedTime t zone) = showb t <> showbSpace <> showb zone
     {-# INLINE showb #-}
 
--- | /Since: next/
+-- | /Since: 3.6/
 instance TextShow UniversalTime where
     showb t = showb $ ut1ToLocalTime 0 t
     {-# INLINE showb #-}
@@ -173,6 +173,6 @@ $(deriveTextShow ''TimeLocale)
 #if MIN_VERSION_time(1,8,0)
 -- | Only available with @time-1.8@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''SystemTime)
 #endif

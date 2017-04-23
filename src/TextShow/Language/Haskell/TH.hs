@@ -279,11 +279,11 @@ $(deriveTextShow ''Strict)
 #if MIN_VERSION_template_haskell(2,12,0)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''DerivClause)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''DerivStrategy)
 -- | Only available with @template-haskell-2.12.0.0@ or later.
 --

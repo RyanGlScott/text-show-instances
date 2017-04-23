@@ -28,6 +28,6 @@ $(deriveTextShow ''Permissions)
 #if MIN_VERSION_directory(1,2,3)
 -- | Only available with @directory-1.2.3.0@ or later.
 --
--- /Since: next/
+-- /Since: 3.6/
 $(deriveTextShow ''XdgDirectory)
 #endif

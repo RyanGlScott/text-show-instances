@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.6 [2017.04.22]
 * New `TextShow` instances:
   * `directory`: `XdgDirectory` (from `System.Directory`)
   * `ghc-boot-th`: `ForeignSrcLang` (from `GHC.ForeignSrcLang.Type`)
