@@ -28,6 +28,17 @@ import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
 import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 
+# if MIN_VERSION_Win32(2,5,0)
+import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
+import System.Win32.Automation.Input (HARDWAREINPUT, INPUT)
+import System.Win32.Automation.Input.Key (KEYBDINPUT)
+import System.Win32.Automation.Input.Mouse (MOUSEINPUT)
+import System.Win32.Exception.Unsupported (Unsupported(..))
+import System.Win32.Info.Version (ProductType, OSVERSIONINFOEX)
+import System.Win32.Mem (MEMORY_BASIC_INFORMATION)
+import System.Win32.SimpleMAPI (RecipientClass, Recipient, FileTag, Attachment, Message)
+# endif
+
 import Test.Hspec (describe)
 
 import TextShow.System.Win32 ()
@@ -59,6 +70,36 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy TIME_ZONE_INFORMATION)
     describe "TimeZoneId" $
         matchesTextShowSpec (Proxy :: Proxy TimeZoneId)
+# if MIN_VERSION_Win32(2,5,0)
+    describe "BLENDFUNCTION" $
+        matchesTextShowSpec (Proxy :: Proxy BLENDFUNCTION)
+    describe "KEYBDINPUT" $
+        matchesTextShowSpec (Proxy :: Proxy KEYBDINPUT)
+    describe "MOUSEINPUT" $
+        matchesTextShowSpec (Proxy :: Proxy MOUSEINPUT)
+    describe "HARDWAREINPUT" $
+        matchesTextShowSpec (Proxy :: Proxy HARDWAREINPUT)
+    describe "INPUT" $
+        matchesTextShowSpec (Proxy :: Proxy INPUT)
+    describe "ProductType" $
+        matchesTextShowSpec (Proxy :: Proxy ProductType)
+    describe "OSVERSIONINFOEX" $
+        matchesTextShowSpec (Proxy :: Proxy OSVERSIONINFOEX)
+    describe "MEMORY_BASIC_INFORMATION" $
+        matchesTextShowSpec (Proxy :: Proxy MEMORY_BASIC_INFORMATION)
+    describe "RecipientClass" $
+        matchesTextShowSpec (Proxy :: Proxy RecipientClass)
+    describe "Recipient" $
+        matchesTextShowSpec (Proxy :: Proxy Recipient)
+    describe "FileTag" $
+        matchesTextShowSpec (Proxy :: Proxy FileTag)
+    describe "Attachment" $
+        matchesTextShowSpec (Proxy :: Proxy Attachment)
+    describe "Message" $
+        matchesTextShowSpec (Proxy :: Proxy Message)
+    describe "Unsupported" $
+        matchesTextShowSpec (Proxy :: Proxy Unsupported)
+# endif
 #else
     pure ()
 #endif

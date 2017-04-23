@@ -34,7 +34,6 @@ import System.Win32.Automation.Input (HARDWAREINPUT, INPUT)
 import System.Win32.Automation.Input.Key (KEYBDINPUT)
 import System.Win32.Automation.Input.Mouse (MOUSEINPUT)
 import System.Win32.Exception.Unsupported (Unsupported(..))
-import System.Win32.HardLink (VolumeInformation)
 import System.Win32.Info.Version (ProductType, OSVERSIONINFOEX)
 import System.Win32.Mem (MEMORY_BASIC_INFORMATION)
 import System.Win32.SimpleMAPI (RecipientClass, Recipient, FileTag, Attachment, Message)
@@ -89,10 +88,6 @@ $(deriveTextShow ''INPUT)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
 -- /Since: next/
-$(deriveTextShow ''VolumeInformation)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: next/
 $(deriveTextShow ''ProductType)
 -- | Only available with @Win32-2.5.0.0@ or later.
 --
@@ -128,7 +123,7 @@ $(deriveTextShow ''Message)
 -- /Since: next/
 instance TextShow Unsupported where
   showb (MissingLibrary  name reason)
-    = "Can't load library \"" <> fromString name <> "\". "  <> reason
+    = "Can't load library \"" <> fromString name <> "\". "  <> fromString reason
   showb (MissingFunction name reason)
     = "Can't find \"" <> fromString name <> "\" function. " <> fromString reason
   showb (MissingValue    name reason)

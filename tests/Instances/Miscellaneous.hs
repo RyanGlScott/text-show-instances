@@ -32,7 +32,7 @@ import Test.QuickCheck (Arbitrary(..), oneof)
 
 #if MIN_VERSION_base(4,5,0)
 
-import Foreign.C.Types (CInt(..))
+import Foreign.C.Types (CInt(..), CUIntPtr(..))
 # if defined(HTYPE_GID_T)
 import System.Posix.Types (CGid(..))
 # endif
@@ -42,7 +42,7 @@ import System.Posix.Types (CUid(..))
 
 #else
 
-import Foreign.C.Types (CInt)
+import Foreign.C.Types (CInt, CUIntPtr)
 # if defined(HTYPE_GID_T)
 import System.Posix.Types (CGid)
 # endif
@@ -65,6 +65,7 @@ instance Arbitrary (Ptr a) where
 #if MIN_VERSION_base(4,5,0)
 
 deriving instance Arbitrary CInt
+deriving instance Arbitrary CUIntPtr
 
 # if defined(HTYPE_GID_T)
 deriving instance Arbitrary CGid
@@ -77,6 +78,9 @@ deriving instance Arbitrary CUid
 #else
 
 instance Arbitrary CInt where
+    arbitrary = arbitrarySizedBoundedIntegral
+
+instance Arbitrary CUIntPtr where
     arbitrary = arbitrarySizedBoundedIntegral
 
 # if defined(HTYPE_GID_T)
