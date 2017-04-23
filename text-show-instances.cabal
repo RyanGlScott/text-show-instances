@@ -126,6 +126,9 @@ library
                        -- Only exports functions if using ghc-boot-th
                        TextShow.GHC.LanguageExtensions.Type
 
+                       -- Only exports functions if using ghc-boot-th-8.2 or later
+                       TextShow.GHC.ForeignSrcLang.Type
+
                        -- Only exports functions if using Windows
                        TextShow.System.Win32
 
@@ -210,6 +213,9 @@ test-suite spec
                        -- Only defines instances if using ghc-boot-th
                        Instances.GHC.LanguageExtensions.Type
 
+                       -- Only defines instances if using ghc-boot-th-8.2 or later
+                       Instances.GHC.ForeignSrcLang.Type
+
                        -- Only defines instances if using Windows
                        Instances.System.Win32
 
@@ -240,6 +246,9 @@ test-suite spec
 
                        -- Only defines tests if using ghc-boot-th
                        Spec.GHC.LanguageExtensions.TypeSpec
+
+                       -- Only exports functions if using ghc-boot-th-8.2 or later
+                       Spec.GHC.ForeignSrcLang.TypeSpec
 
                        -- Only defines tests if using Windows
                        Spec.System.Win32Spec
