@@ -33,9 +33,11 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-#if defined(MIN_VERSION_ghc_boot_th) && MIN_VERSION_ghc_boot_th(8,2,0)
+#if defined(MIN_VERSION_ghc_boot_th)
+# if MIN_VERSION_ghc_boot_th(8,2,0)
     describe "ForeignSrcLang" $
         matchesTextShowSpec (Proxy :: Proxy ForeignSrcLang)
+# endif
 #else
     pure ()
 #endif
