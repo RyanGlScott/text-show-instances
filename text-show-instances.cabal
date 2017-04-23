@@ -216,6 +216,9 @@ test-suite spec
                        -- Only defines instances if using ghc-boot-th-8.2 or later
                        Instances.GHC.ForeignSrcLang.Type
 
+                       -- Only defines instances if using time-1.8 or later
+                       Instances.Data.Time
+
                        -- Only defines instances if using Windows
                        Instances.System.Win32
 

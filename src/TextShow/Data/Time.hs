@@ -42,6 +42,10 @@ import TextShow.TH (deriveTextShow)
 import Data.Maybe (fromJust)
 #endif
 
+#if MIN_VERSION_time(1,8,0)
+import Data.Time.Clock.System (SystemTime)
+#endif
+
 pad1 :: NumericPadOption -> Builder -> Builder
 pad1 (Just c) b = singleton c <> b
 pad1 _        b = b
@@ -164,4 +168,11 @@ instance TextShow UniversalTime where
 --
 -- /Since: 2/
 $(deriveTextShow ''TimeLocale)
+#endif
+
+#if MIN_VERSION_time(1,8,0)
+-- | Only available with @time-1.8@ or later.
+--
+-- /Since: next/
+$(deriveTextShow ''SystemTime)
 #endif

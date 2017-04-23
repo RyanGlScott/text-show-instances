@@ -18,8 +18,13 @@ import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
 #if MIN_VERSION_time(1,6,0)
 import Data.Time (UniversalTime)
 #endif
+#if MIN_VERSION_time(1,8,0)
+import Data.Time.Clock.System (SystemTime)
+#endif
 import Data.Time.Clock.TAI (AbsoluteTime)
 import Data.Time.LocalTime (TimeZone, TimeOfDay, LocalTime, ZonedTime)
+
+import Instances.Data.Time ()
 
 import Spec.Utils (matchesTextShowSpec)
 
@@ -54,4 +59,8 @@ spec = parallel $ do
 #if MIN_VERSION_time(1,6,0)
     describe "UniversalTime" $
         matchesTextShowSpec (Proxy :: Proxy UniversalTime)
+#endif
+#if MIN_VERSION_time(1,8,0)
+    describe "SystemTime" $
+        matchesTextShowSpec (Proxy :: Proxy SystemTime)
 #endif

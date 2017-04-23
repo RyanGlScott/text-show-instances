@@ -2,7 +2,7 @@
 * New `TextShow` instances:
   * `directory`: `XdgDirectory` (from `System.Directory`)
   * `ghc-boot-th`: `ForeignSrcLang` (from `GHC.ForeignSrcLang.Type`)
-  * `time`: `UniversalTime` (from `Data.Time.Clock`)
+  * `time`: `UniversalTime` (from `Data.Time.Clock`) and `SystemTime` (from `Data.Time.Clock.System` with `time-1.8` or later)
   * `Win32`: Lots of datatypes added in `Win32-2.5.0.0`
 * Remove most monomorphic `TextShow` functions, as their utility is questionable, and their maintenance burden is undeniable
 * Made the instances in `TextShow.Data.Bifunctor` poly-kinded when possible
