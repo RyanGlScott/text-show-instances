@@ -1,14 +1,8 @@
 {-# LANGUAGE CPP                #-}
 
 #if !defined(mingw32_HOST_OS)
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE TemplateHaskell    #-}
-{-# LANGUAGE TypeFamilies       #-}
-
-# if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric      #-}
-# endif
-
+{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
 
@@ -25,11 +19,7 @@ Provides 'Arbitrary' instances for data types in the @unix@ library.
 module Instances.System.Posix () where
 
 #if !defined(mingw32_HOST_OS)
-# if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
-# else
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-# endif
 
 import           Instances.Miscellaneous ()
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
@@ -60,15 +50,8 @@ instance Arbitrary GroupEntry where
 instance Arbitrary UserEntry where
     arbitrary = genericArbitrary
 
-# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic DL
 deriving instance Generic ProcessStatus
 deriving instance Generic GroupEntry
 deriving instance Generic UserEntry
-# else
-$(Generics.deriveAll0 ''DL)
-$(Generics.deriveAll0 ''ProcessStatus)
-$(Generics.deriveAll0 ''GroupEntry)
-$(Generics.deriveAll0 ''UserEntry)
-# endif
 #endif

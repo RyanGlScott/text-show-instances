@@ -1,15 +1,9 @@
 {-# LANGUAGE CPP                        #-}
 
 #if defined(mingw32_HOST_OS)
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
-{-# LANGUAGE TemplateHaskell            #-}
-{-# LANGUAGE TypeFamilies               #-}
-
-# if __GLASGOW_HASKELL__ >= 702
-{-# LANGUAGE DeriveGeneric              #-}
-# endif
-
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
 
@@ -26,11 +20,7 @@ Provides 'Arbitrary' instances for data types in the @Win32@ library.
 module Instances.System.Win32 () where
 
 #if defined(mingw32_HOST_OS)
-# if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
-# else
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-# endif
 
 import           Instances.Miscellaneous ()
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
@@ -131,7 +121,6 @@ instance Arbitrary Unsupported where
     arbitrary = genericArbitrary
 #endif
 
-# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic DebugEventInfo
 deriving instance Generic Exception
 deriving instance Generic BY_HANDLE_FILE_INFORMATION
@@ -140,7 +129,7 @@ deriving instance Generic ProcessorArchitecture
 deriving instance Generic SYSTEM_INFO
 deriving instance Generic SYSTEMTIME
 deriving instance Generic TIME_ZONE_INFORMATION
-#  if MIN_VERSION_Win32(2,5,0)
+# if MIN_VERSION_Win32(2,5,0)
 deriving instance Generic BLENDFUNCTION
 deriving instance Generic KEYBDINPUT
 deriving instance Generic MOUSEINPUT
@@ -155,15 +144,5 @@ deriving instance Generic FileTag
 deriving instance Generic Attachment
 deriving instance Generic Message
 deriving instance Generic Unsupported
-#  endif
-# else
-$(Generics.deriveAll0 ''DebugEventInfo)
-$(Generics.deriveAll0 ''Exception)
-$(Generics.deriveAll0 ''BY_HANDLE_FILE_INFORMATION)
-$(Generics.deriveAll0 ''WIN32_FILE_ATTRIBUTE_DATA)
-$(Generics.deriveAll0 ''ProcessorArchitecture)
-$(Generics.deriveAll0 ''SYSTEM_INFO)
-$(Generics.deriveAll0 ''SYSTEMTIME)
-$(Generics.deriveAll0 ''TIME_ZONE_INFORMATION)
 # endif
 #endif

@@ -1,12 +1,6 @@
 {-# LANGUAGE CPP                #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE TemplateHaskell    #-}
-{-# LANGUAGE TypeFamilies       #-}
-
-#if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric      #-}
-#endif
-
+{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.System.Console.Haskeline
@@ -20,11 +14,7 @@ Provides 'Arbitrary' instances for data types in the @haskeline@ library.
 -}
 module Instances.System.Console.Haskeline () where
 
-#if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
-#else
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-#endif
 
 import           Instances.Utils ((<@>))
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
@@ -51,8 +41,4 @@ instance Arbitrary Completion where
 instance Arbitrary History where
     arbitrary = addHistory <$> arbitrary <@> emptyHistory
 
-#if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic Completion
-#else
-$(Generics.deriveAll0 ''Completion)
-#endif

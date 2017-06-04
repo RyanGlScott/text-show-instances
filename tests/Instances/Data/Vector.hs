@@ -1,12 +1,6 @@
 {-# LANGUAGE CPP                #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE TemplateHaskell    #-}
-{-# LANGUAGE TypeFamilies       #-}
-
-#if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE DeriveGeneric      #-}
-#endif
-
+{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Data.Vector
@@ -29,11 +23,7 @@ import           Data.Vector.Generic (fromList)
 import qualified Data.Vector.Primitive as P (Vector)
 import           Data.Vector.Primitive (Prim)
 
-#if __GLASGOW_HASKELL__ >= 704
 import           GHC.Generics (Generic)
-#else
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-#endif
 
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
@@ -49,8 +39,4 @@ instance (Arbitrary a, Prim a) => Arbitrary (P.Vector a) where
 instance Arbitrary Size where
     arbitrary = genericArbitrary
 
-#if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic Size
-#else
-$(Generics.deriveAll0 ''Size)
-#endif

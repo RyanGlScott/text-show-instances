@@ -1,14 +1,8 @@
 {-# LANGUAGE CPP                        #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
-{-# LANGUAGE TemplateHaskell            #-}
-{-# LANGUAGE TypeFamilies               #-}
-
-#if __GLASGOW_HASKELL__ >= 702
-{-# LANGUAGE DeriveGeneric              #-}
-#endif
-
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Control.Applicative.Trans

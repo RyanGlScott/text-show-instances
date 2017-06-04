@@ -1,13 +1,7 @@
 {-# LANGUAGE CPP                        #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
-{-# LANGUAGE TemplateHaskell            #-}
-{-# LANGUAGE TypeFamilies               #-}
-
-#if __GLASGOW_HASKELL__ >= 702
-{-# LANGUAGE DeriveGeneric              #-}
-#endif
-
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Text.PrettyPrint
@@ -21,6 +15,10 @@ Provides 'Arbitrary' instances for data types in the @pretty@ library
 (as well as 'Show' instances if using an old version of @pretty@).
 -}
 module Instances.Text.PrettyPrint () where
+
+#if !(MIN_VERSION_pretty(1,1,2)) || MIN_VERSION_pretty(1,1,3)
+import           GHC.Generics (Generic)
+#endif
 
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
@@ -39,14 +37,6 @@ import           Text.PrettyPrint.HughesPJClass (PrettyLevel(..))
 import qualified Text.PrettyPrint.Annotated.HughesPJ as Annot (Doc, text)
 import           Text.PrettyPrint.Annotated.HughesPJ (AnnotDetails(..), Span(..))
 import qualified Text.PrettyPrint.Annotated.HughesPJClass as Annot (PrettyLevel(..))
-#endif
-
-#if !(MIN_VERSION_pretty(1,1,2)) || MIN_VERSION_pretty(1,1,3)
-# if __GLASGOW_HASKELL__ >= 704
-import           GHC.Generics (Generic)
-# else
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-# endif
 #endif
 
 instance Arbitrary Doc where
@@ -70,13 +60,8 @@ deriving instance Show Mode
 deriving instance Show Style
 deriving instance Show TextDetails
 
-# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic Style
 deriving instance Generic TextDetails
-# else
-$(Generics.deriveAll0 ''Style)
-$(Generics.deriveAll0 ''TextDetails)
-# endif
 #endif
 
 #if MIN_VERSION_pretty(1,1,3)
@@ -91,11 +76,6 @@ deriving instance Arbitrary Annot.PrettyLevel
 instance Arbitrary a => Arbitrary (Span a) where
     arbitrary = genericArbitrary
 
-# if __GLASGOW_HASKELL__ >= 704
 deriving instance Generic (AnnotDetails a)
 deriving instance Generic (Span a)
-# else
-$(Generics.deriveAll0 ''AnnotDetails)
-$(Generics.deriveAll0 ''Span)
-# endif
 #endif
