@@ -1,4 +1,5 @@
 ### next [????.??.??]
+* Drop support for GHC 7.0 and 7.2
 * Allow building with `quickcheck-instances-0.3.14`
 
 ## 3.6 [2017.04.22]

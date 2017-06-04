@@ -163,13 +163,6 @@ $(deriveTextShow ''TyVarBndr)
 instance TextShow Doc where
     showb = renderB . to_HPJ_Doc
 
-#if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
--- | Only available with @template-haskell-2.5@.
---
--- /Since: 2/
-$(deriveTextShow ''ClassInstance)
-#endif
-
 #if MIN_VERSION_template_haskell(2,8,0)
 -- | Only available with @template-haskell-2.8.0.0@ or later.
 --

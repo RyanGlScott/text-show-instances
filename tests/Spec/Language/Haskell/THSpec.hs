@@ -45,10 +45,6 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy Body)
     describe "Callconv" $
         matchesTextShowSpec (Proxy :: Proxy Callconv)
-#if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
-    describe "ClassInstance" $
-        matchesTextShowSpec (Proxy :: Proxy ClassInstance)
-#endif
     describe "Clause" $
         matchesTextShowSpec (Proxy :: Proxy Clause)
     describe "Con" $

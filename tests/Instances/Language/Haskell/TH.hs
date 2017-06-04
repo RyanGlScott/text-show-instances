@@ -194,13 +194,9 @@ instance Arbitrary Exp where
                       , SigE fExp <$> arbitrary
                       , RecConE <$> arbitrary <@> [fFieldExp]
                       , pure $ RecUpdE fExp [fFieldExp]
-#if MIN_VERSION_template_haskell(2,6,0)
                       , pure $ UnboxedTupE [fExp]
-#endif
-#if MIN_VERSION_template_haskell(2,7,0)
                       , pure $ UInfixE fExp fExp fExp
                       , pure $ ParensE fExp
-#endif
 #if MIN_VERSION_template_haskell(2,8,0)
                       , pure $ LamCaseE [fMatch]
                       , pure $ MultiIfE [(fGuard, fExp)]
@@ -233,13 +229,9 @@ instance Arbitrary Exp where
 --                       , SigE        <$> arbitrary <*> arbitrary
 --                       , RecConE     <$> arbitrary <*> arbitrary
 --                       , RecUpdE     <$> arbitrary <*> arbitrary
--- #if MIN_VERSION_template_haskell(2,6,0)
 --                       , UnboxedTupE <$> arbitrary
--- #endif
--- #if MIN_VERSION_template_haskell(2,7,0)
 --                       , UInfixE     <$> arbitrary <*> arbitrary <*> arbitrary
 --                       , ParensE     <$> arbitrary
--- #endif
 -- #if MIN_VERSION_template_haskell(2,8,0)
 --                       , LamCaseE    <$> arbitrary
 --                       , MultiIfE    <$> arbitrary
@@ -276,13 +268,7 @@ instance Arbitrary Guard where
 
 instance Arbitrary Info where
     arbitrary = oneof [
-#if   MIN_VERSION_template_haskell(2,7,0)
           pure $ ClassI fDec [fDec]
-#elif MIN_VERSION_template_haskell(2,5,0)
-          pure $ ClassI fDec [fClassInstance]
-#else
-          pure $ ClassI fDec
-#endif
         , ClassOpI   <$> arbitrary
                      <*> arbitrary
                      <*> arbitrary
@@ -304,28 +290,20 @@ instance Arbitrary Info where
                      <*> arbitrary
 #endif
         , TyVarI     <$> arbitrary <*> arbitrary
-#if MIN_VERSION_template_haskell(2,7,0)
         , pure $ FamilyI fDec [fDec]
-#endif
 #if MIN_VERSION_template_haskell(2,12,0)
         , PatSynI    <$> arbitrary <*> arbitrary
 #endif
         ]
 --     arbitrary = oneof [
--- #if MIN_VERSION_template_haskell(2,5,0)
 --           ClassI     <$> arbitrary <*> arbitrary
--- #else
---           ClassI     <$> arbitrary
--- #endif
 --         , ClassOpI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 --         , TyConI     <$> arbitrary
 --         , PrimTyConI <$> arbitrary <*> arbitrary <*> arbitrary
 --         , DataConI   <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 --         , VarI       <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary
 --         , TyVarI     <$> arbitrary <*> arbitrary
--- #if MIN_VERSION_template_haskell(2,7,0)
 --         , FamilyI    <$> arbitrary <*> arbitrary
--- #endif
 --         ]
 
 instance Arbitrary Lit where
@@ -368,16 +346,10 @@ instance Arbitrary Pat where
                       , RecP <$> arbitrary <@> [fFieldPat]
                       , pure $ ListP [fPat]
                       , SigP fPat <$> arbitrary
-#if MIN_VERSION_template_haskell(2,5,0)
                       , pure $ ViewP fExp fPat
-#endif
-#if MIN_VERSION_template_haskell(2,6,0)
                       , pure $ UnboxedTupP [fPat]
-#endif
-#if MIN_VERSION_template_haskell(2,7,0)
                       , UInfixP fPat <$> arbitrary <@> fPat
                       , pure $ ParensP fPat
-#endif
 #if MIN_VERSION_template_haskell(2,12,0)
                       , UnboxedSumP fPat <$> arbitrary <*> arbitrary
 #endif
@@ -394,16 +366,10 @@ instance Arbitrary Pat where
 --                       , RecP        <$> arbitrary <*> arbitrary
 --                       , ListP       <$> arbitrary
 --                       , SigP        <$> arbitrary <*> arbitrary
--- #if MIN_VERSION_template_haskell(2,5,0)
 --                       , ViewP       <$> arbitrary <*> arbitrary
--- #endif
--- #if MIN_VERSION_template_haskell(2,6,0)
 --                       , UnboxedTupP <$> arbitrary
--- #endif
--- #if MIN_VERSION_template_haskell(2,7,0)
 --                       , UInfixP     <$> arbitrary <*> arbitrary <*> arbitrary
 --                       , ParensP     <$> arbitrary
--- #endif
 --                       ]
 
 instance Arbitrary Pragma where
@@ -447,9 +413,7 @@ instance Arbitrary Type where
                       , pure ListT
                       , pure $ AppT fType fType
                       , pure $ SigT fType fKind
-#if MIN_VERSION_template_haskell(2,6,0)
                       , UnboxedTupleT <$> arbitrary
-#endif
 #if MIN_VERSION_template_haskell(2,8,0)
                       , PromotedT <$> arbitrary
                       , PromotedTupleT <$> arbitrary
@@ -480,10 +444,7 @@ instance Arbitrary Type where
 --                       , pure ListT
 --                       , AppT           <$> arbitrary <*> arbitrary
 --                       , SigT           <$> arbitrary <*> arbitrary
--- #if MIN_VERSION_template_haskell(2,6,0)
 --                       , UnboxedTupleT  <$> arbitrary
--- #endif
--- #if MIN_VERSION_template_haskell(2,7,0)
 --                       , PromotedT      <$> arbitrary
 --                       , PromotedTupleT <$> arbitrary
 --                       , pure PromotedNilT
@@ -491,7 +452,6 @@ instance Arbitrary Type where
 --                       , pure StarT
 --                       , pure ConstraintT
 --                       , LitT           <$> arbitrary
--- #endif
 -- #if MIN_VERSION_template_haskell(2,10,0)
 --                       , pure EqualityT
 -- #endif
@@ -500,11 +460,6 @@ instance Arbitrary Type where
 instance Arbitrary TyVarBndr where
     arbitrary = oneof [PlainTV  <$> arbitrary, KindedTV <$> arbitrary <@> fKind]
 --     arbitrary = oneof [PlainTV <$> arbitrary, KindedTV <$> arbitrary <*> arbitrary]
-
-#if MIN_VERSION_template_haskell(2,5,0) && !(MIN_VERSION_template_haskell(2,7,0))
-instance Arbitrary ClassInstance where
-    arbitrary = genericArbitrary
-#endif
 
 #if MIN_VERSION_template_haskell(2,8,0)
 deriving instance Bounded Inline
@@ -643,11 +598,6 @@ deriving instance Arbitrary PkgName
 
 fBody :: Body
 fBody = GuardedB []
-
-#if MIN_VERSION_template_haskell(2,5,0) && !MIN_VERSION_template_haskell(2,7,0)
-fClassInstance :: ClassInstance
-fClassInstance = ClassInstance fName [fTyVarBndr] [fPred] fName [fType]
-#endif
 
 fClause :: Clause
 fClause = Clause [] fBody []
