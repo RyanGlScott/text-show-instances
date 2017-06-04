@@ -13,11 +13,10 @@ module Spec.Data.TaggedSpec (main, spec) where
 import Data.Proxy (Proxy(..))
 import Data.Tagged (Tagged)
 
-import Instances.Data.Tagged ()
-
 import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
+import Test.QuickCheck.Instances ()
 
 import TextShow.Data.Tagged ()
 
