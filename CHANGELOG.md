@@ -1,3 +1,6 @@
+### next [2017.06.18]
+* Require `QuickCheck-2.10`/`quickcheck-instances-0.13.6` or later
+
 ### 3.6.1 [2017.06.04]
 * Drop support for GHC 7.0 and 7.2
 * Allow building with `quickcheck-instances-0.3.14`

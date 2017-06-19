@@ -22,6 +22,7 @@ import Instances.Data.Functor.Trans ()
 import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
+import Test.QuickCheck.Instances ()
 
 import TextShow.Data.Functor.Trans ()
 

@@ -185,13 +185,9 @@ $(deriveTextShow ''RuleMatch)
 -- /Since: 2/
 $(deriveTextShow ''TyLit)
 #else
--- | Only available with @template-haskell-2.7@ or earlier.
---
--- /Since: 2/
+-- | /Since: 2/
 $(deriveTextShow ''InlineSpec)
--- | Only available with @template-haskell-2.7@ or earlier.
---
--- /Since: 2/
+-- | /Since: 2/
 $(deriveTextShow ''Kind)
 #endif
 

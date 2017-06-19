@@ -32,6 +32,7 @@ import           System.Posix.Process (ProcessStatus(..))
 import           System.Posix.User (GroupEntry(..), UserEntry(..))
 
 import           Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
+import           Test.QuickCheck.Instances ()
 
 deriving instance Bounded RTLDFlags
 deriving instance Enum RTLDFlags

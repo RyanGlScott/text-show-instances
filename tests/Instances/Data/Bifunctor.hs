@@ -1,9 +1,6 @@
-{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
-{-# LANGUAGE TemplateHaskell            #-}
-{-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE UndecidableInstances       #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
@@ -19,24 +16,20 @@ Provides an 'Arbitrary' instance for data types in the @bifunctors@ library.
 -}
 module Instances.Data.Bifunctor () where
 
-import           Data.Bifunctor.Biff (Biff(..))
-import           Data.Bifunctor.Clown (Clown(..))
-import           Data.Bifunctor.Fix (Fix(..))
-import           Data.Bifunctor.Flip (Flip(..))
-import           Data.Bifunctor.Join (Join(..))
-import           Data.Bifunctor.Joker (Joker(..))
-import           Data.Bifunctor.Product (Product(..))
-import           Data.Bifunctor.Sum (Sum(..))
-import           Data.Bifunctor.Tannen (Tannen(..))
-import           Data.Bifunctor.Wrapped (WrappedBifunctor(..))
+import Data.Bifunctor.Biff (Biff(..))
+import Data.Bifunctor.Clown (Clown(..))
+import Data.Bifunctor.Fix (Fix(..))
+import Data.Bifunctor.Flip (Flip(..))
+import Data.Bifunctor.Join (Join(..))
+import Data.Bifunctor.Joker (Joker(..))
+import Data.Bifunctor.Product (Product(..))
+import Data.Bifunctor.Sum (Sum(..))
+import Data.Bifunctor.Tannen (Tannen(..))
+import Data.Bifunctor.Wrapped (WrappedBifunctor(..))
 
-#if __GLASGOW_HASKELL__ < 702
-import qualified Generics.Deriving.TH as Generics (deriveAll0)
-#endif
+import Instances.Utils.GenericArbitrary (genericArbitrary)
 
-import           Instances.Utils.GenericArbitrary (genericArbitrary)
-
-import           Test.QuickCheck (Arbitrary(..))
+import Test.QuickCheck (Arbitrary(..))
 
 deriving instance Arbitrary (p (f a) (g b)) => Arbitrary (Biff p f g a b)
 deriving instance Arbitrary (f a)           => Arbitrary (Clown f a b)
@@ -52,8 +45,3 @@ instance (Arbitrary (f a b), Arbitrary (g a b)) => Arbitrary (Product f g a b) w
 
 instance (Arbitrary (p a b), Arbitrary (q a b)) => Arbitrary (Sum p q a b) where
     arbitrary = genericArbitrary
-
-#if __GLASGOW_HASKELL__ < 702
-$(Generics.deriveAll0 ''Product)
-$(Generics.deriveAll0 ''Sum)
-#endif

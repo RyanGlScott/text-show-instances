@@ -16,17 +16,13 @@ module Instances.Miscellaneous () where
 
 #include "HsBaseConfig.h"
 
-import Foreign.C.Types (CInt(..), CUIntPtr(..))
 import Foreign.Ptr (Ptr, nullPtr, plusPtr)
 
 import Generics.Deriving.Instances ()
 
-import Instances.Utils.GenericArbitrary (genericArbitrary)
-
 import Prelude ()
 import Prelude.Compat
 
-import System.Exit (ExitCode(..))
 import System.IO (Handle, stdin, stdout, stderr)
 #if defined(HTYPE_GID_T)
 import System.Posix.Types (CGid(..))
@@ -37,18 +33,11 @@ import System.Posix.Types (CUid(..))
 
 import Test.QuickCheck (Arbitrary(..), oneof)
 
-
-instance Arbitrary ExitCode where
-    arbitrary = genericArbitrary
-
 instance Arbitrary Handle where
     arbitrary = oneof $ map pure [stdin, stdout, stderr]
 
 instance Arbitrary (Ptr a) where
     arbitrary = plusPtr nullPtr <$> arbitrary
-
-deriving instance Arbitrary CInt
-deriving instance Arbitrary CUIntPtr
 
 #if defined(HTYPE_GID_T)
 deriving instance Arbitrary CGid

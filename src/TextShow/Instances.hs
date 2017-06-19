@@ -1,9 +1,5 @@
 {-# LANGUAGE CPP #-}
 
-#if __GLASGOW_HASKELL__ < 702
-{-# OPTIONS_GHC -fno-warn-duplicate-exports #-}
-#endif
-
 {-|
 Module:      TextShow.Instances
 Copyright:   (C) 2014-2017 Ryan Scott
