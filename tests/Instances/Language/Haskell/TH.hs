@@ -211,6 +211,9 @@ instance Arbitrary Exp where
                       , pure $ AppTypeE fExp fType
                       , UnboxedSumE fExp <$> arbitrary <*> arbitrary
 #endif
+#if MIN_VERSION_template_haskell(2,13,0)
+                      , LabelE <$> arbitrary
+#endif
                       ]
 --     arbitrary = oneof [ VarE        <$> arbitrary
 --                       , ConE        <$> arbitrary
@@ -241,10 +244,12 @@ instance Arbitrary Exp where
 -- #endif
 --                       ]
 
+#if !(MIN_VERSION_template_haskell(2,13,0))
 deriving instance Bounded FamFlavour
 deriving instance Enum FamFlavour
 instance Arbitrary FamFlavour where
     arbitrary = arbitraryBoundedEnum
+#endif
 
 instance Arbitrary Fixity where
     arbitrary = genericArbitrary

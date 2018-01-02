@@ -65,8 +65,10 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy Doc)
     describe "Exp" $
         matchesTextShowSpec (Proxy :: Proxy Exp)
+#if !(MIN_VERSION_template_haskell(2,13,0))
     describe "FamFlavour" $
         matchesTextShowSpec (Proxy :: Proxy FamFlavour)
+#endif
 #if MIN_VERSION_template_haskell(2,11,0)
     describe "FamilyResultSig" $
         matchesTextShowSpec (Proxy :: Proxy FamilyResultSig)

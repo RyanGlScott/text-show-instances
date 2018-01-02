@@ -1,3 +1,6 @@
+### next [????.??.??]
+* GHC 8.4 fixes
+
 ### 3.6.2 [2017.06.18]
 * Require `QuickCheck-2.10`/`quickcheck-instances-0.13.6` or later
 

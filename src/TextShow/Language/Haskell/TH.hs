@@ -109,8 +109,10 @@ $(deriveTextShow ''Con)
 $(deriveTextShow ''Dec)
 -- | /Since: 2/
 $(deriveTextShow ''Exp)
+#if !(MIN_VERSION_template_haskell(2,13,0))
 -- | /Since: 2/
 $(deriveTextShow ''FamFlavour)
+#endif
 -- | /Since: 2/
 $(deriveTextShow ''Fixity)
 -- | /Since: 2/
