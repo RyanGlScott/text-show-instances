@@ -288,6 +288,7 @@ test-suite spec
                      , unordered-containers >= 0.2    && < 0.3
                      , vector               >= 0.9    && < 0.13
                      , xhtml                >= 3000.2 && < 3000.3
+  build-tool-depends:  hspec-discover:hspec-discover
 
   if flag(base-4-9)
     build-depends:     base                >= 4.9 && < 5
