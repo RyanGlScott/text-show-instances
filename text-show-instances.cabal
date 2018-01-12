@@ -276,7 +276,7 @@ test-suite spec
                      , old-time             >= 1      && < 1.2
                      , pretty               >= 1      && < 1.2
                      , process              >= 1      && < 1.7
-                     , QuickCheck           >= 2.10   && < 2.11
+                     , QuickCheck           >= 2.10   && < 2.12
                      , quickcheck-instances >= 0.3.16 && < 0.4
                      , random               >= 1.0.1  && < 1.2
                      , semigroups           >= 0.17   && < 1
