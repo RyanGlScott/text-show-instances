@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Use `base-compat-batteries`.
+
 ### 3.6.3 [2018.03.15]
 * GHC 8.4 fixes
 

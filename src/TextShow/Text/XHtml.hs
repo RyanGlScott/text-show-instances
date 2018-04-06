@@ -14,7 +14,8 @@ Portability: GHC
 -}
 module TextShow.Text.XHtml () where
 
-import Data.Monoid.Compat
+import Prelude ()
+import Prelude.Compat
 
 import Text.XHtml.Frameset (Html, HtmlAttr, HotLink,
                             htmlAttrPair, renderHtmlFragment)

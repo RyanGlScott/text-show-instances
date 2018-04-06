@@ -14,7 +14,8 @@ Portability: GHC
 -}
 module TextShow.Trace.Hpc () where
 
-import Data.Monoid.Compat
+import Prelude ()
+import Prelude.Compat
 
 import TextShow (TextShow(..), FromStringShow(..), singleton)
 import TextShow.Data.Time ()

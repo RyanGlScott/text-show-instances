@@ -19,7 +19,6 @@ Portability: GHC
 module TextShow.Data.Time () where
 
 import Data.Fixed (Pico)
-import Data.Monoid.Compat
 import Data.Semigroup (mtimesDefault)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime, UniversalTime)
@@ -27,6 +26,9 @@ import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
 import Data.Time.Format (NumericPadOption)
 import Data.Time.LocalTime (TimeZone(..), TimeOfDay(..), LocalTime(..), ZonedTime(..),
                             ut1ToLocalTime, utc, utcToLocalTime, utcToZonedTime)
+
+import Prelude ()
+import Prelude.Compat
 
 import TextShow (TextShow(..), Builder, FromStringShow(..),
                  fromString, lengthB, showbSpace, singleton)

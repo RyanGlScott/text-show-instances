@@ -27,7 +27,8 @@ import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
 import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 # if MIN_VERSION_Win32(2,5,0)
-import Data.Monoid.Compat ((<>))
+import Prelude ()
+import Prelude.Compat
 
 import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
 import System.Win32.Automation.Input (HARDWAREINPUT, INPUT)

@@ -27,7 +27,8 @@ import Compiler.Hoopl.GHC (lblToUnique, uniqueToInt)
 #endif
 import Compiler.Hoopl.Passes.Dominator (DominatorNode(..), DominatorTree(..), DPath(..))
 
-import Data.Monoid.Compat
+import Prelude ()
+import Prelude.Compat
 
 import TextShow (TextShow(..), TextShow1(..),
                  TextShow2(..), Builder, singleton, showbPrec1)
