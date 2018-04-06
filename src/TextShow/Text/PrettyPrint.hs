@@ -22,7 +22,8 @@ module TextShow.Text.PrettyPrint (
 #endif
     ) where
 
-import           Data.Monoid.Compat
+import           Prelude ()
+import           Prelude.Compat
 
 import           Text.PrettyPrint.HughesPJ (Doc, Mode, Style(..), TextDetails(..),
                                             fullRender, style)
