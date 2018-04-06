@@ -16,9 +16,7 @@ Portability: GHC
 module TextShow.Data.Binary () where
 
 import Data.Binary.Get.Internal (Decoder(..))
-
-import Prelude ()
-import Prelude.Compat
+import Data.Monoid.Compat
 
 import TextShow (TextShow(..), TextShow1(..), Builder, fromString, showbPrec1)
 

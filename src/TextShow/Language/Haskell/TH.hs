@@ -20,11 +20,9 @@ module TextShow.Language.Haskell.TH (showbName, showbName') where
 
 import           Data.Char (isAlpha)
 import           Data.Maybe (fromJust)
+import           Data.Monoid.Compat
 import qualified Data.Text.Lazy as TL (Text, dropWhile, null, tail)
 import           Data.Text.Lazy (uncons)
-
-import           Prelude ()
-import           Prelude.Compat
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 import           GHC.Exts (Int(I#))
