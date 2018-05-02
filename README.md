@@ -3,7 +3,8 @@
 [![Hackage Dependencies](https://img.shields.io/hackage-deps/v/text-show-instances.svg)](http://packdeps.haskellers.com/reverse/text-show-instances)
 [![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
 [![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
-[![Build](https://img.shields.io/travis/RyanGlScott/text-show-instances.svg)](https://travis-ci.org/RyanGlScott/text-show-instances)
+[![Linux build](https://img.shields.io/travis/RyanGlScott/text-show-instances.svg)](https://travis-ci.org/RyanGlScott/text-show-instances)
+[![Windows build](https://ci.appveyor.com/api/projects/status/ykkc085q8mvpij9d?svg=true)](https://ci.appveyor.com/project/RyanGlScott/text-show-instances)
 
 [Hackage: text-show-instances]:
   http://hackage.haskell.org/package/text-show-instances
