@@ -578,10 +578,8 @@ instance Arbitrary Strict where
 instance Arbitrary DerivClause where
     arbitrary = genericArbitrary
 
-deriving instance Bounded DerivStrategy
-deriving instance Enum DerivStrategy
 instance Arbitrary DerivStrategy where
-    arbitrary = arbitraryBoundedEnum
+    arbitrary = genericArbitrary
 
 instance Arbitrary PatSynArgs where
     arbitrary = oneof $ map pure [ PrefixPatSyn [fName]

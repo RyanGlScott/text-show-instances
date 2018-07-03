@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Fix the tests on GHC 8.6.
+
 ### 3.6.4 [2018.04.07]
 * Use `base-compat-batteries`.
 
