@@ -179,7 +179,7 @@ library
     build-depends:     Win32                 >= 2.1    && < 2.9
   else
     build-depends:     terminfo              >= 0.3.2  && < 0.5
-                     , unix                  >= 2      && < 2.9
+                     , unix                  >= 2      && < 2.8
 
 test-suite spec
   type:                exitcode-stdio-1.0
@@ -308,4 +308,4 @@ test-suite spec
     build-depends:     Win32                 >= 2.1    && < 2.9
   else
     build-depends:     terminfo              >= 0.3.2  && < 0.5
-                     , unix                  >= 2      && < 2.9
+                     , unix                  >= 2      && < 2.8
