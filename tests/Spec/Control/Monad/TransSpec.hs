@@ -26,6 +26,7 @@ import           Instances.Control.Monad.Trans ()
 import           Spec.Utils (matchesTextShowSpec)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
+import           Test.QuickCheck.Instances ()
 
 import           TextShow.Control.Monad.Trans ()
 

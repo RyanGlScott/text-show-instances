@@ -1,3 +1,7 @@
+### next [????.??.??]
+* Depend on `QuickCheck-2.12` or later.
+* Depend on `quickcheck-instances-0.3.19` or later.
+
 ### 3.6.5 [2018.07.03]
 * Fix the tests on GHC 8.6.
 
