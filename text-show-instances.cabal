@@ -19,8 +19,6 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/haskeline            haskeline>@
                      .
-                     * @<http://hackage.haskell.org/package/hoopl                hoopl>@
-                     .
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@
                      .
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@
@@ -98,7 +96,6 @@ flag new-functor-classes
 library
   exposed-modules:     TextShow.Instances
 
-                       TextShow.Compiler.Hoopl
                        TextShow.Control.Applicative.Trans
                        TextShow.Control.Monad.Trans
                        TextShow.Data.Bifunctor
@@ -138,7 +135,6 @@ library
                      , containers            >= 0.1    && < 0.7
                      , directory             >= 1      && < 1.4
                      , haskeline             >= 0.7    && < 0.8
-                     , hoopl                 >= 3.8.7  && < 3.11
                      , hpc                   >= 0.5    && < 0.7
                      , old-locale            >= 1      && < 1.1
                      , old-time              >= 1      && < 1.2
@@ -184,8 +180,7 @@ library
 test-suite spec
   type:                exitcode-stdio-1.0
   main-is:             Spec.hs
-  other-modules:       Instances.Compiler.Hoopl
-                       Instances.Control.Applicative.Trans
+  other-modules:       Instances.Control.Applicative.Trans
                        Instances.Control.Monad.Trans
                        Instances.Data.Bifunctor
                        Instances.Data.Binary
@@ -220,7 +215,6 @@ test-suite spec
                        Instances.System.Console.Terminfo
                        Instances.System.Posix
 
-                       Spec.Compiler.HooplSpec
                        Spec.Control.Applicative.TransSpec
                        Spec.Control.Monad.TransSpec
                        Spec.Data.BifunctorSpec
@@ -262,7 +256,6 @@ test-suite spec
                      , generic-deriving      >= 1.9    && < 2
                      , ghc-prim
                      , haskeline             >= 0.7    && < 0.8
-                     , hoopl                 >= 3.8.7  && < 3.11
                      , hpc                   >= 0.5    && < 0.7
                      , hspec                 >= 2      && < 3
                      , old-locale            >= 1      && < 1.1

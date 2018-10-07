@@ -24,7 +24,6 @@
 * [`directory`](http://hackage.haskell.org/package/directory)
 * [`ghc-boot`](http://hackage.haskell.org/package/ghc-boot)
 * [`haskeline`](http://hackage.haskell.org/package/haskeline)
-* [`hoopl`](http://hackage.haskell.org/package/hoopl)
 * [`hpc`](http://hackage.haskell.org/package/hpc)
 * [`old-locale`](http://hackage.haskell.org/package/old-locale)
 * [`old-time`](http://hackage.haskell.org/package/old-time)

@@ -1,4 +1,6 @@
-### next [????.??.??]
+## next [????.??.??]
+* Remove `hoopl` dependency. Instances are no longer provided for data types
+  in the `hoopl` library.
 * Depend on `QuickCheck-2.12` or later.
 * Depend on `quickcheck-instances-0.3.19` or later.
 

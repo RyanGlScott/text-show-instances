@@ -22,8 +22,6 @@ module TextShow.Instances (
 
 import TextShow (TextShow(..), TextShow1(..), TextShow2(..))
 
-import TextShow.Compiler.Hoopl              ()
-
 import TextShow.Control.Applicative.Trans   ()
 import TextShow.Control.Monad.Trans         ()
 
