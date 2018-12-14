@@ -1,3 +1,6 @@
+## 3.7.1 [2018.12.14]
+* Add `TextShow` instance for `ShortText` in `TextShow.Data.ShortText'
+
 ## 3.7 [2018.10.07]
 * Remove `hoopl` dependency. Instances are no longer provided for data types
   in the `hoopl` library.
