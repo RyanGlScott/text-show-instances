@@ -35,7 +35,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/terminfo             terminfo>@
                      .
-                     * @<https://hackage.haskell.org/package/text-short-0.1.1    text-short>@
+                     * @<https://hackage.haskell.org/package/text-short          text-short>@
                      .
                      * @<http://hackage.haskell.org/package/time                 time>@
                      .
