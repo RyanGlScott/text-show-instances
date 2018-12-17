@@ -9,7 +9,7 @@ Portability: GHC
 
 'TextShow' instance for @ShortText@ type.
 
-/Since: 3.7.1
+/Since: next/
 -}
 module TextShow.Data.ShortText where
 
@@ -19,7 +19,7 @@ import           TextShow           (TextShow (showb))
 import           TextShow.Data.Char (showbString)
 
 
--- | /Since: 3.7.1/
+-- | /Since: next/
 instance TextShow ShortText where
     showb = showbString . toString
     {-# INLINE showb #-}
