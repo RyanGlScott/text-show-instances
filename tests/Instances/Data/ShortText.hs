@@ -15,6 +15,8 @@ Provides an 'Arbitrary' instance for 'ShortText' values.
 module Instances.Data.ShortText () where
 
 import           Data.Text.Short (ShortText, fromString)
+import           Prelude         ()
+import           Prelude.Compat
 
 import           Test.QuickCheck (Arbitrary (..))
 
