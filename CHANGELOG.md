@@ -1,4 +1,6 @@
-## 3.7.1 [2018.12.14]
+## next [????.??.??]
+* Depend on `text-short-0.1` or later.
+* Depend on `base-4.7` or later.
 * Add `TextShow` instance for `ShortText` in `TextShow.Data.ShortText'
 
 ## 3.7 [2018.10.07]
