@@ -1,3 +1,8 @@
+## next [????.??.??]
+* Add a `TextShow` instance for `ShortText` (from the `text-short` package) in
+  `TextShow.Data.ShortText`.
+* Drop support for `base-4.5` and `base-4.6` (GHC 7.4 and 7.6, respectively).
+
 ## 3.7 [2018.10.07]
 * Remove `hoopl` dependency. Instances are no longer provided for data types
   in the `hoopl` library.

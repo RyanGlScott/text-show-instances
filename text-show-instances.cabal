@@ -35,6 +35,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/terminfo             terminfo>@
                      .
+                     * @<https://hackage.haskell.org/package/text-short          text-short>@
+                     .
                      * @<http://hackage.haskell.org/package/time                 time>@
                      .
                      * @<http://hackage.haskell.org/package/transformers         transformers>@
@@ -63,9 +65,7 @@ stability:           Experimental
 copyright:           (C) 2014-2017 Ryan Scott
 category:            Text
 build-type:          Simple
-tested-with:         GHC == 7.4.2
-                   , GHC == 7.6.3
-                   , GHC == 7.8.4
+tested-with:         GHC == 7.8.4
                    , GHC == 7.10.3
                    , GHC == 8.0.2
                    , GHC == 8.2.2
@@ -102,6 +102,7 @@ library
                        TextShow.Data.Binary
                        TextShow.Data.Containers
                        TextShow.Data.Functor.Trans
+                       TextShow.Data.ShortText
                        TextShow.Data.Tagged
                        TextShow.Data.Time
                        TextShow.Data.UnorderedContainers
@@ -143,6 +144,7 @@ library
                      , semigroups            >= 0.16.2 && < 1
                      , tagged                >= 0.4.4  && < 1
                      , text                  >= 0.11.1 && < 1.3
+                     , text-short            >= 0.1    && < 0.2
                      , text-show             >= 3.4    && < 4
                      , time                  >= 0.1    && < 1.10
                      , unordered-containers  >= 0.2    && < 0.3
@@ -156,7 +158,7 @@ library
     build-depends:     base                  >= 4.9 && < 4.13
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
-    build-depends:     base                  >= 4.5 && < 4.9
+    build-depends:     base                  >= 4.7 && < 4.9
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.15
@@ -186,6 +188,7 @@ test-suite spec
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Functor.Trans
+                       Instances.Data.ShortText
                        Instances.Data.Vector
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
@@ -221,6 +224,7 @@ test-suite spec
                        Spec.Data.BinarySpec
                        Spec.Data.ContainersSpec
                        Spec.Data.Functor.TransSpec
+                       Spec.Data.ShortTextSpec
                        Spec.Data.VectorSpec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
@@ -265,6 +269,7 @@ test-suite spec
                      , quickcheck-instances  >= 0.3.19 && < 0.4
                      , random                >= 1.0.1  && < 1.2
                      , tagged                >= 0.4.4  && < 1
+                     , text-short            >= 0.1    && < 0.2
                      , text-show             >= 3.4    && < 4
                      , text-show-instances
                      , th-orphans            >= 0.13.3 && < 1
@@ -278,7 +283,7 @@ test-suite spec
     build-depends:     base                  >= 4.9 && < 4.13
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
-    build-depends:     base                  >= 4.5 && < 4.9
+    build-depends:     base                  >= 4.7 && < 4.9
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.15
