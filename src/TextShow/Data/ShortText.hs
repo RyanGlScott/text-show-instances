@@ -7,7 +7,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-'TextShow' instance for @ShortText@ type.
+'TextShow' instance for 'ShortText' (from the @text-short@ package).
 
 /Since: next/
 -}

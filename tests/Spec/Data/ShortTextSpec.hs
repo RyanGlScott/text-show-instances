@@ -6,8 +6,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-@hspec@ tests for 'ShortText' type.
-
+@hspec@ tests for 'ShortText' (from the @text-short@ package).
 -}
 module Spec.Data.ShortTextSpec (main, spec) where
 
