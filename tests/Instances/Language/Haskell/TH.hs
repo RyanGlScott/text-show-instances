@@ -118,7 +118,10 @@ instance Arbitrary Dec where
                             <*> arbitrary
 # endif
         , RoleAnnotD <$> arbitrary <*> arbitrary
-        , TySynInstD <$> arbitrary <*> arbitrary
+        , TySynInstD <$> arbitrary
+# if !(MIN_VERSION_template_haskell(2,15,0))
+                     <*> arbitrary
+# endif
 #else
         , TySynInstD <$> arbitrary <*> arbitrary <*> arbitrary
 #endif

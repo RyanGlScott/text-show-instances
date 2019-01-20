@@ -1,4 +1,5 @@
-## next [????.??.??]
+### next [????.??.??]
+* Support GHC 8.8.
 * Add a `TextShow` instance for `ShortText` (from the `text-short` package) in
   `TextShow.Data.ShortText`.
 * Drop support for `base-4.5` and `base-4.6` (GHC 7.4 and 7.6, respectively).

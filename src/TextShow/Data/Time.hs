@@ -23,7 +23,6 @@ import Data.Semigroup (mtimesDefault)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime, UniversalTime)
 import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
-import Data.Time.Format (NumericPadOption)
 import Data.Time.LocalTime (TimeZone(..), TimeOfDay(..), LocalTime(..), ZonedTime(..),
                             ut1ToLocalTime, utc, utcToLocalTime, utcToZonedTime)
 
@@ -47,6 +46,8 @@ import Data.Maybe (fromJust)
 #if MIN_VERSION_time(1,8,0)
 import Data.Time.Clock.System (SystemTime)
 #endif
+
+type NumericPadOption = Maybe Char
 
 pad1 :: NumericPadOption -> Builder -> Builder
 pad1 (Just c) b = singleton c <> b
