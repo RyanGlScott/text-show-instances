@@ -14,11 +14,7 @@ module Spec.Data.VectorSpec (main, spec) where
 
 import           Data.Proxy (Proxy(..))
 import qualified Data.Vector as B (Vector)
-#if MIN_VERSION_vector(0,11,0)
 import           Data.Vector.Fusion.Bundle.Size (Size)
-#else
-import           Data.Vector.Fusion.Stream.Size (Size)
-#endif
 import qualified Data.Vector.Primitive as P (Vector)
 import qualified Data.Vector.Storable as S (Vector)
 import qualified Data.Vector.Unboxed as U (Vector)
@@ -26,7 +22,7 @@ import qualified Data.Vector.Unboxed as U (Vector)
 import           Instances.Data.Vector ()
 
 import           Spec.Utils (matchesTextShowSpec)
-#if MIN_VERSION_base(4,9,0) && MIN_VERSION_vector(0,12,0)
+#if MIN_VERSION_base(4,9,0)
 import           Spec.Utils (matchesTextShow1Spec)
 #endif
 
@@ -43,7 +39,7 @@ spec = parallel $ do
         let p :: Proxy (B.Vector Char)
             p = Proxy
         matchesTextShowSpec  p
-#if MIN_VERSION_base(4,9,0) && MIN_VERSION_vector(0,12,0)
+#if MIN_VERSION_base(4,9,0)
         matchesTextShow1Spec p
 #endif
     describe "(primitive) Vector Char" $

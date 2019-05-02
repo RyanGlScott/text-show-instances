@@ -12,32 +12,24 @@ Portability: GHC
 -}
 module Spec.Data.BinarySpec (main, spec) where
 
-import Prelude ()
-import Prelude.Compat
-
-import Test.Hspec (Spec, hspec, parallel)
-
-#if MIN_VERSION_binary(0,6,0)
 import Data.Binary.Get.Internal (Decoder)
 import Data.Proxy (Proxy(..))
 
 import Instances.Data.Binary ()
 
+import Prelude ()
+import Prelude.Compat
+
 import Spec.Utils (matchesTextShowSpec)
 
-import Test.Hspec (describe)
+import Test.Hspec (Spec, describe, hspec, parallel)
 
 import TextShow.Data.Binary ()
-#endif
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-#if MIN_VERSION_binary(0,6,0)
     describe "Decoder Int" $
         matchesTextShowSpec (Proxy :: Proxy (Decoder Int))
-#else
-    pure ()
-#endif

@@ -18,7 +18,7 @@ Portability: GHC
 
 /Since: 2/
 -}
-module TextShow.Data.Tagged (liftShowbTaggedPrec) where
+module TextShow.Data.Tagged () where
 
 import Data.Tagged (Tagged(..))
 import TextShow (TextShow(..), TextShow1(..), TextShow2(..),

@@ -11,40 +11,32 @@ Portability: GHC
 -}
 module Spec.System.DirectorySpec (main, spec) where
 
-import Prelude ()
-import Prelude.Compat
-
-import Test.Hspec (Spec, hspec, parallel)
-
-#if MIN_VERSION_directory(1,1,0)
 import Data.Proxy (Proxy(..))
 
 import Instances.System.Directory ()
 
+import Prelude ()
+import Prelude.Compat
+
 import Spec.Utils (matchesTextShowSpec)
 
 import System.Directory (Permissions)
-# if MIN_VERSION_directory(1,2,3)
+#if MIN_VERSION_directory(1,2,3)
 import System.Directory (XdgDirectory)
-# endif
+#endif
 
-import Test.Hspec (describe)
+import Test.Hspec (Spec, describe, hspec, parallel)
 
 import TextShow.System.Directory ()
-#endif
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-#if MIN_VERSION_directory(1,1,0)
     describe "Permissions" $
         matchesTextShowSpec (Proxy :: Proxy Permissions)
-# if MIN_VERSION_directory(1,2,3)
+#if MIN_VERSION_directory(1,2,3)
     describe "XdgDirectory" $
         matchesTextShowSpec (Proxy :: Proxy XdgDirectory)
-# endif
-#else
-    pure ()
 #endif

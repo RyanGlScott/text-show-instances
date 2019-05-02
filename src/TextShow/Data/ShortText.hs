@@ -11,15 +11,14 @@ Portability: GHC
 
 /Since: next/
 -}
-module TextShow.Data.ShortText where
+module TextShow.Data.ShortText () where
 
 import           Data.Text.Short    (ShortText, toString)
 
 import           TextShow           (TextShow (showb))
 import           TextShow.Data.Char (showbString)
 
-
--- | /Since: next/
+-- | /Since: 3.8/
 instance TextShow ShortText where
     showb = showbString . toString
     {-# INLINE showb #-}

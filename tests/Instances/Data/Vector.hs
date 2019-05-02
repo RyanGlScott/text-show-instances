@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
@@ -14,11 +13,7 @@ Provides 'Arbitrary' instances for 'Vector' types.
 -}
 module Instances.Data.Vector () where
 
-#if MIN_VERSION_vector(0,11,0)
 import           Data.Vector.Fusion.Bundle.Size (Size(..))
-#else
-import           Data.Vector.Fusion.Stream.Size (Size(..))
-#endif
 import           Data.Vector.Generic (fromList)
 import qualified Data.Vector.Primitive as P (Vector)
 import           Data.Vector.Primitive (Prim)

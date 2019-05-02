@@ -19,23 +19,21 @@ Provides an 'Arbitrary' instance for 'Permissions'.
 -}
 module Instances.System.Directory () where
 
-#if MIN_VERSION_directory(1,1,0)
 import qualified Generics.Deriving.TH as Generics (deriveAll0)
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
 import           System.Directory (Permissions)
 import           Test.QuickCheck (Arbitrary(..))
 
-# if MIN_VERSION_directory(1,2,3)
+#if MIN_VERSION_directory(1,2,3)
 import           System.Directory (XdgDirectory(..))
 import           Test.QuickCheck (arbitraryBoundedEnum)
-# endif
+#endif
 
 instance Arbitrary Permissions where
     arbitrary = genericArbitrary
 $(Generics.deriveAll0 ''Permissions)
 
-# if MIN_VERSION_directory(1,2,3)
+#if MIN_VERSION_directory(1,2,3)
 instance Arbitrary XdgDirectory where
     arbitrary = arbitraryBoundedEnum
-# endif
 #endif

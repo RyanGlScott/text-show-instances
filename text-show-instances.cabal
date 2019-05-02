@@ -133,14 +133,14 @@ library
   other-modules:       TextShow.Utils
   build-depends:       base-compat-batteries >= 0.10   && < 1
                      , bifunctors            >= 5.2    && < 6
-                     , binary                >= 0.5    && < 0.9
-                     , containers            >= 0.1    && < 0.7
-                     , directory             >= 1      && < 1.4
-                     , haskeline             >= 0.7    && < 0.8
-                     , hpc                   >= 0.5    && < 0.7
+                     , binary                >= 0.7.1  && < 0.9
+                     , containers            >= 0.5.5  && < 0.7
+                     , directory             >= 1.2.1  && < 1.4
+                     , haskeline             >= 0.7.1  && < 0.8
+                     , hpc                   >= 0.6    && < 0.7
                      , old-locale            >= 1      && < 1.1
-                     , old-time              >= 1      && < 1.2
-                     , pretty                >= 1      && < 1.2
+                     , old-time              >= 1.1    && < 1.2
+                     , pretty                >= 1.1.1  && < 1.2
                      , random                >= 1.0.1  && < 1.2
                      , semigroups            >= 0.16.2 && < 1
                      , tagged                >= 0.4.4  && < 1
@@ -149,7 +149,7 @@ library
                      , text-show             >= 3.4    && < 4
                      , time                  >= 0.1    && < 1.10
                      , unordered-containers  >= 0.2    && < 0.3
-                     , vector                >= 0.9    && < 0.13
+                     , vector                >= 0.12   && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   hs-source-dirs:      src
   default-language:    Haskell2010
@@ -165,10 +165,10 @@ library
     build-depends:     template-haskell      >= 2.11 && < 2.16
                      , ghc-boot-th           >= 8.0  && < 8.9
   else
-    build-depends:     template-haskell      >= 2.7  && < 2.11
+    build-depends:     template-haskell      >= 2.9  && < 2.11
 
   if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.2.1 && < 0.4) || (>= 0.5 && < 0.6)
+    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.6)
                      , transformers-compat   >= 0.5 && < 1
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
@@ -177,8 +177,8 @@ library
   if os(windows)
     build-depends:     Win32                 >= 2.1    && < 2.9
   else
-    build-depends:     terminfo              >= 0.3.2  && < 0.5
-                     , unix                  >= 2      && < 2.8
+    build-depends:     terminfo              >= 0.4    && < 0.5
+                     , unix                  >= 2.7    && < 2.8
 
 test-suite spec
   type:                exitcode-stdio-1.0
@@ -255,17 +255,17 @@ test-suite spec
                        Spec.System.PosixSpec
   build-depends:       base-compat-batteries >= 0.10   && < 1
                      , bifunctors            >= 5.2    && < 6
-                     , binary                >= 0.5    && < 0.9
-                     , containers            >= 0.1    && < 0.7
-                     , directory             >= 1      && < 1.4
+                     , binary                >= 0.7.1  && < 0.9
+                     , containers            >= 0.5.5  && < 0.7
+                     , directory             >= 1.2.1  && < 1.4
                      , generic-deriving      >= 1.9    && < 2
                      , ghc-prim
-                     , haskeline             >= 0.7    && < 0.8
-                     , hpc                   >= 0.5    && < 0.7
+                     , haskeline             >= 0.7.1  && < 0.8
+                     , hpc                   >= 0.6    && < 0.7
                      , hspec                 >= 2      && < 3
                      , old-locale            >= 1      && < 1.1
-                     , old-time              >= 1      && < 1.2
-                     , pretty                >= 1      && < 1.2
+                     , old-time              >= 1.1    && < 1.2
+                     , pretty                >= 1.1.1  && < 1.2
                      , QuickCheck            >= 2.12   && < 2.14
                      , quickcheck-instances  >= 0.3.19 && < 0.4
                      , random                >= 1.0.1  && < 1.2
@@ -290,10 +290,10 @@ test-suite spec
     build-depends:     template-haskell      >= 2.11 && < 2.16
                      , ghc-boot-th           >= 8.0  && < 8.9
   else
-    build-depends:     template-haskell      >= 2.7  && < 2.11
+    build-depends:     template-haskell      >= 2.9  && < 2.11
 
   if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.2.1 && < 0.4) || (>= 0.5 && < 0.6)
+    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.6)
                      , transformers-compat   >= 0.5 && < 1
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
@@ -306,5 +306,5 @@ test-suite spec
   if os(windows)
     build-depends:     Win32                 >= 2.1    && < 2.9
   else
-    build-depends:     terminfo              >= 0.3.2  && < 0.5
-                     , unix                  >= 2      && < 2.8
+    build-depends:     terminfo              >= 0.4    && < 0.5
+                     , unix                  >= 2.7    && < 2.8

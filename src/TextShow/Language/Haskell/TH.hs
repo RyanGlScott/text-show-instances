@@ -100,6 +100,10 @@ showbName' ni nm = case ni of
                             else False
 
 -- | /Since: 2/
+$(deriveTextShow ''AnnLookup)
+-- | /Since: 2/
+$(deriveTextShow ''AnnTarget)
+-- | /Since: 2/
 $(deriveTextShow ''Body)
 -- | /Since: 2/
 $(deriveTextShow ''Callconv)
@@ -128,6 +132,8 @@ $(deriveTextShow ''Guard)
 -- | /Since: 2/
 $(deriveTextShow ''Info)
 -- | /Since: 2/
+$(deriveTextShow ''Inline)
+-- | /Since: 2/
 $(deriveTextShow ''Lit)
 -- | /Since: 2/
 $(deriveTextShow ''Loc)
@@ -135,6 +141,10 @@ $(deriveTextShow ''Loc)
 $(deriveTextShow ''Match)
 -- | /Since: 2/
 $(deriveTextShow ''ModName)
+-- | /Since: 2/
+$(deriveTextShow ''Module)
+-- | /Since: 2/
+$(deriveTextShow ''ModuleInfo)
 
 -- | /Since: 2/
 instance TextShow Name where
@@ -149,78 +159,35 @@ $(deriveTextShow ''OccName)
 -- | /Since: 2/
 $(deriveTextShow ''Pat)
 -- | /Since: 2/
+$(deriveTextShow ''Phases)
+-- | /Since: 2/
 $(deriveTextShow ''PkgName)
 -- | /Since: 2/
 $(deriveTextShow ''Pragma)
 -- | /Since: 2/
 $(deriveTextShow ''Range)
 -- | /Since: 2/
+$(deriveTextShow ''Role)
+-- | /Since: 2/
+$(deriveTextShow ''RuleBndr)
+-- | /Since: 2/
+$(deriveTextShow ''RuleMatch)
+-- | /Since: 2/
 $(deriveTextShow ''Safety)
 -- | /Since: 2/
 $(deriveTextShow ''Stmt)
 -- | /Since: 2/
+$(deriveTextShow ''TyLit)
+-- | /Since: 2/
 $(deriveTextShow ''Type)
+-- | /Since: 2/
+$(deriveTextShow ''TySynEqn)
 -- | /Since: 2/
 $(deriveTextShow ''TyVarBndr)
 
 -- | /Since: 2/
 instance TextShow Doc where
     showb = renderB . to_HPJ_Doc
-
-#if MIN_VERSION_template_haskell(2,8,0)
--- | Only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''Inline)
--- | Only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''Phases)
--- | Only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''RuleBndr)
--- | Only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''RuleMatch)
--- | Only available with @template-haskell-2.8.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''TyLit)
-#else
--- | /Since: 2/
-$(deriveTextShow ''InlineSpec)
--- | /Since: 2/
-$(deriveTextShow ''Kind)
-#endif
-
-#if MIN_VERSION_template_haskell(2,9,0)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''AnnLookup)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''AnnTarget)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''Module)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''ModuleInfo)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''Role)
--- | Only available with @template-haskell-2.9.0.0@ or later.
---
--- /Since: 2/
-$(deriveTextShow ''TySynEqn)
-#endif
 
 #if !(MIN_VERSION_template_haskell(2,10,0))
 -- | Only available with @template-haskell-2.10@ or earlier.

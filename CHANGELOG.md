@@ -3,6 +3,12 @@
 * Add a `TextShow` instance for `ShortText` (from the `text-short` package) in
   `TextShow.Data.ShortText`.
 * Drop support for `base-4.5` and `base-4.6` (GHC 7.4 and 7.6, respectively).
+* `liftShowbTaggedPrec` is no longer exported from `TextShow.Data.Tagged`. Use
+  `Tagged`'s `TextShow1` instance instead.
+* `showbVectorGenericPrec` and `liftShowbVectorGenericPrec` are no longer
+  exported from `TextShow.Data.Vector`. Use the various `TextShow(1)` instances
+  defined in `TextShow.Data.Vector` instead.
+* Require `vector-0.12` or later.
 
 ## 3.7 [2018.10.07]
 * Remove `hoopl` dependency. Instances are no longer provided for data types

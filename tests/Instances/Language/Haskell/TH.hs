@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
@@ -20,9 +19,6 @@ import Instances.Utils.GenericArbitrary (genericArbitrary)
 import Language.Haskell.TH.Instances ()
 import Language.Haskell.TH.PprLib (Doc, text)
 import Language.Haskell.TH.Syntax
-#if !(MIN_VERSION_template_haskell(2,8,0))
-import Language.Haskell.TH.Syntax.Internals
-#endif
 
 import Prelude ()
 import Prelude.Compat

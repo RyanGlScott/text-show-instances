@@ -1,8 +1,5 @@
-{-# LANGUAGE CPP               #-}
-#if MIN_VERSION_binary(0,6,0)
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-#endif
 
 {-|
 Module:      TextShow.Data.Binary
@@ -18,7 +15,6 @@ Portability: GHC
 -}
 module TextShow.Data.Binary () where
 
-#if MIN_VERSION_binary(0,6,0)
 import Data.Binary.Get.Internal (Decoder(..))
 
 import Prelude ()
@@ -41,4 +37,3 @@ instance TextShow1 Decoder where
         go sp (Done _ a)      = "Done: " <> sp a
         go _  (BytesRead _ _) = "BytesRead"
     {-# INLINE liftShowbPrec #-}
-#endif
