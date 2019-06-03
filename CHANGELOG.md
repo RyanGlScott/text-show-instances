@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.8.1 [2019.06.03]
 * Require `quickcheck-instances-0.3.21` or later.
 
 ## 3.8 [2019.05.02]
