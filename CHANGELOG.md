@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Require `quickcheck-instances-0.3.21` or later.
+
 ## 3.8 [2019.05.02]
 * Support GHC 8.8.
 * Add a `TextShow` instance for `ShortText` (from the `text-short` package) in
@@ -26,7 +29,7 @@
 * GHC 8.4 fixes
 
 ### 3.6.2 [2017.06.18]
-* Require `QuickCheck-2.10`/`quickcheck-instances-0.13.6` or later
+* Require `QuickCheck-2.10`/`quickcheck-instances-0.3.16` or later
 
 ### 3.6.1 [2017.06.04]
 * Drop support for GHC 7.0 and 7.2

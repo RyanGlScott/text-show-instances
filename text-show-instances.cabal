@@ -267,7 +267,7 @@ test-suite spec
                      , old-time              >= 1.1    && < 1.2
                      , pretty                >= 1.1.1  && < 1.2
                      , QuickCheck            >= 2.12   && < 2.14
-                     , quickcheck-instances  >= 0.3.19 && < 0.4
+                     , quickcheck-instances  >= 0.3.21 && < 0.4
                      , random                >= 1.0.1  && < 1.2
                      , tagged                >= 0.4.4  && < 1
                      , text-short            >= 0.1    && < 0.2

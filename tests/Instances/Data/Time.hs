@@ -21,11 +21,7 @@ module Instances.Data.Time () where
 #if MIN_VERSION_time(1,8,0)
 import Data.Time.Clock.System (SystemTime(..))
 import GHC.Generics (Generic)
-import Instances.Utils.GenericArbitrary (genericArbitrary)
-import Test.QuickCheck (Arbitrary(..))
-
-instance Arbitrary SystemTime where
-    arbitrary = genericArbitrary
+import Test.QuickCheck.Instances.Time ()
 
 deriving instance Generic SystemTime
 #endif
