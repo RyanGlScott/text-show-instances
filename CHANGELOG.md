@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Make the test suite compile on GHC 8.8.1.
+
 ### 3.8.1 [2019.06.03]
 * Require `quickcheck-instances-0.3.21` or later.
 
