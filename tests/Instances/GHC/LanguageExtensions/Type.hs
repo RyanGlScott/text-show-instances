@@ -19,11 +19,9 @@ module Instances.GHC.LanguageExtensions.Type () where
 
 #if defined(MIN_VERSION_ghc_boot_th)
 import GHC.LanguageExtensions.Type (Extension(..))
+import Language.Haskell.TH.Instances ()
 import Test.QuickCheck (Arbitrary(..), arbitraryBoundedEnum)
 
-# if !(MIN_VERSION_ghc_boot_th(8,8,1))
-deriving instance Bounded Extension
-# endif
 instance Arbitrary Extension where
     arbitrary = arbitraryBoundedEnum
 #endif
