@@ -254,7 +254,7 @@ test-suite spec
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
   build-depends:       base-compat-batteries >= 0.10   && < 1
-                     , bifunctors            >= 5.2    && < 6
+                     , bifunctors            >= 5.5.5  && < 6
                      , binary                >= 0.7.1  && < 0.9
                      , containers            >= 0.5.5  && < 0.7
                      , directory             >= 1.2.1  && < 1.4

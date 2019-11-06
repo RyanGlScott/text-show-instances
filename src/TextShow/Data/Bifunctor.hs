@@ -34,7 +34,13 @@ import Data.Bifunctor.Sum (Sum)
 import Data.Bifunctor.Tannen (Tannen)
 import Data.Bifunctor.Wrapped (WrappedBifunctor)
 
-import TextShow (TextShow(..), TextShow1(..), TextShow2(..))
+import GHC.Show (appPrec)
+
+import Prelude ()
+import Prelude.Compat
+
+import TextShow (TextShow(..), TextShow1(..), TextShow2(..),
+                 fromString, showbParen, singleton)
 import TextShow.TH (deriveTextShow2, makeShowbPrec, makeLiftShowbPrec)
 
 -- | /Since: 2/
@@ -60,8 +66,10 @@ instance TextShow (p (Fix p a) a) => TextShow (Fix p a) where
     showbPrec = $(makeShowbPrec ''Fix)
 -- | /Since: 2/
 instance TextShow2 p => TextShow1 (Fix p) where
-    liftShowbPrec sp sl p =
-        liftShowbPrec2 (liftShowbPrec sp sl) (liftShowbList sp sl) sp sl p . out
+    liftShowbPrec sp sl p (In x) = showbParen (p > appPrec) $
+        fromString "In {out = "
+     <> liftShowbPrec2 (liftShowbPrec sp sl) (liftShowbList sp sl) sp sl 0 x
+     <> singleton '}'
 
 -- | /Since: 2/
 instance TextShow (p b a) => TextShow (Flip p a b) where
@@ -77,7 +85,10 @@ instance TextShow (p a a) => TextShow (Join p a) where
     showbPrec = $(makeShowbPrec ''Join)
 -- | /Since: 2/
 instance TextShow2 p => TextShow1 (Join p) where
-    liftShowbPrec sp sl p = liftShowbPrec2 sp sl sp sl p . runJoin
+    liftShowbPrec sp sl p (Join x) = showbParen (p > appPrec) $
+        fromString "Join {runJoin = "
+     <> liftShowbPrec2 sp sl sp sl 0 x
+     <> singleton '}'
 
 -- | /Since: 2/
 instance TextShow (g b) => TextShow (Joker g a b) where

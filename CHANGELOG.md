@@ -1,3 +1,8 @@
+### next [????.??.??]
+* Make the `TextShow1` and `TextShow2` instances for `Fix` and `Join` in
+  `TextShow.Data.Bifunctor` match the behavior the corresponding `Show1` and
+  `Show2` instances in `bifunctors`.
+
 ### 3.8.2 [2019.09.03]
 * Make the test suite compile on GHC 8.8.1.
 
