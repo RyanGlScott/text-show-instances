@@ -44,13 +44,13 @@ import TextShow (TextShow(..), TextShow1(..), TextShow2(..),
 import TextShow.TH (deriveTextShow2, makeShowbPrec, makeLiftShowbPrec)
 
 -- | /Since: 2/
+$(deriveTextShow2 ''Biff)
+-- | /Since: 2/
 instance TextShow (p (f a) (g b)) => TextShow (Biff p f g a b) where
     showbPrec = $(makeShowbPrec ''Biff)
 -- | /Since: 2/
 instance (TextShow2 p, TextShow1 f, TextShow1 g, TextShow a) => TextShow1 (Biff p f g a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''Biff)
 
 -- | /Since: 2/
 instance TextShow (f a) => TextShow (Clown f a b) where
@@ -72,13 +72,13 @@ instance TextShow2 p => TextShow1 (Fix p) where
      <> singleton '}'
 
 -- | /Since: 2/
+$(deriveTextShow2 ''Flip)
+-- | /Since: 2/
 instance TextShow (p b a) => TextShow (Flip p a b) where
     showbPrec = $(makeShowbPrec ''Flip)
 -- | /Since: 2/
 instance (TextShow2 p, TextShow a) => TextShow1 (Flip p a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''Flip)
 
 -- | /Since: 2/
 instance TextShow (p a a) => TextShow (Join p a) where
@@ -100,37 +100,37 @@ instance TextShow1 g => TextShow1 (Joker g a) where
 $(deriveTextShow2 ''Joker)
 
 -- | /Since: 2/
+$(deriveTextShow2 ''Product)
+-- | /Since: 2/
 instance (TextShow (f a b), TextShow (g a b)) => TextShow (Product f g a b) where
     showbPrec = $(makeShowbPrec ''Product)
 -- | /Since: 2/
 instance (TextShow2 f, TextShow2 g, TextShow a) => TextShow1 (Product f g a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''Product)
 
+-- | /Since: 2/
+$(deriveTextShow2 ''Sum)
 -- | /Since: 2/
 instance (TextShow (f a b), TextShow (g a b)) => TextShow (Sum f g a b) where
     showbPrec = $(makeShowbPrec ''Sum)
 -- | /Since: 2/
 instance (TextShow2 f, TextShow2 g, TextShow a) => TextShow1 (Sum f g a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''Sum)
 
+-- | /Since: 2/
+$(deriveTextShow2 ''Tannen)
 -- | /Since: 2/
 instance TextShow (f (p a b)) => TextShow (Tannen f p a b) where
     showbPrec = $(makeShowbPrec ''Tannen)
 -- | /Since: 2/
 instance (TextShow1 f, TextShow2 p, TextShow a) => TextShow1 (Tannen f p a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''Tannen)
 
+-- | /Since: 2/
+$(deriveTextShow2 ''WrappedBifunctor)
 -- | /Since: 2/
 instance TextShow (p a b) => TextShow (WrappedBifunctor p a b) where
     showbPrec = $(makeShowbPrec ''WrappedBifunctor)
 -- | /Since: 2/
 instance (TextShow2 p, TextShow a) => TextShow1 (WrappedBifunctor p a) where
     liftShowbPrec = liftShowbPrec2 showbPrec showbList
--- | /Since: 2/
-$(deriveTextShow2 ''WrappedBifunctor)

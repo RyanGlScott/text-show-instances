@@ -45,9 +45,11 @@ import TextShow (TextShow(..), fromString)
 import TextShow.TH (deriveTextShow)
 
 -- | /Since: 2/
+$(deriveTextShow ''Exception)
+-- | /Since: 2/
 $(deriveTextShow ''DebugEventInfo)
 -- | /Since: 2/
-$(deriveTextShow ''Exception)
+$(deriveTextShow ''FILETIME)
 -- | /Since: 2/
 $(deriveTextShow ''BY_HANDLE_FILE_INFORMATION)
 -- | /Since: 2/
@@ -56,8 +58,6 @@ $(deriveTextShow ''WIN32_FILE_ATTRIBUTE_DATA)
 $(deriveTextShow ''ProcessorArchitecture)
 -- | /Since: 2/
 $(deriveTextShow ''SYSTEM_INFO)
--- | /Since: 2/
-$(deriveTextShow ''FILETIME)
 -- | /Since: 2/
 $(deriveTextShow ''SYSTEMTIME)
 -- | /Since: 2/

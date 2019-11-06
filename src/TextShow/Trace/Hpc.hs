@@ -26,17 +26,6 @@ import Trace.Hpc.Tix (Tix, TixModule)
 import Trace.Hpc.Util (HpcPos, Hash, fromHpcPos)
 
 -- | /Since: 2/
-$(deriveTextShow ''Mix)
--- | /Since: 2/
-$(deriveTextShow ''BoxLabel)
--- | /Since: 2/
-$(deriveTextShow ''CondBox)
--- | /Since: 2/
-$(deriveTextShow ''Tix)
--- | /Since: 2/
-$(deriveTextShow ''TixModule)
-
--- | /Since: 2/
 instance TextShow HpcPos where
     showb hp = case fromHpcPos hp of
         (l1, c1, l2, c2) -> showb l1
@@ -49,3 +38,14 @@ instance TextShow HpcPos where
 instance TextShow Hash where
     showb = showb . FromStringShow
     {-# INLINE showb #-}
+
+-- | /Since: 2/
+$(deriveTextShow ''TixModule)
+-- | /Since: 2/
+$(deriveTextShow ''CondBox)
+-- | /Since: 2/
+$(deriveTextShow ''BoxLabel)
+-- | /Since: 2/
+$(deriveTextShow ''Mix)
+-- | /Since: 2/
+$(deriveTextShow ''Tix)

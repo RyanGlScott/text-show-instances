@@ -29,12 +29,12 @@ import           Instances.Utils.GenericArbitrary (genericArbitrary)
 import           System.Console.Terminfo (Color, SetupTermError)
 import           Test.QuickCheck (Arbitrary(..))
 
+$(Generics.deriveAll0 ''Color)
+$(Generics.deriveAll0 ''SetupTermError)
+
 instance Arbitrary Color where
     arbitrary = genericArbitrary
 
 instance Arbitrary SetupTermError where
     arbitrary = genericArbitrary
-
-$(Generics.deriveAll0 ''Color)
-$(Generics.deriveAll0 ''SetupTermError)
 #endif

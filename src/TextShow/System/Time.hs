@@ -28,8 +28,8 @@ instance TextShow ClockTime where
 -- | /Since: 2/
 $(deriveTextShow ''TimeDiff)
 -- | /Since: 2/
-$(deriveTextShow ''CalendarTime)
--- | /Since: 2/
 $(deriveTextShow ''Month)
 -- | /Since: 2/
 $(deriveTextShow ''Day)
+-- | /Since: 2/
+$(deriveTextShow ''CalendarTime)

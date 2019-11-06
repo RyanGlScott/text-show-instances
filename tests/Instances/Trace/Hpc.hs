@@ -35,6 +35,12 @@ import           Trace.Hpc.Mix (Mix(..), MixEntry, BoxLabel(..), CondBox(..))
 import           Trace.Hpc.Tix (Tix(..), TixModule(..))
 import           Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
 
+$(Generics.deriveAll0 ''BoxLabel)
+$(Generics.deriveAll0 ''Tix)
+$(Generics.deriveAll0 ''TixModule)
+$(Generics.deriveAll0 ''HpcPos)
+$(Generics.deriveAll0 ''Hash)
+
 instance Arbitrary Mix where
     arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
                     <*> arbitrary <@> [fMixEntry]
@@ -62,14 +68,8 @@ instance Arbitrary Hash where
     arbitrary = genericArbitrary
 
 -------------------------------------------------------------------------------
--- Workarounds to make Arbitrary instances faster
+-- Workaround to make Arbitrary instances faster
 -------------------------------------------------------------------------------
 
 fMixEntry :: MixEntry
 fMixEntry = (toHpcPos (0, 1, 2, 3), ExpBox True)
-
-$(Generics.deriveAll0 ''BoxLabel)
-$(Generics.deriveAll0 ''Tix)
-$(Generics.deriveAll0 ''TixModule)
-$(Generics.deriveAll0 ''HpcPos)
-$(Generics.deriveAll0 ''Hash)

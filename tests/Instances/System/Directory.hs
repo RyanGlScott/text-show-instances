@@ -29,9 +29,9 @@ import           System.Directory (XdgDirectory(..))
 import           Test.QuickCheck (arbitraryBoundedEnum)
 #endif
 
+$(Generics.deriveAll0 ''Permissions)
 instance Arbitrary Permissions where
     arbitrary = genericArbitrary
-$(Generics.deriveAll0 ''Permissions)
 
 #if MIN_VERSION_directory(1,2,3)
 instance Arbitrary XdgDirectory where

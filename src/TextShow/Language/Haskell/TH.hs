@@ -100,157 +100,86 @@ showbName' ni nm = case ni of
                             else False
 
 -- | /Since: 2/
-$(deriveTextShow ''AnnLookup)
--- | /Since: 2/
-$(deriveTextShow ''AnnTarget)
--- | /Since: 2/
-$(deriveTextShow ''Body)
--- | /Since: 2/
-$(deriveTextShow ''Callconv)
--- | /Since: 2/
-$(deriveTextShow ''Clause)
--- | /Since: 2/
-$(deriveTextShow ''Con)
--- | /Since: 2/
-$(deriveTextShow ''Dec)
--- | /Since: 2/
-$(deriveTextShow ''Exp)
-#if !(MIN_VERSION_template_haskell(2,13,0))
--- | /Since: 2/
-$(deriveTextShow ''FamFlavour)
-#endif
--- | /Since: 2/
-$(deriveTextShow ''Fixity)
--- | /Since: 2/
-$(deriveTextShow ''FixityDirection)
--- | /Since: 2/
-$(deriveTextShow ''Foreign)
--- | /Since: 2/
-$(deriveTextShow ''FunDep)
--- | /Since: 2/
-$(deriveTextShow ''Guard)
--- | /Since: 2/
-$(deriveTextShow ''Info)
--- | /Since: 2/
-$(deriveTextShow ''Inline)
--- | /Since: 2/
-$(deriveTextShow ''Lit)
--- | /Since: 2/
-$(deriveTextShow ''Loc)
--- | /Since: 2/
-$(deriveTextShow ''Match)
--- | /Since: 2/
-$(deriveTextShow ''ModName)
--- | /Since: 2/
-$(deriveTextShow ''Module)
--- | /Since: 2/
-$(deriveTextShow ''ModuleInfo)
-
--- | /Since: 2/
 instance TextShow Name where
     showb = showbName
-
--- | /Since: 3.3/
-$(deriveTextShow ''NameFlavour)
--- | /Since: 3.3/
-$(deriveTextShow ''NameSpace)
--- | /Since: 2/
-$(deriveTextShow ''OccName)
--- | /Since: 2/
-$(deriveTextShow ''Pat)
--- | /Since: 2/
-$(deriveTextShow ''Phases)
--- | /Since: 2/
-$(deriveTextShow ''PkgName)
--- | /Since: 2/
-$(deriveTextShow ''Pragma)
--- | /Since: 2/
-$(deriveTextShow ''Range)
--- | /Since: 2/
-$(deriveTextShow ''Role)
--- | /Since: 2/
-$(deriveTextShow ''RuleBndr)
--- | /Since: 2/
-$(deriveTextShow ''RuleMatch)
--- | /Since: 2/
-$(deriveTextShow ''Safety)
--- | /Since: 2/
-$(deriveTextShow ''Stmt)
--- | /Since: 2/
-$(deriveTextShow ''TyLit)
--- | /Since: 2/
-$(deriveTextShow ''Type)
--- | /Since: 2/
-$(deriveTextShow ''TySynEqn)
--- | /Since: 2/
-$(deriveTextShow ''TyVarBndr)
 
 -- | /Since: 2/
 instance TextShow Doc where
     showb = renderB . to_HPJ_Doc
 
+-- A significant chunk of these data types are mutually recursive, which makes
+-- it impossible to derive TextShow instances for everything individually using
+-- Template Haskell. As a workaround, we splice everything together in a single
+-- ungodly large splice. One unfortunate consequence of this is that we cannot
+-- give Haddocks to each instance :(
+$(concat <$> traverse deriveTextShow
+  [ ''AnnLookup
+  , ''AnnTarget
+  , ''Body
+  , ''Callconv
+  , ''Clause
+  , ''Con
+  , ''Dec
+  , ''Exp
+#if !(MIN_VERSION_template_haskell(2,13,0))
+  , ''FamFlavour
+#endif
+  , ''Fixity
+  , ''FixityDirection
+  , ''Foreign
+  , ''FunDep
+  , ''Guard
+  , ''Info
+  , ''Inline
+  , ''Lit
+  , ''Loc
+  , ''Match
+  , ''ModName
+  , ''Module
+  , ''ModuleInfo
+  , ''NameFlavour
+  , ''NameSpace
+  , ''OccName
+  , ''Pat
+  , ''Phases
+  , ''PkgName
+  , ''Pragma
+  , ''Range
+  , ''Role
+  , ''RuleBndr
+  , ''RuleMatch
+  , ''Safety
+  , ''Stmt
+  , ''TyLit
+  , ''Type
+  , ''TySynEqn
+  , ''TyVarBndr
+
 #if !(MIN_VERSION_template_haskell(2,10,0))
--- | Only available with @template-haskell-2.10@ or earlier.
---
--- /Since: 2/
-$(deriveTextShow ''Pred)
+  , ''Pred
 #endif
 
 #if MIN_VERSION_template_haskell(2,11,0)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''Bang)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''DecidedStrictness)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''FamilyResultSig)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''InjectivityAnn)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''Overlap)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''SourceStrictness)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''SourceUnpackedness)
--- | Only available with @template-haskell-2.11.0.0@ or later.
---
--- /Since: 3/
-$(deriveTextShow ''TypeFamilyHead)
+  , ''Bang
+  , ''DecidedStrictness
+  , ''FamilyResultSig
+  , ''InjectivityAnn
+  , ''Overlap
+  , ''SourceStrictness
+  , ''SourceUnpackedness
+  , ''TypeFamilyHead
 #else
--- | Only available with @template-haskell-2.11@ or earlier.
---
--- /Since: 3/
-$(deriveTextShow ''Strict)
+  , ''Strict
 #endif
 
 #if MIN_VERSION_template_haskell(2,12,0)
--- | Only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.6/
-$(deriveTextShow ''DerivClause)
--- | Only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.6/
-$(deriveTextShow ''DerivStrategy)
--- | Only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.3/
-$(deriveTextShow ''PatSynArgs)
--- | Only available with @template-haskell-2.12.0.0@ or later.
---
--- /Since: 3.3/
-$(deriveTextShow ''PatSynDir)
+  , ''DerivClause
+  , ''DerivStrategy
+  , ''PatSynArgs
+  , ''PatSynDir
 #endif
+
+#if MIN_VERSION_template_haskell(2,16,0)
+  , ''Bytes
+#endif
+  ])
