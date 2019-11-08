@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.8.3 [2019.11.08]
 * Make the `TextShow1` and `TextShow2` instances for `Fix` and `Join` in
   `TextShow.Data.Bifunctor` match the behavior the corresponding `Show1` and
   `Show2` instances in `bifunctors`.
