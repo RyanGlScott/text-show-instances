@@ -163,7 +163,7 @@ library
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.17
-                     , ghc-boot-th           >= 8.0  && < 8.9
+                     , ghc-boot-th           >= 8.0  && < 8.11
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
@@ -288,7 +288,7 @@ test-suite spec
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.17
-                     , ghc-boot-th           >= 8.0  && < 8.9
+                     , ghc-boot-th           >= 8.0  && < 8.11
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
