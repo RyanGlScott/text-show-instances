@@ -26,10 +26,6 @@ import           Data.Text.Lazy (uncons)
 import           Prelude ()
 import           Prelude.Compat
 
-#if !(MIN_VERSION_template_haskell(2,10,0))
-import           GHC.Exts (Int(I#))
-#endif
-
 import           Language.Haskell.TH.PprLib (Doc, to_HPJ_Doc)
 import           Language.Haskell.TH.Syntax
 
@@ -37,6 +33,18 @@ import           TextShow (TextShow(..), Builder,
                            fromString, singleton, toLazyText)
 import           TextShow.Text.PrettyPrint (renderB)
 import           TextShow.TH (deriveTextShow)
+
+#if !(MIN_VERSION_template_haskell(2,10,0))
+import           GHC.Exts (Int(I#))
+#endif
+
+#if MIN_VERSION_base(4,15,0)
+import qualified Data.Text.Foreign as TS (peekCStringLen)
+import           Foreign.ForeignPtr (withForeignPtr)
+import           Foreign.Ptr (plusPtr)
+import           System.IO.Unsafe (unsafePerformIO)
+import           TextShow (showtToShowb)
+#endif
 
 -- | Convert a 'Name' to a 'Builder'.
 --
@@ -106,6 +114,15 @@ instance TextShow Name where
 -- | /Since: 2/
 instance TextShow Doc where
     showb = renderB . to_HPJ_Doc
+
+#if MIN_VERSION_template_haskell(2,17,0)
+instance TextShow Bytes where
+   showb = showtToShowb showt
+   showt b = unsafePerformIO $ withForeignPtr (bytesPtr b) $ \ptr ->
+                TS.peekCStringLen ( ptr `plusPtr` fromIntegral (bytesOffset b)
+                                  , fromIntegral (bytesSize b)
+                                  )
+#endif
 
 -- A significant chunk of these data types are mutually recursive, which makes
 -- it impossible to derive TextShow instances for everything individually using
@@ -179,7 +196,11 @@ $(concat <$> traverse deriveTextShow
   , ''PatSynDir
 #endif
 
-#if MIN_VERSION_template_haskell(2,16,0)
+#if MIN_VERSION_template_haskell(2,16,0) && !(MIN_VERSION_template_haskell(2,17,0))
   , ''Bytes
+#endif
+
+#if MIN_VERSION_template_haskell(2,17,0)
+  , ''Specificity
 #endif
   ])

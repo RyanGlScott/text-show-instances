@@ -157,13 +157,13 @@ library
   ghc-options:         -Wall
 
   if flag(base-4-9)
-    build-depends:     base                  >= 4.9 && < 4.15
+    build-depends:     base                  >= 4.9 && < 4.16
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
     build-depends:     base                  >= 4.7 && < 4.9
 
   if flag(template-haskell-2-11)
-    build-depends:     template-haskell      >= 2.11 && < 2.17
+    build-depends:     template-haskell      >= 2.11 && < 2.18
                      , ghc-boot-th           >= 8.0  && < 8.11
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
@@ -282,13 +282,13 @@ test-suite spec
   build-tool-depends:  hspec-discover:hspec-discover
 
   if flag(base-4-9)
-    build-depends:     base                  >= 4.9 && < 4.15
+    build-depends:     base                  >= 4.9 && < 4.16
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
     build-depends:     base                  >= 4.7 && < 4.9
 
   if flag(template-haskell-2-11)
-    build-depends:     template-haskell      >= 2.11 && < 2.17
+    build-depends:     template-haskell      >= 2.11 && < 2.18
                      , ghc-boot-th           >= 8.0  && < 8.11
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
