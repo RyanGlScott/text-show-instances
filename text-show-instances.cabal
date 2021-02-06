@@ -176,7 +176,7 @@ library
     build-depends:     transformers          == 0.4.*
 
   if os(windows)
-    build-depends:     Win32                 >= 2.1    && < 2.9
+    build-depends:     Win32                 >= 2.1    && < 2.12
   else
     build-depends:     terminfo              >= 0.4    && < 0.5
                      , unix                  >= 2.7    && < 2.8
@@ -307,7 +307,7 @@ test-suite spec
     ghc-options:       -Wno-star-is-type
 
   if os(windows)
-    build-depends:     Win32                 >= 2.1    && < 2.9
+    build-depends:     Win32                 >= 2.1    && < 2.12
   else
     build-depends:     terminfo              >= 0.4    && < 0.5
                      , unix                  >= 2.7    && < 2.8
