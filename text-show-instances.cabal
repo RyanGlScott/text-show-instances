@@ -73,6 +73,7 @@ tested-with:         GHC == 7.8.4
                    , GHC == 8.6.5
                    , GHC == 8.8.4
                    , GHC == 8.10.2
+                   , GHC == 9.0.1
 extra-source-files:  CHANGELOG.md, README.md
 cabal-version:       >=1.10
 
@@ -164,7 +165,7 @@ library
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.18
-                     , ghc-boot-th           >= 8.0  && < 8.11
+                     , ghc-boot-th           >= 8.0  && < 9.1
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
@@ -289,7 +290,7 @@ test-suite spec
 
   if flag(template-haskell-2-11)
     build-depends:     template-haskell      >= 2.11 && < 2.18
-                     , ghc-boot-th           >= 8.0  && < 8.11
+                     , ghc-boot-th           >= 8.0  && < 9.1
   else
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
