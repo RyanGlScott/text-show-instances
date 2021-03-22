@@ -82,5 +82,5 @@ spec = parallel $ do
 #endif
 
 -- | Verifies that the output of 'renderStyle' and 'renderStyleB' coincides.
--- prop_renderStyle :: Style -> Doc -> Bool
--- prop_renderStyle sty doc = fromString (renderStyle sty doc) == renderStyleB sty doc
+-- prop_renderStyle :: Style -> Doc -> Expectation
+-- prop_renderStyle sty doc = fromString (renderStyle sty doc) `shouldBe` renderStyleB sty doc

@@ -19,7 +19,7 @@ import Language.Haskell.TH.Syntax
 
 import Spec.Utils (matchesTextShowSpec)
 
-import Test.Hspec (Spec, describe, hspec, parallel)
+import Test.Hspec (Expectation, Spec, describe, hspec, parallel, shouldBe)
 import Test.Hspec.QuickCheck (prop)
 
 import TextShow (fromString)
@@ -48,5 +48,5 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy PkgName)
 
 -- | Verifies that `showName'` and `showbName'` have the same output.
-prop_showName' :: NameIs -> Name -> Bool
-prop_showName' nameIs name = fromString (showName' nameIs name) == showbName' nameIs name
+prop_showName' :: NameIs -> Name -> Expectation
+prop_showName' nameIs name = fromString (showName' nameIs name) `shouldBe` showbName' nameIs name
