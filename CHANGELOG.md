@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Require `quickcheck-instances-0.3.26` or later in the test suite.
+
 ### 3.8.4 [2020.10.03]
 * Allow building with `template-haskell-2.17.0.0` (GHC 9.0).
 

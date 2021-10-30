@@ -10,16 +10,15 @@ Portability: GHC
 -}
 module Spec.Data.ShortTextSpec (main, spec) where
 
-import           Data.Proxy               (Proxy (..))
-import           Data.Text.Short          (ShortText)
+import           Data.Proxy                (Proxy (..))
+import           Data.Text.Short           (ShortText)
 
-import           Instances.Data.ShortText ()
+import           Spec.Utils                (matchesTextShowSpec)
 
-import           Spec.Utils               (matchesTextShowSpec)
+import           Test.Hspec                (Spec, describe, hspec, parallel)
+import           Test.QuickCheck.Instances ()
 
-import           Test.Hspec               (Spec, describe, hspec, parallel)
-
-import           TextShow.Data.ShortText  ()
+import           TextShow.Data.ShortText   ()
 
 main :: IO ()
 main = hspec spec

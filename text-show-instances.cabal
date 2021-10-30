@@ -191,7 +191,6 @@ test-suite spec
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Functor.Trans
-                       Instances.Data.ShortText
                        Instances.Data.Vector
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
@@ -269,7 +268,7 @@ test-suite spec
                      , old-time              >= 1.1    && < 1.2
                      , pretty                >= 1.1.1  && < 1.2
                      , QuickCheck            >= 2.12   && < 2.15
-                     , quickcheck-instances  >= 0.3.21 && < 0.4
+                     , quickcheck-instances  >= 0.3.26 && < 0.4
                      , random                >= 1.0.1  && < 1.3
                      , tagged                >= 0.4.4  && < 1
                      , text-short            >= 0.1    && < 0.2
