@@ -1,4 +1,5 @@
 ### next [????.??.??]
+* Allow building with GHC 9.2.
 * Require `quickcheck-instances-0.3.26` or later in the test suite.
 
 ### 3.8.4 [2020.10.03]
