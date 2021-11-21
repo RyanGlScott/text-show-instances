@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.8.6 [2021.11.21]
 * Add a `TextShow` instance for `Scientific` from the `scientific` package.
 * Require `quickcheck-instances-0.3.27` or later in the test suite.
 
