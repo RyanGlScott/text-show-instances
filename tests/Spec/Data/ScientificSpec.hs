@@ -6,7 +6,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-@hspec@ tests for 'Scientific' (from the @text-short@ package).
+@hspec@ tests for 'Scientific' (from the @scientific@ package).
 -}
 module Spec.Data.ScientificSpec (main, spec) where
 
