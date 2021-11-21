@@ -21,6 +21,7 @@
 * [`bifunctors`](http://hackage.haskell.org/package/bifunctors)
 * [`binary`](http://hackage.haskell.org/package/binary)
 * [`containers`](http://hackage.haskell.org/package/containers)
+* [`scientific`](http://hackage.haskell.org/package/scientific)
 * [`directory`](http://hackage.haskell.org/package/directory)
 * [`ghc-boot`](http://hackage.haskell.org/package/ghc-boot)
 * [`haskeline`](http://hackage.haskell.org/package/haskeline)
