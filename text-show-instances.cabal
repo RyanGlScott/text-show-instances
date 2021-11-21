@@ -13,8 +13,6 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/containers           containers>@
                      .
-                     * @<http://hackage.haskell.org/package/scientific           scientific>@
-                     .
                      * @<http://hackage.haskell.org/package/directory            directory>@
                      .
                      * @<http://hackage.haskell.org/package/ghc-boot-th          ghc-boot-th>@
@@ -30,6 +28,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      * @<http://hackage.haskell.org/package/pretty               pretty>@
                      .
                      * @<http://hackage.haskell.org/package/random               random>@
+                     .
+                     * @<http://hackage.haskell.org/package/scientific           scientific>@
                      .
                      * @<http://hackage.haskell.org/package/tagged               tagged>@
                      .
