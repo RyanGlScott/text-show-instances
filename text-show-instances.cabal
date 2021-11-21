@@ -105,6 +105,7 @@ library
                        TextShow.Data.Binary
                        TextShow.Data.Containers
                        TextShow.Data.Functor.Trans
+                       TextShow.Data.Scientific
                        TextShow.Data.ShortText
                        TextShow.Data.Tagged
                        TextShow.Data.Time
@@ -144,6 +145,7 @@ library
                      , old-time              >= 1.1    && < 1.2
                      , pretty                >= 1.1.1  && < 1.2
                      , random                >= 1.0.1  && < 1.3
+                     , scientific            >= 0.3.7  && < 0.4
                      , semigroups            >= 0.16.2 && < 1
                      , tagged                >= 0.4.4  && < 1
                      , text                  >= 0.11.1 && < 1.3
@@ -226,6 +228,7 @@ test-suite spec
                        Spec.Data.BinarySpec
                        Spec.Data.ContainersSpec
                        Spec.Data.Functor.TransSpec
+                       Spec.Data.ScientificSpec
                        Spec.Data.ShortTextSpec
                        Spec.Data.VectorSpec
                        Spec.Data.TaggedSpec
@@ -271,6 +274,7 @@ test-suite spec
                      , quickcheck-instances  >= 0.3.26 && < 0.4
                      , random                >= 1.0.1  && < 1.3
                      , tagged                >= 0.4.4  && < 1
+                     , scientific            >= 0.3.7  && < 0.4
                      , text-short            >= 0.1    && < 0.2
                      , text-show             >= 3.4    && < 4
                      , text-show-instances
