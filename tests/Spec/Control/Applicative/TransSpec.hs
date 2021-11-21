@@ -15,11 +15,10 @@ import Control.Applicative.Lift      (Lift)
 
 import Data.Proxy (Proxy(..))
 
-import Instances.Control.Applicative.Trans ()
-
 import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
+import Test.QuickCheck.Instances ()
 
 import TextShow.Control.Applicative.Trans ()
 

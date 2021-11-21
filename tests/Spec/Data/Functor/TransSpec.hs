@@ -17,8 +17,6 @@ import Data.Functor.Reverse  (Reverse)
 import Data.Functor.Sum      (Sum)
 import Data.Proxy            (Proxy(..))
 
-import Instances.Data.Functor.Trans ()
-
 import Spec.Utils (matchesTextShowSpec)
 
 import Test.Hspec (Spec, describe, hspec, parallel)

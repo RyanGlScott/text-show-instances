@@ -1,5 +1,6 @@
 ### next [????.??.??]
 * Add a `TextShow` instance for `Scientific` from the `scientific` package.
+* Require `quickcheck-instances-0.3.27` or later in the test suite.
 
 ### 3.8.5 [2021.10.31]
 * Allow building with GHC 9.2.
