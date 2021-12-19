@@ -7,6 +7,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      encompassed by @text-show@. Currently, @text-show-instances@
                      covers these libraries:
                      .
+                     * @<https://hackage.haskell.org/package/aeson               aeson>@
+                     .
                      * @<http://hackage.haskell.org/package/bifunctors           bifunctors>@
                      .
                      * @<http://hackage.haskell.org/package/binary               binary>@
@@ -103,6 +105,7 @@ library
 
                        TextShow.Control.Applicative.Trans
                        TextShow.Control.Monad.Trans
+                       TextShow.Data.Aeson
                        TextShow.Data.Bifunctor
                        TextShow.Data.Binary
                        TextShow.Data.Containers
@@ -136,7 +139,8 @@ library
                        TextShow.System.Console.Terminfo
                        TextShow.System.Posix
   other-modules:       TextShow.Utils
-  build-depends:       base-compat-batteries >= 0.10   && < 1
+  build-depends:       aeson                 >= 1.5.6  && < 2
+                     , base-compat-batteries >= 0.10   && < 1
                      , bifunctors            >= 5.2    && < 6
                      , binary                >= 0.7.1  && < 0.9
                      , containers            >= 0.5.5  && < 0.7
@@ -224,6 +228,7 @@ test-suite spec
 
                        Spec.Control.Applicative.TransSpec
                        Spec.Control.Monad.TransSpec
+                       Spec.Data.AesonSpec
                        Spec.Data.BifunctorSpec
                        Spec.Data.BinarySpec
                        Spec.Data.ContainersSpec
@@ -257,7 +262,8 @@ test-suite spec
                        -- Only defines tests if not using Windows
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
-  build-depends:       base-compat-batteries >= 0.10   && < 1
+  build-depends:       aeson                 >= 1.5.6  && < 2
+                     , base-compat-batteries >= 0.10   && < 1
                      , bifunctors            >= 5.5.5  && < 6
                      , binary                >= 0.7.1  && < 0.9
                      , containers            >= 0.5.5  && < 0.7
