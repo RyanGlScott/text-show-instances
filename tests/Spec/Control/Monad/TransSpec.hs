@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-warnings-deprecations #-}
 {-|
 Module:      Spec.Control.Monad.TransSpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -11,10 +10,8 @@ Portability: GHC
 -}
 module Spec.Control.Monad.TransSpec (main, spec) where
 
-import           Control.Monad.Trans.Error               (ErrorT)
 import           Control.Monad.Trans.Except              (ExceptT)
 import           Control.Monad.Trans.Identity            (IdentityT)
-import           Control.Monad.Trans.List                (ListT)
 import           Control.Monad.Trans.Maybe               (MaybeT)
 import qualified Control.Monad.Trans.Writer.Lazy   as WL (WriterT)
 import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT)
@@ -35,14 +32,10 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-    describe "ErrorT Char Maybe Int" $
-        matchesTextShowSpec (Proxy :: Proxy (ErrorT Char Maybe Int))
     describe "ExceptT Char Maybe Int" $
         matchesTextShowSpec (Proxy :: Proxy (ExceptT Char Maybe Int))
     describe "IdentityT Maybe Int" $
         matchesTextShowSpec (Proxy :: Proxy (IdentityT Maybe Int))
-    describe "ListT Maybe Char" $
-        matchesTextShowSpec (Proxy :: Proxy (ListT Maybe Char))
     describe "Maybe [] Int" $
         matchesTextShowSpec (Proxy :: Proxy (MaybeT [] Int))
     describe "lazy WriterT String Maybe Int" $

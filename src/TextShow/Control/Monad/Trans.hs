@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS_GHC -fno-warn-orphans -fno-warn-warnings-deprecations #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      TextShow.Control.Monad.Trans
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -14,10 +14,8 @@ Portability: GHC
 -}
 module TextShow.Control.Monad.Trans () where
 
-import           Control.Monad.Trans.Error               (ErrorT(..))
 import           Control.Monad.Trans.Except              (ExceptT(..))
 import           Control.Monad.Trans.Identity            (IdentityT(..))
-import           Control.Monad.Trans.List                (ListT(..))
 import           Control.Monad.Trans.Maybe               (MaybeT(..))
 import qualified Control.Monad.Trans.Writer.Lazy   as WL (WriterT(..))
 import qualified Control.Monad.Trans.Writer.Strict as WS (WriterT(..))
@@ -44,16 +42,6 @@ liftShowbWriterTPrec sp sl p m =
 {-# INLINE liftShowbWriterTPrec #-}
 
 -- | /Since: 2/
-instance (TextShow e, TextShow1 m, TextShow a) => TextShow (ErrorT e m a) where
-    showbPrec = showbPrec1
-    {-# INLINE showbPrec #-}
-
--- | /Since: 2/
-instance (TextShow e, TextShow1 m) => TextShow1 (ErrorT e m) where
-    liftShowbPrec sp sl p (ErrorT m) = liftMShowbUnaryWith sp sl "ErrorT" p m
-    {-# INLINE liftShowbPrec #-}
-
--- | /Since: 2/
 instance (TextShow e, TextShow1 m, TextShow a) => TextShow (ExceptT e m a) where
     showbPrec = showbPrec1
     {-# INLINE showbPrec #-}
@@ -71,16 +59,6 @@ instance (TextShow1 f, TextShow a) => TextShow (IdentityT f a) where
 -- | /Since: 2/
 instance TextShow1 f => TextShow1 (IdentityT f) where
     liftShowbPrec sp sl p (IdentityT m) = liftShowbUnaryWith sp sl "IdentityT" p m
-    {-# INLINE liftShowbPrec #-}
-
--- | /Since: 2/
-instance (TextShow1 m, TextShow a) => TextShow (ListT m a) where
-    showbPrec = showbPrec1
-    {-# INLINE showbPrec #-}
-
--- | /Since: 2/
-instance TextShow1 m => TextShow1 (ListT m) where
-    liftShowbPrec sp sl p (ListT m) = liftMShowbUnaryWith sp sl "ListT" p m
     {-# INLINE liftShowbPrec #-}
 
 -- | /Since: 2/
