@@ -47,7 +47,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@
                      .
-                     * @<https://hackage.haskell.org/package/uuid               aeson>@
+                     * @<https://hackage.haskell.org/package/uuid                uuid>@
                      .
                      * @<http://hackage.haskell.org/package/vector               vector>@
                      .
@@ -159,7 +159,7 @@ library
                      , text-show             >= 3.4    && < 4
                      , time                  >= 0.1    && < 1.12
                      , unordered-containers  >= 0.2    && < 0.3
-                     , uuid                  >= 1      && < 2
+                     , uuid-types            >= 1      && < 2
                      , vector                >= 0.12   && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   hs-source-dirs:      src
@@ -290,7 +290,7 @@ test-suite spec
                      , time                  >= 0.1    && < 1.12
                      , transformers-compat   >= 0.5    && < 1
                      , unordered-containers  >= 0.2    && < 0.3
-                     , uuid                  >= 1      && < 2
+                     , uuid-types            >= 1      && < 2
                      , vector                >= 0.9    && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   build-tool-depends:  hspec-discover:hspec-discover

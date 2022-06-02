@@ -1,7 +1,7 @@
 module Spec.Data.UUIDSpec (main, spec) where
 
 import           Data.Proxy                (Proxy (..))
-import           Data.UUID
+import           Data.UUID.Types
 
 import           Spec.Utils                (matchesTextShowSpec)
 
