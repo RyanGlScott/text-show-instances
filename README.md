@@ -37,6 +37,7 @@
 * [`transformers`](http://hackage.haskell.org/package/transformers)
 * [`unix`](http://hackage.haskell.org/package/unix)
 * [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
+* [`uuid-types`](https://hackage.haskell.org/package/uuid-types)
 * [`vector`](http://hackage.haskell.org/package/vector)
 * [`Win32`](http://hackage.haskell.org/package/Win32)
 * [`xhtml`](http://hackage.haskell.org/package/xhtml)
