@@ -139,7 +139,7 @@ library
                        TextShow.System.Console.Terminfo
                        TextShow.System.Posix
   other-modules:       TextShow.Utils
-  build-depends:       aeson                 >= 1.5.6  && < 2
+  build-depends:       aeson                 >= 2      && < 3
                      , base-compat-batteries >= 0.10   && < 1
                      , bifunctors            >= 5.2    && < 6
                      , binary                >= 0.7.1  && < 0.9
