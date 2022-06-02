@@ -33,6 +33,7 @@ import TextShow.Data.Scientific             ()
 import TextShow.Data.Tagged                 ()
 import TextShow.Data.Time                   ()
 import TextShow.Data.UnorderedContainers    ()
+import TextShow.Data.UUID                   ()
 import TextShow.Data.Vector                 ()
 
 import TextShow.GHC.LanguageExtensions.Type ()

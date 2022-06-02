@@ -47,6 +47,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@
                      .
+                     * @<https://hackage.haskell.org/package/uuid               aeson>@
+                     .
                      * @<http://hackage.haskell.org/package/vector               vector>@
                      .
                      * @<http://hackage.haskell.org/package/Win32                Win32>@
@@ -113,6 +115,7 @@ library
                        TextShow.Data.Tagged
                        TextShow.Data.Time
                        TextShow.Data.UnorderedContainers
+                       TextShow.Data.UUID
                        TextShow.Data.Vector
                        TextShow.Language.Haskell.TH
                        TextShow.System.Console.Haskeline
@@ -156,6 +159,7 @@ library
                      , text-show             >= 3.4    && < 4
                      , time                  >= 0.1    && < 1.12
                      , unordered-containers  >= 0.2    && < 0.3
+                     , uuid                  >= 1      && < 2
                      , vector                >= 0.12   && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   hs-source-dirs:      src
@@ -237,6 +241,7 @@ test-suite spec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
                        Spec.Data.UnorderedContainersSpec
+                       Spec.Data.UUIDSpec
                        Spec.Language.Haskell.THSpec
                        Spec.System.Console.HaskelineSpec
                        Spec.System.DirectorySpec
@@ -285,6 +290,7 @@ test-suite spec
                      , time                  >= 0.1    && < 1.12
                      , transformers-compat   >= 0.5    && < 1
                      , unordered-containers  >= 0.2    && < 0.3
+                     , uuid                  >= 1      && < 2
                      , vector                >= 0.9    && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   build-tool-depends:  hspec-discover:hspec-discover
