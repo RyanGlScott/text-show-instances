@@ -47,7 +47,7 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@
                      .
-                     * @<https://hackage.haskell.org/package/uuid                uuid>@
+                     * @<https://hackage.haskell.org/package/uuid-types          uuid-types>@
                      .
                      * @<http://hackage.haskell.org/package/vector               vector>@
                      .
