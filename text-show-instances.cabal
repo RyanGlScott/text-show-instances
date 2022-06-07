@@ -1,5 +1,5 @@
 name:                text-show-instances
-version:             3.8.6
+version:             3.9
 synopsis:            Additional instances for text-show
 description:         @text-show-instances@ is a supplemental library to @text-show@
                      that provides additional @Show@ instances for data types in
@@ -49,6 +49,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/unordered-containers unordered-containers>@
                      .
+                     * @<https://hackage.haskell.org/package/uuid-types          uuid-types>@
+                     .
                      * @<http://hackage.haskell.org/package/vector               vector>@
                      .
                      * @<http://hackage.haskell.org/package/Win32                Win32>@
@@ -76,8 +78,9 @@ tested-with:         GHC == 7.8.4
                    , GHC == 8.4.4
                    , GHC == 8.6.5
                    , GHC == 8.8.4
-                   , GHC == 8.10.4
-                   , GHC == 9.0.1
+                   , GHC == 8.10.7
+                   , GHC == 9.0.2
+                   , GHC == 9.2.2
 extra-source-files:  CHANGELOG.md, README.md
 cabal-version:       >=1.10
 
@@ -115,6 +118,7 @@ library
                        TextShow.Data.Tagged
                        TextShow.Data.Time
                        TextShow.Data.UnorderedContainers
+                       TextShow.Data.UUID
                        TextShow.Data.Vector
                        TextShow.Language.Haskell.TH
                        TextShow.System.Console.Haskeline
@@ -154,16 +158,19 @@ library
                      , scientific            >= 0.3.7  && < 0.4
                      , semigroups            >= 0.16.2 && < 1
                      , tagged                >= 0.4.4  && < 1
-                     , text                  >= 0.11.1 && < 1.3
+                     , text                  >= 0.11.1 && < 2.1
                      , text-short            >= 0.1    && < 0.2
                      , text-show             >= 3.4    && < 4
                      , time                  >= 0.1    && < 1.12
                      , unordered-containers  >= 0.2    && < 0.3
+                     , uuid-types            >= 1      && < 1.1
                      , vector                >= 0.12   && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall
+  if impl(ghc >= 9.0)
+    ghc-options:       -fenable-th-splice-warnings
 
   if flag(base-4-9)
     build-depends:     base                  >= 4.9 && < 4.17
@@ -178,7 +185,7 @@ library
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
   if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.6)
+    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.7)
                      , transformers-compat   >= 0.5 && < 1
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
@@ -239,6 +246,7 @@ test-suite spec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
                        Spec.Data.UnorderedContainersSpec
+                       Spec.Data.UUIDSpec
                        Spec.Language.Haskell.THSpec
                        Spec.System.Console.HaskelineSpec
                        Spec.System.DirectorySpec
@@ -288,6 +296,7 @@ test-suite spec
                      , time                  >= 0.1    && < 1.12
                      , transformers-compat   >= 0.5    && < 1
                      , unordered-containers  >= 0.2    && < 0.3
+                     , uuid-types            >= 1      && < 1.1
                      , vector                >= 0.9    && < 0.13
                      , xhtml                 >= 3000.2 && < 3000.3
   build-tool-depends:  hspec-discover:hspec-discover
@@ -305,7 +314,7 @@ test-suite spec
     build-depends:     template-haskell      >= 2.9  && < 2.11
 
   if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.6)
+    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.7)
     cpp-options:       "-DNEW_FUNCTOR_CLASSES"
   else
     build-depends:     transformers          == 0.4.*
@@ -315,6 +324,8 @@ test-suite spec
   ghc-options:         -Wall -threaded -rtsopts
   if impl(ghc >= 8.6)
     ghc-options:       -Wno-star-is-type
+  if impl(ghc >= 9.0)
+    ghc-options:       -fenable-th-splice-warnings
 
   if os(windows)
     build-depends:     Win32                 >= 2.1    && < 2.13
