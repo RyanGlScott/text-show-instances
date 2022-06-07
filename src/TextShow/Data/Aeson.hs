@@ -2,12 +2,15 @@
 {-# OPTIONS -fno-warn-orphans #-}
 module TextShow.Data.Aeson where
 import Data.Aeson
-import qualified Data.HashMap.Strict as H
-import Data.List ( sortBy )
-import Data.Ord (comparing)
+import qualified Data.Aeson.Key as K
 import TextShow.Data.Scientific ()
 import TextShow.Data.Vector ()
 import TextShow
+import qualified Data.Aeson.KeyMap as KM
+
+instance TextShow K.Key where
+    showb = showtToShowb showt
+    showt = showt . K.toText
 
 instance TextShow Value where
     showbPrec _ Null = fromText "Null"
@@ -21,5 +24,5 @@ instance TextShow Value where
         $ fromText "Array " <> showbPrec 11 xs
     showbPrec d (Object xs) = showbParen (d > 10)
         $ fromText "Object (fromList "
-        <> showbPrec 11 (sortBy (comparing fst) (H.toList xs))
+        <> showbPrec 11 (KM.toAscList xs)
         <> singleton ')'

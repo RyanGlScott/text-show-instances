@@ -1,6 +1,6 @@
 {-|
 Module:      Spec.Data.AesonSpec
-Copyright:   (C) 2014-2018 Ryan Scott
+Copyright:   (C) 2022 Steve Mao
 License:     BSD-style (see the file LICENSE)
 Maintainer:  Ryan Scott
 Stability:   Provisional
@@ -16,8 +16,6 @@ import           Data.Aeson
 import           Spec.Utils                (matchesTextShowSpec)
 
 import           Test.Hspec                (Spec, describe, hspec, parallel)
-import           Test.QuickCheck
-import           Test.QuickCheck.Instances ()
 
 import           TextShow.Data.Aeson       ()
 

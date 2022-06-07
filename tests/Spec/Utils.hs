@@ -48,7 +48,7 @@ matchesTextShowSpec _ = prop "TextShow instance" (prop_matchesTextShow :: Int ->
 -- | Verifies that a type's 'Show' instances coincide for both 'String's and 'Text',
 -- irrespective of precedence.
 prop_matchesTextShow :: (Show a, TextShow a) => Int -> a -> Expectation
-prop_matchesTextShow p x = fromString (showsPrec p x "") `shouldBe` showbPrec p x
+prop_matchesTextShow p x = showbPrec p x `shouldBe` fromString (showsPrec p x "")
 
 -- | Expect a type's 'Show1' instances to coincide for both 'String's and 'Text',
 -- irrespective of precedence.
