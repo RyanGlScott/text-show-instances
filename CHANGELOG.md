@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.9.1 [2022.07.28]
 * Add a `TextShow` instance for `UUID` from `uuid-types`.
 
 ## 3.9 [2022.05.28]
