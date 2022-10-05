@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Require `text-show-3.10` or later in the test suite.
+
 ### 3.9.1 [2022.07.28]
 * Add a `TextShow` instance for `UUID` from `uuid-types`.
 
