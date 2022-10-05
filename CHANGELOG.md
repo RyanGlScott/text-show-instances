@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.9.2 [2022.10.05]
 * Require `text-show-3.10` or later in the test suite.
 
 ### 3.9.1 [2022.07.28]
