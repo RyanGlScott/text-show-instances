@@ -1,3 +1,9 @@
+### 3.9.2 [2022.10.05]
+* Require `text-show-3.10` or later in the test suite.
+
+### 3.9.1 [2022.07.28]
+* Add a `TextShow` instance for `UUID` from `uuid-types`.
+
 ## 3.9 [2022.05.28]
 * Remove instances for `ErrorT` and `ListT`, which had long been deprecated and
   were finally removed from the `transformers` library in version 0.6.0.0.
