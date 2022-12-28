@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Add `TextShow` instances for `Value` and `Key` from `aeson`.
+
 ### 3.9.2 [2022.10.05]
 * Require `text-show-3.10` or later in the test suite.
 

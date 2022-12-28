@@ -11,7 +11,7 @@ Portability: GHC
 module Spec.Data.AesonSpec (main, spec) where
 
 import           Data.Proxy                (Proxy (..))
-import           Data.Aeson
+import           Data.Aeson                (Key, Value)
 
 import           Spec.Utils                (matchesTextShowSpec)
 

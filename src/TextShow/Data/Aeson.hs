@@ -1,12 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS -fno-warn-orphans #-}
 module TextShow.Data.Aeson where
-import Data.Aeson
+
+import Data.Aeson (Value(..))
 import qualified Data.Aeson.Key as K
 import qualified Data.Aeson.KeyMap as KM
+
 import Prelude ()
 import Prelude.Compat
-import TextShow
+
+import TextShow (TextShow(..), fromText, showbParen, showtToShowb, singleton)
 import TextShow.Data.Scientific ()
 import TextShow.Data.Vector ()
 
