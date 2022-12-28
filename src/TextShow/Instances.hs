@@ -25,6 +25,7 @@ import TextShow (TextShow(..), TextShow1(..), TextShow2(..))
 import TextShow.Control.Applicative.Trans   ()
 import TextShow.Control.Monad.Trans         ()
 
+import TextShow.Data.Aeson                  ()
 import TextShow.Data.Bifunctor              ()
 import TextShow.Data.Binary                 ()
 import TextShow.Data.Containers             ()
