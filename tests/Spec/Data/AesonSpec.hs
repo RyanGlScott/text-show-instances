@@ -24,5 +24,7 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-    describe "Aeson" $
+    describe "Aeson Value" $
         matchesTextShowSpec (Proxy :: Proxy Value)
+    describe "Aeson Key" $
+        matchesTextShowSpec (Proxy :: Proxy Key)
