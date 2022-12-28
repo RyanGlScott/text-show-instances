@@ -1,13 +1,9 @@
 {-# LANGUAGE CPP             #-}
 
 #if !defined(mingw32_HOST_OS)
+{-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies    #-}
-
-# if __GLASGOW_HASKELL__ >= 706
-{-# LANGUAGE DataKinds       #-}
-# endif
-
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 #endif
 

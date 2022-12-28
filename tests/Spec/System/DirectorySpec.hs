@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-|
 Module:      Spec.System.DirectorySpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -20,10 +19,7 @@ import Prelude.Compat
 
 import Spec.Utils (matchesTextShowSpec)
 
-import System.Directory (Permissions)
-#if MIN_VERSION_directory(1,2,3)
-import System.Directory (XdgDirectory)
-#endif
+import System.Directory (Permissions, XdgDirectory)
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 
@@ -36,7 +32,5 @@ spec :: Spec
 spec = parallel $ do
     describe "Permissions" $
         matchesTextShowSpec (Proxy :: Proxy Permissions)
-#if MIN_VERSION_directory(1,2,3)
     describe "XdgDirectory" $
         matchesTextShowSpec (Proxy :: Proxy XdgDirectory)
-#endif

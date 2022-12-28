@@ -34,10 +34,6 @@ import           TextShow (TextShow(..), Builder,
 import           TextShow.Text.PrettyPrint (renderB)
 import           TextShow.TH (deriveTextShow)
 
-#if !(MIN_VERSION_template_haskell(2,10,0))
-import           GHC.Exts (Int(I#))
-#endif
-
 #if MIN_VERSION_base(4,15,0)
 import qualified Data.Text.Foreign as TS (peekCStringLen)
 import           Foreign.ForeignPtr (withForeignPtr)
@@ -76,14 +72,8 @@ showbName' ni nm = case ni of
                Name occ NameS         -> occB occ
                Name occ (NameQ m)     -> modB m   <> singleton '.' <> occB occ
                Name occ (NameG _ _ m) -> modB m   <> singleton '.' <> occB occ
-               Name occ (NameU u)     -> occB occ <> singleton '_' <> showb (mkInt u)
-               Name occ (NameL u)     -> occB occ <> singleton '_' <> showb (mkInt u)
-
-#if MIN_VERSION_template_haskell(2,10,0)
-    mkInt = id
-#else
-    mkInt i# = I# i#
-#endif
+               Name occ (NameU u)     -> occB occ <> singleton '_' <> showb u
+               Name occ (NameL u)     -> occB occ <> singleton '_' <> showb u
 
     occB :: OccName -> Builder
     occB = fromString . occString
@@ -172,11 +162,6 @@ $(concat <$> traverse deriveTextShow
   , ''TySynEqn
   , ''TyVarBndr
 
-#if !(MIN_VERSION_template_haskell(2,10,0))
-  , ''Pred
-#endif
-
-#if MIN_VERSION_template_haskell(2,11,0)
   , ''Bang
   , ''DecidedStrictness
   , ''FamilyResultSig
@@ -185,9 +170,6 @@ $(concat <$> traverse deriveTextShow
   , ''SourceStrictness
   , ''SourceUnpackedness
   , ''TypeFamilyHead
-#else
-  , ''Strict
-#endif
 
 #if MIN_VERSION_template_haskell(2,12,0)
   , ''DerivClause

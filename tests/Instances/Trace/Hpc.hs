@@ -1,12 +1,7 @@
-{-# LANGUAGE CPP                #-}
+{-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
 {-# LANGUAGE TypeFamilies       #-}
-
-#if __GLASGOW_HASKELL__ >= 706
-{-# LANGUAGE DataKinds          #-}
-#endif
-
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Instances.Trace.Hpc

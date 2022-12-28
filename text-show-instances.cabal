@@ -86,21 +86,6 @@ source-repository head
   type:                git
   location:            https://github.com/RyanGlScott/text-show-instances
 
-flag base-4-9
-  description:         Use base-4.9 or later.
-  default:             True
-
-flag template-haskell-2-11
-  description:         Use template-haskell-2.11.0.0 or later.
-  default:             True
-
-flag new-functor-classes
-  description:         Use a version of transformers or transformers-compat with a
-                       modern-style Data.Functor.Classes module. This flag cannot be
-                       used when building with transformers-0.4, since it comes with
-                       a different version of Data.Functor.Classes.
-  default: True
-
 library
   exposed-modules:     TextShow.Instances
 
@@ -118,6 +103,7 @@ library
                        TextShow.Data.UnorderedContainers
                        TextShow.Data.UUID
                        TextShow.Data.Vector
+                       TextShow.GHC.LanguageExtensions.Type
                        TextShow.Language.Haskell.TH
                        TextShow.System.Console.Haskeline
                        TextShow.System.Directory
@@ -127,9 +113,6 @@ library
                        TextShow.Text.PrettyPrint
                        TextShow.Text.XHtml
                        TextShow.Trace.Hpc
-
-                       -- Only exports functions if using ghc-boot-th
-                       TextShow.GHC.LanguageExtensions.Type
 
                        -- Only exports functions if using ghc-boot-th-8.2 or later
                        TextShow.GHC.ForeignSrcLang.Type
@@ -141,59 +124,44 @@ library
                        TextShow.System.Console.Terminfo
                        TextShow.System.Posix
   other-modules:       TextShow.Utils
-  build-depends:       aeson                 >= 2.0.3  && < 2.1
-                     , base-compat-batteries >= 0.10   && < 1
-                     , bifunctors            >= 5.2    && < 6
-                     , binary                >= 0.7.1  && < 0.9
-                     , containers            >= 0.5.5  && < 0.7
-                     , directory             >= 1.2.1  && < 1.4
-                     , haskeline             >= 0.7.1  && < 0.9
-                     , hpc                   >= 0.6    && < 0.7
-                     , old-locale            >= 1      && < 1.1
-                     , old-time              >= 1.1    && < 1.2
-                     , pretty                >= 1.1.1  && < 1.2
-                     , random                >= 1.0.1  && < 1.3
-                     , scientific            >= 0.3.7  && < 0.4
-                     , semigroups            >= 0.16.2 && < 1
-                     , tagged                >= 0.4.4  && < 1
-                     , text                  >= 0.11.1 && < 2.1
-                     , text-short            >= 0.1    && < 0.2
-                     , text-show             >= 3.4    && < 4
-                     , time                  >= 0.1    && < 1.13
-                     , unordered-containers  >= 0.2    && < 0.3
-                     , uuid-types            >= 1      && < 1.1
-                     , vector                >= 0.12   && < 0.14
-                     , xhtml                 >= 3000.2 && < 3000.3
+  build-depends:       aeson                 >= 2.0.3   && < 2.1
+                     , base                  >= 4.9     && < 4.18
+                     , base-compat           >= 0.10    && < 1
+                     , bifunctors            >= 5.2     && < 6
+                     , binary                >= 0.8.3   && < 0.9
+                     , containers            >= 0.5.7.1 && < 0.7
+                     , directory             >= 1.3     && < 1.4
+                     , ghc-boot-th           >= 8.0     && < 9.5
+                     , haskeline             >= 0.7.3   && < 0.9
+                     , hpc                   >= 0.6     && < 0.7
+                     , old-locale            >= 1       && < 1.1
+                     , old-time              >= 1.1     && < 1.2
+                     , pretty                >= 1.1.3.3 && < 1.2
+                     , random                >= 1.0.1   && < 1.3
+                     , scientific            >= 0.3.7   && < 0.4
+                     , semigroups            >= 0.16.2  && < 1
+                     , tagged                >= 0.4.4   && < 1
+                     , template-haskell      >= 2.11    && < 2.20
+                     , text                  >= 0.11.1  && < 2.1
+                     , text-short            >= 0.1     && < 0.2
+                     , text-show             >= 3.4     && < 4
+                     , time                  >= 1.6.0.1 && < 1.13
+                     , transformers          >= 0.5     && < 0.7
+                     , unordered-containers  >= 0.2     && < 0.3
+                     , uuid-types            >= 1       && < 1.1
+                     , vector                >= 0.12    && < 0.14
+                     , xhtml                 >= 3000.2  && < 3000.3
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall
   if impl(ghc >= 9.0)
     ghc-options:       -fenable-th-splice-warnings
 
-  if flag(base-4-9)
-    build-depends:     base                  >= 4.9 && < 4.18
-    cpp-options:       "-DNEW_FUNCTOR_CLASSES"
-  else
-    build-depends:     base                  >= 4.7 && < 4.9
-
-  if flag(template-haskell-2-11)
-    build-depends:     template-haskell      >= 2.11 && < 2.20
-                     , ghc-boot-th           >= 8.0  && < 9.5
-  else
-    build-depends:     template-haskell      >= 2.9  && < 2.11
-
-  if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.7)
-                     , transformers-compat   >= 0.5 && < 1
-    cpp-options:       "-DNEW_FUNCTOR_CLASSES"
-  else
-    build-depends:     transformers          == 0.4.*
-
   if os(windows)
-    build-depends:     Win32                 >= 2.1    && < 2.13
+    build-depends:     Win32                 >= 2.3.1.1 && < 2.13
   else
-    build-depends:     terminfo              >= 0.4    && < 0.5
-                     , unix                  >= 2.7    && < 2.8
+    build-depends:     terminfo              >= 0.4     && < 0.5
+                     , unix                  >= 2.7     && < 2.8
 
 test-suite spec
   type:                exitcode-stdio-1.0
@@ -203,6 +171,7 @@ test-suite spec
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Vector
+                       Instances.GHC.LanguageExtensions.Type
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
                        Instances.System.Console.Haskeline
@@ -214,9 +183,6 @@ test-suite spec
                        Instances.Trace.Hpc
                        Instances.Utils
                        Instances.Utils.GenericArbitrary
-
-                       -- Only defines instances if using ghc-boot-th
-                       Instances.GHC.LanguageExtensions.Type
 
                        -- Only defines instances if using ghc-boot-th-8.2 or later
                        Instances.GHC.ForeignSrcLang.Type
@@ -245,6 +211,7 @@ test-suite spec
                        Spec.Data.TimeSpec
                        Spec.Data.UnorderedContainersSpec
                        Spec.Data.UUIDSpec
+                       Spec.GHC.LanguageExtensions.TypeSpec
                        Spec.Language.Haskell.THSpec
                        Spec.System.Console.HaskelineSpec
                        Spec.System.DirectorySpec
@@ -256,9 +223,6 @@ test-suite spec
                        Spec.Trace.HpcSpec
                        Spec.Utils
 
-                       -- Only defines tests if using ghc-boot-th
-                       Spec.GHC.LanguageExtensions.TypeSpec
-
                        -- Only exports functions if using ghc-boot-th-8.2 or later
                        Spec.GHC.ForeignSrcLang.TypeSpec
 
@@ -268,54 +232,40 @@ test-suite spec
                        -- Only defines tests if not using Windows
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
-  build-depends:       aeson                 >= 2.0.3  && < 2.1
-                     , base-compat-batteries >= 0.10   && < 1
-                     , bifunctors            >= 5.5.5  && < 6
-                     , binary                >= 0.7.1  && < 0.9
-                     , containers            >= 0.5.5  && < 0.7
-                     , directory             >= 1.2.1  && < 1.4
-                     , generic-deriving      >= 1.9    && < 2
+  build-depends:       aeson                 >= 2.0.3   && < 2.1
+                     , base                  >= 4.9     && < 4.18
+                     , base-compat           >= 0.10    && < 1
+                     , bifunctors            >= 5.5.5   && < 6
+                     , binary                >= 0.8.3   && < 0.9
+                     , containers            >= 0.5.7.1 && < 0.7
+                     , directory             >= 1.3     && < 1.4
+                     , generic-deriving      >= 1.9     && < 2
+                     , ghc-boot-th           >= 8.0     && < 9.5
                      , ghc-prim
-                     , haskeline             >= 0.7.1  && < 0.9
-                     , hpc                   >= 0.6    && < 0.7
-                     , hspec                 >= 2      && < 3
-                     , old-locale            >= 1      && < 1.1
-                     , old-time              >= 1.1    && < 1.2
-                     , pretty                >= 1.1.1  && < 1.2
-                     , QuickCheck            >= 2.12   && < 2.15
-                     , quickcheck-instances  >= 0.3.27 && < 0.4
-                     , random                >= 1.0.1  && < 1.3
-                     , tagged                >= 0.4.4  && < 1
-                     , scientific            >= 0.3.7  && < 0.4
-                     , text-short            >= 0.1    && < 0.2
-                     , text-show             >= 3.10   && < 4
+                     , haskeline             >= 0.7.3   && < 0.9
+                     , hpc                   >= 0.6     && < 0.7
+                     , hspec                 >= 2       && < 3
+                     , old-locale            >= 1       && < 1.1
+                     , old-time              >= 1.1     && < 1.2
+                     , pretty                >= 1.1.3.3 && < 1.2
+                     , QuickCheck            >= 2.12    && < 2.15
+                     , quickcheck-instances  >= 0.3.27  && < 0.4
+                     , random                >= 1.0.1   && < 1.3
+                     , tagged                >= 0.4.4   && < 1
+                     , scientific            >= 0.3.7   && < 0.4
+                     , template-haskell      >= 2.11    && < 2.20
+                     , text-short            >= 0.1     && < 0.2
+                     , text-show             >= 3.10    && < 4
                      , text-show-instances
-                     , th-orphans            >= 0.13.8 && < 1
-                     , time                  >= 0.1    && < 1.13
-                     , transformers-compat   >= 0.5    && < 1
-                     , unordered-containers  >= 0.2    && < 0.3
-                     , uuid-types            >= 1      && < 1.1
-                     , vector                >= 0.9    && < 0.14
-                     , xhtml                 >= 3000.2 && < 3000.3
+                     , th-orphans            >= 0.13.8  && < 1
+                     , time                  >= 1.6.0.1 && < 1.13
+                     , transformers          >= 0.5     && < 0.7
+                     , transformers-compat   >= 0.5     && < 1
+                     , unordered-containers  >= 0.2     && < 0.3
+                     , uuid-types            >= 1       && < 1.1
+                     , vector                >= 0.9     && < 0.14
+                     , xhtml                 >= 3000.2  && < 3000.3
   build-tool-depends:  hspec-discover:hspec-discover
-
-  if flag(base-4-9)
-    build-depends:     base                  >= 4.9 && < 4.18
-    cpp-options:       "-DNEW_FUNCTOR_CLASSES"
-  else
-    build-depends:     base                  >= 4.7 && < 4.9
-
-  if flag(template-haskell-2-11)
-    build-depends:     template-haskell      >= 2.11 && < 2.20
-                     , ghc-boot-th           >= 8.0  && < 9.5
-  else
-    build-depends:     template-haskell      >= 2.9  && < 2.11
-
-  if flag(new-functor-classes)
-    build-depends:     transformers          (>= 0.3 && < 0.4) || (>= 0.5 && < 0.7)
-    cpp-options:       "-DNEW_FUNCTOR_CLASSES"
-  else
-    build-depends:     transformers          == 0.4.*
 
   hs-source-dirs:      tests
   default-language:    Haskell2010
@@ -326,7 +276,7 @@ test-suite spec
     ghc-options:       -fenable-th-splice-warnings
 
   if os(windows)
-    build-depends:     Win32                 >= 2.1    && < 2.13
+    build-depends:     Win32                 >= 2.3.1.1 && < 2.13
   else
-    build-depends:     terminfo              >= 0.4    && < 0.5
-                     , unix                  >= 2.7    && < 2.8
+    build-depends:     terminfo              >= 0.4     && < 0.5
+                     , unix                  >= 2.7     && < 2.8

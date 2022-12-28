@@ -1,8 +1,6 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
-#if MIN_VERSION_time(1,5,0)
 {-# LANGUAGE TemplateHaskell   #-}
-#endif
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      TextShow.Data.Time
@@ -23,6 +21,7 @@ import Data.Semigroup (mtimesDefault)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime, UniversalTime)
 import Data.Time.Clock.TAI (AbsoluteTime, taiToUTCTime)
+import Data.Time.Format (TimeLocale)
 import Data.Time.LocalTime (TimeZone(..), TimeOfDay(..), LocalTime(..), ZonedTime(..),
                             ut1ToLocalTime, utc, utcToLocalTime, utcToZonedTime)
 
@@ -33,11 +32,7 @@ import TextShow (TextShow(..), Builder, FromStringShow(..),
                  fromString, lengthB, showbSpace, singleton)
 import TextShow.Data.Fixed (showbFixed)
 import TextShow.Data.Integral ()
-
-#if MIN_VERSION_time(1,5,0)
-import Data.Time.Format (TimeLocale)
 import TextShow.TH (deriveTextShow)
-#endif
 
 #if MIN_VERSION_time(1,7,0)
 import Data.Maybe (fromJust)
@@ -166,12 +161,8 @@ instance TextShow UniversalTime where
     showb t = showb $ ut1ToLocalTime 0 t
     {-# INLINE showb #-}
 
-#if MIN_VERSION_time(1,5,0)
--- | Only available with @time-1.5@ or later.
---
--- /Since: 2/
+-- | /Since: 2/
 $(deriveTextShow ''TimeLocale)
-#endif
 
 #if MIN_VERSION_time(1,8,0)
 -- | Only available with @time-1.8@ or later.

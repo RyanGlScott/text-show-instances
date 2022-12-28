@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 {-|
 Module:      Spec.Data.VectorSpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -21,10 +19,7 @@ import qualified Data.Vector.Unboxed as U (Vector)
 
 import           Instances.Data.Vector ()
 
-import           Spec.Utils (matchesTextShowSpec)
-#if MIN_VERSION_base(4,9,0)
-import           Spec.Utils (matchesTextShow1Spec)
-#endif
+import           Spec.Utils (matchesTextShowSpec, matchesTextShow1Spec)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
 
@@ -39,9 +34,7 @@ spec = parallel $ do
         let p :: Proxy (B.Vector Char)
             p = Proxy
         matchesTextShowSpec  p
-#if MIN_VERSION_base(4,9,0)
         matchesTextShow1Spec p
-#endif
     describe "(primitive) Vector Char" $
         matchesTextShowSpec (Proxy :: Proxy (P.Vector Char))
     describe "(storable) Vector Char" $

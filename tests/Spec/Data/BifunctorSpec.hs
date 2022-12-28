@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 {-|
 Module:      Spec.Data.BifunctorSpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -26,7 +24,7 @@ import Data.Proxy (Proxy(..))
 
 import Instances.Data.Bifunctor ()
 
-import Spec.Utils 
+import Spec.Utils
 
 import Test.Hspec (Spec, describe, hspec, parallel)
 
@@ -39,59 +37,39 @@ spec :: Spec
 spec = parallel $ do
     describe "Biff Either [] Maybe Char Int" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Biff Either [] Maybe Char Int))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Biff Either [] Maybe Char Int))
         matchesTextShow2Spec (Proxy :: Proxy (Biff Either [] Maybe Char Int))
-#endif
     describe "Clown [] Char Int" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Clown [] Char Int))
         matchesTextShow1Spec (Proxy :: Proxy (Clown [] Char Int))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow2Spec (Proxy :: Proxy (Clown [] Char Int))
-#endif
     describe "Fix Either Int" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Fix Either Int))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Fix Either Int))
-#endif
     describe "Flip Either Int Char" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Flip Either Int Char))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Flip Either Int Char))
         matchesTextShow2Spec (Proxy :: Proxy (Flip Either Int Char))
-#endif
     describe "Join Either Int" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Join Either Int))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Join Either Int))
-#endif
     describe "Joker [] Char Int" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Joker [] Char Int))
         matchesTextShow1Spec (Proxy :: Proxy (Joker [] Char Int))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow2Spec (Proxy :: Proxy (Joker [] Char Int))
-#endif
     describe "Product Either ((,,) Bool) Int Char" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Product Either (,) Int Char))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Product Either (,) Int Char))
         matchesTextShow2Spec (Proxy :: Proxy (Product Either (,) Int Char))
-#endif
     describe "Sum Either ((,,) Bool) Int Char" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Sum Either (,) Int Char))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Sum Either (,) Int Char))
         matchesTextShow2Spec (Proxy :: Proxy (Sum Either (,) Int Char))
-#endif
     describe "Tannen Maybe Either Int Char" $ do
         matchesTextShowSpec  (Proxy :: Proxy (Tannen Maybe Either Int Char))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (Tannen Maybe Either Int Char))
         matchesTextShow2Spec (Proxy :: Proxy (Tannen Maybe Either Int Char))
-#endif
     describe "WrappedBifunctor Either Int Char" $ do
         matchesTextShowSpec  (Proxy :: Proxy (WrappedBifunctor Either Int Char))
-#if defined(NEW_FUNCTOR_CLASSES)
         matchesTextShow1Spec (Proxy :: Proxy (WrappedBifunctor Either Int Char))
         matchesTextShow2Spec (Proxy :: Proxy (WrappedBifunctor Either Int Char))
-#endif

@@ -1,11 +1,7 @@
-{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE TemplateHaskell      #-}
 {-# LANGUAGE UndecidableInstances #-}
-
-#if __GLASGOW_HASKELL__ >= 706
-{-# LANGUAGE PolyKinds            #-}
-#endif
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 

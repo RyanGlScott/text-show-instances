@@ -1,9 +1,5 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
-
-#if __GLASGOW_HASKELL__ >= 706
 {-# LANGUAGE PolyKinds         #-}
-#endif
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
