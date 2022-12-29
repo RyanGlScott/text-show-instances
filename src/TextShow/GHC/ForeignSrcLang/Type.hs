@@ -2,7 +2,7 @@
 
 #if MIN_VERSION_ghc_boot_th(8,2,0)
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 #endif
 
 {-|

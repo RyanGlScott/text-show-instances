@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -Wno-orphans #-}
 module TextShow.Data.Aeson where
 
 import Data.Aeson (Value(..))

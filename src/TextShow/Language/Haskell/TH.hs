@@ -3,7 +3,7 @@
 {-# LANGUAGE MagicHash            #-}
 {-# LANGUAGE TemplateHaskell      #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 {-|
 Module:      TextShow.Language.Haskell.TH
 Copyright:   (C) 2014-2017 Ryan Scott

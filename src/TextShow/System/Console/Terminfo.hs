@@ -2,7 +2,7 @@
 
 #if !defined(mingw32_HOST_OS)
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 #endif
 
 {-|

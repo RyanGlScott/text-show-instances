@@ -2,7 +2,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving         #-}
 {-# LANGUAGE UndecidableInstances       #-}
-{-# OPTIONS_GHC -fno-warn-orphans               #-}
+{-# OPTIONS_GHC -Wno-orphans               #-}
 {-|
 Module:      Instances.Control.Monad.Trans
 Copyright:   (C) 2014-2017 Ryan Scott

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PolyKinds         #-}
 
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -Wno-orphans #-}
 {-|
 Module:      TextShow.Data.Tagged
 Copyright:   (C) 2014-2017 Ryan Scott

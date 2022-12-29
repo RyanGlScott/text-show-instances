@@ -1,4 +1,4 @@
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -Wno-orphans #-}
 module TextShow.Data.Scientific () where
 import Data.Scientific
 import Data.Text.Lazy.Builder.Scientific ( scientificBuilder )

@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -Wno-orphans #-}
 {-|
 Module:      TextShow.Data.Containers
 Copyright:   (C) 2014-2017 Ryan Scott
