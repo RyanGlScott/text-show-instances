@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Allow building with `aeson-2.1.*`.
+
 ### 3.9.3 [2022.12.28]
 * Add `TextShow` instances for `Value` and `Key` from `aeson`.
 * Drop support for GHC 7.8 and 7.10.
