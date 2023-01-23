@@ -25,7 +25,12 @@ import Spec.Utils (matchesTextShowSpec)
 
 import System.Posix.DynamicLinker (RTLDFlags, DL)
 import System.Posix.Process (ProcessStatus)
-import System.Posix.User (GroupEntry, UserEntry)
+# if MIN_VERSION_unix(2,8,0)
+import System.Posix.User.ByteString
+# else
+import System.Posix.User
+# endif
+  (GroupEntry, UserEntry)
 
 import Test.Hspec (describe)
 
