@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Allow building with `unix-2.8.*`.
+
 ### 3.9.4 [2022.12.30]
 * Allow building with `aeson-2.1.*`.
 
