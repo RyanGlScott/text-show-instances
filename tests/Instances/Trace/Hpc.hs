@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TemplateHaskell    #-}
@@ -31,10 +32,12 @@ import           Trace.Hpc.Tix (Tix(..), TixModule(..))
 import           Trace.Hpc.Util (HpcPos, Hash, toHpcPos)
 
 $(Generics.deriveAll0 ''BoxLabel)
+$(Generics.deriveAll0 ''HpcPos)
+#if !(MIN_VERSION_hpc(0,6,2))
 $(Generics.deriveAll0 ''Tix)
 $(Generics.deriveAll0 ''TixModule)
-$(Generics.deriveAll0 ''HpcPos)
 $(Generics.deriveAll0 ''Hash)
+#endif
 
 instance Arbitrary Mix where
     arbitrary = Mix <$> arbitrary <*> arbitrary <*> arbitrary
