@@ -31,3 +31,8 @@ instance TextShow Value where
         $ fromText "Object (fromList "
         <> showbPrec 11 (KM.toAscList xs)
         <> singleton ')'
+
+instance TextShow v => TextShow (KM.KeyMap v) where
+    showbPrec d xs = showbParen (d > 10)
+        $ fromText "fromList "
+        <> showbPrec 11 (KM.toAscList xs)
