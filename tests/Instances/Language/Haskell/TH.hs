@@ -37,10 +37,8 @@ deriving instance Show NameIs
 instance Arbitrary NameIs where
     arbitrary = arbitraryBoundedEnum
 
-deriving instance Bounded NameSpace
-deriving instance Enum NameSpace
 instance Arbitrary NameSpace where
-    arbitrary = arbitraryBoundedEnum
+    arbitrary = genericArbitrary
 
 instance Arbitrary Doc where
     arbitrary = text <$> arbitrary
