@@ -185,4 +185,8 @@ $(concat <$> traverse deriveTextShow
 #if MIN_VERSION_template_haskell(2,17,0)
   , ''Specificity
 #endif
+
+#if MIN_VERSION_template_haskell(2,21,0)
+  , ''BndrVis
+#endif
   ])
