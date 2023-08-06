@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Support building with GHC 9.8.
+
 ### 3.9.5 [2023.03.05]
 * Allow building with `unix-2.8.*`.
 
