@@ -9,7 +9,8 @@ import qualified Data.Aeson.KeyMap as KM
 import Prelude ()
 import Prelude.Compat
 
-import TextShow (TextShow(..), TextShow1(..), showbPrec1, fromText, showbParen, showtToShowb, singleton)
+import TextShow ( TextShow(..), TextShow1(..)
+                , fromText, showbParen, showbPrec1, showtToShowb, singleton )
 import TextShow.Data.Scientific ()
 import TextShow.Data.Vector ()
 import TextShow.Utils (showbUnaryListWith)

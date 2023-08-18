@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Add `TextShow(1)` instances for `aeson`'s `KeyMap` type.
+
 ### 3.9.6 [2023.08.06]
 * Support building with GHC 9.8.
 * Add `TextShow` instance for `BndrVis` in `TextShow.Language.Haskell.TH`.
