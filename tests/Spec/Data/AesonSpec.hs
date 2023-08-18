@@ -12,6 +12,7 @@ module Spec.Data.AesonSpec (main, spec) where
 
 import           Data.Proxy                (Proxy (..))
 import           Data.Aeson                (Key, Value)
+import qualified Data.Aeson.KeyMap as KM   (KeyMap)
 
 import           Spec.Utils                (matchesTextShowSpec)
 
@@ -28,3 +29,5 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy Value)
     describe "Aeson Key" $
         matchesTextShowSpec (Proxy :: Proxy Key)
+    describe "Aeson KeyMap" $
+        matchesTextShowSpec (Proxy :: Proxy (KM.KeyMap Char))
