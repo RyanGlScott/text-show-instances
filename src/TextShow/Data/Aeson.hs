@@ -9,9 +9,10 @@ import qualified Data.Aeson.KeyMap as KM
 import Prelude ()
 import Prelude.Compat
 
-import TextShow (TextShow(..), fromText, showbParen, showtToShowb, singleton)
+import TextShow (TextShow(..), TextShow1(..), showbPrec1, fromText, showbParen, showtToShowb, singleton)
 import TextShow.Data.Scientific ()
 import TextShow.Data.Vector ()
+import TextShow.Utils (showbUnaryListWith)
 
 instance TextShow K.Key where
     showb = showtToShowb showt
@@ -31,3 +32,10 @@ instance TextShow Value where
         $ fromText "Object (fromList "
         <> showbPrec 11 (KM.toAscList xs)
         <> singleton ')'
+
+instance TextShow v => TextShow (KM.KeyMap v) where
+    showbPrec = showbPrec1
+
+instance TextShow1 KM.KeyMap where
+    liftShowbPrec sp sl d xs =
+      showbUnaryListWith (liftShowbList sp sl) d (KM.toAscList xs)
