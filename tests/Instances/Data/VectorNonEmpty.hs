@@ -7,7 +7,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-Provides 'Arbitrary' instances for 'Vector' types.
+Provides an 'Arbitrary' instance for the 'NonEmptyVector' type.
 -}
 module Instances.Data.VectorNonEmpty () where
 
