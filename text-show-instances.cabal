@@ -23,6 +23,8 @@ description:         @text-show-instances@ is a supplemental library to @text-sh
                      .
                      * @<http://hackage.haskell.org/package/hpc                  hpc>@
                      .
+                     * @<http://hackage.haskell.org/package/nonempty-vector      nonempty-vector>@
+                     .
                      * @<http://hackage.haskell.org/package/old-locale           old-locale>@
                      .
                      * @<http://hackage.haskell.org/package/old-time             old-time>@
@@ -105,6 +107,7 @@ library
                        TextShow.Data.UnorderedContainers
                        TextShow.Data.UUID
                        TextShow.Data.Vector
+                       TextShow.Data.Vector.NonEmpty
                        TextShow.GHC.LanguageExtensions.Type
                        TextShow.Language.Haskell.TH
                        TextShow.System.Console.Haskeline
@@ -136,6 +139,7 @@ library
                      , ghc-boot-th           >= 8.0     && < 9.9
                      , haskeline             >= 0.7.3   && < 0.9
                      , hpc                   >= 0.6     && < 0.7
+                     , nonempty-vector       >= 0.2     && < 0.3
                      , old-locale            >= 1       && < 1.1
                      , old-time              >= 1.1     && < 1.2
                      , pretty                >= 1.1.3.3 && < 1.2
@@ -173,6 +177,7 @@ test-suite spec
                        Instances.Data.Binary
                        Instances.Data.Containers
                        Instances.Data.Vector
+                       Instances.Data.Vector.NonEmpty
                        Instances.GHC.LanguageExtensions.Type
                        Instances.Language.Haskell.TH
                        Instances.Miscellaneous
@@ -208,6 +213,7 @@ test-suite spec
                        Spec.Data.Functor.TransSpec
                        Spec.Data.ScientificSpec
                        Spec.Data.ShortTextSpec
+                       Spec.Data.Vector.NonEmptySpec
                        Spec.Data.VectorSpec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
@@ -247,6 +253,7 @@ test-suite spec
                      , haskeline             >= 0.7.3   && < 0.9
                      , hpc                   >= 0.6     && < 0.7
                      , hspec                 >= 2       && < 3
+                     , nonempty-vector       >= 0.2     && < 0.3
                      , old-locale            >= 1       && < 1.1
                      , old-time              >= 1.1     && < 1.2
                      , pretty                >= 1.1.3.3 && < 1.2
