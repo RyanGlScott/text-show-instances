@@ -1,6 +1,6 @@
 {-|
 Module:      Spec.Data.Vector.NonEmptySpec
-Copyright:   (C) 2014-2017 Ryan Scott
+Copyright:   (C) 2023 Ryan Scott
 License:     BSD-style (see the file LICENSE)
 Maintainer:  Ryan Scott
 Stability:   Provisional
@@ -8,18 +8,18 @@ Portability: GHC
 
 @hspec@ tests for the 'NonEmptyVector' type.
 -}
-module Spec.Data.VectorNonEmptySpec (main, spec) where
+module Spec.Data.Vector.NonEmptySpec (main, spec) where
 
 import           Data.Proxy (Proxy(..))
 import qualified Data.Vector.NonEmpty as B (NonEmptyVector)
 
-import           Instances.Data.VectorNonEmpty ()
+import           Instances.Data.Vector.NonEmpty ()
 
 import           Spec.Utils (matchesTextShowSpec, matchesTextShow1Spec)
 
 import           Test.Hspec (Spec, describe, hspec, parallel)
 
-import           TextShow.Data.VectorNonEmpty ()
+import           TextShow.Data.Vector.NonEmpty ()
 
 main :: IO ()
 main = hspec spec

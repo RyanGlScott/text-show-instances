@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wno-orphans #-}
 {-|
 Module:      TextShow.Data.Vector.NonEmpty
-Copyright:   (C) 2014-2023 Ryan Scott
+Copyright:   (C) 2023 Ryan Scott
 License:     BSD-style (see the file LICENSE)
 Maintainer:  Ryan Scott
 Stability:   Provisional
@@ -9,7 +9,7 @@ Portability: GHC
 
 'TextShow' instances for the @NonEmptyVector@ type.
 -}
-module TextShow.Data.VectorNonEmpty () where
+module TextShow.Data.Vector.NonEmpty () where
 
 import qualified Data.Vector.NonEmpty as B (NonEmptyVector, toVector)
 
