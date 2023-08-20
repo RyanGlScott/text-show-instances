@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 {-|
 Module:      Instances.Data.Vector
