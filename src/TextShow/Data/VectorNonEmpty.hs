@@ -7,7 +7,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-'TextShow' instances for @NonEmptyVector@ types.
+'TextShow' instances for the @NonEmptyVector@ type.
 -}
 module TextShow.Data.VectorNonEmpty () where
 
