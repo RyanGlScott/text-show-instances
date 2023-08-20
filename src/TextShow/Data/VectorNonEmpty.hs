@@ -13,9 +13,8 @@ module TextShow.Data.VectorNonEmpty () where
 
 import qualified Data.Vector.NonEmpty as B (NonEmptyVector, toVector)
 
-import           TextShow.Data.Vector ()
-
 import           TextShow (TextShow(..), TextShow1(..), showbPrec1)
+import           TextShow.Data.Vector ()
 
 instance TextShow a => TextShow (B.NonEmptyVector a) where
     showbPrec = showbPrec1
