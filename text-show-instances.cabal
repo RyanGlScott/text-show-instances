@@ -213,8 +213,8 @@ test-suite spec
                        Spec.Data.Functor.TransSpec
                        Spec.Data.ScientificSpec
                        Spec.Data.ShortTextSpec
-                       Spec.Data.VectorSpec
                        Spec.Data.VectorNonEmptySpec
+                       Spec.Data.VectorSpec
                        Spec.Data.TaggedSpec
                        Spec.Data.TimeSpec
                        Spec.Data.UnorderedContainersSpec
