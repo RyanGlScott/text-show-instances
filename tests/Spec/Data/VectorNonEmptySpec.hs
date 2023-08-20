@@ -6,7 +6,7 @@ Maintainer:  Ryan Scott
 Stability:   Provisional
 Portability: GHC
 
-@hspec@ tests for 'Vector' types.
+@hspec@ tests for the 'NonEmptyVector' type.
 -}
 module Spec.Data.VectorNonEmptySpec (main, spec) where
 
