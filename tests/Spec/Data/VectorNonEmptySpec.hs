@@ -26,7 +26,7 @@ main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-    describe "(boxed) Vector Char" $ do
+    describe "(boxed) NonEmptyVector Char" $ do
         let p :: Proxy (B.NonEmptyVector Char)
             p = Proxy
         matchesTextShowSpec  p
