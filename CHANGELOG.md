@@ -1,5 +1,7 @@
 ### next [????.??.??]
 * Add `TextShow(1)` instances for `aeson`'s `KeyMap` type.
+* Add `TextShow(1)` instances for `NonEmptyVector` from the `nonempty-vector`
+  library.
 
 ### 3.9.6 [2023.08.06]
 * Support building with GHC 9.8.
