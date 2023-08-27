@@ -148,7 +148,7 @@ library
                      , semigroups            >= 0.16.2  && < 1
                      , tagged                >= 0.4.4   && < 1
                      , template-haskell      >= 2.11    && < 2.22
-                     , text                  >= 0.11.1  && < 2.1
+                     , text                  >= 0.11.1  && < 2.2
                      , text-short            >= 0.1     && < 0.2
                      , text-show             >= 3.4     && < 4
                      , time                  >= 1.6.0.1 && < 1.13
