@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.9.7 [2023.10.11]
 * Add `TextShow(1)` instances for `aeson`'s `KeyMap` type.
 * Add `TextShow(1)` instances for `NonEmptyVector` from the `nonempty-vector`
   library.
