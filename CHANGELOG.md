@@ -1,3 +1,9 @@
+### next [????.??.??]
+* Support building with GHC 9.10.
+* Add a `TextShow` instance for `NamespaceSpecifier` in
+  `TextShow.Language.Haskell.TH` when building with `template-haskell-2.22.0.0`
+  (GHC 9.10.1) or later.
+
 ### 3.9.7 [2023.10.11]
 * Add `TextShow(1)` instances for `aeson`'s `KeyMap` type.
 * Add `TextShow(1)` instances for `NonEmptyVector` from the `nonempty-vector`

@@ -130,13 +130,13 @@ library
                        TextShow.System.Posix
   other-modules:       TextShow.Utils
   build-depends:       aeson                 >= 2.0.3   && < 2.3
-                     , base                  >= 4.9     && < 4.20
+                     , base                  >= 4.9     && < 4.21
                      , base-compat           >= 0.10    && < 1
                      , bifunctors            >= 5.2     && < 6
                      , binary                >= 0.8.3   && < 0.9
                      , containers            >= 0.5.7.1 && < 0.8
                      , directory             >= 1.3     && < 1.4
-                     , ghc-boot-th           >= 8.0     && < 9.9
+                     , ghc-boot-th           >= 8.0     && < 9.11
                      , haskeline             >= 0.7.3   && < 0.9
                      , hpc                   >= 0.6     && < 0.8
                      , nonempty-vector       >= 0.2     && < 0.3
@@ -147,7 +147,7 @@ library
                      , scientific            >= 0.3.7   && < 0.4
                      , semigroups            >= 0.16.2  && < 1
                      , tagged                >= 0.4.4   && < 1
-                     , template-haskell      >= 2.11    && < 2.22
+                     , template-haskell      >= 2.11    && < 2.23
                      , text                  >= 0.11.1  && < 2.2
                      , text-short            >= 0.1     && < 0.2
                      , text-show             >= 3.4     && < 4
@@ -241,14 +241,14 @@ test-suite spec
                        Spec.System.Console.TerminfoSpec
                        Spec.System.PosixSpec
   build-depends:       aeson                 >= 2.0.3   && < 2.3
-                     , base                  >= 4.9     && < 4.20
+                     , base                  >= 4.9     && < 4.21
                      , base-compat           >= 0.10    && < 1
                      , bifunctors            >= 5.5.5   && < 6
                      , binary                >= 0.8.3   && < 0.9
                      , containers            >= 0.5.7.1 && < 0.8
                      , directory             >= 1.3     && < 1.4
                      , generic-deriving      >= 1.9     && < 2
-                     , ghc-boot-th           >= 8.0     && < 9.9
+                     , ghc-boot-th           >= 8.0     && < 9.11
                      , ghc-prim
                      , haskeline             >= 0.7.3   && < 0.9
                      , hpc                   >= 0.6     && < 0.8
@@ -262,7 +262,7 @@ test-suite spec
                      , random                >= 1.0.1   && < 1.3
                      , tagged                >= 0.4.4   && < 1
                      , scientific            >= 0.3.7   && < 0.4
-                     , template-haskell      >= 2.11    && < 2.22
+                     , template-haskell      >= 2.11    && < 2.23
                      , text-short            >= 0.1     && < 0.2
                      , text-show             >= 3.10    && < 4
                      , text-show-instances

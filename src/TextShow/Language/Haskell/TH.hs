@@ -146,6 +146,9 @@ $(concat <$> traverse deriveTextShow
   , ''ModuleInfo
   , ''NameFlavour
   , ''NameSpace
+#if MIN_VERSION_template_haskell(2,22,0)
+  , ''NamespaceSpecifier
+#endif
   , ''OccName
   , ''Pat
   , ''Phases
