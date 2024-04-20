@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.9.8 [2024.04.20]
 * Support building with GHC 9.10.
 * Add a `TextShow` instance for `NamespaceSpecifier` in
   `TextShow.Language.Haskell.TH` when building with `template-haskell-2.22.0.0`
