@@ -1,4 +1,5 @@
 ### next [????.??.??]
+* Support building with GHC 9.12.
 * Drop support for GHC 8.0.
 
 ### 3.9.8 [2024.04.20]
