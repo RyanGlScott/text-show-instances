@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Drop support for GHC 8.0.
+
 ### 3.9.8 [2024.04.20]
 * Support building with GHC 9.10.
 * Add a `TextShow` instance for `NamespaceSpecifier` in

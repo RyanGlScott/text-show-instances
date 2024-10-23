@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
@@ -16,7 +15,9 @@ Portability: GHC
 -}
 module TextShow.Data.Time () where
 
+import Data.Time.Clock.System (SystemTime)
 import Data.Fixed (Pico)
+import Data.Maybe (fromJust)
 import Data.Semigroup (mtimesDefault)
 import Data.Time.Calendar (Day, toGregorian)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime, UniversalTime)
@@ -33,14 +34,6 @@ import TextShow (TextShow(..), Builder, FromStringShow(..),
 import TextShow.Data.Fixed (showbFixed)
 import TextShow.Data.Integral ()
 import TextShow.TH (deriveTextShow)
-
-#if MIN_VERSION_time(1,7,0)
-import Data.Maybe (fromJust)
-#endif
-
-#if MIN_VERSION_time(1,8,0)
-import Data.Time.Clock.System (SystemTime)
-#endif
 
 type NumericPadOption = Maybe Char
 
@@ -122,12 +115,7 @@ instance TextShow NominalDiffTime where
 
 -- | /Since: 2/
 instance TextShow AbsoluteTime where
-    showb t = showb (utcToLocalTime utc $
-#if MIN_VERSION_time(1,7,0)
-                                          fromJust $ taiToUTCTime (const (Just 0)) t)
-#else
-                                          taiToUTCTime (const 0) t)
-#endif
+    showb t = showb (utcToLocalTime utc $ fromJust $ taiToUTCTime (const (Just 0)) t)
               <> " TAI" -- ugly, but standard apparently
     {-# INLINE showb #-}
 
@@ -164,9 +152,5 @@ instance TextShow UniversalTime where
 -- | /Since: 2/
 $(deriveTextShow ''TimeLocale)
 
-#if MIN_VERSION_time(1,8,0)
--- | Only available with @time-1.8@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''SystemTime)
-#endif

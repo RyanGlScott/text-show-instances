@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 {-|
 Module:      Spec.GHC.ForeignSrcLang.TypeSpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -12,28 +10,25 @@ Portability: GHC
 -}
 module Spec.GHC.ForeignSrcLang.TypeSpec (main, spec) where
 
+import Data.Proxy (Proxy(..))
+
+import GHC.ForeignSrcLang.Type (ForeignSrcLang)
+
+import Instances.GHC.ForeignSrcLang.Type ()
+
 import Prelude ()
 import Prelude.Compat
 
-import Test.Hspec (Spec, hspec, parallel)
-
-#if MIN_VERSION_ghc_boot_th(8,2,0)
-import Data.Proxy (Proxy(..))
-import GHC.ForeignSrcLang.Type (ForeignSrcLang)
-import Instances.GHC.ForeignSrcLang.Type ()
 import Spec.Utils (matchesTextShowSpec)
-import Test.Hspec (describe)
+
+import Test.Hspec (Spec, describe, hspec, parallel)
+
 import TextShow.GHC.ForeignSrcLang.Type ()
-#endif
 
 main :: IO ()
 main = hspec spec
 
 spec :: Spec
 spec = parallel $ do
-#if MIN_VERSION_ghc_boot_th(8,2,0)
     describe "ForeignSrcLang" $
         matchesTextShowSpec (Proxy :: Proxy ForeignSrcLang)
-#else
-    pure ()
-#endif

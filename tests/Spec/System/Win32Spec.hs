@@ -19,25 +19,23 @@ import Test.Hspec (Spec, hspec, parallel)
 #if defined(mingw32_HOST_OS)
 import Data.Proxy (Proxy(..))
 
+import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
+
 import Instances.System.Win32 ()
 
 import Spec.Utils (matchesTextShowSpec)
 
-import System.Win32.DebugApi (DebugEventInfo, Exception)
-import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
-import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
-import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
-
-# if MIN_VERSION_Win32(2,5,0)
-import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
 import System.Win32.Automation.Input (HARDWAREINPUT, INPUT)
 import System.Win32.Automation.Input.Key (KEYBDINPUT)
 import System.Win32.Automation.Input.Mouse (MOUSEINPUT)
+import System.Win32.DebugApi (DebugEventInfo, Exception)
 import System.Win32.Exception.Unsupported (Unsupported(..))
+import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
+import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Info.Version (ProductType, OSVERSIONINFOEX)
 import System.Win32.Mem (MEMORY_BASIC_INFORMATION)
 import System.Win32.SimpleMAPI (RecipientClass, Recipient, FileTag, Attachment, Message)
-# endif
+import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 
 import Test.Hspec (describe)
 
@@ -70,7 +68,6 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy TIME_ZONE_INFORMATION)
     describe "TimeZoneId" $
         matchesTextShowSpec (Proxy :: Proxy TimeZoneId)
-# if MIN_VERSION_Win32(2,5,0)
     describe "BLENDFUNCTION" $
         matchesTextShowSpec (Proxy :: Proxy BLENDFUNCTION)
     describe "KEYBDINPUT" $
@@ -99,7 +96,6 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy Message)
     describe "Unsupported" $
         matchesTextShowSpec (Proxy :: Proxy Unsupported)
-# endif
 #else
     pure ()
 #endif

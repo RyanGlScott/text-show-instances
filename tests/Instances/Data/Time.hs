@@ -1,10 +1,6 @@
-{-# LANGUAGE CPP #-}
-
-#if MIN_VERSION_time(1,8,0)
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
-#endif
 
 {-|
 Module:      Instances.Data.Time
@@ -18,10 +14,8 @@ Provides an 'Arbitrary' instance for 'SystemTime' values.
 -}
 module Instances.Data.Time () where
 
-#if MIN_VERSION_time(1,8,0)
 import Data.Time.Clock.System (SystemTime(..))
 import GHC.Generics (Generic)
 import Test.QuickCheck.Instances.Time ()
 
 deriving instance Generic SystemTime
-#endif

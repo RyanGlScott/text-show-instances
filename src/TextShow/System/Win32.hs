@@ -22,25 +22,24 @@ Only provided if using Windows.
 module TextShow.System.Win32 () where
 
 #if defined(mingw32_HOST_OS)
-import System.Win32.DebugApi (DebugEventInfo, Exception)
-import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
-import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
-import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
-# if MIN_VERSION_Win32(2,5,0)
+import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
+
 import Prelude ()
 import Prelude.Compat
 
-import Graphics.Win32.GDI.AlphaBlend (BLENDFUNCTION)
 import System.Win32.Automation.Input (HARDWAREINPUT, INPUT)
 import System.Win32.Automation.Input.Key (KEYBDINPUT)
 import System.Win32.Automation.Input.Mouse (MOUSEINPUT)
+import System.Win32.DebugApi (DebugEventInfo, Exception)
 import System.Win32.Exception.Unsupported (Unsupported(..))
+import System.Win32.File (BY_HANDLE_FILE_INFORMATION, WIN32_FILE_ATTRIBUTE_DATA)
+import System.Win32.Info (ProcessorArchitecture, SYSTEM_INFO)
 import System.Win32.Info.Version (ProductType, OSVERSIONINFOEX)
 import System.Win32.Mem (MEMORY_BASIC_INFORMATION)
 import System.Win32.SimpleMAPI (RecipientClass, Recipient, FileTag, Attachment, Message)
+import System.Win32.Time (FILETIME, SYSTEMTIME, TIME_ZONE_INFORMATION, TimeZoneId)
 
 import TextShow (TextShow(..), fromString)
-# endif
 
 import TextShow.TH (deriveTextShow)
 
@@ -64,64 +63,34 @@ $(deriveTextShow ''SYSTEMTIME)
 $(deriveTextShow ''TIME_ZONE_INFORMATION)
 -- | /Since: 2/
 $(deriveTextShow ''TimeZoneId)
-
-# if MIN_VERSION_Win32(2,5,0)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''BLENDFUNCTION)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''KEYBDINPUT)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''MOUSEINPUT)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''HARDWAREINPUT)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''INPUT)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''ProductType)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''OSVERSIONINFOEX)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''MEMORY_BASIC_INFORMATION)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''RecipientClass)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''Recipient)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''FileTag)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''Attachment)
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 $(deriveTextShow ''Message)
 
--- | Only available with @Win32-2.5.0.0@ or later.
---
--- /Since: 3.6/
+-- | /Since: 3.6/
 instance TextShow Unsupported where
   showb (MissingLibrary  name reason)
     = "Can't load library \"" <> fromString name <> "\". "  <> fromString reason
@@ -129,5 +98,4 @@ instance TextShow Unsupported where
     = "Can't find \"" <> fromString name <> "\" function. " <> fromString reason
   showb (MissingValue    name reason)
     = "Can't use \""  <> fromString name <> "\" value. "    <> fromString reason
-# endif
 #endif

@@ -1,9 +1,5 @@
-{-# LANGUAGE CPP             #-}
-
-#if MIN_VERSION_ghc_boot_th(8,2,0)
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
-#endif
 
 {-|
 Module:      TextShow.GHC.ForeignSrcLang.Type
@@ -14,16 +10,13 @@ Stability:   Provisional
 Portability: GHC
 
 'TextShow' instance for the 'ForeignSrcLang' data type.
-Only provided if using @ghc-boot-th-8.2@ or later.
 
 /Since: 3.3/
 -}
 module TextShow.GHC.ForeignSrcLang.Type () where
 
-#if MIN_VERSION_ghc_boot_th(8,2,0)
 import GHC.ForeignSrcLang.Type (ForeignSrcLang)
 import TextShow.TH (deriveTextShow)
 
 -- | /Since: 3.6/
 $(deriveTextShow ''ForeignSrcLang)
-#endif

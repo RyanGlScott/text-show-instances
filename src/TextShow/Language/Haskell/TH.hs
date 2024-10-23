@@ -174,12 +174,10 @@ $(concat <$> traverse deriveTextShow
   , ''SourceUnpackedness
   , ''TypeFamilyHead
 
-#if MIN_VERSION_template_haskell(2,12,0)
   , ''DerivClause
   , ''DerivStrategy
   , ''PatSynArgs
   , ''PatSynDir
-#endif
 
 #if MIN_VERSION_template_haskell(2,16,0) && !(MIN_VERSION_template_haskell(2,17,0))
   , ''Bytes

@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 {-|
 Module:      Spec.Data.TimeSpec
 Copyright:   (C) 2014-2017 Ryan Scott
@@ -16,9 +14,7 @@ import Data.Proxy (Proxy(..))
 import Data.Time (UniversalTime)
 import Data.Time.Calendar (Day)
 import Data.Time.Clock (DiffTime, UTCTime, NominalDiffTime)
-#if MIN_VERSION_time(1,8,0)
 import Data.Time.Clock.System (SystemTime)
-#endif
 import Data.Time.Clock.TAI (AbsoluteTime)
 import Data.Time.LocalTime (TimeZone, TimeOfDay, LocalTime, ZonedTime)
 
@@ -56,7 +52,5 @@ spec = parallel $ do
         matchesTextShowSpec (Proxy :: Proxy ZonedTime)
     describe "UniversalTime" $
         matchesTextShowSpec (Proxy :: Proxy UniversalTime)
-#if MIN_VERSION_time(1,8,0)
     describe "SystemTime" $
         matchesTextShowSpec (Proxy :: Proxy SystemTime)
-#endif
