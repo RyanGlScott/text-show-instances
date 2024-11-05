@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
@@ -14,22 +15,27 @@ Provides 'Arbitrary' instances for 'Vector' types.
 module Instances.Data.Vector () where
 
 import           Data.Vector.Fusion.Bundle.Size (Size(..))
-import           Data.Vector.Generic (fromList)
-import qualified Data.Vector.Primitive as P (Vector)
-import           Data.Vector.Primitive (Prim)
 
 import           GHC.Generics (Generic)
 
 import           Instances.Utils.GenericArbitrary (genericArbitrary)
 
-import           Prelude ()
-import           Prelude.Compat
-
 import           Test.QuickCheck (Arbitrary(..))
 import           Test.QuickCheck.Instances ()
 
+#if !MIN_VERSION_quickcheck_instances(0,3,32)
+import           Data.Vector.Generic (fromList)
+import qualified Data.Vector.Primitive as P (Vector)
+import           Data.Vector.Primitive (Prim)
+
+import           Prelude ()
+import           Prelude.Compat
+#endif
+
+#if !MIN_VERSION_quickcheck_instances(0,3,32)
 instance (Arbitrary a, Prim a) => Arbitrary (P.Vector a) where
     arbitrary = fromList <$> arbitrary
+#endif
 
 instance Arbitrary Size where
     arbitrary = genericArbitrary
