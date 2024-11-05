@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 3.9.10 [2024.11.05]
 * Support building with `quickcheck-instances-0.3.32` or later in the test
   suite.
 
