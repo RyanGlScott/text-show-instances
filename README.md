@@ -1,6 +1,5 @@
 # `text-show-instances`
 [![Hackage](https://img.shields.io/hackage/v/text-show-instances.svg)][Hackage: text-show-instances]
-[![Hackage Dependencies](https://img.shields.io/hackage-deps/v/text-show-instances.svg)](http://packdeps.haskellers.com/reverse/text-show-instances)
 [![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
 [![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
 [![Build Status](https://github.com/RyanGlScott/text-show-instances/workflows/Haskell-CI/badge.svg)](https://github.com/RyanGlScott/text-show-instances/actions?query=workflow%3AHaskell-CI)
